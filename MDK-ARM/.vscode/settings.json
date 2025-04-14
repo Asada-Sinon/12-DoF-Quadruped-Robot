@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "j60.h": "c",
+        "string.h": "c",
+        "dog.h": "c",
+        "fsm.h": "c",
+        "tim.h": "c",
+        "timer.h": "c"
+    }
+}
