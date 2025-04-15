@@ -36,28 +36,13 @@ static void trot_exit(void) {
 static bool trot_check_transition(StateName next) {
     // 从对角步态状态可以转到任何状态
     if (next == STATE_STAND) {
-        // if(first_run == 1)
-        // {
-        //     first_run = 0;
-        //     printf("first_run = 0\n");
-        //     get_gait_state()->end_T[0] = 1;
-        //     get_gait_state()->end_T[1] = 1;
-        //     get_gait_state()->end_T[2] = 1;
-        //     get_gait_state()->end_T[3] = 1;
-        // }
-        // if(get_gait_state()->end_T[0] == 0 && get_gait_state()->end_T[1] == 0 && get_gait_state()->end_T[2] == 0 && get_gait_state()->end_T[3] == 0)
-        // {
-        //     for (int i = 0; i < 4; i++) {
-        //         printf("退出对角步态时足端目标位置[%d]: %f %f %f\n", i, foot_target_pos[i][X_IDX], foot_target_pos[i][Y_IDX], foot_target_pos[i][Z_IDX]);
-        //     }
-        //     return true;
-
-        // }
         if(trot_state.contact[0] == 1 && trot_state.contact[1] == 1 && trot_state.contact[2] == 1 && trot_state.contact[3] == 1)
         {
             return true;
         }
     }
+    if (next == STATE_PASSIVE)
+        return true;
     return false;
 }
 

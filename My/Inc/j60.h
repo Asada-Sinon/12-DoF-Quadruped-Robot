@@ -58,10 +58,11 @@ typedef struct {
     uint8_t custom_id;    // 自定义电机ID (0-15)
     uint8_t can_bus;      // CAN总线索引 (0=CAN1, 1=CAN2, 2=CAN3)
     uint8_t local_id;     // 电机在CAN总线上的原始ID (0-15)
-    float position;       // 位置 (rad)
-    float velocity;       // 速度 (rad/s)
-    float torque;         // 力矩 (Nm)
-    float temperature;    // 温度 (°C)
+    uint8_t is_enable;    // 电机是否使能
+    float position;       // 反馈位置 (rad)
+    float velocity;       // 反馈速度 (rad/s)
+    float torque;         // 反馈力矩 (Nm)
+    float temperature;    // 反馈温度 (°C)
     uint8_t temp_type;    // 温度类型 (0=mosfet温度, 1=电机温度)
     uint8_t error_code;   // 错误码
     float kp;             // 位置环增益
@@ -69,7 +70,7 @@ typedef struct {
 } J60_Motor;
 
 /* 函数声明 */
-HAL_StatusTypeDef J60_Init(void);
+HAL_StatusTypeDef J60_Can_Init(void);
 HAL_StatusTypeDef J60_ConfigMotor(uint8_t custom_id, uint8_t can_bus, uint8_t local_id);
 HAL_StatusTypeDef J60_ConfigMotors(J60_Motor_Config* configs, uint8_t num_motors);
 J60_Motor* J60_GetMotor(uint8_t custom_id);

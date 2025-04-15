@@ -47,3 +47,4 @@ quadruped_f767\main.o: ../My/Inc/fsm.h
 quadruped_f767\main.o: D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin\..\include\stdbool.h
 quadruped_f767\main.o: ../My/Inc/timer.h
 quadruped_f767\main.o: ../My/Inc/motor.h
+quadruped_f767\main.o: ../My/Inc/gamepad.h

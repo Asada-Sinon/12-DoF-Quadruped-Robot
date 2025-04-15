@@ -4,83 +4,54 @@
 
 
 /* 全局参数实例 */
-static const RobotParams robot_params = {
+RobotParams robot_params = {
     /* 步态参数 */
     .trot_gait = {
         .phase = {0.0, 0.5, 0.5, 0.0}, 
-        .T = 1, //0.3
+        .T = 0.4, //0.3
         .stance_ratio = 0.52,
         .swing_ratio = 1- 0.52,
         .step_length = 0,
-        .swing_height = 0.05,
+        .swing_height = 0.07,
         .stance_depth = 0.0,
         .stand_height = DEFAULT_STAND_HEIGHT
     },
-    
-    /* 电机控制参数 */
+    /* 电机参数 */
     .motor_param = {
         .motor_control_params = {
             //FL
-            {140, 8}, 
-            {140, 8}, 
-            {140, 8}, 
+            {70, 0.5}, 
+            {80, 0.5}, 
+            {90, 0.5}, 
             //FR
-            {140, 8}, 
-            {140, 8}, 
-            {140, 8}, 
+            {70, 0.5}, 
+            {80, 0.5}, 
+            {90, 0.5}, 
             //HL
-            {140, 8}, 
-            {140, 8}, 
-            {140, 8}, 
+            {50, 0.5}, 
+            {50, 0.5}, 
+            {50, 0.5},  
             //HR
-            {140, 8}, 
-            {140, 8}, 
-            {140, 8}
-        }
-    },
-
-    /* 姿态参数 */
-    .posture = {
-        .stand_height = DEFAULT_STAND_HEIGHT,
-        .center_of_gravity = {
-            .translation = {DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_X, DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_Y, DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_Z},
-            .rotation = {DEFAULT_CENTER_OF_GRAVITY_ROTATION_X, DEFAULT_CENTER_OF_GRAVITY_ROTATION_Y, DEFAULT_CENTER_OF_GRAVITY_ROTATION_Z}
+            {50, 0.5}, 
+            {50, 0.5}, 
+            {50, 0.5},
+            //FL
+//            {0, 0}, 
+//            {0, 0}, 
+//            {0, 0}, 
+//            //FR
+//            {0, 0}, 
+//            {0, 0}, 
+//            {0, 0}, 
+//            //HL
+//            {0, 0}, 
+//            {0, 0}, 
+//            {0, 0}, 
+//            //HR
+//            {0, 0}, 
+//            {0, 0}, 
+//            {0, 0}
         },
-        .center_of_gravity_limit = {
-            .cog_x_max = DEFAULT_CENTER_OF_GRAVITY_MAX_X,
-            .cog_x_min = DEFAULT_CENTER_OF_GRAVITY_MIN_X,
-            .cog_y_max = DEFAULT_CENTER_OF_GRAVITY_MAX_Y,
-            .cog_y_min = DEFAULT_CENTER_OF_GRAVITY_MIN_Y,
-            .cog_z_max = DEFAULT_CENTER_OF_GRAVITY_MAX_Z,
-            .cog_z_min = DEFAULT_CENTER_OF_GRAVITY_MIN_Z
-        },
-        .default_joint_pos = {
-            {DEFAULT_JOINT_ANGLE_HIP, DEFAULT_JOINT_ANGLE_THIGH, DEFAULT_JOINT_ANGLE_CALF},
-            {DEFAULT_JOINT_ANGLE_HIP, DEFAULT_JOINT_ANGLE_THIGH, DEFAULT_JOINT_ANGLE_CALF},
-            {DEFAULT_JOINT_ANGLE_HIP, DEFAULT_JOINT_ANGLE_THIGH, DEFAULT_JOINT_ANGLE_CALF},
-            {DEFAULT_JOINT_ANGLE_HIP, DEFAULT_JOINT_ANGLE_THIGH, DEFAULT_JOINT_ANGLE_CALF}
-        }
-    },
-
-    /* 连杆参数 */
-    .leg_links = {
-        .hip_length = LINK_LENGTH_HIP,
-        .thigh_length = LINK_LENGTH_THIGH,
-        .calf_length = LINK_LENGTH_CALF
-    },
-    
-    /* 关节限制 */
-    .joint_limits = {
-        .max_hip_angle = MOTOR_FL_HIP_MAX,   // 使用FL的值作为通用限制
-        .min_hip_angle = MOTOR_FL_HIP_MIN,
-        .max_thigh_angle = MOTOR_FL_THIGH_MAX,
-        .min_thigh_angle = MOTOR_FL_THIGH_MIN,
-        .max_calf_angle = MOTOR_FL_CALF_MAX,
-        .min_calf_angle = MOTOR_FL_CALF_MIN
-    },
-    
-    /* 电机参数 */
-    .motor_param = {
         .motor_id = {
             {MOTOR_FL_HIP_ID, MOTOR_FL_THIGH_ID, MOTOR_FL_CALF_ID},
             {MOTOR_FR_HIP_ID, MOTOR_FR_THIGH_ID, MOTOR_FR_CALF_ID},
@@ -168,10 +139,49 @@ static const RobotParams robot_params = {
                 .calf_zero_pos = MOTOR_HR_CALF_ANGLE_ZERO_POS
             }
         }
-    }          
+    },
+    /* 姿态参数 */
+    .posture = {
+        .stand_height = DEFAULT_STAND_HEIGHT,
+        .center_of_gravity = {
+            .translation = {DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_X, DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_Y, DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_Z},
+            .rotation = {DEFAULT_CENTER_OF_GRAVITY_ROTATION_X, DEFAULT_CENTER_OF_GRAVITY_ROTATION_Y, DEFAULT_CENTER_OF_GRAVITY_ROTATION_Z}
+        },
+        .center_of_gravity_limit = {
+            .cog_x_max = DEFAULT_CENTER_OF_GRAVITY_MAX_X,
+            .cog_x_min = DEFAULT_CENTER_OF_GRAVITY_MIN_X,
+            .cog_y_max = DEFAULT_CENTER_OF_GRAVITY_MAX_Y,
+            .cog_y_min = DEFAULT_CENTER_OF_GRAVITY_MIN_Y,
+            .cog_z_max = DEFAULT_CENTER_OF_GRAVITY_MAX_Z,
+            .cog_z_min = DEFAULT_CENTER_OF_GRAVITY_MIN_Z
+        },
+        .default_joint_pos = {
+            {DEFAULT_JOINT_ANGLE_HIP, DEFAULT_JOINT_ANGLE_THIGH, DEFAULT_JOINT_ANGLE_CALF},
+            {DEFAULT_JOINT_ANGLE_HIP, DEFAULT_JOINT_ANGLE_THIGH, DEFAULT_JOINT_ANGLE_CALF},
+            {DEFAULT_JOINT_ANGLE_HIP, DEFAULT_JOINT_ANGLE_THIGH, DEFAULT_JOINT_ANGLE_CALF},
+            {DEFAULT_JOINT_ANGLE_HIP, DEFAULT_JOINT_ANGLE_THIGH, DEFAULT_JOINT_ANGLE_CALF}
+        }
+    },
+
+    /* 连杆参数 */
+    .leg_links = {
+        .hip_length = LINK_LENGTH_HIP,
+        .thigh_length = LINK_LENGTH_THIGH,
+        .calf_length = LINK_LENGTH_CALF
+    },
+    
+    /* 关节限制 */
+    .joint_limits = {
+        .max_hip_angle = MOTOR_FL_HIP_MAX,   // 使用FL的值作为通用限制
+        .min_hip_angle = MOTOR_FL_HIP_MIN,
+        .max_thigh_angle = MOTOR_FL_THIGH_MAX,
+        .min_thigh_angle = MOTOR_FL_THIGH_MIN,
+        .max_calf_angle = MOTOR_FL_CALF_MAX,
+        .min_calf_angle = MOTOR_FL_CALF_MIN
+    }   
 };
 
 /* 获取机器人参数 */
-const RobotParams* get_robot_params(void) {
+RobotParams* get_robot_params(void) {
     return &robot_params;
 }

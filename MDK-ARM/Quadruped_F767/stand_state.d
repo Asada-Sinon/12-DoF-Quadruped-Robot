@@ -43,3 +43,5 @@ quadruped_f767\stand_state.o: ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_
 quadruped_f767\stand_state.o: ../Core/Inc/can.h
 quadruped_f767\stand_state.o: ../My/Inc/timer.h
 quadruped_f767\stand_state.o: D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin\..\include\stdio.h
+quadruped_f767\stand_state.o: D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin\..\include\string.h
+quadruped_f767\stand_state.o: ../My/Inc/motor.h

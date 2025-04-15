@@ -35,13 +35,13 @@
  * 机械参数
  ************************************************************/
 // 连杆长度（米）
-#define LINK_LENGTH_HIP   0.0838f
-#define LINK_LENGTH_THIGH 0.2f
-#define LINK_LENGTH_CALF  0.2f
+#define LINK_LENGTH_HIP   0.0693f
+#define LINK_LENGTH_THIGH 0.255f
+#define LINK_LENGTH_CALF  0.26f
 
 // 机体尺寸(大腿关节距离)
-#define BODY_LENGTH 0.361f 
-#define BODY_WIDTH 0.2616f
+#define BODY_LENGTH 0.459f 
+#define BODY_WIDTH 0.3686f
 
 // 大腿关节与机体中心连线角度
 #define HIP_ANGLE atan2f(BODY_LENGTH, BODY_WIDTH)
@@ -50,11 +50,11 @@
  * 默认姿态参数
  ************************************************************/
 // 站立高度（米）
-#define DEFAULT_STAND_HEIGHT 0.25f
+#define DEFAULT_STAND_HEIGHT 0.3f
 
 // 重心位置
-#define DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_X 0.0075f
-#define DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_Y -0.0027f
+#define DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_X 0.05f
+#define DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_Y 0.00f
 #define DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_Z 0.0f
 
 #define DEFAULT_CENTER_OF_GRAVITY_ROTATION_X 0.0f
@@ -70,7 +70,7 @@
 #define DEFAULT_CENTER_OF_GRAVITY_MIN_Z -0.1f
 
 
-// 默认关节角度（弧度）
+// 默认关节角度（弧度） # 已弃用
 #define DEFAULT_JOINT_ANGLE_HIP    0.0f
 #define DEFAULT_JOINT_ANGLE_THIGH  0.67f
 #define DEFAULT_JOINT_ANGLE_CALF  -1.3f
@@ -80,21 +80,21 @@
 /************************************************************
  * 电机id与关节id对应关系
  ************************************************************/
-#define MOTOR_FL_HIP_ID 1
+#define MOTOR_FL_HIP_ID 3
 #define MOTOR_FL_THIGH_ID 2
-#define MOTOR_FL_CALF_ID 3
+#define MOTOR_FL_CALF_ID 1
 
-#define MOTOR_FR_HIP_ID 5
-#define MOTOR_FR_THIGH_ID 6
-#define MOTOR_FR_CALF_ID 7
+#define MOTOR_FR_HIP_ID 6
+#define MOTOR_FR_THIGH_ID 5
+#define MOTOR_FR_CALF_ID 4
 
-#define MOTOR_HL_HIP_ID 9
-#define MOTOR_HL_THIGH_ID 10
-#define MOTOR_HL_CALF_ID 11
+#define MOTOR_HL_HIP_ID 12
+#define MOTOR_HL_THIGH_ID 11
+#define MOTOR_HL_CALF_ID 10
 
-#define MOTOR_HR_HIP_ID 13
-#define MOTOR_HR_THIGH_ID 14
-#define MOTOR_HR_CALF_ID 15
+#define MOTOR_HR_HIP_ID 9
+#define MOTOR_HR_THIGH_ID 8
+#define MOTOR_HR_CALF_ID 7
 /************************************************************
  * 电机CAN总线配置
  ************************************************************/
@@ -106,28 +106,28 @@
 #define MOTOR_FR_THIGH_CAN_BUS CAN_BUS_2
 #define MOTOR_FR_CALF_CAN_BUS CAN_BUS_2
 
-#define MOTOR_HL_HIP_CAN_BUS CAN_BUS_3
+#define MOTOR_HL_HIP_CAN_BUS CAN_BUS_1
 #define MOTOR_HL_THIGH_CAN_BUS CAN_BUS_3
-#define MOTOR_HL_CALF_CAN_BUS CAN_BUS_3
+#define MOTOR_HL_CALF_CAN_BUS CAN_BUS_2
 
-#define MOTOR_HR_HIP_CAN_BUS CAN_BUS_1
-#define MOTOR_HR_THIGH_CAN_BUS CAN_BUS_2
+#define MOTOR_HR_HIP_CAN_BUS CAN_BUS_3
+#define MOTOR_HR_THIGH_CAN_BUS CAN_BUS_3
 #define MOTOR_HR_CALF_CAN_BUS CAN_BUS_3
 
 /************************************************************
  * 电机坐标系相关（用于确定电机坐标系与关节坐标系的关系）
  ************************************************************/
-#define MOTOR_FL_HIP_DIRECTION 1 // 左前腿髋关节电机旋转方向，与关节坐标系旋转方向相同为1，相反为-1，
-#define MOTOR_FL_THIGH_DIRECTION 1 // 左前腿大腿电机旋转方向，与关节坐标系旋转方向相同为1，相反为-1，
-#define MOTOR_FL_CALF_DIRECTION 1 // 左前腿小腿电机旋转方向，与关节坐标系旋转方向相同为1，相反为-1，
+#define MOTOR_FL_HIP_DIRECTION -1 // 左前腿髋关节电机旋转方向，与关节坐标系旋转方向相同为1，相反为-1，
+#define MOTOR_FL_THIGH_DIRECTION -1 // 左前腿大腿电机旋转方向，与关节坐标系旋转方向相同为1，相反为-1，
+#define MOTOR_FL_CALF_DIRECTION -1 // 左前腿小腿电机旋转方向，与关节坐标系旋转方向相同为1，相反为-1，
 
-#define MOTOR_FR_HIP_DIRECTION 1 // 右前腿髋关节电机旋转方向，与关节坐标系旋转方向相同为1，相反为-1，
+#define MOTOR_FR_HIP_DIRECTION -1 // 右前腿髋关节电机旋转方向，与关节坐标系旋转方向相同为1，相反为-1，
 #define MOTOR_FR_THIGH_DIRECTION 1 // 右前腿大腿电机旋转方向，与关节坐标系旋转方向相同为1，相反为-1，
 #define MOTOR_FR_CALF_DIRECTION 1 // 右前腿小腿电机旋转方向，与关节坐标系旋转方向相同为1，相反为-1，
 
 #define MOTOR_HL_HIP_DIRECTION 1 // 左后腿髋关节电机旋转方向，与关节坐标系旋转方向相同为1，相反为-1，
-#define MOTOR_HL_THIGH_DIRECTION 1 // 左后腿大腿电机旋转方向，与关节坐标系旋转方向相同为1，相反为-1，
-#define MOTOR_HL_CALF_DIRECTION 1 // 左后腿小腿电机旋转方向，与关节坐标系旋转方向相同为1，相反为-1，
+#define MOTOR_HL_THIGH_DIRECTION -1 // 左后腿大腿电机旋转方向，与关节坐标系旋转方向相同为1，相反为-1，
+#define MOTOR_HL_CALF_DIRECTION -1 // 左后腿小腿电机旋转方向，与关节坐标系旋转方向相同为1，相反为-1，
 
 #define MOTOR_HR_HIP_DIRECTION 1 // 右后腿髋关节电机旋转方向，与关节坐标系旋转方向相同为1，相反为-1，
 #define MOTOR_HR_THIGH_DIRECTION 1 // 右后腿大腿电机旋转方向，与关节坐标系旋转方向相同为1，相反为-1，
@@ -135,37 +135,37 @@
 
 // 特定位置的关节坐标系角度（一般由建模软件中直接测量得到）
 #define JOINT_FL_HIP_ANGLE_SPECIAL_POS 0.0f
-#define JOINT_FL_THIGH_ANGLE_SPECIAL_POS 0.0f
-#define JOINT_FL_CALF_ANGLE_SPECIAL_POS 0.0f
+#define JOINT_FL_THIGH_ANGLE_SPECIAL_POS 2.4622f * DEGREE_TO_RADIAN
+#define JOINT_FL_CALF_ANGLE_SPECIAL_POS -31.753f * DEGREE_TO_RADIAN
 
 #define JOINT_FR_HIP_ANGLE_SPECIAL_POS 0.0f
-#define JOINT_FR_THIGH_ANGLE_SPECIAL_POS 0.0f
-#define JOINT_FR_CALF_ANGLE_SPECIAL_POS 0.0f
+#define JOINT_FR_THIGH_ANGLE_SPECIAL_POS 2.4622f * DEGREE_TO_RADIAN
+#define JOINT_FR_CALF_ANGLE_SPECIAL_POS -31.753f * DEGREE_TO_RADIAN
 
 #define JOINT_HL_HIP_ANGLE_SPECIAL_POS 0.0f
-#define JOINT_HL_THIGH_ANGLE_SPECIAL_POS 0.0f
-#define JOINT_HL_CALF_ANGLE_SPECIAL_POS 0.0f
+#define JOINT_HL_THIGH_ANGLE_SPECIAL_POS 2.4622f * DEGREE_TO_RADIAN
+#define JOINT_HL_CALF_ANGLE_SPECIAL_POS -31.753f * DEGREE_TO_RADIAN
 
 #define JOINT_HR_HIP_ANGLE_SPECIAL_POS 0.0f
-#define JOINT_HR_THIGH_ANGLE_SPECIAL_POS 0.0f
-#define JOINT_HR_CALF_ANGLE_SPECIAL_POS 0.0f
+#define JOINT_HR_THIGH_ANGLE_SPECIAL_POS 2.4622f * DEGREE_TO_RADIAN
+#define JOINT_HR_CALF_ANGLE_SPECIAL_POS -31.753f * DEGREE_TO_RADIAN
 
 // 对应的电机坐标系角度（摆好关节位置后从电机回传数据读取出）
-#define MOTOR_FL_HIP_ANGLE_SPECIAL_POS 0.0f
-#define MOTOR_FL_THIGH_ANGLE_SPECIAL_POS 0.0f
-#define MOTOR_FL_CALF_ANGLE_SPECIAL_POS 0.0f
+#define MOTOR_FL_HIP_ANGLE_SPECIAL_POS 0.366f
+#define MOTOR_FL_THIGH_ANGLE_SPECIAL_POS 1.26f
+#define MOTOR_FL_CALF_ANGLE_SPECIAL_POS -2.198f
 
-#define MOTOR_FR_HIP_ANGLE_SPECIAL_POS 0.0f
-#define MOTOR_FR_THIGH_ANGLE_SPECIAL_POS 0.0f
-#define MOTOR_FR_CALF_ANGLE_SPECIAL_POS 0.0f
+#define MOTOR_FR_HIP_ANGLE_SPECIAL_POS -0.366f
+#define MOTOR_FR_THIGH_ANGLE_SPECIAL_POS -0.99f
+#define MOTOR_FR_CALF_ANGLE_SPECIAL_POS 2.06f
 
-#define MOTOR_HL_HIP_ANGLE_SPECIAL_POS 0.0f
-#define MOTOR_HL_THIGH_ANGLE_SPECIAL_POS 0.0f
-#define MOTOR_HL_CALF_ANGLE_SPECIAL_POS 0.0f
+#define MOTOR_HL_HIP_ANGLE_SPECIAL_POS -0.194f
+#define MOTOR_HL_THIGH_ANGLE_SPECIAL_POS 0.87f
+#define MOTOR_HL_CALF_ANGLE_SPECIAL_POS -2.426f
 
-#define MOTOR_HR_HIP_ANGLE_SPECIAL_POS 0.0f
-#define MOTOR_HR_THIGH_ANGLE_SPECIAL_POS 0.0f
-#define MOTOR_HR_CALF_ANGLE_SPECIAL_POS 0.0f
+#define MOTOR_HR_HIP_ANGLE_SPECIAL_POS 0.518f
+#define MOTOR_HR_THIGH_ANGLE_SPECIAL_POS -1.23f
+#define MOTOR_HR_CALF_ANGLE_SPECIAL_POS 2.36f
 
 // 计算电机坐标系与关节坐标系零位重合时电机的当前角度
 #define MOTOR_FL_HIP_ANGLE_ZERO_POS (MOTOR_FL_HIP_ANGLE_SPECIAL_POS - MOTOR_FL_HIP_DIRECTION*JOINT_FL_HIP_ANGLE_SPECIAL_POS)
@@ -188,36 +188,36 @@
  * 电机角度限制（弧度）
  ************************************************************/
 // FL腿电机限制
-#define MOTOR_FL_HIP_MAX    46.0f  * DEGREE_TO_RADIAN
-#define MOTOR_FL_HIP_MIN   -46.0f  * DEGREE_TO_RADIAN
-#define MOTOR_FL_THIGH_MAX 240.0f  * DEGREE_TO_RADIAN
-#define MOTOR_FL_THIGH_MIN -60.0f  * DEGREE_TO_RADIAN
-#define MOTOR_FL_CALF_MAX  -52.5f  * DEGREE_TO_RADIAN
-#define MOTOR_FL_CALF_MIN  -154.5f * DEGREE_TO_RADIAN
+#define MOTOR_FL_HIP_MAX   0.65f
+#define MOTOR_FL_HIP_MIN   -0.6f
+#define MOTOR_FL_THIGH_MAX 2.166f
+#define MOTOR_FL_THIGH_MIN 0.5f
+#define MOTOR_FL_CALF_MAX  -0.26f
+#define MOTOR_FL_CALF_MIN  -1.8f
 
 // FR腿电机限制
-#define MOTOR_FR_HIP_MAX    46.0f  * DEGREE_TO_RADIAN
-#define MOTOR_FR_HIP_MIN   -46.0f  * DEGREE_TO_RADIAN
-#define MOTOR_FR_THIGH_MAX 240.0f  * DEGREE_TO_RADIAN
-#define MOTOR_FR_THIGH_MIN -60.0f  * DEGREE_TO_RADIAN
-#define MOTOR_FR_CALF_MAX  -52.5f  * DEGREE_TO_RADIAN
-#define MOTOR_FR_CALF_MIN  -154.5f * DEGREE_TO_RADIAN
+#define MOTOR_FR_HIP_MAX    0.28f
+#define MOTOR_FR_HIP_MIN   -0.8f
+#define MOTOR_FR_THIGH_MAX -0.35f
+#define MOTOR_FR_THIGH_MIN -2.0f
+#define MOTOR_FR_CALF_MAX  1.7f
+#define MOTOR_FR_CALF_MIN  0.13f
 
 // HL腿电机限制
-#define MOTOR_HL_HIP_MAX    46.0f  * DEGREE_TO_RADIAN
-#define MOTOR_HL_HIP_MIN   -46.0f  * DEGREE_TO_RADIAN
-#define MOTOR_HL_THIGH_MAX 240.0f  * DEGREE_TO_RADIAN
-#define MOTOR_HL_THIGH_MIN -60.0f  * DEGREE_TO_RADIAN
-#define MOTOR_HL_CALF_MAX  -52.5f  * DEGREE_TO_RADIAN
-#define MOTOR_HL_CALF_MIN  -154.5f * DEGREE_TO_RADIAN
+#define MOTOR_HL_HIP_MAX    0.4f
+#define MOTOR_HL_HIP_MIN   -0.7f
+#define MOTOR_HL_THIGH_MAX -0.18f
+#define MOTOR_HL_THIGH_MIN 1.48f
+#define MOTOR_HL_CALF_MAX  -0.48f
+#define MOTOR_HL_CALF_MIN  -0.2f
 
 // HR腿电机限制
-#define MOTOR_HR_HIP_MAX    46.0f  * DEGREE_TO_RADIAN
-#define MOTOR_HR_HIP_MIN   -46.0f  * DEGREE_TO_RADIAN
-#define MOTOR_HR_THIGH_MAX 240.0f  * DEGREE_TO_RADIAN
-#define MOTOR_HR_THIGH_MIN -60.0f  * DEGREE_TO_RADIAN
-#define MOTOR_HR_CALF_MAX  -52.5f  * DEGREE_TO_RADIAN
-#define MOTOR_HR_CALF_MIN  -154.5f * DEGREE_TO_RADIAN
+#define MOTOR_HR_HIP_MAX    1.0f
+#define MOTOR_HR_HIP_MIN   -0.15f
+#define MOTOR_HR_THIGH_MAX -0.1f
+#define MOTOR_HR_THIGH_MIN -1.68f
+#define MOTOR_HR_CALF_MAX  1.9f
+#define MOTOR_HR_CALF_MIN  0.25f
 
 
 /************************************************************
@@ -331,6 +331,6 @@ typedef struct {
 /************************************************************
  * 函数声明
  ************************************************************/
-const RobotParams* get_robot_params(void);
+RobotParams* get_robot_params(void);
 
 #endif /* _ROBOT_PARAMS_H */

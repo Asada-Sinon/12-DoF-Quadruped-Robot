@@ -43,3 +43,4 @@ quadruped_f767\timer.o: ../My/Inc/j60.h
 quadruped_f767\timer.o: ../Core/Inc/can.h
 quadruped_f767\timer.o: ../My/Inc/fsm.h
 quadruped_f767\timer.o: D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin\..\include\stdbool.h
+quadruped_f767\timer.o: ../My/Inc/motor.h

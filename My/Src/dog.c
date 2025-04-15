@@ -438,8 +438,24 @@ void dog_init(const RobotParams* init_params)
     for (int leg_idx = 0; leg_idx < 4; leg_idx++) {
         leg_get_motors_current_pos(leg_idx, motor_current_pos[leg_idx]);
         leg_motor_to_joint(leg_idx, motor_current_pos[leg_idx], dog.leg[leg_idx].join_target_pos);
+        leg_set_motor_pos(leg_idx, motor_current_pos[leg_idx]);
     }
 
+    
+    // 初始化电机角度后，赋予电机控制参数
+    for (int i = 0; i < 12; i++) {
+//        if (i == 8 || i == 7)
+//        {
+            J60_GetMotor(i)->kp = 0;
+            J60_GetMotor(i)->kd = 0;
+//        }
+//        if (i == 9 || i==10 ||i==11)
+//        {
+//            J60_GetMotor(i)->kp = dog.params.motor_param.motor_control_params[i].kp;
+//            J60_GetMotor(i)->kd = dog.params.motor_param.motor_control_params[i].kd;
+//        }
+        
+    }
 }
 
 void dog_data_update()

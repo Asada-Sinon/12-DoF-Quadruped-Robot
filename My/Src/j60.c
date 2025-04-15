@@ -26,7 +26,7 @@ static void CAN_Queue_Init(void)
  * @brief  初始化J60电机CAN总线
  * @retval HAL状态
  */
-HAL_StatusTypeDef J60_Init(void)
+HAL_StatusTypeDef J60_Can_Init(void)
 {
     CAN_FilterTypeDef filter;
     
@@ -166,11 +166,13 @@ static uint32_t J60_MakeCanId(uint8_t motor_id, uint32_t cmd_id, uint8_t is_rx)
  * @param  length: 数据长度
  * @retval HAL状态
  */
+CAN_TxHeaderTypeDef txHeader;
+uint8_t tx_data[8] = {0};
 static HAL_StatusTypeDef J60_SendCanMessage_NonBlocking(uint8_t custom_id, uint32_t cmd_id, uint8_t *data, uint8_t length)
 {
-    CAN_TxHeaderTypeDef txHeader;
+//    CAN_TxHeaderTypeDef txHeader;
     uint32_t txMailbox;
-    uint8_t tx_data[8] = {0};
+//    uint8_t tx_data[8] = {0};
     
     // 检查参数
     if (custom_id > 15 || length > 8) {
@@ -569,7 +571,14 @@ void J60_ProcessReceivedData(CAN_HandleTypeDef *hcan, CAN_RxHeaderTypeDef *pRxHe
             }
             break;
         }
-        
+        case J60_CMD_MOTOR_ENABLE: {
+            j60_motors[custom_id].is_enable =  data[0];
+            break;
+        }
+        case J60_CMD_MOTOR_DISABLE: {
+            j60_motors[custom_id].is_enable = data[0];
+            break;
+        }
         // 保留其他命令的处理...
         
         default:

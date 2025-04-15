@@ -81,7 +81,7 @@
           </BeforeMake>
           <AfterMake>
             <RunUserProg1>0</RunUserProg1>
-            <RunUserProg2>1</RunUserProg2>
+            <RunUserProg2>0</RunUserProg2>
             <UserProg1Name></UserProg1Name>
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
@@ -899,14 +899,14 @@
           <GroupName>Drive</GroupName>
           <Files>
             <File>
-              <FileName>gamepad.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\My\Src\gamepad.c</FilePath>
-            </File>
-            <File>
               <FileName>motor.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\My\Src\motor.c</FilePath>
+            </File>
+            <File>
+              <FileName>gamepad.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\My\Src\gamepad.c</FilePath>
             </File>
             <File>
               <FileName>j60.c</FileName>

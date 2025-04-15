@@ -5,6 +5,7 @@
         "dog.h": "c",
         "fsm.h": "c",
         "tim.h": "c",
-        "timer.h": "c"
+        "timer.h": "c",
+        "motor.h": "c"
     }
 }

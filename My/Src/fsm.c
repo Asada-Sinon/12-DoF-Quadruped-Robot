@@ -15,7 +15,7 @@ static bool default_checker(StateName next) {
 }
 
 /* 状态机内部上下文 */
-static struct {
+struct {
     StateName current;        // 当前状态
     StateName previous;       // 上一个状态
     StateName next;        // 待转换的状态
@@ -120,6 +120,7 @@ StateName fsm_get_next_state(void) {
 // 前向声明所有状态注册函数
 void register_stand_state(void);
 void register_trot_state(void);
+void register_passive_state(void);
 
 void dog_fsm_init(void) {
     // 先初始化状态机框架
@@ -127,4 +128,5 @@ void dog_fsm_init(void) {
     // 注册各个状态
     register_stand_state();  
     register_trot_state();
+    register_passive_state();
 }

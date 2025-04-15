@@ -31,7 +31,7 @@
 #include "timer.h"
 #include "motor.h"
 #include "robot_params.h"
-
+#include "gamepad.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -117,12 +117,13 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
     // 初始化
-    dog_fsm_init();// 初始化状态机
-    timer_init();// 初始化定时器，发送电机信息
-    motor_init();// 初始化电机，while循环等待电机回传
-    dog_init(NULL);// 初始化狗参数，需要用到电机当前回传值
+    dog_fsm_init();// 状态机初始化
+    motor_init();// 电机初始化
+    timer_init();// 定时器初始化
+    HAL_Delay(100); // 等待确保接收到电机数据
+    dog_init(NULL);// 初始化狗参数
     
-    // 转换到初始状态
+    // 状态机切换到站立状态
     fsm_change_to(STATE_STAND);
   /* USER CODE END 2 */
 
@@ -131,8 +132,10 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-
+    
     /* USER CODE BEGIN 3 */
+      gamepad_control();
+      HAL_Delay(1);
   }
   /* USER CODE END 3 */
 }
@@ -146,10 +149,6 @@ void SystemClock_Config(void)
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
-  /** Configure LSE Drive Capability
-  */
-  HAL_PWR_EnableBkUpAccess();
-
   /** Configure the main internal regulator output voltage
   */
   __HAL_RCC_PWR_CLK_ENABLE();
@@ -162,8 +161,8 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLM = 25;
-  RCC_OscInitStruct.PLL.PLLN = 432;
+  RCC_OscInitStruct.PLL.PLLM = 4;
+  RCC_OscInitStruct.PLL.PLLN = 216;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
   RCC_OscInitStruct.PLL.PLLQ = 2;
   RCC_OscInitStruct.PLL.PLLR = 2;

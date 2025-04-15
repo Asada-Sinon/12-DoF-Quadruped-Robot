@@ -4,45 +4,56 @@
 #include "j60.h"
 
 // 初始化电机回传
+
 void motor_init()
 {
     
-    J60_Init();
+    J60_Can_Init();
     
     // FL
-    J60_ConfigMotor(LEG_FL + JOINT_HIP, MOTOR_FL_HIP_CAN_BUS, MOTOR_FL_HIP_ID);   
-    J60_ConfigMotor(LEG_FL + JOINT_THIGH, MOTOR_FL_THIGH_CAN_BUS, MOTOR_FL_THIGH_ID);   
-    J60_ConfigMotor(LEG_FL + JOINT_CALF, MOTOR_FL_CALF_CAN_BUS, MOTOR_FL_CALF_ID); 
+    J60_ConfigMotor(LEG_FL*3 + JOINT_HIP, MOTOR_FL_HIP_CAN_BUS, MOTOR_FL_HIP_ID);   
+    J60_ConfigMotor(LEG_FL*3 + JOINT_THIGH, MOTOR_FL_THIGH_CAN_BUS, MOTOR_FL_THIGH_ID);   
+    J60_ConfigMotor(LEG_FL*3 + JOINT_CALF, MOTOR_FL_CALF_CAN_BUS, MOTOR_FL_CALF_ID); 
 
     // FR
-    J60_ConfigMotor(LEG_FR + JOINT_HIP, MOTOR_FR_HIP_CAN_BUS, MOTOR_FR_HIP_ID);   
-    J60_ConfigMotor(LEG_FR + JOINT_THIGH, MOTOR_FR_THIGH_CAN_BUS, MOTOR_FR_THIGH_ID);   
-    J60_ConfigMotor(LEG_FR + JOINT_CALF, MOTOR_FR_CALF_CAN_BUS, MOTOR_FR_CALF_ID);  
+    J60_ConfigMotor(LEG_FR*3 + JOINT_HIP, MOTOR_FR_HIP_CAN_BUS, MOTOR_FR_HIP_ID);   
+    J60_ConfigMotor(LEG_FR*3 + JOINT_THIGH, MOTOR_FR_THIGH_CAN_BUS, MOTOR_FR_THIGH_ID);   
+    J60_ConfigMotor(LEG_FR*3 + JOINT_CALF, MOTOR_FR_CALF_CAN_BUS, MOTOR_FR_CALF_ID);  
     
     // HL
-    J60_ConfigMotor(LEG_HL + JOINT_HIP, MOTOR_HL_HIP_CAN_BUS, MOTOR_HL_HIP_ID);  
-    J60_ConfigMotor(LEG_HL + JOINT_THIGH, MOTOR_HL_THIGH_CAN_BUS, MOTOR_HL_THIGH_ID);  
-    J60_ConfigMotor(LEG_HL + JOINT_CALF, MOTOR_HL_CALF_CAN_BUS, MOTOR_HL_CALF_ID); 
+    J60_ConfigMotor(LEG_HL*3 + JOINT_HIP, MOTOR_HL_HIP_CAN_BUS, MOTOR_HL_HIP_ID);  
+    J60_ConfigMotor(LEG_HL*3 + JOINT_THIGH, MOTOR_HL_THIGH_CAN_BUS, MOTOR_HL_THIGH_ID);  
+    J60_ConfigMotor(LEG_HL*3 + JOINT_CALF, MOTOR_HL_CALF_CAN_BUS, MOTOR_HL_CALF_ID); 
 
     // HR
-    J60_ConfigMotor(LEG_HR + JOINT_HIP, MOTOR_HR_HIP_CAN_BUS, MOTOR_HR_HIP_ID);  
-    J60_ConfigMotor(LEG_HR + JOINT_THIGH, MOTOR_HR_THIGH_CAN_BUS, MOTOR_HR_THIGH_ID);  
-    J60_ConfigMotor(LEG_HR + JOINT_CALF, MOTOR_HR_CALF_CAN_BUS, MOTOR_HR_CALF_ID);  
+    J60_ConfigMotor(LEG_HR*3 + JOINT_HIP, MOTOR_HR_HIP_CAN_BUS, MOTOR_HR_HIP_ID);  
+    J60_ConfigMotor(LEG_HR*3 + JOINT_THIGH, MOTOR_HR_THIGH_CAN_BUS, MOTOR_HR_THIGH_ID);  
+    J60_ConfigMotor(LEG_HR*3 + JOINT_CALF, MOTOR_HR_CALF_CAN_BUS, MOTOR_HR_CALF_ID);  
 
-    // 使能所有电机
-    for (uint8_t i = 0; i < 12; i++) {
-        J60_EnableMotor(i);
-    }
 
-    while(J60_GetMotor(0)->position == 0 || J60_GetMotor(1)->position == 0 || J60_GetMotor(2)->position == 0 || J60_GetMotor(3)->position == 0 || J60_GetMotor(4)->position == 0 || J60_GetMotor(5)->position == 0 || J60_GetMotor(6)->position == 0 || J60_GetMotor(7)->position == 0 || J60_GetMotor(8)->position == 0 || J60_GetMotor(9)->position == 0 || J60_GetMotor(10)->position == 0 || J60_GetMotor(11)->position == 0)
+   for (uint8_t i = 0; i < 12; i++) { // 初始化使能状态，1使能失败，0使能成功
+       J60_GetMotor(i)->is_enable = 1;
+   }
+
+    while(J60_GetMotor(0)->is_enable == 1 || J60_GetMotor(1)->is_enable == 1 || J60_GetMotor(2)->is_enable == 1 || J60_GetMotor(3)->is_enable == 1 || \
+    J60_GetMotor(4)->is_enable == 1 || J60_GetMotor(5)->is_enable == 1 || J60_GetMotor(6)->is_enable == 1 || J60_GetMotor(7)->is_enable == 1 || \
+    J60_GetMotor(8)->is_enable == 1 || J60_GetMotor(9)->is_enable == 1 || J60_GetMotor(10)->is_enable == 1 || J60_GetMotor(11)->is_enable == 1)
     {
         for (int i = 0; i < 12; i++) 
         {
-            if (J60_GetMotor(i)->position == 0)
+            if (J60_GetMotor(i)->is_enable == 1)
             {
+                J60_EnableMotor(i);
+                HAL_Delay(10);
                 printf("未接收到电机[%d]回传数据\n", i);
             }
         }
+    }
+    // 清空电机控制参数，只接收电机回传数据
+    const RobotParams* params = get_robot_params();
+    for (int i = 0; i < 12; i++) {
+        J60_GetMotor(i)->kp = 0;
+        J60_GetMotor(i)->kd = 0;
     }
     printf("电机回传初始化成功\n");
 }
@@ -115,10 +126,10 @@ void check_motor_limit(float *motor_target_pos)
 // 发送电机目标位置
 void send_motors_target_pos(float *motors_target_pos)
 {
-    check_motor_limit(motors_target_pos);  // 先检查限位
-    const RobotParams* params = get_robot_params();
+//    check_motor_limit(motors_target_pos);  // 先检查限位
+    
     for (int i = 0; i < 12; i++) {
-        J60_MotorControl(i, motors_target_pos[i], 0, params->motor_param.motor_control_params[i].kp, params->motor_param.motor_control_params[i].kd, 0);
+        J60_MotorControl(i, motors_target_pos[i], 0, J60_GetMotor(i)->kp, J60_GetMotor(i)->kd, 0);
     } 
 }   
 
@@ -131,3 +142,12 @@ void leg_get_motors_current_pos(uint8_t leg_idx, float motors_current_pos[3])
     }
 }
 
+void leg_set_motor_kp_kd(uint8_t leg_idx, float kp_hip, float kd_hip, float kp_thigh, float kd_thigh, float kp_calf, float kd_calf)
+{
+    J60_GetMotor(leg_idx*3+JOINT_HIP)->kp = kp_hip;
+    J60_GetMotor(leg_idx*3+JOINT_HIP)->kd = kd_hip;
+    J60_GetMotor(leg_idx*3+JOINT_THIGH)->kp = kp_thigh;
+    J60_GetMotor(leg_idx*3+JOINT_THIGH)->kd = kd_thigh;
+    J60_GetMotor(leg_idx*3+JOINT_CALF)->kp = kp_calf;
+    J60_GetMotor(leg_idx*3+JOINT_CALF)->kd = kd_calf;
+}
