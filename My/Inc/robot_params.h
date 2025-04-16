@@ -37,7 +37,7 @@
 // 连杆长度（米）
 #define LINK_LENGTH_HIP   0.0693f
 #define LINK_LENGTH_THIGH 0.255f
-#define LINK_LENGTH_CALF  0.26f
+#define LINK_LENGTH_CALF  0.265f
 
 // 机体尺寸(大腿关节距离)
 #define BODY_LENGTH 0.459f 
@@ -50,24 +50,29 @@
  * 默认姿态参数
  ************************************************************/
 // 站立高度（米）
-#define DEFAULT_STAND_HEIGHT 0.3f
+#define DEFAULT_STAND_HEIGHT 0.33f //0.3
 
-// 重心位置
-#define DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_X 0.05f
-#define DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_Y 0.00f
+// 站立时重心位置
+#define DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_X 0.01f
+#define DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_Y 0.001f
 #define DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_Z 0.0f
 
 #define DEFAULT_CENTER_OF_GRAVITY_ROTATION_X 0.0f
 #define DEFAULT_CENTER_OF_GRAVITY_ROTATION_Y 0.0f
 #define DEFAULT_CENTER_OF_GRAVITY_ROTATION_Z 0.0f
 
+// 速度补偿，原地踏步时狗往前往后退自转的话改这个值
+#define DEFAULT_CENTER_OF_GRAVITY_VX 0.11f
+#define DEFAULT_CENTER_OF_GRAVITY_VY -0.02f
+#define DEFAULT_CENTER_OF_GRAVITY_VW -0.01f
+
 // 重心偏移量限制
-#define DEFAULT_CENTER_OF_GRAVITY_MAX_X 0.1f
-#define DEFAULT_CENTER_OF_GRAVITY_MIN_X -0.1f
-#define DEFAULT_CENTER_OF_GRAVITY_MAX_Y 0.1f
-#define DEFAULT_CENTER_OF_GRAVITY_MIN_Y -0.1f
-#define DEFAULT_CENTER_OF_GRAVITY_MAX_Z 0.1f
-#define DEFAULT_CENTER_OF_GRAVITY_MIN_Z -0.1f
+#define DEFAULT_CENTER_OF_GRAVITY_MAX_X 0.2f
+#define DEFAULT_CENTER_OF_GRAVITY_MIN_X -0.2f
+#define DEFAULT_CENTER_OF_GRAVITY_MAX_Y 0.2f
+#define DEFAULT_CENTER_OF_GRAVITY_MIN_Y -0.2f
+#define DEFAULT_CENTER_OF_GRAVITY_MAX_Z 0.2f
+#define DEFAULT_CENTER_OF_GRAVITY_MIN_Z -0.2f
 
 
 // 默认关节角度（弧度） # 已弃用
@@ -245,6 +250,7 @@ typedef struct {
 typedef struct {
     float translation[3];
     float rotation[3];
+    float velocity[3];
 } CenterOfGravity;
 
 

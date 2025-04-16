@@ -13,7 +13,6 @@ static void passive_enter(void) {
     }
 }
 
-
 static void passive_run(void) {
 
 }

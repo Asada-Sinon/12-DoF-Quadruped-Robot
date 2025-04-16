@@ -8,12 +8,12 @@ RobotParams robot_params = {
     /* 步态参数 */
     .trot_gait = {
         .phase = {0.0, 0.5, 0.5, 0.0}, 
-        .T = 0.4, //0.3
+        .T = 0.35, //0.3
         .stance_ratio = 0.52,
         .swing_ratio = 1- 0.52,
         .step_length = 0,
         .swing_height = 0.07,
-        .stance_depth = 0.0,
+        .stance_depth = 0.008,
         .stand_height = DEFAULT_STAND_HEIGHT
     },
     /* 电机参数 */
@@ -145,7 +145,8 @@ RobotParams robot_params = {
         .stand_height = DEFAULT_STAND_HEIGHT,
         .center_of_gravity = {
             .translation = {DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_X, DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_Y, DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_Z},
-            .rotation = {DEFAULT_CENTER_OF_GRAVITY_ROTATION_X, DEFAULT_CENTER_OF_GRAVITY_ROTATION_Y, DEFAULT_CENTER_OF_GRAVITY_ROTATION_Z}
+            .rotation = {DEFAULT_CENTER_OF_GRAVITY_ROTATION_X, DEFAULT_CENTER_OF_GRAVITY_ROTATION_Y, DEFAULT_CENTER_OF_GRAVITY_ROTATION_Z},
+            .velocity = {DEFAULT_CENTER_OF_GRAVITY_VX, DEFAULT_CENTER_OF_GRAVITY_VY, DEFAULT_CENTER_OF_GRAVITY_VW}
         },
         .center_of_gravity_limit = {
             .cog_x_max = DEFAULT_CENTER_OF_GRAVITY_MAX_X,

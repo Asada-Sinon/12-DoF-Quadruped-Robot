@@ -4,6 +4,9 @@
 #include "gait.h"
 #include "stdio.h"
 
+float trot_forward_cog_offset = 0.01;
+float trot_backward_cog_offset = 0.005;
+
 GaitState trot_state;    
 /* 对角步态状态的处理函数 */
 static void trot_enter(void) {
@@ -15,7 +18,16 @@ static void trot_enter(void) {
 static void trot_run(void) {
     float phase[4] = {0};
     float motor_target_pos[4][3];
-
+    float s_body_vel[3];
+    dog_get_body_vel_without_cog(s_body_vel); // 获取当前机体速度
+    if (s_body_vel[X_IDX] >= 0) // 前进时使用前进的重心补偿
+    {
+        get_robot_params()->posture.center_of_gravity.translation[X_IDX] = trot_forward_cog_offset;
+    }
+    else // 后退时使用后退的重心补偿
+    {
+        get_robot_params()->posture.center_of_gravity.translation[X_IDX] = trot_backward_cog_offset;
+    }
     phase_wave_generator(get_trot_params(), trot_state.wave_status, trot_state.time_start, phase, trot_state.contact);
     gait_generator(get_trot_params(), phase, trot_state.contact, trot_state.foot_target_pos);
     

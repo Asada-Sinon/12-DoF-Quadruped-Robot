@@ -128,7 +128,7 @@ void gait_generator(GaitParams *gait, float *phase, int *contact, float foot_tar
     
     // 获取中性点位置 - 修改为针对单腿获取
     for (int i = 0; i < 4; i++) {
-        leg_get_neutral_pos(i, neutral_pos[i]);
+        leg_get_neutral_current_pos(i, neutral_pos[i]);
     }
 
     for(int i = 0; i < 4; ++i){

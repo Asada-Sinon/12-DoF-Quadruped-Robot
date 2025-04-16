@@ -44,9 +44,9 @@ void gamepad_control()
 //            break;
 //        }
 //    }
-    vx_smooth = smooth(vx_smooth, vx, 0.05f);
-    vy_smooth = smooth(vy_smooth, vy, 0.05f);
-    w_smooth = smooth(w_smooth, w, 0.05f);
+    vx_smooth = smooth(vx_smooth, vx, 0.005f);
+    vy_smooth = smooth(vy_smooth, vy, 0.005f);
+    w_smooth = smooth(w_smooth, w, 0.005f);
     dog_set_body_vel(vx_smooth, vy_smooth, w_smooth);
 //    if (fabs(vx_smooth) < 0.05f && fabs(vy_smooth) < 0.05f && fabs(w_smooth) < 0.05f) {
 //        fsm_change_to(STATE_STAND);

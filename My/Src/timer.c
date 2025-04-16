@@ -23,8 +23,6 @@ void timer_init()
     HAL_TIM_Base_Start_IT(&htim3); // 2ms状态机
 }
 
-float motors_current_pos[4][3];
-float joints_current_pos[4][3];
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
     if (htim->Instance == TIM1) {
@@ -34,13 +32,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     if (htim->Instance == TIM2) {
         // 2ms发送电机信息
         dog_send_motors();
-        for (int i = 0; i < 4; i++) {
-            leg_get_motors_current_pos(i, motors_current_pos[i]);
-//            leg_motor_to_joint(i, motors_current_pos[i], joints_current_pos[i]);
-        }
 
     }
     if (htim->Instance == TIM3) {
+        // 全局调整重心
+        dog_smooth_cog(0.005);
         // 2ms状态机
         fsm_update();
     }

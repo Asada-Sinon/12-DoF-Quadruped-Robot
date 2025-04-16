@@ -355,6 +355,41 @@
           <WinNumber>1</WinNumber>
           <ItemText>calf_kd</ItemText>
         </Ww>
+        <Ww>
+          <count>40</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>\\Quadruped_F767\../My/Src/robot_params.c\robot_params.posture.center_of_gravity.translation</ItemText>
+        </Ww>
+        <Ww>
+          <count>41</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>fsm_context.next</ItemText>
+        </Ww>
+        <Ww>
+          <count>42</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>\\Quadruped_F767\../My/Src/fsm.c\fsm_context.change_enable</ItemText>
+        </Ww>
+        <Ww>
+          <count>43</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>trot_forward_cog_offset</ItemText>
+        </Ww>
+        <Ww>
+          <count>44</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>trot_backward_cog_offset</ItemText>
+        </Ww>
+        <Ww>
+          <count>45</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>\\Quadruped_F767\../My/Src/robot_params.c\robot_params.posture.center_of_gravity.translation</ItemText>
+        </Ww>
+        <Ww>
+          <count>46</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>\\Quadruped_F767\../My/Src/robot_params.c\robot_params.posture.center_of_gravity.velocity</ItemText>
+        </Ww>
       </WatchWindow1>
       <Tracepoint>
         <THDelay>0</THDelay>

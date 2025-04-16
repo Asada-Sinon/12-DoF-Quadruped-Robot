@@ -257,16 +257,16 @@ float smooth(float current, float target, float step_increment) {
  * @param center_of_gravity 地面坐标系下期望的重心位置
  * @param step_increment 步长增量(m)
  */
-void dog_smooth_cog(const float center_of_gravity[3], const float foot_now[4][3], float step_increment, float foot_next[4][3])
+void dog_smooth_cog(float step_increment)
 {
     // 计算目标足端中性点位置
     float target_neutral_points[4][3];
-    dog_cog_to_foot(center_of_gravity, /* rotation */ NULL, target_neutral_points);
-    // 计算每步增量
+    dog_cog_to_foot(get_robot_params()->posture.center_of_gravity.translation, /* rotation */ NULL, target_neutral_points);
+    // 计算每步增量 
     for (int i = 0; i < 4; i++) {
-        foot_next[i][X_IDX] = smooth(foot_now[i][X_IDX], target_neutral_points[i][X_IDX], step_increment);
-        foot_next[i][Y_IDX] = smooth(foot_now[i][Y_IDX], target_neutral_points[i][Y_IDX], step_increment);
-        foot_next[i][Z_IDX] = smooth(foot_now[i][Z_IDX], target_neutral_points[i][Z_IDX], step_increment);
+        dog.leg[i].foot_neutral_pos[X_IDX] = smooth(dog.leg[i].foot_neutral_pos[X_IDX], target_neutral_points[i][X_IDX], step_increment);
+        dog.leg[i].foot_neutral_pos[Y_IDX] = smooth(dog.leg[i].foot_neutral_pos[Y_IDX], target_neutral_points[i][Y_IDX], step_increment);
+        dog.leg[i].foot_neutral_pos[Z_IDX] = smooth(dog.leg[i].foot_neutral_pos[Z_IDX], target_neutral_points[i][Z_IDX], step_increment);
     }
 }
 
@@ -307,7 +307,7 @@ void leg_get_target_foot_pos(uint8_t leg_idx, float foot_pos[3])
 }
 
 
-void leg_get_neutral_pos(uint8_t leg_idx, float neutral_pos[3])
+void leg_get_neutral_current_pos(uint8_t leg_idx, float neutral_pos[3])
 {
     memcpy(neutral_pos, dog.leg[leg_idx].foot_neutral_pos, 3 * sizeof(float));
 }
@@ -319,14 +319,24 @@ void leg_get_joint_pos(uint8_t leg_idx, float joint_pos[3])
 
 void dog_get_body_vel(float velocity[3])
 {
-    memcpy(velocity, body_vel, 3 * sizeof(float));
+    velocity[X_IDX] = body_vel[X_IDX];
+    velocity[Y_IDX] = body_vel[Y_IDX];
+    velocity[Z_IDX] = body_vel[Z_IDX];
+}
+
+void dog_get_body_vel_without_cog(float velocity[3])
+{
+    velocity[X_IDX] = body_vel[X_IDX] - get_robot_params()->posture.center_of_gravity.velocity[X_IDX];
+    velocity[Y_IDX] = body_vel[Y_IDX] - get_robot_params()->posture.center_of_gravity.velocity[Y_IDX];
+    velocity[Z_IDX] = body_vel[Z_IDX] - get_robot_params()->posture.center_of_gravity.velocity[Z_IDX];
 }
 
 void dog_set_body_vel(float vx, float vy, float w)
 {
-    body_vel[X_IDX] = vx;
-    body_vel[Y_IDX] = vy;
-    body_vel[Z_IDX] = w;
+    // 速度加上重心补偿速度
+    body_vel[X_IDX] = vx + get_robot_params()->posture.center_of_gravity.velocity[X_IDX];
+    body_vel[Y_IDX] = vy + get_robot_params()->posture.center_of_gravity.velocity[Y_IDX];
+    body_vel[Z_IDX] = w + get_robot_params()->posture.center_of_gravity.velocity[Z_IDX];
 }
 
 float dog_get_stand_height()

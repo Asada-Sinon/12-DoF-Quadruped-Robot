@@ -16,12 +16,12 @@ static float motor_current_pos[4][3];
 float stand_test_foot_start_pos[4][3];
 float stand_test_foot_target_pos[4][3];
 
-float hip_kp = 70;
-float hip_kd = 0.5;
-float thigh_kp = 80;
+float hip_kp = 90;
+float hip_kd = 0.8;
+float thigh_kp = 90;
 float thigh_kd = 0.5;
-float calf_kp = 90;
-float calf_kd = 0.5;
+float calf_kp = 120;
+float calf_kd = 0.8;
 
 /* 站立状态的处理函数 */
 static void stand_enter(void) {
@@ -29,7 +29,7 @@ static void stand_enter(void) {
     RobotParams* params = get_robot_params();
     time_start = getTime();
     for (int i = 0; i < 4; i++){
-        if (fsm_get_previous_state() == STATE_TROT) // 上一个状态是对角步态，把上一时刻的目标值当做起始值，防止电机回传延迟
+        if (fsm_get_previous_state() == STATE_TROT) // 上一个状态是对角步态，仿真中把上一时刻的目标值当做起始值，防止电机回传延迟。实机正常把当前值做起始值就行。
         {
 //            leg_get_target_foot_pos(i, foot_start_pos[i]);
             leg_get_current_foot_pos(i, foot_start_pos[i]);
@@ -52,18 +52,15 @@ static void stand_enter(void) {
 
 // 从当前位置经历stand_T秒到达目标位置
 static void stand_run(void) {
-    // if (fsm_get_previous_state() != STATE_INVALID && fsm_get_current_state() != STATE_PASSIVE) {
-    //     return;
-    // }
     t = getTime() - time_start;
     float stand_height = dog_get_stand_height();
     float neutral_pos[4][3]; 
-    
+    RobotParams* params = get_robot_params();
     float motor_target_pos[4][3];
 
     for (int i = 0; i < 4; i++)
     {
-        leg_get_neutral_pos(i, neutral_pos[i]);
+        leg_get_neutral_current_pos(i, neutral_pos[i]);
         leg_thigh_to_hip(i, neutral_pos[i], neutral_pos[i]);
     }
     for (int i = 0; i < 4; i++)

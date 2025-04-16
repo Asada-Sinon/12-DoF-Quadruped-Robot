@@ -141,6 +141,7 @@ void leg_set_target_foot_pos(uint8_t leg_id, const float foot_pos[3]);
  */
 void dog_set_body_vel(float vx, float vy, float w);
 
+
 /**
  * @brief 设置站立高度
  * @param height 站立高度
@@ -167,7 +168,7 @@ void leg_get_current_foot_pos(uint8_t leg_idx, float foot_pos[3]);
  * @param leg_idx 腿的ID (0:FL, 1:FR, 2:HL, 3:HR)
  * @param neutral_pos 中性点位置数组 [3]
  */
-void leg_get_neutral_pos(uint8_t leg_idx, float neutral_pos[3]);
+void leg_get_neutral_current_pos(uint8_t leg_idx, float neutral_pos[3]);
 
 /**
  * @brief 获取指定腿的关节位置
@@ -188,6 +189,12 @@ void leg_get_target_foot_pos(uint8_t leg_idx, float foot_pos[3]);
  * @param velocity 机体速度数组 [3]
  */
 void dog_get_body_vel(float velocity[3]);
+
+/**
+ * @brief 获取机体速度（不包含重心速度）
+ * @param velocity 机体速度数组 [3]
+ */
+void dog_get_body_vel_without_cog(float velocity[3]);
 
 /**
  * @brief 获取站立高度
@@ -214,23 +221,11 @@ void robot_control(void);
 
 /*========================= 重心控制函数声明 =========================*/
 /**
- * @brief 通过调整足端中性点位置来控制机器人重心
- * 
- * @param cog_translation 平移重心偏移量 [3]
- * @param cog_rotation 旋转重心偏移量 [3]
- * @param foot_points 输出的足端中性点位置数组 [4][3]
- */
-void dog_cog_to_foot(const float cog_translation[3], const float cog_rotation[3], float foot_points[4][3]);
-
-/**
  * @brief 平滑过渡到指定重心位置
- * 
- * @param center_of_gravity 期望的重心偏移量 [3]
- * @param foot_now 当前足端位置 [4][3]
  * @param step_increment 单步增量
- * @param foot_next 下一步足端位置 [4][3]
  */
-void dog_smooth_cog(const float center_of_gravity[3], const float foot_now[4][3], float step_increment, float foot_next[4][3]);
+void dog_smooth_cog(float step_increment);
+
 
 float smooth(float current, float target, float step_increment);
 
