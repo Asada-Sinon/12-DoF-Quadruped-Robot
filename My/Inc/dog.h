@@ -66,6 +66,16 @@ void leg_forward_kinematics(uint8_t leg_id, const float joint_pos[3], float foot
  */
 void leg_inverse_kinematics(uint8_t leg_id, const float foot_pos[3], float joint_pos[3]);
 
+/**
+ * @brief 几何法求运动学逆解，计算从足端位置到关节角度的映射
+ * @param leg_id 腿的ID (0:FL, 1:FR, 2:HL, 3:HR)
+ * @param joint_pos 输入的关节角度数组 [hip, thigh, calf]
+ * @param joint_vel 输入的关节速度数组 [hip, thigh, calf]
+ * @param foot_vel 输出的足端速度数组 [x, y, z]
+ */
+void leg_forward_kinematics_vel(uint8_t leg_id, const float joint_pos[3], const float joint_vel[3], float foot_vel[3]);
+
+
 /*========================= 坐标系转换函数声明 =========================*/
 /**
  * @brief 单腿关节坐标系转电机坐标系
@@ -154,7 +164,14 @@ void dog_set_stand_height(float height);
  * @param leg_idx 腿的ID (0:FL, 1:FR, 2:HL, 3:HR)
  * @param joint_current_pos 关节当前位置数组 [3]
  */
-void leg_get_current_joints(uint8_t leg_idx, float joint_current_pos[3]);
+void leg_get_current_joint_pos(uint8_t leg_idx, float joint_current_pos[3]);
+
+/**
+ * @brief 获取指定腿的当前关节速度
+ * @param leg_idx 腿的ID (0:FL, 1:FR, 2:HL, 3:HR)
+ * @param joint_current_vel 关节当前速度数组 [3]
+ */
+void leg_get_current_joint_vel(uint8_t leg_idx, float joint_current_vel[3]);
 
 /**
  * @brief 获取指定腿的当前足端位置
@@ -162,6 +179,14 @@ void leg_get_current_joints(uint8_t leg_idx, float joint_current_pos[3]);
  * @param foot_pos 足端位置数组 [3]
  */
 void leg_get_current_foot_pos(uint8_t leg_idx, float foot_pos[3]);
+
+/**
+ * @brief 获取指定腿的当前足端位置(机身坐标系下)
+ * @description 机身坐标系原点为机体中心，x轴正方向为前进方向，y轴正方向为左，z轴正方向为上
+ * @param leg_idx 腿的ID (0:FL, 1:FR, 2:HL, 3:HR)
+ * @param foot_pos_body 足端位置数组 [3]
+ */
+void leg_get_current_foot_pos_body(uint8_t leg_idx, float foot_pos_body[3]);
 
 /**
  * @brief 获取指定腿的中性点位置

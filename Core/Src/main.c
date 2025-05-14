@@ -32,6 +32,7 @@
 #include "motor.h"
 #include "robot_params.h"
 #include "gamepad.h"
+ #include "arm_math.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -116,14 +117,14 @@ int main(void)
   MX_UART4_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-    // ³õÊ¼»¯
-    dog_fsm_init();// ×´Ì¬»ú³õÊ¼»¯
-    motor_init();// µç»ú³õÊ¼»¯
-    timer_init();// ¶¨Ê±Æ÷³õÊ¼»¯
-    HAL_Delay(100); // µÈ´ıÈ·±£½ÓÊÕµ½µç»úÊı¾İ
-    dog_init(NULL);// ³õÊ¼»¯¹·²ÎÊı
+    // åˆå§‹åŒ–
+    dog_fsm_init();// çŠ¶æ€æœºåˆå§‹åŒ–ï¼Œæ³¨å†ŒçŠ¶æ€
+    motor_init();// ç”µæœºåˆå§‹åŒ–ï¼Œå¾ªç¯ç›´åˆ°ç”µæœºä½¿èƒ½å®Œæˆ
+    timer_init();// å®šæ—¶å™¨åˆå§‹åŒ–ï¼Œå¼€å¯çŠ¶æ€æœºï¼Œç”µæœºå›ä¼ ç­‰
+    HAL_Delay(100); // ç­‰å¾…ä»¥ç¡®ä¿æ¥æ”¶åˆ°ç”µæœºå›ä¼ æ•°æ®
+    dog_init(NULL);// åˆå§‹åŒ–ç‹—å‚æ•°
     
-    // ×´Ì¬»úÇĞ»»µ½Õ¾Á¢×´Ì¬
+    // çŠ¶æ€æœºåˆ‡æ¢åˆ°åˆå§‹çŠ¶æ€
     fsm_change_to(STATE_STAND);
   /* USER CODE END 2 */
 
@@ -132,7 +133,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-    
+
     /* USER CODE BEGIN 3 */
       gamepad_control();
       HAL_Delay(1);

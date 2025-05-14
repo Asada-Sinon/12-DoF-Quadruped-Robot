@@ -963,7 +963,7 @@ ARM Macro Assembler    Page 15
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M7.fp.dp --apcs=
 interwork --depend=quadruped_f767\startup_stm32f767xx.d -oquadruped_f767\startu
 p_stm32f767xx.o -I.\RTE\_Quadruped_F767 -ID:\1.Work\Flushbonading\keil\ARM\PACK
-\ARM\CMSIS\5.4.0\CMSIS\Core\Include -ID:\1.Work\Flushbonading\keil\ARM\PACK\Kei
+\ARM\CMSIS\5.9.0\CMSIS\Core\Include -ID:\1.Work\Flushbonading\keil\ARM\PACK\Kei
 l\STM32F7xx_DFP\2.15.2\Drivers\CMSIS\Device\ST\STM32F7xx\Include --predefine="_
 _MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 526" --predefine="_RTE_ S
 ETA 1" --predefine="STM32F767xx SETA 1" --list=startup_stm32f767xx.lst startup_

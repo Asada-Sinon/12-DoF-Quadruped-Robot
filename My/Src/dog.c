@@ -15,7 +15,7 @@
 #include "dog.h"
 #include "motor.h"
 #include "gait.h"
-
+#include "estimator.h"
 /*========================= 全局变量 =========================*/
 Dog dog;                    // 狗实例
 float body_vel[3] = {0, 0, 0}; // 机体速度
@@ -128,6 +128,71 @@ void leg_inverse_kinematics(uint8_t leg_id, const float foot_pos[3], float joint
     joint_pos[THIGH_IDX] = thigh_angle;
     joint_pos[CALF_IDX] = calf_angle;
 }
+
+// 计算雅克比矩阵
+void leg_jacobian(uint8_t leg_id, const float joint_pos[3], float jacobian[3][3])
+{
+    const LegLinkParams *leg_links = &dog.params.leg_links;
+
+    // 确定髋关节Y方向符号（左腿和右腿方向相反）
+    int y_sign = (leg_id == LEG_FL || leg_id == LEG_HL) ? 1 : -1;
+    // 转换连杆长度，适应坐标系方向
+    float l1 = y_sign * leg_links->hip_length;  // 髋关节偏移（考虑左右方向）
+    float l2 = -leg_links->thigh_length;        // 大腿长度
+    float l3 = -leg_links->calf_length;         // 小腿长度
+
+    float s1 = sinf(joint_pos[HIP_IDX]);
+    float s2 = sinf(joint_pos[THIGH_IDX]);
+    float s3 = sinf(joint_pos[CALF_IDX]);
+
+    float c1 = cosf(joint_pos[HIP_IDX]);
+    float c2 = cosf(joint_pos[THIGH_IDX]);
+    float c3 = cosf(joint_pos[CALF_IDX]);
+
+    float c23 = c2 * c3 - s2 * s3;
+    float s23 = s2 * c3 + c2 * s3;
+    jacobian[0][0] = 0;
+    jacobian[1][0] = -l3 * c1 * c23 - l2 * c1 * c2 - l1 * s1;
+    jacobian[2][0] = -l3 * s1 * c23 - l2 * c2 * s1 + l1 * c1;
+    jacobian[0][1] = l3 * c23 + l2 * c2;
+    jacobian[1][1] = l3 * s1 * s23 + l2 * s1 * s2;
+    jacobian[2][1] = -l3 * c1 * s23 - l2 * c1 * s2;
+    jacobian[0][2] = l3 * c23;
+    jacobian[1][2] = l3 * s1 * s23;
+    jacobian[2][2] = -l3 * c1 * s23;
+}
+
+void leg_forward_kinematics_vel(uint8_t leg_id, const float joint_pos[3], const float joint_vel[3], float foot_vel[3])
+{
+    float jacobian[3][3];
+    leg_jacobian(leg_id, joint_pos, jacobian);
+    for (int i = 0; i < 3; i++) {
+        foot_vel[i] = 0;
+        for (int j = 0; j < 3; j++) {
+            foot_vel[i] += jacobian[i][j] * joint_vel[j];
+        }
+    }
+}
+
+void leg_inverse_kinematics_pos_vel(uint8_t leg_id, const float foot_vel[3], const float foot_pos[3], float joint_pos[3], float joint_vel[3])
+{
+    float jacobian[3][3];
+    float jacobian_inv[3][3];
+    leg_inverse_kinematics(leg_id, foot_pos, joint_pos);
+    leg_jacobian(leg_id, joint_pos, jacobian);
+    if(mat_inverse_ptr(3, &jacobian[0][0], &jacobian_inv[0][0]) == MAT_ERROR) {
+        printf("jacobian_inv error.\n");
+    }
+    else {
+        for (int i = 0; i < 3; i++) {
+            joint_vel[i] = 0;
+        for (int j = 0; j < 3; j++) {
+                joint_vel[i] += jacobian_inv[i][j] * foot_vel[j];
+            }
+        }
+    }
+}
+
 
 /*========================= 坐标系转换函数 =========================*/
 
@@ -287,7 +352,7 @@ void leg_set_target_foot_pos(uint8_t leg_id, const float foot_pos[3])
 
 
 
-void leg_get_current_joints(uint8_t leg_idx, float joint_current_pos[3])
+void leg_get_current_joint_pos(uint8_t leg_idx, float joint_current_pos[3])
 {
     float motor_current_pos[3];
     leg_get_motors_current_pos(leg_idx, motor_current_pos);
@@ -297,8 +362,42 @@ void leg_get_current_joints(uint8_t leg_idx, float joint_current_pos[3])
 void leg_get_current_foot_pos(uint8_t leg_idx, float foot_pos[3])
 {
     float joint_current_pos[3];
-    leg_get_current_joints(leg_idx, joint_current_pos);
+    leg_get_current_joint_pos(leg_idx, joint_current_pos);
     leg_forward_kinematics(leg_idx, joint_current_pos, foot_pos);
+}
+
+void leg_get_current_joint_vel(uint8_t leg_idx, float joint_current_vel[3])
+{
+    leg_get_motors_current_vel(leg_idx, joint_current_vel);
+}
+
+// 机身坐标系原点为机体中心，x轴正方向为前进方向，y轴正方向为左，z轴正方向为上
+void leg_get_current_foot_pos_body(uint8_t leg_idx, float foot_pos_body[3])
+{
+    float foot_pos[3];
+    leg_get_current_foot_pos(leg_idx, foot_pos);
+    switch (leg_idx) {
+        case LEG_FL:
+            foot_pos_body[X_IDX] = foot_pos[X_IDX] + BODY_CENTER_TO_LEG_X;
+            foot_pos_body[Y_IDX] = foot_pos[Y_IDX] + BODY_CENTER_TO_LEG_Y;
+            foot_pos_body[Z_IDX] = foot_pos[Z_IDX];
+            break;
+        case LEG_FR:
+            foot_pos_body[X_IDX] = foot_pos[X_IDX] + BODY_CENTER_TO_LEG_X;
+            foot_pos_body[Y_IDX] = foot_pos[Y_IDX] - BODY_CENTER_TO_LEG_Y;
+            foot_pos_body[Z_IDX] = foot_pos[Z_IDX];
+            break;
+        case LEG_HL:
+            foot_pos_body[X_IDX] = foot_pos[X_IDX] - BODY_CENTER_TO_LEG_X;
+            foot_pos_body[Y_IDX] = foot_pos[Y_IDX] + BODY_CENTER_TO_LEG_Y;
+            foot_pos_body[Z_IDX] = foot_pos[Z_IDX];
+            break;
+        case LEG_HR:
+            foot_pos_body[X_IDX] = foot_pos[X_IDX] - BODY_CENTER_TO_LEG_X;
+            foot_pos_body[Y_IDX] = foot_pos[Y_IDX] - BODY_CENTER_TO_LEG_Y;
+            foot_pos_body[Z_IDX] = foot_pos[Z_IDX];
+            break;
+    }
 }
 
 void leg_get_target_foot_pos(uint8_t leg_idx, float foot_pos[3])
@@ -312,7 +411,7 @@ void leg_get_neutral_current_pos(uint8_t leg_idx, float neutral_pos[3])
     memcpy(neutral_pos, dog.leg[leg_idx].foot_neutral_pos, 3 * sizeof(float));
 }
 
-void leg_get_joint_pos(uint8_t leg_idx, float joint_pos[3])
+void leg_get_target_joint_pos(uint8_t leg_idx, float joint_pos[3])
 {
     memcpy(joint_pos, dog.leg[leg_idx].join_target_pos, 3 * sizeof(float));
 }

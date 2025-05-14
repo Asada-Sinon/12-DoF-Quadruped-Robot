@@ -142,6 +142,14 @@ void leg_get_motors_current_pos(uint8_t leg_idx, float motors_current_pos[3])
     }
 }
 
+// 获取电机当前速度
+void leg_get_motors_current_vel(uint8_t leg_idx, float motors_current_vel[3])
+{
+    for (int i = 0; i < 3; i++) {
+        motors_current_vel[i] = J60_GetMotor(leg_idx*3+i)->velocity;
+    }
+}
+
 void leg_set_motor_kp_kd(uint8_t leg_idx, float kp_hip, float kd_hip, float kp_thigh, float kd_thigh, float kp_calf, float kd_calf)
 {
     J60_GetMotor(leg_idx*3+JOINT_HIP)->kp = kp_hip;

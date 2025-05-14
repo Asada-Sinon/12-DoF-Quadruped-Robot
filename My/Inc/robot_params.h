@@ -39,9 +39,14 @@
 #define LINK_LENGTH_THIGH 0.255f
 #define LINK_LENGTH_CALF  0.265f
 
-// 机体尺寸(大腿关节距离)
+// 机体尺寸(机身中心到大腿关节的距离，用于分配自转角速度到xy平面)
 #define BODY_LENGTH 0.459f 
 #define BODY_WIDTH 0.3686f
+
+// 机身坐标系原点与腿坐标系原点距离
+#define BODY_CENTER_TO_LEG_X (BODY_LENGTH/2.0f)
+#define BODY_CENTER_TO_LEG_Y (BODY_WIDTH/2.0f - LINK_LENGTH_HIP)
+
 
 // 大腿关节与机体中心连线角度
 #define HIP_ANGLE atan2f(BODY_LENGTH, BODY_WIDTH)

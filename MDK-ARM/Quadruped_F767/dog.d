@@ -45,3 +45,4 @@ quadruped_f767\dog.o: ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.
 quadruped_f767\dog.o: ../Core/Inc/can.h
 quadruped_f767\dog.o: ../My/Inc/motor.h
 quadruped_f767\dog.o: ../My/Inc/gait.h
+quadruped_f767\dog.o: ../My/Inc/estimator.h

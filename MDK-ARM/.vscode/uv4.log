@@ -1,0 +1,69 @@
+*** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin'
+Build target 'Quadruped_F767'
+compiling estimator.c...
+../Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f7xx.h(170): error:  #40: expected an identifier
+    SUCCESS = 0U,
+../Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f7xx.h(171): error:  #40: expected an identifier
+    ERROR = !SUCCESS
+..\My\Src\estimator.c(104): warning:  #177-D: variable "temp_val"  was declared but never referenced
+      float temp_val;
+..\My\Src\estimator.c(255): warning:  #177-D: variable "j"  was declared but never referenced
+      int i, j;
+..\My\Src\estimator.c(454): error:  #167: argument of type "float (*)[3]" is incompatible with parameter of type "float (*)[18]"
+          mat_mult_vec(STATE_DIM, CTRL_DIM, kf->B, u, Bu);
+..\My\Src\estimator.c(435): warning:  #177-D: variable "i"  was declared but never referenced
+      int i, j, k;
+..\My\Src\estimator.c(435): warning:  #177-D: variable "j"  was declared but never referenced
+      int i, j, k;
+..\My\Src\estimator.c(435): warning:  #177-D: variable "k"  was declared but never referenced
+      int i, j, k;
+..\My\Src\estimator.c(436): warning:  #177-D: variable "temp_x"  was declared but never referenced
+      float temp_x[MAX_MATRIX_DIM] = {0};
+..\My\Src\estimator.c(530): error:  #167: argument of type "float (*)[15]" is incompatible with parameter of type "float (*)[18]"
+      mat_transpose(valid_meas, STATE_DIM, H_valid, H_transpose);
+..\My\Src\estimator.c(533): error:  #167: argument of type "float (*)[15]" is incompatible with parameter of type "float (*)[18]"
+      mat_mult(valid_meas, STATE_DIM, valid_meas, HP, H_transpose, HPHT);
+..\My\Src\estimator.c(533): error:  #167: argument of type "float (*)[15]" is incompatible with parameter of type "float (*)[18]"
+      mat_mult(valid_meas, STATE_DIM, valid_meas, HP, H_transpose, HPHT);
+..\My\Src\estimator.c(536): error:  #167: argument of type "float (*)[15]" is incompatible with parameter of type "float (*)[18]"
+      mat_add(valid_meas, valid_meas, HPHT, R_valid, S);
+..\My\Src\estimator.c(536): error:  #167: argument of type "float (*)[15]" is incompatible with parameter of type "float (*)[18]"
+      mat_add(valid_meas, valid_meas, HPHT, R_valid, S);
+..\My\Src\estimator.c(536): error:  #167: argument of type "float (*)[15]" is incompatible with parameter of type "float (*)[18]"
+      mat_add(valid_meas, valid_meas, HPHT, R_valid, S);
+..\My\Src\estimator.c(541): error:  #167: argument of type "float (*)[15]" is incompatible with parameter of type "float (*)[18]"
+      if (mat_inverse(valid_meas, S, S_inv) != SUCCESS) {
+..\My\Src\estimator.c(541): error:  #167: argument of type "float (*)[15]" is incompatible with parameter of type "float (*)[18]"
+      if (mat_inverse(valid_meas, S, S_inv) != SUCCESS) {
+..\My\Src\estimator.c(547): error:  #167: argument of type "float (*)[15]" is incompatible with parameter of type "float (*)[18]"
+      mat_mult(STATE_DIM, STATE_DIM, valid_meas, kf->P, H_transpose, PHT);
+..\My\Src\estimator.c(547): error:  #167: argument of type "float (*)[15]" is incompatible with parameter of type "float (*)[18]"
+      mat_mult(STATE_DIM, STATE_DIM, valid_meas, kf->P, H_transpose, PHT);
+..\My\Src\estimator.c(550): error:  #167: argument of type "float (*)[15]" is incompatible with parameter of type "float (*)[18]"
+      mat_mult(STATE_DIM, valid_meas, valid_meas, PHT, S_inv, K);
+..\My\Src\estimator.c(550): error:  #167: argument of type "float (*)[15]" is incompatible with parameter of type "float (*)[18]"
+      mat_mult(STATE_DIM, valid_meas, valid_meas, PHT, S_inv, K);
+..\My\Src\estimator.c(550): error:  #167: argument of type "float (*)[15]" is incompatible with parameter of type "float (*)[18]"
+      mat_mult(STATE_DIM, valid_meas, valid_meas, PHT, S_inv, K);
+..\My\Src\estimator.c(555): error:  #167: argument of type "float (*)[15]" is incompatible with parameter of type "float (*)[18]"
+      mat_mult_vec(STATE_DIM, valid_meas, K, innovation, Ky);
+..\My\Src\estimator.c(563): error:  #167: argument of type "float (*)[15]" is incompatible with parameter of type "float (*)[18]"
+      mat_mult(STATE_DIM, valid_meas, STATE_DIM, K, H_valid, KH);
+..\My\Src\estimator.c(480): warning:  #177-D: variable "k"  was declared but never referenced
+      int i, j, k;
+..\My\Src\estimator.c(689): error:  #167: argument of type "const float *" is incompatible with parameter of type "float *"
+      quaternion_to_rotation_matrix_zyx(q, R);
+..\My\Src\estimator.c(706): error:  #167: argument of type "const float *" is incompatible with parameter of type "float *"
+      quaternion_to_rotation_matrix_zyx(q, R);
+..\My\Src\estimator.c(707): error:  #167: argument of type "float (*)[3]" is incompatible with parameter of type "float (*)[18]"
+      mat_mult_vec(3, 3, R, foot_pos, foot_pos_body);
+..\My\Src\estimator.c(707): error:  #167: argument of type "const float *" is incompatible with parameter of type "float *"
+      mat_mult_vec(3, 3, R, foot_pos, foot_pos_body);
+..\My\Src\estimator.c(724): error:  #167: argument of type "float (*)[3]" is incompatible with parameter of type "const float *"
+      transform_acceleration_to_world_frame(sensor_data.quaternion, &sensor_data.acc, u);
+..\My\Src\estimator.c(737): warning:  #1-D: last line of file ends without a newline
+  }
+..\My\Src\estimator.c: 8 warnings, 23 errors
+"Quadruped_F767\Quadruped_F767.axf" - 23 Error(s), 8 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:06
