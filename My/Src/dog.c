@@ -16,6 +16,7 @@
 #include "motor.h"
 #include "gait.h"
 #include "estimator.h"
+#include "matrix.h"
 /*========================= 全局变量 =========================*/
 Dog dog;                    // 狗实例
 float body_vel[3] = {0, 0, 0}; // 机体速度

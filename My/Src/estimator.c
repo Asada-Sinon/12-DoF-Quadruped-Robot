@@ -3,9 +3,9 @@
  * 状态向量x: [pb_x, pb_y, pb_z, vb_x, vb_y, vb_z, 
  *            p0_x, p0_y, p0_z, p1_x, p1_y, p1_z, 
  *            p2_x, p2_y, p2_z, p3_x, p3_y, p3_z]
- * 输出向量y: [psfB_0x, psfB_0y, psfB_0z, ..., psfB_3z,    // 12维足端到机身位置
- *            vsfB_0x, vsfB_0y, vsfB_0z, ..., vsfB_3z,     // 12维足端到机身速度
- *            psz_0, psz_1, psz_2, psz_3]                  // 4维足端高度
+ * 输出向量y: [psfB_0x, psfB_0y, psfB_0z, ..., psfB_3z,    // 12维世界坐标系下足端到机身位置
+ *            vsfB_0x, vsfB_0y, vsfB_0z, ..., vsfB_3z,     // 12维世界坐标系下足端到机身速度
+ *            psz_0, psz_1, psz_2, psz_3]                  // 4维足端高度，防止误差积累，给0
  * 输入: IMU数据、足端接触传感器、关节编码器数据
  * 输出: 估计的机身位置、速度、足端位置及相对量
  ************************************************************/
@@ -16,313 +16,10 @@
 #include <math.h>
 #include "estimator.h"
 #include "dog.h"  // 引入dog.h以使用腿部运动学函数
-
+#include "matrix.h"
 KalmanFilter kf;
 ExtendedSensorData sensor_data;
-// 自定义矩阵操作函数
 
-/**
- * 矩阵乘法: C = A * B (使用指针形式)
- * @param[in] m A矩阵的行数
- * @param[in] n A矩阵的列数和B矩阵的行数
- * @param[in] p B矩阵的列数
- * @param[in] A 输入矩阵A，大小为m×n，按行存储
- * @param[in] B 输入矩阵B，大小为n×p，按行存储
- * @param[out] C 输出矩阵C，大小为m×p，按行存储
- */
-void mat_mult_ptr(int m, int n, int p, const float *A, const float *B, float *C) {
-    int i, j, k;
-    for (i = 0; i < m; i++) {
-        for (j = 0; j < p; j++) {
-            C[i*p + j] = 0.0f;
-            for (k = 0; k < n; k++) {
-                C[i*p + j] += A[i*n + k] * B[k*p + j];
-            }
-        }
-    }
-}
-
-/**
- * 矩阵乘以向量: y = A * x (使用指针形式)
- * @param[in] m A矩阵的行数
- * @param[in] n A矩阵的列数和x向量的维度
- * @param[in] A 输入矩阵A，大小为m×n，按行存储
- * @param[in] x 输入向量x，大小为n
- * @param[out] y 输出向量y，大小为m
- */
-void mat_mult_vec_ptr(int m, int n, const float *A, const float *x, float *y) {
-    int i, j;
-    for (i = 0; i < m; i++) {
-        y[i] = 0.0f;
-        for (j = 0; j < n; j++) {
-            y[i] += A[i*n + j] * x[j];
-        }
-    }
-}
-
-/**
- * 矩阵加法: C = A + B (使用指针形式)
- * @param[in] m 矩阵的行数
- * @param[in] n 矩阵的列数
- * @param[in] A 输入矩阵A，大小为m×n，按行存储
- * @param[in] B 输入矩阵B，大小为m×n，按行存储
- * @param[out] C 输出矩阵C，大小为m×n，按行存储
- */
-void mat_add_ptr(int m, int n, const float *A, const float *B, float *C) {
-    int i, j, idx;
-    for (i = 0; i < m; i++) {
-        for (j = 0; j < n; j++) {
-            idx = i*n + j;
-            C[idx] = A[idx] + B[idx];
-        }
-    }
-}
-
-/**
- * 矩阵减法: C = A - B (使用指针形式)
- * @param[in] m 矩阵的行数
- * @param[in] n 矩阵的列数
- * @param[in] A 输入矩阵A，大小为m×n，按行存储
- * @param[in] B 输入矩阵B，大小为m×n，按行存储
- * @param[out] C 输出矩阵C，大小为m×n，按行存储
- */
-void mat_sub_ptr(int m, int n, const float *A, const float *B, float *C) {
-    int i, j, idx;
-    for (i = 0; i < m; i++) {
-        for (j = 0; j < n; j++) {
-            idx = i*n + j;
-            C[idx] = A[idx] - B[idx];
-        }
-    }
-}
-
-/**
- * 矩阵转置: B = A^T (使用指针形式)
- * @param[in] m A矩阵的行数
- * @param[in] n A矩阵的列数
- * @param[in] A 输入矩阵，大小为m×n，按行存储
- * @param[out] B 输出转置矩阵，大小为n×m，按行存储
- */
-void mat_transpose_ptr(int m, int n, const float *A, float *B) {
-    int i, j;
-    for (i = 0; i < m; i++) {
-        for (j = 0; j < n; j++) {
-            B[j*m + i] = A[i*n + j];
-        }
-    }
-}
-
-/**
- * 向量减法: c = a - b (使用指针形式)
- * @param[in] n 向量的维度
- * @param[in] a 输入向量a，大小为n
- * @param[in] b 输入向量b，大小为n
- * @param[out] c 输出向量c，大小为n
- */
-void vec_sub_ptr(int n, const float *a, const float *b, float *c) {
-    int i;
-    for (i = 0; i < n; i++) {
-        c[i] = a[i] - b[i];
-    }
-}
-
-/**
- * 向量加法: c = a + b (使用指针形式)
- * @param[in] n 向量的维度
- * @param[in] a 输入向量a，大小为n
- * @param[in] b 输入向量b，大小为n
- * @param[out] c 输出向量c，大小为n
- */
-void vec_add_ptr(int n, const float *a, const float *b, float *c) {
-    int i;
-    for (i = 0; i < n; i++) {
-        c[i] = a[i] + b[i];
-    }
-}
-
-/**
- * 三维向量直接叉乘
- * @param[in] a 输入向量a，长度为3
- * @param[in] b 输入向量b，长度为3
- * @param[out] c 输出向量c = a × b，长度为3
- */
-void vec3_cross(const float a[3], const float b[3], float c[3]) {
-    c[0] = a[1] * b[2] - a[2] * b[1];
-    c[1] = a[2] * b[0] - a[0] * b[2];
-    c[2] = a[0] * b[1] - a[1] * b[0];
-}
-
-/**
- * 三维向量叉乘 (指针版本)
- * @param[in] a 输入向量a，长度为3
- * @param[in] b 输入向量b，长度为3
- * @param[out] c 输出向量c = a × b，长度为3
- */
-void vec3_cross_ptr(const float *a, const float *b, float *c) {
-    c[0] = a[1] * b[2] - a[2] * b[1];
-    c[1] = a[2] * b[0] - a[0] * b[2];
-    c[2] = a[0] * b[1] - a[1] * b[0];
-}
-
-// 矩阵求逆的指针版本 (使用LU分解法)
-// 返回值: 0成功, -1失败
-// A和Ainv是按行存储的一维数组形式
-int mat_inverse_ptr(int n, const float *A, float *Ainv) {
-    int i, j, k;
-    float L[MAX_MATRIX_DIM * MAX_MATRIX_DIM] = {0}; // 下三角矩阵
-    float U[MAX_MATRIX_DIM * MAX_MATRIX_DIM] = {0}; // 上三角矩阵
-    float sum;
-    int P[MAX_MATRIX_DIM];    // 行交换记录(整数索引)
-    int temp_idx;
-    float temp_val;
-    float y[MAX_MATRIX_DIM];    // 中间解向量
-    float b[MAX_MATRIX_DIM];    // 右侧向量
-    
-    printf("A(指针版本):\n");
-    for (i = 0; i < n; i++) {
-        for (j = 0; j < n; j++) {
-            printf("%f ", A[i*n + j]);
-        }
-        printf("\n");
-    }
-    
-    if (n > MAX_MATRIX_DIM) {
-        return MAT_ERROR; // 矩阵维度超出限制
-    }
-    
-    // 初始化L和U矩阵
-    for (i = 0; i < n; i++) {
-        for (j = 0; j < n; j++) {
-            if (i == j) {
-                L[i*n + j] = 1.0f; // L对角线初始化为1
-            } else {
-                L[i*n + j] = 0.0f;
-            }
-            U[i*n + j] = 0.0f;
-        }
-        P[i] = i; // 初始无行交换，使用整数索引
-    }
-    
-    // 计算行列式值，检查是否可逆
-    float det = 1.0f;
-    for (i = 0; i < n; i++) {
-        det *= A[i*n + i];
-    }
-    if (fabs(det) < 1e-5f) {
-        // 快速检查是否可能不可逆
-        // 进行更详细的检查
-    }
-    
-    // LU分解带部分主元
-    for (i = 0; i < n; i++) {
-        // 查找主元
-        int pivot_row = i;
-        float pivot_val = 0.0f;
-        for (j = i; j < n; j++) {
-            if (fabs(A[P[j]*n + i]) > pivot_val) {
-                pivot_val = fabs(A[P[j]*n + i]);
-                pivot_row = j;
-            }
-        }
-        
-        // 检查矩阵是否可逆 - 提高阈值
-        if (pivot_val < 1e-5f) {
-            return MAT_ERROR; // 矩阵接近奇异，不可逆
-        }
-        
-        // 交换行索引
-        if (pivot_row != i) {
-            temp_idx = P[i];
-            P[i] = P[pivot_row];
-            P[pivot_row] = temp_idx;
-        }
-        
-        // 计算U的第i行
-        for (j = i; j < n; j++) {
-            sum = 0.0f;
-            for (k = 0; k < i; k++) {
-                sum += L[P[i]*n + k] * U[k*n + j];
-            }
-            U[i*n + j] = A[P[i]*n + j] - sum;
-        }
-        
-        // 计算L的第i列
-        for (j = i+1; j < n; j++) { // 从i+1开始，因为对角线元素已设为1
-            sum = 0.0f;
-            for (k = 0; k < i; k++) {
-                sum += L[P[j]*n + k] * U[k*n + i];
-            }
-            // 避免除以非常小的数
-            if (fabs(U[i*n + i]) < 1e-5f) {
-                return MAT_ERROR; // 主元太小，不可逆
-            }
-            L[P[j]*n + i] = (A[P[j]*n + i] - sum) / U[i*n + i];
-        }
-    }
-    
-    // 通过求解方程AX=I来获取逆矩阵
-    // 对每一列分别求解
-    for (j = 0; j < n; j++) {
-        // 构造单位向量
-        for (i = 0; i < n; i++) {
-            b[i] = (i == j) ? 1.0f : 0.0f;
-        }
-        
-        // 前向替换求解Ly = b (考虑行交换)
-        for (i = 0; i < n; i++) {
-            y[i] = b[P[i]]; // 应用行交换
-            for (k = 0; k < i; k++) {
-                y[i] -= L[P[i]*n + k] * y[k];
-            }
-        }
-        
-        // 后向替换求解Ux = y
-        for (i = n - 1; i >= 0; i--) {
-            Ainv[i*n + j] = y[i];
-            for (k = i + 1; k < n; k++) {
-                Ainv[i*n + j] -= U[i*n + k] * Ainv[k*n + j];
-            }
-            // 再次检查数值稳定性
-            if (fabs(U[i*n + i]) < 1e-5f) {
-                return MAT_ERROR; // 主元太小，可能导致数值不稳定
-            }
-            Ainv[i*n + j] /= U[i*n + i];
-        }
-    }
-    
-    return MAT_SUCCESS;
-}
-
-// 专门处理3x3矩阵的求逆函数的指针版本
-int mat_inverse_3x3_ptr(const float *A, float *Ainv) {
-    // 计算行列式
-    float det = A[0] * (A[4] * A[8] - A[5] * A[7])
-              - A[1] * (A[3] * A[8] - A[5] * A[6])
-              + A[2] * (A[3] * A[7] - A[4] * A[6]);
-    
-    // 判断是否可逆
-    if (fabs(det) < 1e-5f) {
-        printf("矩阵奇异，行列式接近于0: %f\n", det);
-        return MAT_ERROR; // 矩阵不可逆
-    }
-    
-    // 计算伴随矩阵的转置除以行列式
-    float inv_det = 1.0f / det;
-    
-    Ainv[0] = (A[4] * A[8] - A[5] * A[7]) * inv_det;
-    Ainv[1] = (A[2] * A[7] - A[1] * A[8]) * inv_det;
-    Ainv[2] = (A[1] * A[5] - A[2] * A[4]) * inv_det;
-    
-    Ainv[3] = (A[5] * A[6] - A[3] * A[8]) * inv_det;
-    Ainv[4] = (A[0] * A[8] - A[2] * A[6]) * inv_det;
-    Ainv[5] = (A[2] * A[3] - A[0] * A[5]) * inv_det;
-    
-    Ainv[6] = (A[3] * A[7] - A[4] * A[6]) * inv_det;
-    Ainv[7] = (A[1] * A[6] - A[0] * A[7]) * inv_det;
-    Ainv[8] = (A[0] * A[4] - A[1] * A[3]) * inv_det;
-    
-    return MAT_SUCCESS;
-}
 
 // 初始化卡尔曼滤波器
 void init_kalman_filter(KalmanFilter* kf, float dt) {
@@ -758,27 +455,22 @@ void quaternion_to_rotation_matrix_zyx(const float q[4], float R[3][3]) {
  * 将加速度从机身坐标系转换到世界坐标系
  * 使用IMU提供的四元数
  */
-void transform_acceleration_to_world_frame(const float q[4], const float acc_body[3], float acc_world[3]) {
-
-    float R[3][3]; // 旋转矩阵
-    quaternion_to_rotation_matrix_zyx(q, R);
-
+void body_to_world_acc(float R[3][3], const float acc_body[3], float acc_world[3]) {
     // 应用旋转变换
     mat_mult_vec_ptr(3, 3, &R[0][0], acc_body, acc_world);  // 使用指针版本
-    
     // 补偿重力加速度 (假设世界坐标系Z轴向上)
     acc_world[2] += 9.81f;
 }
 
 //计算世界坐标系下足端相对于机身的位置
-void world_foot_to_body_position(uint8_t leg_id, const float R[3][3], float PsfBi[3]) {
+void world_foot_to_body_pos(uint8_t leg_id, const float R[3][3], float PsfBi[3]) {
     float PbfBi[3];
     leg_get_current_foot_pos_body(leg_id, PbfBi);
     mat_mult_vec_ptr(3, 3, &R[0][0], PbfBi, PsfBi);  // 添加&R[0][0]以获取指针
 }
 
 // 计算世界坐标系下足端相对于机身的速度
-void world_foot_to_body_velocity(uint8_t leg_id, const float R[3][3], float VsfBi[3]) {
+void world_foot_to_body_vel(uint8_t leg_id, const float R[3][3], float VsfBi[3]) {
     float PbfBi[3];
     float WbxPbfBi[3];
     float VbfBi[3];
@@ -806,7 +498,7 @@ void process_quadruped_state_estimation() {
     float u[CTRL_DIM];
     // 将加速度从机身坐标系转换到世界坐标系 
     // 使用四元数旋转，这里简化处理
-    transform_acceleration_to_world_frame(sensor_data.quaternion, sensor_data.acc, u);
+//    transform_acceleration_to_world_frame(sensor_data.quaternion, sensor_data.acc, u);
     // 4. 预测步骤
     kf_predict(&kf, u);
     
@@ -819,4 +511,179 @@ void process_quadruped_state_estimation() {
     
     // 7. 计算输出向量
     compute_output_vector(&kf);
+}
+
+float dt[3] = { 0.002, 0.002, 0.002 }; // 离散化采样时间，即计算间隔s
+    float I3[3][3] = {
+            {1, 0, 0},
+            {0, 1, 0},
+            {0, 0, 1}
+    };
+    float _I3[3][3] = {
+            {-1, 0, 0},
+            {0, -1, 0},
+            {0, 0, -1}
+    };
+    float I3dt[3][3] = {
+        {0.002, 0, 0},
+        {0, 0.002, 0},
+        {0, 0, 0.002}
+    };
+    float I12[12][12] = {
+        {1,0,0,0,0,0,0,0,0,0,0,0},
+        {0,1,0,0,0,0,0,0,0,0,0,0},
+        {0,0,1,0,0,0,0,0,0,0,0,0},
+        {0,0,0,1,0,0,0,0,0,0,0,0},
+        {0,0,0,0,1,0,0,0,0,0,0,0},
+        {0,0,0,0,0,1,0,0,0,0,0,0},
+        {0,0,0,0,0,0,1,0,0,0,0,0},
+        {0,0,0,0,0,0,0,1,0,0,0,0},
+        {0,0,0,0,0,0,0,0,1,0,0,0},
+        {0,0,0,0,0,0,0,0,0,1,0,0},
+        {0,0,0,0,0,0,0,0,0,0,1,0},
+        {0,0,0,0,0,0,0,0,0,0,0,1}
+    };
+    float I18[18][18] = {
+        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0},
+        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}
+    };
+
+void estimation_init() {
+    // 构造离散化状态转移矩阵F = I + dt*A
+    //[I3 I3dt 0]
+    //[    I3   ]
+    //[      I12] 18x18
+    memset(kf.F, 0, sizeof(kf.F));
+    mat_add_block_ptr(0, 0, 3, 3, 18, &kf.F[0][0], &I3[0][0], &kf.F[0][0]);
+    mat_add_block_ptr(0, 3, 3, 3, 18, &kf.F[0][0], &I3dt[0][0], &kf.F[0][0]);
+    mat_add_block_ptr(3, 3, 3, 3, 18, &kf.F[0][0], &I3[0][0], &kf.F[0][0]);
+    mat_add_block_ptr(6, 6, 12, 12, 18, &kf.F[0][0], &I12[0][0], &kf.F[0][0]);
+    // 构造离散化控制矩阵B = dt*B
+    memset(kf.B, 0, sizeof(kf.B));
+    mat_add_block_ptr(0, 3, 3, 3, 18, &kf.B[0][0], &I3dt[0][0], &kf.B[0][0]);
+    // 构造离散化观测矩阵H = C
+    // [-I3 0 I3 0 0 0]
+    // [-I3 0 0 I3 0 0]
+    // [-I3 0 0 0 I3 0]
+    // [-I3 0 0 0 0 I3]
+    // [0 -I3 0 0 0 0]
+    // [0 -I3 0 0 0 0]
+    // [0 -I3 0 0 0 0]
+    // [0 -I3 0 0 0 0]
+    // [0 0 [0 0 1] 0 0 0]
+    // [0 0 0 [0 0 1] 0 0]
+    // [0 0 0 0 [0 0 1] 0]
+    // [0 0 0 0 0 [0 0 1]] 28x18
+    memset(kf.H, 0, sizeof(kf.H));
+    mat_add_block_ptr(0, 0, 3, 3, 18, &kf.H[0][0], &_I3[0][0], &kf.H[0][0]);
+    mat_add_block_ptr(3, 0, 3, 3, 18, &kf.H[0][0], &_I3[0][0], &kf.H[0][0]);
+    mat_add_block_ptr(6, 0, 3, 3, 18, &kf.H[0][0], &_I3[0][0], &kf.H[0][0]);
+    mat_add_block_ptr(9, 0, 3, 3, 18, &kf.H[0][0], &_I3[0][0], &kf.H[0][0]);
+    mat_add_block_ptr(12, 3, 3, 3, 18, &kf.H[0][0], &_I3[0][0], &kf.H[0][0]);
+    mat_add_block_ptr(15, 3, 3, 3, 18, &kf.H[0][0], &_I3[0][0], &kf.H[0][0]);
+    mat_add_block_ptr(18, 3, 3, 3, 18, &kf.H[0][0], &_I3[0][0], &kf.H[0][0]);
+    mat_add_block_ptr(21, 3, 3, 3, 18, &kf.H[0][0], &_I3[0][0], &kf.H[0][0]);
+    mat_add_block_ptr(0, 6, 12, 12, 18, &kf.H[0][0], &I12[0][0], &kf.H[0][0]);
+    kf.H[24][8] = 1;
+    kf.H[25][11] = 1;
+    kf.H[26][14] = 1;
+    kf.H[27][17] = 1;
+
+}
+
+void estimation_run() {
+    /* -----------中间变量------------- */
+    float Rot[3][3] = {0};
+    float u[3] = {0};
+    float xhat[STATE_DIM] = {0};
+    float yhat[OUTPUT_DIM] = {0};
+    float Ppri[STATE_DIM][STATE_DIM] = {0};
+    float PpriT[STATE_DIM][STATE_DIM] = {0};
+    float AP[STATE_DIM][STATE_DIM] = {0};
+    float AT[STATE_DIM][STATE_DIM] = {0};
+    float CT[STATE_DIM][OUTPUT_DIM] = {0};
+    float CP[OUTPUT_DIM][STATE_DIM] = {0};
+    float S[OUTPUT_DIM][OUTPUT_DIM] = {0};
+    float ST[OUTPUT_DIM][OUTPUT_DIM] = {0};
+    float SL[OUTPUT_DIM][OUTPUT_DIM] = {0};
+    float SU[OUTPUT_DIM][OUTPUT_DIM] = {0};
+    int LU_P[OUTPUT_DIM] = {0};
+    float invSy[OUTPUT_DIM] = {0};
+    float y_yhat[OUTPUT_DIM] = {0};
+    float invSC[OUTPUT_DIM][STATE_DIM] = {0};
+    float invSR[OUTPUT_DIM][OUTPUT_DIM] = {0};
+    float invSTC[STATE_DIM][OUTPUT_DIM] = {0};
+    float KC[STATE_DIM][STATE_DIM] = {0};
+    float I_KC[STATE_DIM][STATE_DIM] = {0};
+    float PCT[STATE_DIM][OUTPUT_DIM] = {0};
+    float I_KCT[STATE_DIM][STATE_DIM] = {0};
+    float I_KCPI_KCT[STATE_DIM][STATE_DIM] = {0};
+    float KR[STATE_DIM][OUTPUT_DIM] = {0};
+    float KRKT[STATE_DIM][STATE_DIM] = {0};
+    /* -----------根据触底状态更新协方差矩阵------------- */
+    /* -----------预测部分------------- */
+    // R
+    quaternion_to_rotation_matrix_zyx(sensor_data.quaternion, Rot);
+    // u = R * acc + g
+    body_to_world_acc(Rot, sensor_data.acc, u);
+    // xhat = A * x + B * u
+    mat_mult_vec_ptr(STATE_DIM, STATE_DIM, &kf.F[0][0], kf.x, xhat);
+    vec_add_ptr(STATE_DIM, xhat, u, xhat);
+    // yhat = C * x
+    mat_mult_vec_ptr(OUTPUT_DIM, STATE_DIM, &kf.H[0][0], kf.x, yhat);
+    // Ppri = A * P * A^T + Q
+    mat_mult_ptr(STATE_DIM, STATE_DIM, STATE_DIM, &kf.F[0][0], &kf.P[0][0], &AP[0][0]);
+    mat_transpose_ptr(STATE_DIM, STATE_DIM, &kf.F[0][0], &AT[0][0]);
+    mat_mult_ptr(STATE_DIM, STATE_DIM, STATE_DIM, &AP[0][0], &AT[0][0], &Ppri[0][0]);
+    mat_add_ptr(STATE_DIM, STATE_DIM, &Ppri[0][0], &kf.Q[0][0], &Ppri[0][0]);
+
+    /* -----------更新部分------------- */
+    // S = R + C * Ppri * C^T
+    mat_mult_ptr(OUTPUT_DIM, STATE_DIM, STATE_DIM, &kf.H[0][0], &Ppri[0][0], &CP[0][0]);
+    mat_transpose_ptr(OUTPUT_DIM, STATE_DIM, &kf.H[0][0], &CT[0][0]);
+    mat_mult_ptr(OUTPUT_DIM, STATE_DIM, OUTPUT_DIM, &CP[0][0], &CT[0][0], &S[0][0]);
+    mat_add_ptr(OUTPUT_DIM, OUTPUT_DIM, &S[0][0], &kf.R[0][0], &S[0][0]);
+    // S^-1(y - yhat) 28x1
+    vec_sub_ptr(OUTPUT_DIM, kf.y, yhat, y_yhat);
+    mat_lu_decomp_ptr(OUTPUT_DIM, &S[0][0], &SL[0][0], &SU[0][0], LU_P);
+    mat_solve_with_lu_ptr(OUTPUT_DIM, &SL[0][0], &SU[0][0], LU_P, 1, y_yhat, invSy);
+    // S^-1 * C 28x18
+    mat_solve_with_lu_ptr(OUTPUT_DIM, &SL[0][0], &SU[0][0], LU_P, STATE_DIM, &kf.H[0][0], &invSC[0][0]);
+    // S^-1 * R 28x28
+    mat_solve_with_lu_ptr(OUTPUT_DIM, &SL[0][0], &SU[0][0], LU_P, OUTPUT_DIM, &kf.R[0][0], &invSR[0][0]);
+    // (S^T)^-1 * C 28x18
+    mat_transpose_ptr(OUTPUT_DIM, OUTPUT_DIM, &S[0][0], &ST[0][0]);
+    mat_solve_with_lu_ptr(OUTPUT_DIM, &SL[0][0], &SU[0][0], LU_P, STATE_DIM, &kf.H[0][0], &invSTC[0][0]);
+
+    // I - Ppri * C^T * S^-1 * C 18x18
+    mat_mult_ptr(STATE_DIM, STATE_DIM, OUTPUT_DIM, &Ppri[0][0], &CT[0][0], &PCT[0][0]);
+    mat_mult_ptr(STATE_DIM, OUTPUT_DIM, STATE_DIM, &PCT[0][0], &invSC[0][0], &KC[0][0]);
+    mat_sub_ptr(STATE_DIM, STATE_DIM, &I18[0][0], &KC[0][0], &I_KC[0][0]);
+    // x = xhat + Ppri * C^T * S^-1 * (y - yhat) 18x1
+    mat_mult_ptr(STATE_DIM, OUTPUT_DIM, 1, &PCT[0][0], &invSy[0], &kf.x[0]);
+    vec_add_ptr(STATE_DIM, xhat, &kf.x[0], &kf.x[0]);
+    // P = (I-KC) * Ppri * (I-KC)^T + Ppri * C^T * S^-1 * R * (S^T)^-1 * C * Ppri^T
+    mat_mult_ptr(STATE_DIM, STATE_DIM, STATE_DIM, &I_KC[0][0], &Ppri[0][0], &I_KCPI_KCT[0][0]);
+    mat_mult_ptr(STATE_DIM, STATE_DIM, STATE_DIM, &I_KCPI_KCT[0][0], &I_KCT[0][0], &I_KCPI_KCT[0][0]);
+    mat_mult_ptr(STATE_DIM, OUTPUT_DIM, OUTPUT_DIM, &PCT[0][0], &invSR[0][0], &KR[0][0]);
+    mat_mult_ptr(STATE_DIM, OUTPUT_DIM, STATE_DIM, &KR[0][0], &invSTC[0][0], &KRKT[0][0]);
+    mat_transpose_ptr(STATE_DIM, STATE_DIM, &Ppri[0][0], &PpriT[0][0]);
+    mat_mult_ptr(STATE_DIM, STATE_DIM, STATE_DIM, &KRKT[0][0], &PpriT[0][0], &KRKT[0][0]);
+    mat_add_ptr(STATE_DIM, STATE_DIM, &I_KCPI_KCT[0][0], &KRKT[0][0], &kf.P[0][0]);
 }
