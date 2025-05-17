@@ -471,7 +471,6 @@ int mat_inverse_3x3_ptr(const float *A, float *Ainv) {
  * @return 成功返回MAT_SUCCESS，失败返回MAT_ERROR
  */
 int mat_solve_ptr(int n, const float *A, int m, const float *B, float *X) {
-    int i, j;
     float L[MAX_MATRIX_DIM * MAX_MATRIX_DIM] = {0}; // 下三角矩阵
     float U[MAX_MATRIX_DIM * MAX_MATRIX_DIM] = {0}; // 上三角矩阵
     int P[MAX_MATRIX_DIM];    // 行交换记录(整数索引)

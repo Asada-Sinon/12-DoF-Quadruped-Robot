@@ -431,6 +431,16 @@ void dog_get_body_vel_without_cog(float velocity[3])
     velocity[Z_IDX] = body_vel[Z_IDX] - get_robot_params()->posture.center_of_gravity.velocity[Z_IDX];
 }
 
+int leg_get_contact_state(uint8_t leg_idx)
+{
+    return get_robot_params()->posture.contact[leg_idx];
+}
+
+float leg_get_phase(uint8_t leg_idx)
+{
+    return get_robot_params()->posture.phase[leg_idx];
+}
+
 void dog_set_body_vel(float vx, float vy, float w)
 {
     // 速度加上重心补偿速度

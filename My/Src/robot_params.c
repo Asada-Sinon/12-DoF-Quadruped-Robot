@@ -161,7 +161,8 @@ RobotParams robot_params = {
             {DEFAULT_JOINT_ANGLE_HIP, DEFAULT_JOINT_ANGLE_THIGH, DEFAULT_JOINT_ANGLE_CALF},
             {DEFAULT_JOINT_ANGLE_HIP, DEFAULT_JOINT_ANGLE_THIGH, DEFAULT_JOINT_ANGLE_CALF},
             {DEFAULT_JOINT_ANGLE_HIP, DEFAULT_JOINT_ANGLE_THIGH, DEFAULT_JOINT_ANGLE_CALF}
-        }
+        },
+        .contact = {1, 1, 1, 1}
     },
 
     /* Á¬¸Ë²ÎÊý */

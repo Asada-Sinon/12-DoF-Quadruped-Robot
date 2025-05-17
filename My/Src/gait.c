@@ -106,6 +106,11 @@ void phase_wave_generator(GaitParams *gait, WaveStatus status, float start_time,
             }
             break;
     }
+    for(int i = 0; i < 4; ++i){
+        // 实时更新机器人的步态状态
+        get_robot_params()->posture.contact[i] = contact[i];
+        get_robot_params()->posture.phase[i] = phase[i];
+    }
 }
 
 void gait_generator(GaitParams *gait, float *phase, int *contact, float foot_target_pos[4][3])

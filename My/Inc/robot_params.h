@@ -307,6 +307,8 @@ typedef struct {
     CenterOfGravityLimits center_of_gravity_limit; // 重心偏移量限制
     CenterOfGravity center_of_gravity; // 重心位置
     float default_joint_pos[4][3];  // 每条腿的默认关节角度 [leg][joint]
+    int contact[4]; // 每条腿的接触状态
+    float phase[4]; // 每条腿当前所在相位
 } PostureParams;
 
 typedef struct {

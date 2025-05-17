@@ -227,6 +227,20 @@ void dog_get_body_vel_without_cog(float velocity[3]);
  */
 float dog_get_stand_height(void);
 
+/**
+ * @brief 获取指定腿的接触状态
+ * @param leg_idx 腿的ID (0:FL, 1:FR, 2:HL, 3:HR)
+ * @return int 接触状态 (0: 不接触, 1: 接触)
+ */
+int leg_get_contact_state(uint8_t leg_idx);
+
+/**
+ * @brief 获取指定腿的步态相位
+ * @param leg_idx 腿的ID (0:FL, 1:FR, 2:HL, 3:HR)
+ * @return float 步态相位
+ */
+float leg_get_phase(uint8_t leg_idx);
+
 /*========================= send函数声明 =========================*/
 /**
  * @brief 发送电机目标位置

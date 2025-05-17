@@ -3,11 +3,10 @@
  * 状态向量x: [pb_x, pb_y, pb_z, vb_x, vb_y, vb_z, 
  *            p0_x, p0_y, p0_z, p1_x, p1_y, p1_z, 
  *            p2_x, p2_y, p2_z, p3_x, p3_y, p3_z]
- * 输出向量y: [psfB_0x, psfB_0y, psfB_0z, ..., psfB_3z,    // 12维世界坐标系下足端到机身位置
+ * 测量向量y: [psfB_0x, psfB_0y, psfB_0z, ..., psfB_3z,    // 12维世界坐标系下足端到机身位置
  *            vsfB_0x, vsfB_0y, vsfB_0z, ..., vsfB_3z,     // 12维世界坐标系下足端到机身速度
  *            psz_0, psz_1, psz_2, psz_3]                  // 4维足端高度，防止误差积累，给0
- * 输入: IMU数据、足端接触传感器、关节编码器数据
- * 输出: 估计的机身位置、速度、足端位置及相对量
+ * 控制向量u: [asb, asy, asz + g]
  ************************************************************/
 
 #include <stdio.h>
@@ -20,380 +19,42 @@
 KalmanFilter kf;
 ExtendedSensorData sensor_data;
 
+// 一些常量矩阵
+float dt = 0.002; // 离散化采样时间，即计算间隔s
+float largeVariance = 100; // 大数，用于代替无穷
+float I3dt[3][3];
+float I3[3][3];
+float _I3[3][3];
+float I12[12][12];
+float I18[18][18];
 
-// 初始化卡尔曼滤波器
-void init_kalman_filter(KalmanFilter* kf, float dt) {
-    int i, j;
-    
-    // 设置时间步长
-    kf->dt = dt;
-    kf->prev_time = 0;
-    
-    // 初始化状态向量和上一时刻状态为0
-    memset(kf->x, 0, sizeof(kf->x));
-    memset(kf->prev_x, 0, sizeof(kf->prev_x));
-    
-    // 初始化输出向量为0
-    memset(kf->y, 0, sizeof(kf->y));
-    
-    // 初始化状态协方差矩阵为对角阵 * 初始不确定度
-    memset(kf->P, 0, sizeof(kf->P));
-    for (i = 0; i < STATE_DIM; i++) {
-        // 机身位置与速度的初始不确定度较大
-        if (i < 6) {
-            kf->P[i][i] = 1.0f;
-        } else {
-            // 足端位置的初始不确定度较小(假设机器人初始站立姿态已知)
-            kf->P[i][i] = 0.1f;
-        }
-    }
-    
-    // 初始化状态转移矩阵 F (离散时间系统)
-    memset(kf->F, 0, sizeof(kf->F));
-    for (i = 0; i < STATE_DIM; i++) {
-        kf->F[i][i] = 1.0f;  // 单位矩阵部分
-    }
-    // 位置与速度的关系: pb(k+1) = pb(k) + vb(k)*dt
-    kf->F[0][3] = kf->dt;  // pb_x与vb_x
-    kf->F[1][4] = kf->dt;  // pb_y与vb_y
-    kf->F[2][5] = kf->dt;  // pb_z与vb_z
-    
-    // 初始化控制输入矩阵 B
-    memset(kf->B, 0, sizeof(kf->B));
-    // 加速度对速度的影响: vb(k+1) = vb(k) + a(k)*dt
-    kf->B[3][0] = kf->dt;  // vb_x与ax
-    kf->B[4][1] = kf->dt;  // vb_y与ay
-    kf->B[5][2] = kf->dt;  // vb_z与az
-    
-    // 初始化过程噪声协方差矩阵 Q
-    memset(kf->Q, 0, sizeof(kf->Q));
-    // 设置适当的过程噪声值 (基于系统特性调整)
-    // 机身位置噪声
-    for (i = 0; i < 3; i++) 
-        kf->Q[i][i] = 0.01f;
-    // 机身速度噪声
-    for (i = 3; i < 6; i++) 
-        kf->Q[i][i] = 0.1f;
-    // 足端位置噪声(取决于是否接触地面)
-    // 在update步骤中根据接触状态动态调整
-    for (i = 6; i < STATE_DIM; i++) 
-        kf->Q[i][i] = 0.05f;
-    
-    // 初始化观测矩阵 H 和测量噪声协方差矩阵 R
-    memset(kf->H, 0, sizeof(kf->H));
-    memset(kf->R, 0, sizeof(kf->R));
-    
-    // 初始有效测量数量
-    kf->valid_measurements = 0;
+struct LPFilter{
+    float weight;
+    uint8_t start;
+    float pastValue;
+} lpf;
+
+// 低通滤波器
+void LPFilter_init(float samplePeriod, float cutFrequency){
+    lpf.weight = 1.0f / ( 1.0f + 1.0f/(2.0f * PI * samplePeriod * cutFrequency) );
+    lpf.start  = 0;
 }
 
-// 根据接触状态更新观测模型
-void update_observation_model(KalmanFilter* kf, ExtendedSensorData* sensor_data) {
-    int i, j;
-    int meas_idx = 0;
-    
-    // 重置观测矩阵和测量噪声协方差
-    memset(kf->H, 0, sizeof(float) * MEAS_DIM * STATE_DIM);
-    memset(kf->R, 0, sizeof(float) * MEAS_DIM * MEAS_DIM);
-    
-    // 1. IMU加速度数据用于速度估计(需要考虑姿态换算到世界坐标系)
-    // 这部分需要从局部坐标系转换到世界坐标系，这里简化处理
-    for (i = 0; i < 3; i++) {
-        kf->H[meas_idx][i+3] = 1.0f;  // 速度观测
-        kf->R[meas_idx][meas_idx] = 0.1f;  // 速度测量噪声
-        meas_idx++;
+void LPFilter(float newValue){
+    if(!lpf.start){
+        lpf.start = 1;
+        lpf.pastValue = newValue;
     }
-    
-    // 2. 处理足端接触信息
-    // 当足接触地面时，该足的位置在世界坐标系中变化很小(假设不打滑)
-    for (i = 0; i < LEG_NUM; i++) {
-        if (sensor_data->contact[i]) {
-            // 该足接触地面，将其位置测量添加到观测
-            for (j = 0; j < 3; j++) {
-                // 足端位置在状态向量中的索引: 6+i*3+j
-                kf->H[meas_idx][6+i*3+j] = 1.0f;
-                // 接触点位置噪声小，因为地面提供了约束
-                kf->R[meas_idx][meas_idx] = 0.01f;
-                meas_idx++;
-            }
-        }
-    }
-    
-    // 3. 使用运动学模型作为机身位置的间接测量
-    // 对于每个接触地面的足，可以根据关节角度计算机身相对于足的位置
-    for (i = 0; i < LEG_NUM; i++) {
-        if (sensor_data->contact[i]) {
-            // 添加机身位置与足端位置的关系约束
-            for (j = 0; j < 3; j++) {
-                // 机身位置 = 足端位置 - 从足端到机身的相对位置(由正向运动学提供)
-                kf->H[meas_idx][j] = 1.0f;  // 机身位置
-                kf->H[meas_idx][6+i*3+j] = -1.0f;  // 足端位置的负值
-                kf->R[meas_idx][meas_idx] = 0.05f;  // 运动学约束噪声
-                meas_idx++;
-            }
-        }
-    }
-    
-    // 记录有效测量数量
-    kf->valid_measurements = meas_idx;
+    lpf.pastValue = lpf.weight*newValue + (1-lpf.weight)*lpf.pastValue;
 }
 
-// 准备测量向量
-void prepare_measurement_vector(KalmanFilter* kf, ExtendedSensorData* sensor_data, float z[MEAS_DIM]) {
-    int i, j;
-    int meas_idx = 0;
-    
-    // 1. IMU加速度积分得到的速度估计(简化处理)
-    for (i = 0; i < 3; i++) {
-        // 这里假设已经将局部加速度转换到世界坐标系并考虑了重力补偿
-        // 实际应用中需要使用四元数旋转矩阵进行坐标转换
-        z[meas_idx++] = kf->x[i+3] + sensor_data->acc[i] * kf->dt;
-    }
-    
-    // 2. 接触足端的位置测量
-    for (i = 0; i < LEG_NUM; i++) {
-        if (sensor_data->contact[i]) {
-            for (j = 0; j < 3; j++) {
-                z[meas_idx++] = sensor_data->foot_pos[i*3+j];
-            }
-        }
-    }
-    
-    // 3. 机身位置的间接测量(通过运动学)
-    float relative_pos[3];
-    for (i = 0; i < LEG_NUM; i++) {
-        if (sensor_data->contact[i]) {
-            // 计算从足端到机身的相对位置(由正向运动学提供)
-            // 这里使用已有的运动学函数计算从关节角度到足端位置的映射
-            float joint_pos[3];
-            float foot_to_body[3];
-            
-            // 从关节数组中提取当前腿的关节角度
-            memcpy(joint_pos, &sensor_data->joint_angles[i*3], 3 * sizeof(float));
-            
-            // 计算足端相对于髋关节的位置
-            leg_forward_kinematics(i, joint_pos, foot_to_body);
-            
-            // 计算从足端到机身的相对位置(假设髋关节位于机身坐标系原点)
-            relative_pos[0] = -foot_to_body[0];
-            relative_pos[1] = -foot_to_body[1];
-            relative_pos[2] = -foot_to_body[2];
-            
-            // 机身位置 = 足端位置 - 相对位置
-            for (j = 0; j < 3; j++) {
-                z[meas_idx++] = sensor_data->foot_pos[i*3+j] - relative_pos[j];
-            }
-        }
-    }
+float LPF_get_value(){
+    return lpf.pastValue;
 }
 
-// 调整过程噪声协方差，考虑足端是否接触地面
-void adjust_process_noise(KalmanFilter* kf, ExtendedSensorData* sensor_data) {
-    int i, j;
-    
-    // 调整足端位置的过程噪声
-    for (i = 0; i < LEG_NUM; i++) {
-        // 接触地面的足端位置变化更小(噪声小)，悬空的足端位置变化大(噪声大)
-        float foot_noise = sensor_data->contact[i] ? 0.001f : 0.1f;
-        for (j = 0; j < 3; j++) {
-            kf->Q[6+i*3+j][6+i*3+j] = foot_noise;
-        }
-    }
-}
-
-// 卡尔曼滤波器预测步骤
-void kf_predict(KalmanFilter* kf, float u[CTRL_DIM]) {
-    int i, j, k;
-    float temp_x[MAX_MATRIX_DIM] = {0};
-    float temp_matrix[MAX_MATRIX_DIM][MAX_MATRIX_DIM] = {0};
-    float Fx[MAX_MATRIX_DIM] = {0};
-    float Bu[MAX_MATRIX_DIM] = {0};
-    float FP[MAX_MATRIX_DIM][MAX_MATRIX_DIM] = {0};
-    float F_transpose[MAX_MATRIX_DIM][MAX_MATRIX_DIM] = {0};
-    
-    // 保存上一时刻状态(用于计算速度)
-    memcpy(kf->prev_x, kf->x, sizeof(kf->x));
-    kf->prev_time += kf->dt;
-    
-    // 1. 预测状态: x(k|k-1) = F * x(k-1|k-1) + B * u(k)
-    
-    // 计算 Fx
-    mat_mult_vec_ptr(STATE_DIM, STATE_DIM, &kf->F[0][0], kf->x, Fx);
-    
-    // 如果有控制输入u，计算 Bu
-    if (u != NULL) {
-        mat_mult_vec_ptr(STATE_DIM, CTRL_DIM, &kf->B[0][0], u, Bu);
-        
-        // 计算 x = Fx + Bu
-        vec_add_ptr(STATE_DIM, Fx, Bu, kf->x);
-    } else {
-        // 如果没有控制输入，直接使用 x = Fx
-        memcpy(kf->x, Fx, sizeof(Fx));
-    }
-    
-    // 2. 预测误差协方差: P(k|k-1) = F * P(k-1|k-1) * F^T + Q
-    
-    // 计算 FP = F * P
-    mat_mult_ptr(STATE_DIM, STATE_DIM, STATE_DIM, &kf->F[0][0], &kf->P[0][0], &FP[0][0]);
-    
-    // 计算 F 的转置
-    mat_transpose_ptr(STATE_DIM, STATE_DIM, &kf->F[0][0], &F_transpose[0][0]);
-    
-    // 计算 FPFT = FP * F^T
-    mat_mult_ptr(STATE_DIM, STATE_DIM, STATE_DIM, &FP[0][0], &F_transpose[0][0], &temp_matrix[0][0]);
-    
-    // 计算 P = FPFT + Q
-    mat_add_ptr(STATE_DIM, STATE_DIM, &temp_matrix[0][0], &kf->Q[0][0], &kf->P[0][0]);
-}
-
-// 卡尔曼滤波器更新步骤
-void kf_update(KalmanFilter* kf, float z[MEAS_DIM]) {
-    int i, j, k;
-    int valid_meas = kf->valid_measurements;
-    
-    if (valid_meas <= 0) return; // 没有有效测量，跳过更新
-    
-    // 临时变量
-    float Hx[MAX_VALID_MEAS] = {0};
-    float innovation[MAX_VALID_MEAS] = {0};
-    float HP[MAX_VALID_MEAS][MAX_MATRIX_DIM] = {0};
-    float H_transpose[MAX_MATRIX_DIM][MAX_VALID_MEAS] = {0};
-    float HPHT[MAX_VALID_MEAS][MAX_VALID_MEAS] = {0};
-    float S[MAX_VALID_MEAS][MAX_VALID_MEAS] = {0};
-    float S_inv[MAX_VALID_MEAS][MAX_VALID_MEAS] = {0};
-    float PHT[MAX_MATRIX_DIM][MAX_VALID_MEAS] = {0};
-    float K[MAX_MATRIX_DIM][MAX_VALID_MEAS] = {0};
-    float Ky[MAX_MATRIX_DIM] = {0};
-    float KH[MAX_MATRIX_DIM][MAX_MATRIX_DIM] = {0};
-    float IKH[MAX_MATRIX_DIM][MAX_MATRIX_DIM] = {0};
-    float temp_P[MAX_MATRIX_DIM][MAX_MATRIX_DIM] = {0};
-    
-    // 临时向量和矩阵 (为了适应变化的有效测量数量)
-    float H_valid[MAX_VALID_MEAS][MAX_MATRIX_DIM] = {0};
-    float R_valid[MAX_VALID_MEAS][MAX_VALID_MEAS] = {0};
-    float z_valid[MAX_VALID_MEAS] = {0};
-    
-    // 提取有效的H, R和z
-    for (i = 0; i < valid_meas; i++) {
-        z_valid[i] = z[i];
-        for (j = 0; j < valid_meas; j++) {
-            R_valid[i][j] = kf->R[i][j];
-        }
-        for (j = 0; j < STATE_DIM; j++) {
-            H_valid[i][j] = kf->H[i][j];
-        }
-    }
-    
-    // 0. 计算测量残差: innovation = z - H*x
-    
-    // 计算 H * x
-    mat_mult_vec_ptr(valid_meas, STATE_DIM, &H_valid[0][0], kf->x, Hx);
-    
-    // 计算 innovation = z - Hx
-    vec_sub_ptr(valid_meas, z_valid, Hx, innovation);
-    
-    // 1. 计算残差协方差: S = H * P * H^T + R
-    
-    // 计算 HP = H * P
-    mat_mult_ptr(valid_meas, STATE_DIM, STATE_DIM, &H_valid[0][0], &kf->P[0][0], &HP[0][0]);
-    
-    // 计算 H 的转置
-    mat_transpose_ptr(valid_meas, STATE_DIM, &H_valid[0][0], &H_transpose[0][0]);
-    
-    // 计算 HPHT = HP * H^T
-    mat_mult_ptr(valid_meas, STATE_DIM, valid_meas, &HP[0][0], &H_transpose[0][0], &HPHT[0][0]);
-    
-    // 计算 S = HPHT + R
-    mat_add_ptr(valid_meas, valid_meas, &HPHT[0][0], &R_valid[0][0], &S[0][0]);
-    
-    // 2. 计算卡尔曼增益: K = P * H^T * S^(-1)
-    
-    // 计算 S 的逆矩阵
-    if (mat_inverse_ptr(valid_meas, &S[0][0], &S_inv[0][0]) != MAT_SUCCESS) {
-        printf("警告: 矩阵求逆失败\n");
-        return;
-    }
-    
-    // 计算 P * H^T
-    mat_mult_ptr(STATE_DIM, STATE_DIM, valid_meas, &kf->P[0][0], &H_transpose[0][0], &PHT[0][0]);
-    
-    // 计算 K = PHT * S_inv
-    mat_mult_ptr(STATE_DIM, valid_meas, valid_meas, &PHT[0][0], &S_inv[0][0], &K[0][0]);
-    
-    // 3. 更新状态估计: x(k|k) = x(k|k-1) + K * innovation
-    
-    // 计算 K * innovation
-    mat_mult_vec_ptr(STATE_DIM, valid_meas, &K[0][0], innovation, Ky);
-    
-    // 更新状态向量: x = x + Ky
-    vec_add_ptr(STATE_DIM, kf->x, Ky, kf->x);
-    
-    // 4. 更新误差协方差: P(k|k) = (I - K*H) * P(k|k-1)
-    
-    // 计算 KH = K * H
-    mat_mult_ptr(STATE_DIM, valid_meas, STATE_DIM, &K[0][0], &H_valid[0][0], &KH[0][0]);
-    
-    // 计算 I - KH
-    for (i = 0; i < STATE_DIM; i++) {
-        for (j = 0; j < STATE_DIM; j++) {
-            IKH[i][j] = (i == j ? 1.0f : 0.0f) - KH[i][j];
-        }
-    }
-    
-    // 计算 (I - KH) * P
-    mat_mult_ptr(STATE_DIM, STATE_DIM, STATE_DIM, &IKH[0][0], &kf->P[0][0], &temp_P[0][0]);
-        
-    // 更新误差协方差
-    memcpy(kf->P, temp_P, sizeof(temp_P));
-}
-
-// 计算28维输出向量
-void compute_output_vector(KalmanFilter* kf) {
-    int i, j, idx = 0;
-    
-    // 计算足端相对位置向量 psfB (12维)
-    for (i = 0; i < LEG_NUM; i++) {
-        for (j = 0; j < 3; j++) {
-            // 足端位置减去机身位置
-            kf->y[idx++] = kf->x[6 + i*3 + j] - kf->x[j];
-        }
-    }
-    
-    // 计算足端相对速度向量 vsfB (12维)
-    for (i = 0; i < LEG_NUM; i++) {
-        for (j = 0; j < 3; j++) {
-            // 计算足端位置变化率减去机身速度
-            // (当前足端位置 - 上一时刻足端位置)/dt - 机身速度
-            float foot_vel = (kf->x[6 + i*3 + j] - kf->prev_x[6 + i*3 + j]) / kf->dt;
-            kf->y[12 + idx++] = foot_vel - kf->x[3 + j];
-        }
-    }
-    
-    // 计算足端高度 psz (4维)
-    for (i = 0; i < LEG_NUM; i++) {
-        // 足端z坐标就是高度
-        kf->y[24 + i] = kf->x[6 + i*3 + 2];
-    }
-}
-
-
-// 获取28维输出向量
-void kf_get_output_vector(KalmanFilter* kf, float output[OUTPUT_DIM]) {
-    memcpy(output, kf->y, OUTPUT_DIM * sizeof(float));
-}
-
-// 获取足端相对位置向量
-void kf_get_foot_relative_positions(KalmanFilter* kf, float psfB[LEG_NUM][3]) {
-    for (int i = 0; i < LEG_NUM; i++) {
-        memcpy(psfB[i], &kf->y[i*3], 3 * sizeof(float));
-    }
-}
-
-// 获取足端相对速度向量
-void kf_get_foot_relative_velocities(KalmanFilter* kf, float vsfB[LEG_NUM][3]) {
-    for (int i = 0; i < LEG_NUM; i++) {
-        memcpy(vsfB[i], &kf->y[12 + i*3], 3 * sizeof(float));
-    }
+void LPF_clear(){
+    lpf.start = 0;
+    lpf.pastValue = 0;
 }
 
 /**
@@ -463,14 +124,14 @@ void body_to_world_acc(float R[3][3], const float acc_body[3], float acc_world[3
 }
 
 //计算世界坐标系下足端相对于机身的位置
-void world_foot_to_body_pos(uint8_t leg_id, const float R[3][3], float PsfBi[3]) {
+void world_foot_to_body_pos(uint8_t leg_id, float R[3][3], float PsfBi[3]) {
     float PbfBi[3];
     leg_get_current_foot_pos_body(leg_id, PbfBi);
     mat_mult_vec_ptr(3, 3, &R[0][0], PbfBi, PsfBi);  // 添加&R[0][0]以获取指针
 }
 
 // 计算世界坐标系下足端相对于机身的速度
-void world_foot_to_body_vel(uint8_t leg_id, const float R[3][3], float VsfBi[3]) {
+void world_foot_to_body_vel(uint8_t leg_id, float R[3][3], float VsfBi[3]) {
     float PbfBi[3];
     float WbxPbfBi[3];
     float VbfBi[3];
@@ -486,85 +147,19 @@ void world_foot_to_body_vel(uint8_t leg_id, const float R[3][3], float VsfBi[3])
     mat_mult_vec_ptr(3, 3, &R[0][0], Wb_add_Vb, VsfBi);  // 添加&R[0][0]以获取指针
 }
 
-// 卡尔曼滤波器完整处理步骤
-void process_quadruped_state_estimation() {
-    // 1. 根据接触状态调整过程噪声
-    adjust_process_noise(&kf, &sensor_data);
-    
-    // 2. 更新观测模型
-    update_observation_model(&kf, &sensor_data);
-    
-    // 3. 准备控制输入(IMU加速度在世界坐标系下)
-    float u[CTRL_DIM];
-    // 将加速度从机身坐标系转换到世界坐标系 
-    // 使用四元数旋转，这里简化处理
-//    transform_acceleration_to_world_frame(sensor_data.quaternion, sensor_data.acc, u);
-    // 4. 预测步骤
-    kf_predict(&kf, u);
-    
-    // 5. 准备测量向量
-    float z[MEAS_DIM];
-    prepare_measurement_vector(&kf, &sensor_data, z);
-    
-    // 6. 更新步骤
-    kf_update(&kf, z);
-    
-    // 7. 计算输出向量
-    compute_output_vector(&kf);
-}
-
-float dt[3] = { 0.002, 0.002, 0.002 }; // 离散化采样时间，即计算间隔s
-    float I3[3][3] = {
-            {1, 0, 0},
-            {0, 1, 0},
-            {0, 0, 1}
-    };
-    float _I3[3][3] = {
-            {-1, 0, 0},
-            {0, -1, 0},
-            {0, 0, -1}
-    };
-    float I3dt[3][3] = {
-        {0.002, 0, 0},
-        {0, 0.002, 0},
-        {0, 0, 0.002}
-    };
-    float I12[12][12] = {
-        {1,0,0,0,0,0,0,0,0,0,0,0},
-        {0,1,0,0,0,0,0,0,0,0,0,0},
-        {0,0,1,0,0,0,0,0,0,0,0,0},
-        {0,0,0,1,0,0,0,0,0,0,0,0},
-        {0,0,0,0,1,0,0,0,0,0,0,0},
-        {0,0,0,0,0,1,0,0,0,0,0,0},
-        {0,0,0,0,0,0,1,0,0,0,0,0},
-        {0,0,0,0,0,0,0,1,0,0,0,0},
-        {0,0,0,0,0,0,0,0,1,0,0,0},
-        {0,0,0,0,0,0,0,0,0,1,0,0},
-        {0,0,0,0,0,0,0,0,0,0,1,0},
-        {0,0,0,0,0,0,0,0,0,0,0,1}
-    };
-    float I18[18][18] = {
-        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0},
-        {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1}
-    };
-
 void estimation_init() {
+    // 初始化常量矩阵
+    for (int i = 0; i < 3; i++) {
+        I3[i][i] = 1;
+        I3dt[i][i] = dt;
+        _I3[i][i] = -1;
+    }
+    for (int i = 0; i < 12; i++) {
+        I12[i][i] = 1;
+    }
+    for (int i = 0; i < 18; i++) {
+        I18[i][i] = 1;
+    }
     // 构造离散化状态转移矩阵F = I + dt*A
     //[I3 I3dt 0]
     //[    I3   ]
@@ -604,13 +199,101 @@ void estimation_init() {
     kf.H[25][11] = 1;
     kf.H[26][14] = 1;
     kf.H[27][17] = 1;
-
+    // 控制矩阵的噪声协方差矩阵，一般直接测出来。这里用的宇树程序里的值，如果效果不好需要自己重测
+    float Cu[3][3] = {
+        268.573,  -43.819, -147.211,
+        -43.819 ,  92.949 ,  58.082,
+        -147.211,   58.082,  302.120
+    };
+    // 状态变量的噪声协方差，前六个方差较小，后12个因为足端触底有抖动，因此方差较大
+    float Qdig[18][18] = {0};
+    for (int i = 0; i < 18; i++) {
+        if (i < 3) {
+            Qdig[i][i] = 0.0003;
+        } else if (i < 6) {
+            Qdig[i][i] = 0.0003;
+        } else {
+            Qdig[i][i] = 0.01;
+        }
+    }
+    // 构造过程噪声协方差矩阵Q = Qdig + B * Cu * B^T
+    float BCu[18][18] = {0};
+    float BT[3][18] = {0};
+    mat_mult_ptr(18, 3, 3, &kf.B[0][0], &Cu[0][0], &BCu[0][0]);
+    mat_transpose_ptr(18, 3, &kf.B[0][0], &BT[0][0]);
+    mat_mult_ptr(18, 3, 18, &BCu[0][0], &BT[0][0], &kf.Q[0][0]);
+    mat_add_ptr(18, 18, &Qdig[0][0], &kf.Q[0][0], &kf.Q[0][0]);
+    // 测量噪声协方差矩阵R，直接用的宇树的
+    float R[28][28] = {
+        {0.008, 0.012, -0.000, -0.009, 0.012, 0.000, 0.009, -0.009, -0.000, -0.009, -0.009, 0.000, -0.000, 0.000, -0.000, 0.000, -0.000, -0.001, -0.002, 0.000, -0.000, -0.003, -0.000, -0.001, 0.000, 0.000, 0.000, 0.000},
+        {0.012, 0.019, -0.001, -0.014, 0.018, -0.000, 0.014, -0.013, -0.000, -0.014, -0.014, 0.001, -0.001, 0.001, -0.001, 0.000, 0.000, -0.001, -0.003, 0.000, -0.001, -0.004, -0.000, -0.001, 0.000, 0.000, 0.000, 0.000},
+        {-0.000, -0.001, 0.001, 0.001, -0.001, 0.000, -0.000, 0.000, -0.000, 0.001, 0.000, -0.000, 0.000, -0.000, 0.000, 0.000, -0.000, -0.000, 0.000, -0.000, -0.000, -0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000},
+        {-0.009, -0.014, 0.001, 0.010, -0.013, 0.000, -0.010, 0.010, 0.000, 0.010, 0.010, -0.000, 0.001, 0.000, 0.000, 0.001, -0.000, 0.001, 0.002, -0.000, 0.000, 0.003, 0.000, 0.001, 0.000, 0.000, 0.000, 0.000},
+        {0.012, 0.018, -0.001, -0.013, 0.018, -0.000, 0.013, -0.013, -0.000, -0.013, -0.013, 0.001, -0.001, 0.000, -0.001, 0.000, 0.001, -0.001, -0.003, 0.000, -0.001, -0.004, -0.000, -0.001, 0.000, 0.000, 0.000, 0.000},
+        {0.000, -0.000, 0.000, 0.000, -0.000, 0.001, 0.000, 0.000, -0.000, 0.000, 0.000, -0.000, -0.000, 0.000, -0.000, 0.000, 0.000, 0.000, -0.000, -0.000, -0.000, -0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000},
+        {0.009, 0.014, -0.000, -0.010, 0.013, 0.000, 0.010, -0.010, -0.000, -0.010, -0.010, 0.000, -0.001, 0.000, -0.001, 0.000, -0.000, -0.001, -0.001, 0.000, -0.000, -0.003, -0.000, -0.001, 0.000, 0.000, 0.000, 0.000},
+        {-0.009, -0.013, 0.000, 0.010, -0.013, 0.000, -0.010, 0.009, 0.000, 0.010, 0.010, -0.000, 0.001, -0.000, 0.000, -0.000, 0.000, 0.001, 0.002, 0.000, 0.000, 0.003, 0.000, 0.001, 0.000, 0.000, 0.000, 0.000},
+        {-0.000, -0.000, -0.000, 0.000, -0.000, -0.000, -0.000, 0.000, 0.001, 0.000, 0.000, 0.000, 0.000, -0.000, 0.000, -0.000, 0.000, -0.000, 0.000, -0.000, 0.000, 0.000, -0.000, -0.000, 0.000, 0.000, 0.000, 0.000},
+        {-0.009, -0.014, 0.001, 0.010, -0.013, 0.000, -0.010, 0.010, 0.000, 0.010, 0.010, -0.000, 0.001, 0.000, 0.000, -0.000, -0.000, 0.001, 0.002, -0.000, 0.000, 0.003, 0.000, 0.001, 0.000, 0.000, 0.000, 0.000},
+        {-0.009, -0.014, 0.000, 0.010, -0.013, 0.000, -0.010, 0.010, 0.000, 0.010, 0.010, -0.000, 0.001, -0.000, 0.000, -0.000, 0.000, 0.001, 0.002, -0.000, 0.000, 0.003, 0.001, 0.001, 0.000, 0.000, 0.000, 0.000},
+        {0.000, 0.001, -0.000, -0.000, 0.001, -0.000, 0.000, -0.000, 0.000, -0.000, -0.000, 0.001, 0.000, -0.000, -0.000, -0.000, 0.000, 0.000, -0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000},
+        {-0.000, -0.001, 0.000, 0.001, -0.001, -0.000, -0.001, 0.001, 0.000, 0.001, 0.001, 0.000, 1.708, 0.048, 0.784, 0.062, 0.042, 0.053, 0.077, 0.001, -0.061, 0.046, -0.019, -0.029, 0.000, 0.000, 0.000, 0.000},
+        {0.000, 0.001, -0.000, 0.000, 0.000, 0.000, 0.000, -0.000, -0.000, 0.000, -0.000, -0.000, 0.048, 5.001, -1.631, -0.036, 0.144, 0.040, 0.036, 0.016, -0.051, -0.067, -0.024, -0.005, 0.000, 0.000, 0.000, 0.000},
+        {-0.000, -0.001, 0.000, 0.000, -0.001, -0.000, -0.001, 0.000, 0.000, 0.000, 0.000, -0.000, 0.784, -1.631, 1.242, 0.057, -0.037, 0.018, 0.034, -0.017, -0.015, 0.058, -0.021, -0.029, 0.000, 0.000, 0.000, 0.000},
+        {0.000, 0.000, 0.000, 0.001, 0.000, 0.000, 0.000, -0.000, -0.000, -0.000, -0.000, -0.000, 0.062, -0.036, 0.057, 6.228, -0.014, 0.932, 0.059, 0.053, -0.069, 0.148, 0.015, -0.031, 0.000, 0.000, 0.000, 0.000},
+        {-0.000, 0.000, -0.000, -0.000, 0.001, 0.000, -0.000, 0.000, 0.000, -0.000, 0.000, 0.000, 0.042, 0.144, -0.037, -0.014, 3.011, 0.986, 0.076, 0.030, -0.052, -0.027, 0.057, 0.051, 0.000, 0.000, 0.000, 0.000},
+        {-0.001, -0.001, -0.000, 0.001, -0.001, 0.000, -0.001, 0.001, -0.000, 0.001, 0.001, 0.000, 0.053, 0.040, 0.018, 0.932, 0.986, 0.885, 0.090, 0.044, -0.055, 0.057, 0.051, -0.003, 0.000, 0.000, 0.000, 0.000},
+        {-0.002, -0.003, 0.000, 0.002, -0.003, -0.000, -0.001, 0.002, 0.000, 0.002, 0.002, -0.000, 0.077, 0.036, 0.034, 0.059, 0.076, 0.090, 6.230, 0.139, 0.763, 0.013, -0.019, -0.024, 0.000, 0.000, 0.000, 0.000},
+        {0.000, 0.000, -0.000, -0.000, 0.000, -0.000, 0.000, 0.000, -0.000, -0.000, -0.000, 0.000, 0.001, 0.016, -0.017, 0.053, 0.030, 0.044, 0.139, 3.130, -1.128, -0.010, 0.131, 0.018, 0.000, 0.000, 0.000, 0.000},
+        {-0.000, -0.001, -0.000, 0.000, -0.001, -0.000, -0.000, 0.000, 0.000, 0.000, 0.000, 0.000, -0.061, -0.051, -0.015, -0.069, -0.052, -0.055, 0.763, -1.128, 0.866, -0.022, -0.053, 0.007, 0.000, 0.000, 0.000, 0.000},
+        {-0.003, -0.004, -0.000, 0.003, -0.004, -0.000, -0.003, 0.003, 0.000, 0.003, 0.003, 0.000, 0.046, -0.067, 0.058, 0.148, -0.027, 0.057, 0.013, -0.010, -0.022, 2.437, -0.102, 0.938, 0.000, 0.000, 0.000, 0.000},
+        {-0.000, -0.000, 0.000, 0.000, -0.000, 0.000, -0.000, 0.000, -0.000, 0.000, 0.001, 0.000, -0.019, -0.024, -0.021, 0.015, 0.057, 0.051, -0.019, 0.131, -0.053, -0.102, 4.944, 1.724, 0.000, 0.000, 0.000, 0.000},
+        {-0.001, -0.001, 0.000, 0.001, -0.001, 0.000, -0.001, 0.001, -0.000, 0.001, 0.001, 0.000, -0.029, -0.005, -0.029, -0.031, 0.051, -0.003, -0.024, 0.018, 0.007, 0.938, 1.724, 1.569, 0.000, 0.000, 0.000, 0.000},
+        {0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.0, 0.000, 0.000, 0.000},
+        {0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.0, 0.000, 0.000},
+        {0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.0, 0.000},
+        {0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.0}
+    };
+    memcpy(kf.R, R, sizeof(kf.R));
+    
+    // 初始化协方差矩阵P
+    memset(kf.P, 0, sizeof(kf.P));
+    for (int i = 0; i < 18; i++) {
+        kf.P[i][i] = largeVariance;
+    }
+    // 初始化状态变量x
+    memset(kf.x, 0, sizeof(kf.x));
+    // 初始化低通滤波器
+    LPFilter_init(dt, 3.0);
 }
 
-void estimation_run() {
-    /* -----------中间变量------------- */
+// 窗口函数，用于降低触底抖动对状态估计的影响
+float windowFunc(float x, float windowRatio){
+    float xRange = 1;
+    float yRange = 1;
+    if((x < 0)||(x > xRange)){
+        printf("The x=%f, which should between [0, xRange]\n", x);
+    }
+    if((windowRatio <= 0)||(windowRatio >= 0.5f)){
+        printf("The windowRatio=%f, which should between [0, 0.5]\n", windowRatio);
+    }
+    if(x/xRange < windowRatio){
+        return x * yRange / (xRange * windowRatio);
+    }
+    else if(x/xRange > 1 - windowRatio){
+        return yRange * (xRange - x)/(xRange * windowRatio);
+    }
+    else{
+        return yRange;
+    }
+}
+
+/* -----------中间变量------------- */
     float Rot[3][3] = {0};
     float u[3] = {0};
+    float feetPos[4][3] = {0};
+    float feetVel[4][3] = {0};
+    float feetZ[4] = {0};
     float xhat[STATE_DIM] = {0};
     float yhat[OUTPUT_DIM] = {0};
     float Ppri[STATE_DIM][STATE_DIM] = {0};
@@ -636,7 +319,27 @@ void estimation_run() {
     float I_KCPI_KCT[STATE_DIM][STATE_DIM] = {0};
     float KR[STATE_DIM][OUTPUT_DIM] = {0};
     float KRKT[STATE_DIM][STATE_DIM] = {0};
+void estimation_run() {
     /* -----------根据触底状态更新协方差矩阵------------- */
+    for(int i = 0; i < 4; ++i){
+        if(leg_get_contact_state(i) == 0){
+            for (int j = 0; j < 3; j ++)
+            {
+                kf.Q[6+3*i+j][6+3*i+j] = largeVariance;
+                kf.R[12+3*i+j][12+3*i+j] = largeVariance;
+            }
+            kf.R[24+i][24+i] = largeVariance;
+        }
+        else{
+            float trust = windowFunc(leg_get_phase(i), 0.2);
+            for (int j = 0; j < 3; j ++)
+            {
+                kf.Q[6+3*i+j][6+3*i+j] = (1 + (1-trust)*largeVariance) * kf.Q[6+3*i+j][6+3*i+j];
+                kf.R[12+3*i+j][12+3*i+j] = (1 + (1-trust)*largeVariance) * kf.R[12+3*i+j][12+3*i+j];
+            }
+            kf.R[24+i][24+i] = (1 + (1-trust)*largeVariance) * kf.R[24+i][24+i];
+        }
+    }
     /* -----------预测部分------------- */
     // R
     quaternion_to_rotation_matrix_zyx(sensor_data.quaternion, Rot);
@@ -654,7 +357,18 @@ void estimation_run() {
     mat_add_ptr(STATE_DIM, STATE_DIM, &Ppri[0][0], &kf.Q[0][0], &Ppri[0][0]);
 
     /* -----------更新部分------------- */
-    // S = R + C * Ppri * C^T
+    // y 28x1
+    for(int i = 0; i < 4; i ++){
+        world_foot_to_body_pos(i, Rot, feetPos[i]);
+        world_foot_to_body_vel(i, Rot, feetVel[i]);
+        feetZ[i] = 0;
+        for(int j = 0; j < 3; j ++){
+            kf.y[3*i+j] = feetPos[i][j];
+            kf.y[3*i+12+j] = feetVel[i][j];
+        }
+        kf.y[24+i] = feetZ[i];
+    }
+    // S = R + C * Ppri * C^T 28x28
     mat_mult_ptr(OUTPUT_DIM, STATE_DIM, STATE_DIM, &kf.H[0][0], &Ppri[0][0], &CP[0][0]);
     mat_transpose_ptr(OUTPUT_DIM, STATE_DIM, &kf.H[0][0], &CT[0][0]);
     mat_mult_ptr(OUTPUT_DIM, STATE_DIM, OUTPUT_DIM, &CP[0][0], &CT[0][0], &S[0][0]);
@@ -678,7 +392,7 @@ void estimation_run() {
     // x = xhat + Ppri * C^T * S^-1 * (y - yhat) 18x1
     mat_mult_ptr(STATE_DIM, OUTPUT_DIM, 1, &PCT[0][0], &invSy[0], &kf.x[0]);
     vec_add_ptr(STATE_DIM, xhat, &kf.x[0], &kf.x[0]);
-    // P = (I-KC) * Ppri * (I-KC)^T + Ppri * C^T * S^-1 * R * (S^T)^-1 * C * Ppri^T
+    // P = (I-KC) * Ppri * (I-KC)^T + Ppri * C^T * S^-1 * R * (S^T)^-1 * C * Ppri^T 18x18
     mat_mult_ptr(STATE_DIM, STATE_DIM, STATE_DIM, &I_KC[0][0], &Ppri[0][0], &I_KCPI_KCT[0][0]);
     mat_mult_ptr(STATE_DIM, STATE_DIM, STATE_DIM, &I_KCPI_KCT[0][0], &I_KCT[0][0], &I_KCPI_KCT[0][0]);
     mat_mult_ptr(STATE_DIM, OUTPUT_DIM, OUTPUT_DIM, &PCT[0][0], &invSR[0][0], &KR[0][0]);
@@ -686,4 +400,9 @@ void estimation_run() {
     mat_transpose_ptr(STATE_DIM, STATE_DIM, &Ppri[0][0], &PpriT[0][0]);
     mat_mult_ptr(STATE_DIM, STATE_DIM, STATE_DIM, &KRKT[0][0], &PpriT[0][0], &KRKT[0][0]);
     mat_add_ptr(STATE_DIM, STATE_DIM, &I_KCPI_KCT[0][0], &KRKT[0][0], &kf.P[0][0]);
+
+    // 对速度进行低通滤波
+    LPFilter(xhat[3]);
+    LPFilter(xhat[4]);
+    LPFilter(xhat[5]);
 }
