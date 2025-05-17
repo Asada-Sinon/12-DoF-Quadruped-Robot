@@ -45,12 +45,13 @@ typedef struct {
     float F[STATE_DIM][STATE_DIM];      // 状态转移矩阵A
     float B[STATE_DIM][CTRL_DIM];       // 控制输入矩阵B
     float Q[STATE_DIM][STATE_DIM];      // 过程噪声协方差矩阵Q
+    float Q_init[STATE_DIM][STATE_DIM]; // 初始过程噪声协方差矩阵Q
 
     // 测量模型参数 (动态调整)
     float H[OUTPUT_DIM][STATE_DIM];       // 观测矩阵C
     float R[OUTPUT_DIM][OUTPUT_DIM];        // 测量噪声协方差矩阵R
+    float R_init[OUTPUT_DIM][OUTPUT_DIM]; // 初始测量噪声协方差矩阵R
 
-    int valid_measurements;             // 有效测量数量
 
     // 输出变量
     float y[OUTPUT_DIM];                // 输出向量
@@ -94,7 +95,9 @@ void kf_get_foot_relative_positions(KalmanFilter* kf, float psfB[][3]);
  */
 void kf_get_foot_relative_velocities(KalmanFilter* kf, float vsfB[][3]);
 
-
+void estimation_init(void);
+void estimation_start(void);
+void estimation_run(void);
 #endif /* ESTIMATOR_H */
 
 

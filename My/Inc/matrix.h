@@ -1,7 +1,7 @@
 #ifndef MATRIX_H
 #define MATRIX_H
 
-#define MAX_MATRIX_DIM 18  // 用于矩阵操作的最大维度
+#define MAX_MATRIX_DIM 28  // 用于矩阵操作的最大维度
 
 #define MAT_SUCCESS 0     // 操作成功
 #define MAT_ERROR -1      // 操作失败

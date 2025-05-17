@@ -32,7 +32,9 @@
 #include "motor.h"
 #include "robot_params.h"
 #include "gamepad.h"
- #include "arm_math.h"
+#include "arm_math.h"
+#include "my_usart.h"
+#include "estimator.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -53,7 +55,8 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+float test_use_time = 0;
+float test_now_time = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -123,9 +126,13 @@ int main(void)
     timer_init();// 定时器初始化，开启状态机，电机回传等
     HAL_Delay(100); // 等待以确保接收到电机回传数据
     dog_init(NULL);// 初始化狗参数
+    my_usart_init();// 初始化imu
+    estimation_init();// 初始化状态观测器 暂时放在这里初始化，有可能需要先进入站立状态再初始化观测器
     
     // 状态机切换到初始状态
-    fsm_change_to(STATE_STAND);
+   fsm_change_to(STATE_STAND);
+   HAL_Delay(1000); // 延时1s，等待状态机切换完成
+   estimation_start(); // 在站立状态下，开始状态观测器，站立过程可能会有影响
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -136,6 +143,9 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
       gamepad_control();
+      test_now_time = getTime();
+      estimation_run();
+      test_use_time = getTime() - test_now_time;
       HAL_Delay(1);
   }
   /* USER CODE END 3 */

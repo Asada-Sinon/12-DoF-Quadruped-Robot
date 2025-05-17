@@ -4,6 +4,7 @@
 #include "j60.h"
 #include "fsm.h"
 #include "motor.h"
+#include "estimator.h"
 
 // 获取系统时间
 // long long getSystemTime() {
@@ -37,6 +38,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     if (htim->Instance == TIM3) {
         // 全局调整重心
         dog_smooth_cog(0.005);
+        // 状态观测器
+//        estimation_run();
         // 2ms状态机
         fsm_update();
     }

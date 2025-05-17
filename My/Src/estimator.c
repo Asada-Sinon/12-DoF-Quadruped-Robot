@@ -16,8 +16,12 @@
 #include "estimator.h"
 #include "dog.h"  // 引入dog.h以使用腿部运动学函数
 #include "matrix.h"
+#include "imu.h"
+
+
 KalmanFilter kf;
-ExtendedSensorData sensor_data;
+
+float kf_start = 0;
 
 // 一些常量矩阵
 float dt = 0.002; // 离散化采样时间，即计算间隔s
@@ -139,7 +143,7 @@ void world_foot_to_body_vel(uint8_t leg_id, float R[3][3], float VsfBi[3]) {
     float joint_pos[3];
     float joint_vel[3];
     leg_get_current_foot_pos_body(leg_id, PbfBi);
-    vec3_cross(sensor_data.gyro, PbfBi, WbxPbfBi);  // 使用vec3_cross替代vec_cross
+    vec3_cross(imu_get_data()->gyro, PbfBi, WbxPbfBi);  // 使用vec3_cross替代vec_cross
     leg_get_current_joint_pos(leg_id, joint_pos);
     leg_get_current_joint_vel(leg_id, joint_vel);
     leg_forward_kinematics_vel(leg_id, joint_pos, joint_vel, VbfBi);
@@ -221,8 +225,9 @@ void estimation_init() {
     float BT[3][18] = {0};
     mat_mult_ptr(18, 3, 3, &kf.B[0][0], &Cu[0][0], &BCu[0][0]);
     mat_transpose_ptr(18, 3, &kf.B[0][0], &BT[0][0]);
-    mat_mult_ptr(18, 3, 18, &BCu[0][0], &BT[0][0], &kf.Q[0][0]);
-    mat_add_ptr(18, 18, &Qdig[0][0], &kf.Q[0][0], &kf.Q[0][0]);
+    mat_mult_ptr(18, 3, 18, &BCu[0][0], &BT[0][0], &kf.Q_init[0][0]);
+    mat_add_ptr(18, 18, &Qdig[0][0], &kf.Q_init[0][0], &kf.Q_init[0][0]);
+    memcpy(kf.Q, kf.Q_init, sizeof(kf.Q));
     // 测量噪声协方差矩阵R，直接用的宇树的
     float R[28][28] = {
         {0.008, 0.012, -0.000, -0.009, 0.012, 0.000, 0.009, -0.009, -0.000, -0.009, -0.009, 0.000, -0.000, 0.000, -0.000, 0.000, -0.000, -0.001, -0.002, 0.000, -0.000, -0.003, -0.000, -0.001, 0.000, 0.000, 0.000, 0.000},
@@ -254,7 +259,8 @@ void estimation_init() {
         {0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.0, 0.000},
         {0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 1.0}
     };
-    memcpy(kf.R, R, sizeof(kf.R));
+    memcpy(kf.R_init, R, sizeof(kf.R_init));
+    memcpy(kf.R, kf.R_init, sizeof(kf.R));
     
     // 初始化协方差矩阵P
     memset(kf.P, 0, sizeof(kf.P));
@@ -319,7 +325,12 @@ float windowFunc(float x, float windowRatio){
     float I_KCPI_KCT[STATE_DIM][STATE_DIM] = {0};
     float KR[STATE_DIM][OUTPUT_DIM] = {0};
     float KRKT[STATE_DIM][STATE_DIM] = {0};
+
+
 void estimation_run() {
+    if(kf_start == 0){
+        return;
+    }
     /* -----------根据触底状态更新协方差矩阵------------- */
     for(int i = 0; i < 4; ++i){
         if(leg_get_contact_state(i) == 0){
@@ -334,17 +345,17 @@ void estimation_run() {
             float trust = windowFunc(leg_get_phase(i), 0.2);
             for (int j = 0; j < 3; j ++)
             {
-                kf.Q[6+3*i+j][6+3*i+j] = (1 + (1-trust)*largeVariance) * kf.Q[6+3*i+j][6+3*i+j];
-                kf.R[12+3*i+j][12+3*i+j] = (1 + (1-trust)*largeVariance) * kf.R[12+3*i+j][12+3*i+j];
+                kf.Q[6+3*i+j][6+3*i+j] = (1 + (1-trust)*largeVariance) * kf.Q_init[6+3*i+j][6+3*i+j];
+                kf.R[12+3*i+j][12+3*i+j] = (1 + (1-trust)*largeVariance) * kf.R_init[12+3*i+j][12+3*i+j];
             }
-            kf.R[24+i][24+i] = (1 + (1-trust)*largeVariance) * kf.R[24+i][24+i];
+            kf.R[24+i][24+i] = (1 + (1-trust)*largeVariance) * kf.R_init[24+i][24+i];
         }
     }
     /* -----------预测部分------------- */
     // R
-    quaternion_to_rotation_matrix_zyx(sensor_data.quaternion, Rot);
+    quaternion_to_rotation_matrix_zyx(imu_get_data()->quaternion, Rot);
     // u = R * acc + g
-    body_to_world_acc(Rot, sensor_data.acc, u);
+    body_to_world_acc(Rot, imu_get_data()->acc, u);
     // xhat = A * x + B * u
     mat_mult_vec_ptr(STATE_DIM, STATE_DIM, &kf.F[0][0], kf.x, xhat);
     vec_add_ptr(STATE_DIM, xhat, u, xhat);
@@ -405,4 +416,9 @@ void estimation_run() {
     LPFilter(xhat[3]);
     LPFilter(xhat[4]);
     LPFilter(xhat[5]);
+}
+
+void estimation_start(void)
+{
+    kf_start = 1;
 }
