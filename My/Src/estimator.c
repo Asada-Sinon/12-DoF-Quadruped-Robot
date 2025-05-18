@@ -17,7 +17,7 @@
 #include "dog.h"  // 引入dog.h以使用腿部运动学函数
 #include "matrix.h"
 #include "imu.h"
-
+#include "timer.h"
 
 KalmanFilter kf;
 
@@ -26,11 +26,11 @@ float kf_start = 0;
 // 一些常量矩阵
 float dt = 0.002; // 离散化采样时间，即计算间隔s
 float largeVariance = 100; // 大数，用于代替无穷
-float I3dt[3][3];
-float I3[3][3];
-float _I3[3][3];
-float I12[12][12];
-float I18[18][18];
+float I3dt_f32[3][3] = {0};
+float I3_f32[3][3] = {0};
+float _I3_f32[3][3] = {0};
+float I12_f32[12][12] = {0};
+float I18_f32[18][18] = {0};
 
 struct LPFilter{
     float weight;
@@ -154,28 +154,28 @@ void world_foot_to_body_vel(uint8_t leg_id, float R[3][3], float VsfBi[3]) {
 void estimation_init() {
     // 初始化常量矩阵
     for (int i = 0; i < 3; i++) {
-        I3[i][i] = 1;
-        I3dt[i][i] = dt;
-        _I3[i][i] = -1;
+        I3_f32[i][i] = 1;
+        I3dt_f32[i][i] = dt;
+        _I3_f32[i][i] = -1;
     }
     for (int i = 0; i < 12; i++) {
-        I12[i][i] = 1;
+        I12_f32[i][i] = 1;
     }
     for (int i = 0; i < 18; i++) {
-        I18[i][i] = 1;
+        I18_f32[i][i] = 1;
     }
     // 构造离散化状态转移矩阵F = I + dt*A
     //[I3 I3dt 0]
     //[    I3   ]
     //[      I12] 18x18
     memset(kf.F, 0, sizeof(kf.F));
-    mat_add_block_ptr(0, 0, 3, 3, 18, &kf.F[0][0], &I3[0][0], &kf.F[0][0]);
-    mat_add_block_ptr(0, 3, 3, 3, 18, &kf.F[0][0], &I3dt[0][0], &kf.F[0][0]);
-    mat_add_block_ptr(3, 3, 3, 3, 18, &kf.F[0][0], &I3[0][0], &kf.F[0][0]);
-    mat_add_block_ptr(6, 6, 12, 12, 18, &kf.F[0][0], &I12[0][0], &kf.F[0][0]);
+    mat_add_block_ptr(0, 0, 3, 3, 18, &kf.F[0][0], &I3_f32[0][0], &kf.F[0][0]);
+    mat_add_block_ptr(0, 3, 3, 3, 18, &kf.F[0][0], &I3dt_f32[0][0], &kf.F[0][0]);
+    mat_add_block_ptr(3, 3, 3, 3, 18, &kf.F[0][0], &I3_f32[0][0], &kf.F[0][0]);
+    mat_add_block_ptr(6, 6, 12, 12, 18, &kf.F[0][0], &I12_f32[0][0], &kf.F[0][0]);
     // 构造离散化控制矩阵B = dt*B
     memset(kf.B, 0, sizeof(kf.B));
-    mat_add_block_ptr(0, 3, 3, 3, 18, &kf.B[0][0], &I3dt[0][0], &kf.B[0][0]);
+    mat_add_block_ptr(0, 3, 3, 3, 18, &kf.B[0][0], &I3dt_f32[0][0], &kf.B[0][0]);
     // 构造离散化观测矩阵H = C
     // [-I3 0 I3 0 0 0]
     // [-I3 0 0 I3 0 0]
@@ -190,15 +190,15 @@ void estimation_init() {
     // [0 0 0 0 [0 0 1] 0]
     // [0 0 0 0 0 [0 0 1]] 28x18
     memset(kf.H, 0, sizeof(kf.H));
-    mat_add_block_ptr(0, 0, 3, 3, 18, &kf.H[0][0], &_I3[0][0], &kf.H[0][0]);
-    mat_add_block_ptr(3, 0, 3, 3, 18, &kf.H[0][0], &_I3[0][0], &kf.H[0][0]);
-    mat_add_block_ptr(6, 0, 3, 3, 18, &kf.H[0][0], &_I3[0][0], &kf.H[0][0]);
-    mat_add_block_ptr(9, 0, 3, 3, 18, &kf.H[0][0], &_I3[0][0], &kf.H[0][0]);
-    mat_add_block_ptr(12, 3, 3, 3, 18, &kf.H[0][0], &_I3[0][0], &kf.H[0][0]);
-    mat_add_block_ptr(15, 3, 3, 3, 18, &kf.H[0][0], &_I3[0][0], &kf.H[0][0]);
-    mat_add_block_ptr(18, 3, 3, 3, 18, &kf.H[0][0], &_I3[0][0], &kf.H[0][0]);
-    mat_add_block_ptr(21, 3, 3, 3, 18, &kf.H[0][0], &_I3[0][0], &kf.H[0][0]);
-    mat_add_block_ptr(0, 6, 12, 12, 18, &kf.H[0][0], &I12[0][0], &kf.H[0][0]);
+    mat_add_block_ptr(0, 0, 3, 3, 18, &kf.H[0][0], &_I3_f32[0][0], &kf.H[0][0]);
+    mat_add_block_ptr(3, 0, 3, 3, 18, &kf.H[0][0], &_I3_f32[0][0], &kf.H[0][0]);
+    mat_add_block_ptr(6, 0, 3, 3, 18, &kf.H[0][0], &_I3_f32[0][0], &kf.H[0][0]);
+    mat_add_block_ptr(9, 0, 3, 3, 18, &kf.H[0][0], &_I3_f32[0][0], &kf.H[0][0]);
+    mat_add_block_ptr(12, 3, 3, 3, 18, &kf.H[0][0], &_I3_f32[0][0], &kf.H[0][0]);
+    mat_add_block_ptr(15, 3, 3, 3, 18, &kf.H[0][0], &_I3_f32[0][0], &kf.H[0][0]);
+    mat_add_block_ptr(18, 3, 3, 3, 18, &kf.H[0][0], &_I3_f32[0][0], &kf.H[0][0]);
+    mat_add_block_ptr(21, 3, 3, 3, 18, &kf.H[0][0], &_I3_f32[0][0], &kf.H[0][0]);
+    mat_add_block_ptr(0, 6, 12, 12, 18, &kf.H[0][0], &I12_f32[0][0], &kf.H[0][0]);
     kf.H[24][8] = 1;
     kf.H[25][11] = 1;
     kf.H[26][14] = 1;
@@ -295,42 +295,84 @@ float windowFunc(float x, float windowRatio){
 }
 
 /* -----------中间变量------------- */
-    float Rot[3][3] = {0};
-    float u[3] = {0};
-    float feetPos[4][3] = {0};
-    float feetVel[4][3] = {0};
-    float feetZ[4] = {0};
-    float xhat[STATE_DIM] = {0};
-    float yhat[OUTPUT_DIM] = {0};
-    float Ppri[STATE_DIM][STATE_DIM] = {0};
-    float PpriT[STATE_DIM][STATE_DIM] = {0};
-    float AP[STATE_DIM][STATE_DIM] = {0};
-    float AT[STATE_DIM][STATE_DIM] = {0};
-    float CT[STATE_DIM][OUTPUT_DIM] = {0};
-    float CP[OUTPUT_DIM][STATE_DIM] = {0};
-    float S[OUTPUT_DIM][OUTPUT_DIM] = {0};
-    float ST[OUTPUT_DIM][OUTPUT_DIM] = {0};
-    float SL[OUTPUT_DIM][OUTPUT_DIM] = {0};
-    float SU[OUTPUT_DIM][OUTPUT_DIM] = {0};
-    int LU_P[OUTPUT_DIM] = {0};
-    float invSy[OUTPUT_DIM] = {0};
-    float y_yhat[OUTPUT_DIM] = {0};
-    float invSC[OUTPUT_DIM][STATE_DIM] = {0};
-    float invSR[OUTPUT_DIM][OUTPUT_DIM] = {0};
-    float invSTC[STATE_DIM][OUTPUT_DIM] = {0};
-    float KC[STATE_DIM][STATE_DIM] = {0};
-    float I_KC[STATE_DIM][STATE_DIM] = {0};
-    float PCT[STATE_DIM][OUTPUT_DIM] = {0};
-    float I_KCT[STATE_DIM][STATE_DIM] = {0};
-    float I_KCPI_KCT[STATE_DIM][STATE_DIM] = {0};
-    float KR[STATE_DIM][OUTPUT_DIM] = {0};
-    float KRKT[STATE_DIM][STATE_DIM] = {0};
+float Rot_f32[3][3] = {0};
+float u_f32[3] = {0};
+float feetPos_f32[4][3] = {0};
+float feetVel_f32[4][3] = {0};
+float feetZ_f32[4] = {0};
+float Ax_f32[STATE_DIM] = {0};
+float Bu_f32[STATE_DIM] = {0};
+float xhat_f32[STATE_DIM] = {0};
+float yhat_f32[OUTPUT_DIM] = {0};
+float Ppri_f32[STATE_DIM][STATE_DIM] = {0};
+float PpriT_f32[STATE_DIM][STATE_DIM] = {0};
+float AP_f32[STATE_DIM][STATE_DIM] = {0};
+float AT_f32[STATE_DIM][STATE_DIM] = {0};
+float APAT_f32[STATE_DIM][STATE_DIM] = {0};
+float CT_f32[STATE_DIM][OUTPUT_DIM] = {0};
+float CP_f32[OUTPUT_DIM][STATE_DIM] = {0};
+float S_f32[OUTPUT_DIM][OUTPUT_DIM] = {0};
+float ST_f32[OUTPUT_DIM][OUTPUT_DIM] = {0};
+float SL_f32[OUTPUT_DIM][OUTPUT_DIM] = {0};
+float SU_f32[OUTPUT_DIM][OUTPUT_DIM] = {0};
+int LU_P_f32[OUTPUT_DIM] = {0};
+float invSy_f32[OUTPUT_DIM] = {0};
+float y_yhat_f32[OUTPUT_DIM] = {0};
+float invSC_f32[OUTPUT_DIM][STATE_DIM] = {0};
+float invSR_f32[OUTPUT_DIM][OUTPUT_DIM] = {0};
+float invSTC_f32[STATE_DIM][OUTPUT_DIM] = {0};
+float KC_f32[STATE_DIM][STATE_DIM] = {0};
+float I_KC_f32[STATE_DIM][STATE_DIM] = {0};
+float PCT_f32[STATE_DIM][OUTPUT_DIM] = {0};
+float I_KCT_f32[STATE_DIM][STATE_DIM] = {0};
+float I_KCPI_KCT_f32[STATE_DIM][STATE_DIM] = {0};
+float KR_f32[STATE_DIM][OUTPUT_DIM] = {0};
+float KRKT_f32[STATE_DIM][STATE_DIM] = {0};
 
-
+float start_time[5];
+float use_time[5]; 
+float use_time_all = 0;
 void estimation_run() {
     if(kf_start == 0){
         return;
     }
+    start_time[0] = getTime();
+    static arm_matrix_instance_f32 I18; 
+    static arm_matrix_instance_f32 A; 
+    static arm_matrix_instance_f32 x; 
+    static arm_matrix_instance_f32 B; 
+    static arm_matrix_instance_f32 u;
+    static arm_matrix_instance_f32 C;
+    static arm_matrix_instance_f32 y;
+    static arm_matrix_instance_f32 xhat;
+    static arm_matrix_instance_f32 yhat;
+    static arm_matrix_instance_f32 Ax;
+    static arm_matrix_instance_f32 Bu;
+    static arm_matrix_instance_f32 Ppri;
+    static arm_matrix_instance_f32 PpriT;
+    static arm_matrix_instance_f32 AP;
+    static arm_matrix_instance_f32 AT;
+    static arm_matrix_instance_f32 APAT;
+    static arm_matrix_instance_f32 P;
+    static arm_matrix_instance_f32 Q;
+    static arm_matrix_instance_f32 CP;
+    static arm_matrix_instance_f32 CT;
+    static arm_matrix_instance_f32 PCT;
+    static arm_matrix_instance_f32 R;
+    static arm_matrix_instance_f32 S;
+    static arm_matrix_instance_f32 ST;
+    static arm_matrix_instance_f32 y_yhat;
+    static arm_matrix_instance_f32 invSy;
+    static arm_matrix_instance_f32 invSC;
+    static arm_matrix_instance_f32 invSR;
+    static arm_matrix_instance_f32 invSTC;
+    static arm_matrix_instance_f32 KC;
+    static arm_matrix_instance_f32 I_KC;
+    static arm_matrix_instance_f32 I_KCT;
+    static arm_matrix_instance_f32 I_KCPI_KCT;
+    static arm_matrix_instance_f32 KR;
+    static arm_matrix_instance_f32 KRKT;
+    
     /* -----------根据触底状态更新协方差矩阵------------- */
     for(int i = 0; i < 4; ++i){
         if(leg_get_contact_state(i) == 0){
@@ -351,71 +393,131 @@ void estimation_run() {
             kf.R[24+i][24+i] = (1 + (1-trust)*largeVariance) * kf.R_init[24+i][24+i];
         }
     }
+    use_time[0] = (getTime() - start_time[0]) * 1000;
     /* -----------预测部分------------- */
     // R
-    quaternion_to_rotation_matrix_zyx(imu_get_data()->quaternion, Rot);
+    quaternion_to_rotation_matrix_zyx(imu_get_data()->quaternion, Rot_f32);
     // u = R * acc + g
-    body_to_world_acc(Rot, imu_get_data()->acc, u);
+    body_to_world_acc(Rot_f32, imu_get_data()->acc, u_f32);
     // xhat = A * x + B * u
-    mat_mult_vec_ptr(STATE_DIM, STATE_DIM, &kf.F[0][0], kf.x, xhat);
-    vec_add_ptr(STATE_DIM, xhat, u, xhat);
+    arm_mat_init_f32(&A, STATE_DIM, STATE_DIM, (float32_t*)kf.F);
+    arm_mat_init_f32(&x, STATE_DIM, 1, (float32_t*)kf.x);
+    arm_mat_init_f32(&B, STATE_DIM, CTRL_DIM, (float32_t*)kf.B);
+    arm_mat_init_f32(&u, CTRL_DIM, 1, (float32_t*)u_f32);
+    arm_mat_init_f32(&xhat, STATE_DIM, 1, (float32_t*)xhat_f32);
+    arm_mat_init_f32(&Ax, STATE_DIM, 1, (float32_t*)Ax_f32);
+    arm_mat_init_f32(&Bu, STATE_DIM, 1, (float32_t*)Bu_f32);
+    
+    arm_mat_mult_f32(&A, &x, &Ax);
+    arm_mat_mult_f32(&B, &u, &Bu);
+    arm_mat_add_f32(&Ax, &Bu, &xhat);
+    
     // yhat = C * x
-    mat_mult_vec_ptr(OUTPUT_DIM, STATE_DIM, &kf.H[0][0], kf.x, yhat);
+    arm_mat_init_f32(&C, OUTPUT_DIM, STATE_DIM, (float32_t*)kf.H);
+    arm_mat_init_f32(&yhat, OUTPUT_DIM, 1, (float32_t*)yhat_f32);
+    arm_mat_mult_f32(&C, &x, &yhat);
+    
     // Ppri = A * P * A^T + Q
-    mat_mult_ptr(STATE_DIM, STATE_DIM, STATE_DIM, &kf.F[0][0], &kf.P[0][0], &AP[0][0]);
-    mat_transpose_ptr(STATE_DIM, STATE_DIM, &kf.F[0][0], &AT[0][0]);
-    mat_mult_ptr(STATE_DIM, STATE_DIM, STATE_DIM, &AP[0][0], &AT[0][0], &Ppri[0][0]);
-    mat_add_ptr(STATE_DIM, STATE_DIM, &Ppri[0][0], &kf.Q[0][0], &Ppri[0][0]);
-
+    arm_mat_init_f32(&Ppri, STATE_DIM, STATE_DIM, (float32_t*)Ppri_f32);
+    arm_mat_init_f32(&P, STATE_DIM, STATE_DIM, (float32_t*)kf.P);
+    arm_mat_init_f32(&AP, STATE_DIM, STATE_DIM, (float32_t*)AP_f32);
+    arm_mat_init_f32(&AT, STATE_DIM, STATE_DIM, (float32_t*)AT_f32);
+    arm_mat_init_f32(&APAT, STATE_DIM, STATE_DIM, (float32_t*)APAT_f32);
+    arm_mat_init_f32(&Q, STATE_DIM, STATE_DIM, (float32_t*)kf.Q);
+    
+    
+    arm_mat_mult_f32(&A, &P, &AP);
+    arm_mat_trans_f32(&A, &AT);
+    start_time[1] = getTime();
+    // arm_mat_mult_f32(&AP, &AT, &APAT);
+    mat_mult_18x18_optimized(AP.pData, AT.pData, APAT.pData);
+//    mat_mult_ptr(STATE_DIM, STATE_DIM, STATE_DIM, AP.pData, AT.pData, APAT.pData);
+    use_time[1] = (getTime() - start_time[1]) * 1000;
+    arm_mat_add_f32(&APAT, &Q, &Ppri);
+    
     /* -----------更新部分------------- */
+    start_time[2] = getTime();
     // y 28x1
     for(int i = 0; i < 4; i ++){
-        world_foot_to_body_pos(i, Rot, feetPos[i]);
-        world_foot_to_body_vel(i, Rot, feetVel[i]);
-        feetZ[i] = 0;
+        world_foot_to_body_pos(i, Rot_f32, feetPos_f32[i]);
+        world_foot_to_body_vel(i, Rot_f32, feetVel_f32[i]);
+        feetZ_f32[i] = 0;
         for(int j = 0; j < 3; j ++){
-            kf.y[3*i+j] = feetPos[i][j];
-            kf.y[3*i+12+j] = feetVel[i][j];
+            kf.y[3*i+j] = feetPos_f32[i][j];
+            kf.y[3*i+12+j] = feetVel_f32[i][j];
         }
-        kf.y[24+i] = feetZ[i];
+        kf.y[24+i] = feetZ_f32[i];
     }
+    
     // S = R + C * Ppri * C^T 28x28
-    mat_mult_ptr(OUTPUT_DIM, STATE_DIM, STATE_DIM, &kf.H[0][0], &Ppri[0][0], &CP[0][0]);
-    mat_transpose_ptr(OUTPUT_DIM, STATE_DIM, &kf.H[0][0], &CT[0][0]);
-    mat_mult_ptr(OUTPUT_DIM, STATE_DIM, OUTPUT_DIM, &CP[0][0], &CT[0][0], &S[0][0]);
-    mat_add_ptr(OUTPUT_DIM, OUTPUT_DIM, &S[0][0], &kf.R[0][0], &S[0][0]);
-    // S^-1(y - yhat) 28x1
-    vec_sub_ptr(OUTPUT_DIM, kf.y, yhat, y_yhat);
-    mat_lu_decomp_ptr(OUTPUT_DIM, &S[0][0], &SL[0][0], &SU[0][0], LU_P);
-    mat_solve_with_lu_ptr(OUTPUT_DIM, &SL[0][0], &SU[0][0], LU_P, 1, y_yhat, invSy);
-    // S^-1 * C 28x18
-    mat_solve_with_lu_ptr(OUTPUT_DIM, &SL[0][0], &SU[0][0], LU_P, STATE_DIM, &kf.H[0][0], &invSC[0][0]);
-    // S^-1 * R 28x28
-    mat_solve_with_lu_ptr(OUTPUT_DIM, &SL[0][0], &SU[0][0], LU_P, OUTPUT_DIM, &kf.R[0][0], &invSR[0][0]);
-    // (S^T)^-1 * C 28x18
-    mat_transpose_ptr(OUTPUT_DIM, OUTPUT_DIM, &S[0][0], &ST[0][0]);
-    mat_solve_with_lu_ptr(OUTPUT_DIM, &SL[0][0], &SU[0][0], LU_P, STATE_DIM, &kf.H[0][0], &invSTC[0][0]);
+    arm_mat_init_f32(&CP, OUTPUT_DIM, STATE_DIM, (float32_t*)CP_f32);
+    arm_mat_init_f32(&CT, STATE_DIM, OUTPUT_DIM, (float32_t*)CT_f32);
+    arm_mat_init_f32(&R, OUTPUT_DIM, OUTPUT_DIM, (float32_t*)kf.R);
+    arm_mat_init_f32(&S, OUTPUT_DIM, OUTPUT_DIM, (float32_t*)S_f32);
 
+    arm_mat_mult_f32(&C, &Ppri, &CP);
+    arm_mat_trans_f32(&C, &CT);
+    arm_mat_mult_f32(&CP, &CT, &S);
+    arm_mat_add_f32(&S, &R, &S);
+    use_time[2] = (getTime() - start_time[2]) * 1000;
+    // S^-1(y - yhat) 28x1
+    start_time[3] = getTime();
+    arm_mat_init_f32(&y, OUTPUT_DIM, 1, (float32_t*)kf.y);
+    arm_mat_init_f32(&y_yhat, OUTPUT_DIM, 1, (float32_t*)y_yhat_f32);
+    arm_mat_init_f32(&invSy, OUTPUT_DIM, 1, (float32_t*)invSy_f32);
+
+    arm_mat_sub_f32(&y, &yhat, &y_yhat);
+    mat_lu_decomp_ptr(OUTPUT_DIM, S.pData, (float*)SL_f32, (float*)SU_f32, LU_P_f32);
+    mat_solve_with_lu_ptr(OUTPUT_DIM, (float*)SL_f32, (float*)SU_f32, LU_P_f32, 1, y_yhat.pData, invSy.pData);
+    // S^-1 * C 28x18
+    arm_mat_init_f32(&invSC, OUTPUT_DIM, STATE_DIM, (float32_t*)invSC_f32);
+    mat_solve_with_lu_ptr(OUTPUT_DIM, (float*)SL_f32, (float*)SU_f32, LU_P_f32, STATE_DIM, C.pData, invSC.pData);
+    // S^-1 * R 28x28
+    arm_mat_init_f32(&invSR, OUTPUT_DIM, OUTPUT_DIM, (float32_t*)invSR_f32);
+    mat_solve_with_lu_ptr(OUTPUT_DIM, (float*)SL_f32, (float*)SU_f32, LU_P_f32, OUTPUT_DIM, R.pData, invSR.pData);
+    // (S^T)^-1 * C 28x18
+    arm_mat_init_f32(&ST, OUTPUT_DIM, OUTPUT_DIM, (float32_t*)ST_f32);
+    arm_mat_init_f32(&invSTC, STATE_DIM, OUTPUT_DIM, (float32_t*)invSTC_f32);
+    arm_mat_trans_f32(&S, &ST);
+    mat_solve_with_lu_ptr(OUTPUT_DIM, (float*)SL_f32, (float*)SU_f32, LU_P_f32, STATE_DIM, C.pData, invSTC.pData);
+    use_time[3] = (getTime() - start_time[3]) * 1000;
     // I - Ppri * C^T * S^-1 * C 18x18
-    mat_mult_ptr(STATE_DIM, STATE_DIM, OUTPUT_DIM, &Ppri[0][0], &CT[0][0], &PCT[0][0]);
-    mat_mult_ptr(STATE_DIM, OUTPUT_DIM, STATE_DIM, &PCT[0][0], &invSC[0][0], &KC[0][0]);
-    mat_sub_ptr(STATE_DIM, STATE_DIM, &I18[0][0], &KC[0][0], &I_KC[0][0]);
+    start_time[4] = getTime();
+    arm_mat_init_f32(&PCT, STATE_DIM, OUTPUT_DIM, (float32_t*)PCT_f32);
+    arm_mat_init_f32(&KC, STATE_DIM, STATE_DIM, (float32_t*)KC_f32);
+    arm_mat_init_f32(&I_KC, STATE_DIM, STATE_DIM, (float32_t*)I_KC_f32);
+    arm_mat_init_f32(&I18, STATE_DIM, STATE_DIM, (float32_t*)I18_f32);
+    arm_mat_mult_f32(&Ppri, &CT, &PCT);
+    arm_mat_mult_f32(&PCT, &invSC, &KC);
+    arm_mat_sub_f32(&I18, &KC, &I_KC);
     // x = xhat + Ppri * C^T * S^-1 * (y - yhat) 18x1
-    mat_mult_ptr(STATE_DIM, OUTPUT_DIM, 1, &PCT[0][0], &invSy[0], &kf.x[0]);
-    vec_add_ptr(STATE_DIM, xhat, &kf.x[0], &kf.x[0]);
+    arm_mat_mult_f32(&PCT, &invSy, &x);
+    arm_mat_add_f32(&x, &xhat, &x);
+    memcpy(kf.x, x.pData, sizeof(kf.x));
     // P = (I-KC) * Ppri * (I-KC)^T + Ppri * C^T * S^-1 * R * (S^T)^-1 * C * Ppri^T 18x18
-    mat_mult_ptr(STATE_DIM, STATE_DIM, STATE_DIM, &I_KC[0][0], &Ppri[0][0], &I_KCPI_KCT[0][0]);
-    mat_mult_ptr(STATE_DIM, STATE_DIM, STATE_DIM, &I_KCPI_KCT[0][0], &I_KCT[0][0], &I_KCPI_KCT[0][0]);
-    mat_mult_ptr(STATE_DIM, OUTPUT_DIM, OUTPUT_DIM, &PCT[0][0], &invSR[0][0], &KR[0][0]);
-    mat_mult_ptr(STATE_DIM, OUTPUT_DIM, STATE_DIM, &KR[0][0], &invSTC[0][0], &KRKT[0][0]);
-    mat_transpose_ptr(STATE_DIM, STATE_DIM, &Ppri[0][0], &PpriT[0][0]);
-    mat_mult_ptr(STATE_DIM, STATE_DIM, STATE_DIM, &KRKT[0][0], &PpriT[0][0], &KRKT[0][0]);
-    mat_add_ptr(STATE_DIM, STATE_DIM, &I_KCPI_KCT[0][0], &KRKT[0][0], &kf.P[0][0]);
+    arm_mat_init_f32(&I_KCPI_KCT, STATE_DIM, STATE_DIM, (float32_t*)I_KCPI_KCT_f32);
+    arm_mat_init_f32(&I_KCT, STATE_DIM, STATE_DIM, (float32_t*)I_KCT_f32);
+    arm_mat_init_f32(&KR, STATE_DIM, OUTPUT_DIM, (float32_t*)KR_f32);
+    arm_mat_init_f32(&KRKT, STATE_DIM, STATE_DIM, (float32_t*)KRKT_f32);
+    arm_mat_init_f32(&PpriT, STATE_DIM, STATE_DIM, (float32_t*)PpriT_f32);
+
+    arm_mat_mult_f32(&I_KC, &Ppri, &I_KCPI_KCT);
+    arm_mat_trans_f32(&I_KC, &I_KCT);
+    arm_mat_mult_f32(&I_KCPI_KCT, &I_KCT, &I_KCPI_KCT);
+
+    arm_mat_mult_f32(&PCT, &invSR, &KR);
+    arm_mat_mult_f32(&KR, &invSTC, &KRKT);
+    arm_mat_trans_f32(&Ppri, &PpriT);
+    arm_mat_mult_f32(&KRKT, &PpriT, &KRKT);
+    arm_mat_add_f32(&I_KCPI_KCT, &KRKT, &P);
+    memcpy(kf.P, P.pData, sizeof(kf.P));
 
     // 对速度进行低通滤波
-    LPFilter(xhat[3]);
-    LPFilter(xhat[4]);
-    LPFilter(xhat[5]);
+    LPFilter(kf.x[3]);
+    LPFilter(kf.x[4]);
+    LPFilter(kf.x[5]);
+    use_time[4] = (getTime() - start_time[4]) * 1000;
+    use_time_all = (getTime() - start_time[0]) * 1000;
 }
 
 void estimation_start(void)

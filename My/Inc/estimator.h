@@ -52,7 +52,6 @@ typedef struct {
     float R[OUTPUT_DIM][OUTPUT_DIM];        // 测量噪声协方差矩阵R
     float R_init[OUTPUT_DIM][OUTPUT_DIM]; // 初始测量噪声协方差矩阵R
 
-
     // 输出变量
     float y[OUTPUT_DIM];                // 输出向量
     

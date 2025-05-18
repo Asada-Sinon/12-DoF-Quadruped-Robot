@@ -144,15 +144,15 @@ void gait_generator(GaitParams *gait, float *phase, int *contact, float foot_tar
             x = end_P[i][X_IDX] * (1 - (2 * phase[i]));
             y = end_P[i][Y_IDX] * (1 - (2 * phase[i]));
             // 支撑相中足端略微下压，提供更好的地面接触
-            z = -gait->stance_depth * cosf(PI * (phase[i] - 0.5f));
+            z = -gait->stance_depth * cosf(MY_PI * (phase[i] - 0.5f));
         }
         else{ // 处于摆动相 
             // 规划落足点位置 
             cal_foot_end_pos(i, body_vel, stance_duration, end_P[i]);
 
-            float fai = 2 * PI * phase[i];
-            x = end_P[i][X_IDX] * (fai - sinf(fai)) / PI - end_P[i][X_IDX];
-            y = end_P[i][Y_IDX] * (fai - sinf(fai)) / PI - end_P[i][Y_IDX];
+            float fai = 2 * MY_PI * phase[i];
+            x = end_P[i][X_IDX] * (fai - sinf(fai)) / MY_PI - end_P[i][X_IDX];
+            y = end_P[i][Y_IDX] * (fai - sinf(fai)) / MY_PI - end_P[i][Y_IDX];
             z = gait->swing_height * (1 - cosf(fai)) / 2.0f;
         }
         // xy转换到thigh坐标系下

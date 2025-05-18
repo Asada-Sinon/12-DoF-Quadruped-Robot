@@ -1,6 +1,7 @@
 #ifndef MATRIX_H
 #define MATRIX_H
-
+#include "stm32f767xx.h"
+#include "arm_math.h"
 #define MAX_MATRIX_DIM 28  // 用于矩阵操作的最大维度
 
 #define MAT_SUCCESS 0     // 操作成功
@@ -67,4 +68,5 @@ int mat_solve_with_lu_ptr(int n, const float *L, const float *U, const int *P,
 // 计算矩阵的LU分解 (使用部分主元法)
 int mat_lu_decomp_ptr(int n, const float *A, float *L, float *U, int *P);
 
+void mat_mult_18x18_optimized(float32_t *A, float32_t *B, float32_t *C);
 #endif

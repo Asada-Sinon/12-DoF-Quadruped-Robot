@@ -3,6 +3,7 @@
 #include "stdio.h"
 #include "stm32f767xx.h"
 #include "arm_math.h"  // HALDSP库
+
 // 自定义矩阵计算函数
 /**
  * 矩阵乘法: C = A * B (使用HALDSP库)
@@ -13,16 +14,45 @@
  * @param[in] B 输入矩阵B，大小为n×p，按行存储
  * @param[out] C 输出矩阵C，大小为m×p，按行存储
  */
+// void mat_mult_ptr(int m, int n, int p, const float *A, const float *B, float *C) {
+//     arm_matrix_instance_f32 mat_A, mat_B, mat_C;
+    
+//     // 初始化矩阵实例
+//     arm_mat_init_f32(&mat_A, m, n, (float *)A);
+//     arm_mat_init_f32(&mat_B, n, p, (float *)B);
+//     arm_mat_init_f32(&mat_C, m, p, C);
+    
+//     // 执行矩阵乘法
+//     arm_mat_mult_f32(&mat_A, &mat_B, &mat_C);
+// }
+
 void mat_mult_ptr(int m, int n, int p, const float *A, const float *B, float *C) {
-    arm_matrix_instance_f32 mat_A, mat_B, mat_C;
-    
-    // 初始化矩阵实例
-    arm_mat_init_f32(&mat_A, m, n, (float *)A);
-    arm_mat_init_f32(&mat_B, n, p, (float *)B);
-    arm_mat_init_f32(&mat_C, m, p, C);
-    
-    // 执行矩阵乘法
-    arm_mat_mult_f32(&mat_A, &mat_B, &mat_C);
+    int i, j, k;
+    for (i = 0; i < m; i++) {
+        for (j = 0; j < p; j++) {
+            C[i*p + j] = 0.0f;
+            for (k = 0; k < n; k++) {
+                C[i*p + j] += A[i*n + k] * B[k*p + j];
+            }
+        }
+    }
+}
+
+// 改进手动矩阵乘法利用DSP指令
+void mat_mult_18x18_optimized(float32_t *A, float32_t *B, float32_t *C) {
+    int i, j, k;
+    for (i = 0; i < 18; i++) {
+        for (j = 0; j < 18; j++) {
+            float32_t sum = 0.0f;
+            // 内部循环展开和DSP优化
+            for (k = 0; k < 18; k += 2) {
+                sum += A[i*18 + k] * B[k*18 + j];
+                if (k+1 < 18)
+                    sum += A[i*18 + k+1] * B[(k+1)*18 + j];
+            }
+            C[i*18 + j] = sum;
+        }
+    }
 }
 
 /**
@@ -171,79 +201,6 @@ void mat_add_block_ptr(int row, int col, int m, int n, int ld,
 }
 
 /**
- * 矩阵子块减法: C(destRow:destRow+m-1, destCol:destCol+n-1) = A(srcRowA:srcRowA+m-1, srcColA:srcColA+n-1) - B(srcRowB:srcRowB+m-1, srcColB:srcColB+n-1)
- * @param[in] m 子块的行数
- * @param[in] n 子块的列数
- * @param[in] A 输入矩阵A
- * @param[in] ldA A的列数（行主序步长）
- * @param[in] srcRowA A的子块起始行索引
- * @param[in] srcColA A的子块起始列索引
- * @param[in] B 输入矩阵B
- * @param[in] ldB B的列数（行主序步长）
- * @param[in] srcRowB B的子块起始行索引
- * @param[in] srcColB B的子块起始列索引
- * @param[out] C 输出矩阵C
- * @param[in] ldC C的列数（行主序步长）
- * @param[in] destRow C的目标子块起始行索引
- * @param[in] destCol C的目标子块起始列索引
- */
-void mat_subblock_sub_ptr(int m, int n, 
-                          const float *A, int ldA, int srcRowA, int srcColA, 
-                          const float *B, int ldB, int srcRowB, int srcColB, 
-                          float *C, int ldC, int destRow, int destCol) {
-    int i, j;
-    float temp_A[MAX_MATRIX_DIM * MAX_MATRIX_DIM];
-    float temp_B[MAX_MATRIX_DIM * MAX_MATRIX_DIM];
-    float temp_C[MAX_MATRIX_DIM * MAX_MATRIX_DIM];
-    
-    // 提取子块
-    for (i = 0; i < m; i++) {
-        for (j = 0; j < n; j++) {
-            temp_A[i*n + j] = A[(srcRowA+i)*ldA + (srcColA+j)];
-            temp_B[i*n + j] = B[(srcRowB+i)*ldB + (srcColB+j)];
-        }
-    }
-    
-    // 使用HALDSP库的矩阵减法
-    arm_matrix_instance_f32 mat_A, mat_B, mat_C;
-    arm_mat_init_f32(&mat_A, m, n, temp_A);
-    arm_mat_init_f32(&mat_B, m, n, temp_B);
-    arm_mat_init_f32(&mat_C, m, n, temp_C);
-    arm_mat_sub_f32(&mat_A, &mat_B, &mat_C);
-    
-    // 将结果复制回原矩阵
-    for (i = 0; i < m; i++) {
-        for (j = 0; j < n; j++) {
-            C[(destRow+i)*ldC + (destCol+j)] = temp_C[i*n + j];
-        }
-    }
-}
-
-/**
- * 矩阵子块复制: C(destRow:destRow+m-1, destCol:destCol+n-1) = A(srcRow:srcRow+m-1, srcCol:srcCol+n-1)
- * @param[in] m 子块的行数
- * @param[in] n 子块的列数
- * @param[in] A 输入矩阵A
- * @param[in] ldA A的列数（行主序步长）
- * @param[in] srcRow A的子块起始行索引
- * @param[in] srcCol A的子块起始列索引
- * @param[out] C 输出矩阵C
- * @param[in] ldC C的列数（行主序步长）
- * @param[in] destRow C的目标子块起始行索引
- * @param[in] destCol C的目标子块起始列索引
- */
-void mat_subblock_copy_ptr(int m, int n, 
-                           const float *A, int ldA, int srcRow, int srcCol, 
-                           float *C, int ldC, int destRow, int destCol) {
-    int i, j;
-    for (i = 0; i < m; i++) {
-        for (j = 0; j < n; j++) {
-            C[(destRow+i)*ldC + (destCol+j)] = A[(srcRow+i)*ldA + (srcCol+j)];
-        }
-    }
-}
-
-/**
  * 三维向量直接叉乘
  * @param[in] a 输入向量a，长度为3
  * @param[in] b 输入向量b，长度为3
@@ -266,7 +223,7 @@ void vec3_cross_ptr(const float *a, const float *b, float *c) {
 }
 
 /**
- * 计算矩阵的LU分解 (使用HALDSP库)
+ * 计算矩阵的LU分解 
  * A = P^(-1) * L * U，其中P是置换矩阵(通过P数组表示)
  * 
  * @param[in] n 矩阵A的维度(n×n)
@@ -468,17 +425,4 @@ int mat_solve_ptr(int n, const float *A, int m, const float *B, float *X) {
     return mat_solve_with_lu_ptr(n, L, U, P, m, B, X);
 }
 
-/**
- * 专门处理3x3矩阵方程求解的快速函数 A * X = B，得到 X = A^-1 * B
- * 使用克拉默法则直接求解
- * 
- * @param[in] A 输入矩阵A，大小为3×3，按行存储
- * @param[in] m B矩阵的列数
- * @param[in] B 输入矩阵B，大小为3×m，按行存储
- * @param[out] X 输出矩阵X = A^-1 * B，大小为3×m，按行存储
- * @return 成功返回MAT_SUCCESS，失败返回MAT_ERROR
- */
-int mat_solve_3x3_ptr(const float *A, int m, const float *B, float *X) {
-    return mat_solve_ptr(3, A, m, B, X);
-}
 

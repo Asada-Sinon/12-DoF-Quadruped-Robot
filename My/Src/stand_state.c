@@ -94,9 +94,9 @@ static void stand_run(void) {
         if (p > 1)
             p = 1;
 
-        float x = x0 + (xf - x0) * (1 - cosf(PI*p)) / 2.0f;
-        float y = y0 + (yf - y0) * (1 - cosf(PI*p)) / 2.0f;
-        float z = z0 + (zf - z0) * (1 - cosf(PI*p)) / 2.0f;
+        float x = x0 + (xf - x0) * (1 - cosf(MY_PI*p)) / 2.0f;
+        float y = y0 + (yf - y0) * (1 - cosf(MY_PI*p)) / 2.0f;
+        float z = z0 + (zf - z0) * (1 - cosf(MY_PI*p)) / 2.0f;
 
         foot_target_pos[i][X_IDX] = x;
         foot_target_pos[i][Y_IDX] = y;

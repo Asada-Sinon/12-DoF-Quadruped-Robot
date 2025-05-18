@@ -8,7 +8,9 @@
                 "Drivers\\CMSIS\\Device\\ST\\STM32F7xx\\Include",
                 "Drivers\\STM32F7xx_HAL_Driver\\Inc\\Legacy",
                 "My\\Inc",
-                "Core\\Inc"
+                "Core\\Inc",
+                "${workspaceFolder}/Drivers/CMSIS/DSP/Include",
+                "Drivers/CMSIS/DSP/Include"
             ],
             "defines": [
                 "_DEBUG",

@@ -55,7 +55,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-float test_use_time = 0;
+float test_use_time_all = 0;
 float test_now_time = 0;
 float test_data = 0;
 /* USER CODE END PV */
@@ -124,10 +124,10 @@ int main(void)
     // 初始化
     dog_fsm_init();// 状态机初始化，注册状态
     motor_init();// 电机初始化，循环直到电机使能完成
-    timer_init();// 定时器初始化，开启状态机，电机回传等
+//    timer_init();// 定时器初始化，开启状态机，电机回传等
     HAL_Delay(100); // 等待以确保接收到电机回传数据
     dog_init(NULL);// 初始化狗参数
-    my_usart_init();// 初始化imu
+//    my_usart_init();// 初始化imu
     estimation_init();// 初始化状态观测器 暂时放在这里初始化，有可能需要先进入站立状态再初始化观测器
     
     // 状态机切换到初始状态
@@ -144,9 +144,7 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
       gamepad_control();
-      test_now_time = getTime();
-      estimation_run();
-      test_use_time = getTime() - test_now_time;
+        estimation_run();
       test_data = arm_cos_f32(PI/3) ;
       HAL_Delay(1);
   }

@@ -13,7 +13,7 @@
 // 单位转换系数
 #define RADIAN_TO_DEGREE 57.295779513f
 #define DEGREE_TO_RADIAN 0.0174533f
-#define PI 3.1415926f
+#define MY_PI 3.1415926f
 // 腿索引定义
 //  0   1
 //
