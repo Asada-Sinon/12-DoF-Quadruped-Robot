@@ -57,6 +57,7 @@
 /* USER CODE BEGIN PV */
 float test_use_time = 0;
 float test_now_time = 0;
+float test_data = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -146,6 +147,7 @@ int main(void)
       test_now_time = getTime();
       estimation_run();
       test_use_time = getTime() - test_now_time;
+      test_data = arm_cos_f32(PI/3) ;
       HAL_Delay(1);
   }
   /* USER CODE END 3 */
