@@ -124,15 +124,16 @@ int main(void)
     // 初始化
     dog_fsm_init();// 状态机初始化，注册状态
     motor_init();// 电机初始化，循环直到电机使能完成
-//    timer_init();// 定时器初始化，开启状态机，电机回传等
+    timer_init();// 定时器初始化，开启状态机，电机回传等
     HAL_Delay(100); // 等待以确保接收到电机回传数据
     dog_init(NULL);// 初始化狗参数
-//    my_usart_init();// 初始化imu
+    my_usart_init();// 初始化imu
     estimation_init();// 初始化状态观测器 暂时放在这里初始化，有可能需要先进入站立状态再初始化观测器
     
     // 状态机切换到初始状态
    fsm_change_to(STATE_STAND);
    HAL_Delay(1000); // 延时1s，等待状态机切换完成
+   gamepad_control_init(); // 启动手柄
    estimation_start(); // 在站立状态下，开始状态观测器，站立过程可能会有影响
   /* USER CODE END 2 */
 
@@ -143,9 +144,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-      gamepad_control();
-        estimation_run();
-      test_data = arm_cos_f32(PI/3) ;
+      
       HAL_Delay(1);
   }
   /* USER CODE END 3 */

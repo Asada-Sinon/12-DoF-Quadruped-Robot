@@ -8,11 +8,9 @@
 
 #include "matrix.h"
 
-#define STATE_DIM 18  // 状态向量维度: 机身位置(3) + 机身速度(3) + 4个足端位置(12)
-#define MEAS_DIM 15   // 测量向量维度: IMU数据(6) + 足端位置测量(12，仅当接触时有效)
-#define MAX_VALID_MEAS MEAS_DIM
-#define OUTPUT_DIM 28 // 输出向量维度: 足端相对位置(12) + 足端相对速度(12) + 足端高度(4)
-#define CTRL_DIM 3    // 控制输入维度: 加速度估计(3)
+#define STATE_DIM 4  // 状态向量维度: 机身位置(3) + 机身速度(3) + 4个足端位置(12)
+#define OUTPUT_DIM 8 // 输出向量维度: 足端相对位置(12) + 足端相对速度(12) + 足端高度(4)
+#define CTRL_DIM 2    // 控制输入维度: 加速度估计(3)
 #define LEG_NUM 4     // 腿的数量
 
 // 传感器数据结构

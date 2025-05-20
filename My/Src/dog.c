@@ -17,6 +17,7 @@
 #include "gait.h"
 #include "estimator.h"
 #include "matrix.h"
+#include "timer.h"
 /*========================= 全局变量 =========================*/
 Dog dog;                    // 狗实例
 float body_vel[3] = {0, 0, 0}; // 机体速度
@@ -46,6 +47,9 @@ typedef enum {
  * 注：左侧腿FL，HL 的y轴向身体外侧；右侧腿FR，HR的y轴向身体内侧。
  */
 
+float sin_time_start = 0;
+float sin_time = 0;
+
 void leg_forward_kinematics(uint8_t leg_id, const float joint_pos[3], float foot_pos[3])
 {
     const LegLinkParams *leg_links = &dog.params.leg_links;
@@ -60,6 +64,7 @@ void leg_forward_kinematics(uint8_t leg_id, const float joint_pos[3], float foot
     float l3 = -leg_links->calf_length;
 
     // 计算三角函数值
+    
     float s1 = sinf(joint_pos[HIP_IDX]);
     float s2 = sinf(joint_pos[THIGH_IDX]);
     float s3 = sinf(joint_pos[CALF_IDX]);
@@ -67,7 +72,7 @@ void leg_forward_kinematics(uint8_t leg_id, const float joint_pos[3], float foot
     float c1 = cosf(joint_pos[HIP_IDX]);
     float c2 = cosf(joint_pos[THIGH_IDX]);
     float c3 = cosf(joint_pos[CALF_IDX]);
-
+    
     // 计算复合角的三角函数值
     float c23 = c2 * c3 - s2 * s3;
     float s23 = s2 * c3 + c2 * s3;
@@ -76,9 +81,9 @@ void leg_forward_kinematics(uint8_t leg_id, const float joint_pos[3], float foot
     foot_pos[X_IDX] = l3 * s23 + l2 * s2;
     foot_pos[Y_IDX] = -l3 * s1 * c23 + l1 * c1 - l2 * c2 * s1;
     foot_pos[Z_IDX] =  l3 * c1 * c23 + l1 * s1 + l2 * c1 * c2;
-
-    printf("foot_pos[%d]: %f %f %f\n", leg_id, foot_pos[X_IDX], foot_pos[Y_IDX], foot_pos[Z_IDX]);
-
+    sin_time_start = getTime();
+    // printf("foot_pos[%d]: %f %f %f\n", leg_id, foot_pos[X_IDX], foot_pos[Y_IDX], foot_pos[Z_IDX]);
+    sin_time = (getTime() - sin_time_start ) * 1000;
 }
 
 void leg_inverse_kinematics(uint8_t leg_id, const float foot_pos[3], float joint_pos[3])
@@ -182,7 +187,7 @@ void leg_inverse_kinematics_pos_vel(uint8_t leg_id, const float foot_vel[3], con
     leg_inverse_kinematics(leg_id, foot_pos, joint_pos);
     leg_jacobian(leg_id, joint_pos, jacobian);
     if(mat_inverse_ptr(3, &jacobian[0][0], &jacobian_inv[0][0]) == MAT_ERROR) {
-        printf("jacobian_inv error.\n");
+        // printf("jacobian_inv error.\n");
     }
     else {
         for (int i = 0; i < 3; i++) {
@@ -360,11 +365,16 @@ void leg_get_current_joint_pos(uint8_t leg_idx, float joint_current_pos[3])
     leg_motor_to_joint(leg_idx, motor_current_pos, joint_current_pos);
 }
 
+float leg_time_start = 0;
+float leg_time = 0;
 void leg_get_current_foot_pos(uint8_t leg_idx, float foot_pos[3])
 {
     float joint_current_pos[3];
+    leg_time_start = getTime();
     leg_get_current_joint_pos(leg_idx, joint_current_pos);
+    leg_time = (getTime() - leg_time_start) * 1000;
     leg_forward_kinematics(leg_idx, joint_current_pos, foot_pos);
+    
 }
 
 void leg_get_current_joint_vel(uint8_t leg_idx, float joint_current_vel[3])

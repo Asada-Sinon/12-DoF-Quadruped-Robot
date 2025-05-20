@@ -5,6 +5,7 @@
 #include "fsm.h"
 #include "motor.h"
 #include "estimator.h"
+#include "gamepad.h"
 
 // 获取系统时间
 // long long getSystemTime() {
@@ -20,8 +21,9 @@ double getTime() {
 void timer_init()
 {
     HAL_TIM_Base_Start_IT(&htim1); // 1ms处理can队列信息
-    HAL_TIM_Base_Start_IT(&htim2); // 2ms发送电机信息
+    HAL_TIM_Base_Start_IT(&htim2); // 4ms发送电机信息
     HAL_TIM_Base_Start_IT(&htim3); // 2ms状态机
+    HAL_TIM_Base_Start_IT(&htim4); // 3ms状态观测器
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
@@ -31,16 +33,19 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         J60_ProcessCanQueues();
     }
     if (htim->Instance == TIM2) {
-        // 2ms发送电机信息
+        // 4ms发送电机信息
         dog_send_motors();
-
     }
     if (htim->Instance == TIM3) {
         // 全局调整重心
         dog_smooth_cog(0.005);
-        // 状态观测器
-//        estimation_run();
+        // 手柄
+        gamepad_control();
         // 2ms状态机
         fsm_update();
+    }
+    if (htim->Instance == TIM4) {
+        // 状态观测器
+        estimation_run();
     }
 }

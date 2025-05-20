@@ -10,7 +10,7 @@ float trot_backward_cog_offset = 0.005;
 GaitState trot_state;    
 /* 对角步态状态的处理函数 */
 static void trot_enter(void) {
-    printf("进入对角步态状态\n");
+    // printf("进入对角步态状态\n");
     trot_state.time_start = getTime();   
 }
 
@@ -39,7 +39,7 @@ static void trot_run(void) {
 }
 
 static void trot_exit(void) {
-    printf("退出对角步态状态\n");
+    // printf("退出对角步态状态\n");
     // 离开对角步态状态的处理
     // ...
 }

@@ -16,12 +16,12 @@ static float motor_current_pos[4][3];
 float stand_test_foot_start_pos[4][3];
 float stand_test_foot_target_pos[4][3];
 
-//float hip_kp = 90;
-//float hip_kd = 0.8;
-//float thigh_kp = 90;
-//float thigh_kd = 0.5;
-//float calf_kp = 120;
-//float calf_kd = 0.8;
+float hip_kp = 90;
+float hip_kd = 0.8;
+float thigh_kp = 90;
+float thigh_kd = 0.5;
+float calf_kp = 120;
+float calf_kd = 0.8;
 
 //float hip_kp = 10;
 //float hip_kd = 0.1;
@@ -30,16 +30,16 @@ float stand_test_foot_target_pos[4][3];
 //float calf_kp = 10;
 //float calf_kd = 0.1;
 
-float hip_kp = 0;
-float hip_kd = 0;
-float thigh_kp = 0;
-float thigh_kd = 0;
-float calf_kp = 0;
-float calf_kd = 0;
+//float hip_kp = 0;
+//float hip_kd = 0;
+//float thigh_kp = 0;
+//float thigh_kd = 0;
+//float calf_kp = 0;
+//float calf_kd = 0;
 
 /* 站立状态的处理函数 */
 static void stand_enter(void) {
-    printf("进入站立状态\n");
+    // printf("进入站立状态\n");
     RobotParams* params = get_robot_params();
     time_start = getTime();
     for (int i = 0; i < 4; i++){
@@ -47,7 +47,7 @@ static void stand_enter(void) {
         {
 //            leg_get_target_foot_pos(i, foot_start_pos[i]);
             leg_get_current_foot_pos(i, foot_start_pos[i]);
-            printf("站立状态起始位置[%d]: %f %f %f\n", i, foot_start_pos[i][X_IDX], foot_start_pos[i][Y_IDX], foot_start_pos[i][Z_IDX]);
+            // printf("站立状态起始位置[%d]: %f %f %f\n", i, foot_start_pos[i][X_IDX], foot_start_pos[i][Y_IDX], foot_start_pos[i][Z_IDX]);
         }
         else
         {
@@ -109,7 +109,7 @@ static void stand_run(void) {
 }
 
 static void stand_exit(void) {
-    printf("退出站立状态\n");
+    // printf("退出站立状态\n");
 }
 
 /* 站立状态的转换检查 */
