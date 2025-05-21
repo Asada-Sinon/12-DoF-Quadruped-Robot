@@ -8,13 +8,13 @@ GaitState passive_state;
 /* 对角步态状态的处理函数 */
 static void passive_enter(void) {
     // printf("进入阻尼状态\n");
-    for(int i = 0; i < 4; i++){
-        leg_set_motor_kp_kd(i, 0, 8, 0, 8, 0, 8);
-    }
+    
 }
 
 static void passive_run(void) {
-
+    for(int i = 0; i < 4; i++){
+        leg_set_motor_kp_kd(i, 0, 8, 0, 8, 0, 8);
+    }
 }
 
 static void passive_exit(void) {

@@ -58,6 +58,8 @@
 float test_use_time_all = 0;
 float test_now_time = 0;
 float test_data = 0;
+uint8_t get_motor_status_flag = 0;
+uint8_t motor_custom_id = 8;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -144,7 +146,14 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-      
+      if (get_motor_status_flag)
+      {
+          J60_GetMotorStatus(motor_custom_id);
+//          J60_ResetMotorError(motor_custom_id);
+          get_motor_status_flag = 0;
+      }
+//      estimation_run();
+          
       HAL_Delay(1);
   }
   /* USER CODE END 3 */

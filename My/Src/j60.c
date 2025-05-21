@@ -323,6 +323,26 @@ HAL_StatusTypeDef J60_DisableMotor(uint8_t custom_id)
 }
 
 /**
+ * @brief  获取电机状态码
+ * @param  custom_id: 自定义电机ID (0-15)
+ * @retval HAL状态
+ */
+HAL_StatusTypeDef J60_GetMotorStatus(uint8_t custom_id)
+{
+    return J60_SendCanMessage(custom_id, J60_CMD_GET_STATUSWORD, NULL, 0);
+}
+
+/**
+ * @brief  清除电机错误
+ * @param  custom_id: 自定义电机ID (0-15)
+ * @retval HAL状态
+ */
+HAL_StatusTypeDef J60_ResetMotorError(uint8_t custom_id)
+{
+    return J60_SendCanMessage(custom_id, J60_CMD_ERROR_RESET, NULL, 0);
+}
+
+/**
  * @brief  将物理角度映射到16位无符号整数
  * @param  position: 角度值 (-40rad到40rad)
  * @retval 16位无符号整数 (0-65535)
@@ -577,6 +597,10 @@ void J60_ProcessReceivedData(CAN_HandleTypeDef *hcan, CAN_RxHeaderTypeDef *pRxHe
         }
         case J60_CMD_MOTOR_DISABLE: {
             j60_motors[custom_id].is_enable = data[0];
+            break;
+        }
+        case J60_CMD_GET_STATUSWORD: {
+            j60_motors[custom_id].error_code = data[0];
             break;
         }
         // 保留其他命令的处理...

@@ -66,7 +66,7 @@ typedef struct {
     uint8_t temp_type;    // 温度类型 (0=mosfet温度, 1=电机温度)
     uint8_t error_code;   // 错误码
     float kp;             // 位置环增益
-    float kd;             // 速度环增益
+    float kd;             // 速度环增益 
 } J60_Motor;
 
 /* 函数声明 */
@@ -77,6 +77,8 @@ J60_Motor* J60_GetMotor(uint8_t custom_id);
 
 HAL_StatusTypeDef J60_EnableMotor(uint8_t custom_id);
 HAL_StatusTypeDef J60_DisableMotor(uint8_t custom_id);
+HAL_StatusTypeDef J60_GetMotorStatus(uint8_t custom_id);
+HAL_StatusTypeDef J60_ResetMotorError(uint8_t custom_id);
 HAL_StatusTypeDef J60_MotorControl(uint8_t custom_id, float position, float velocity, float kp, float kd, float torque);
 
 void J60_ProcessReceivedData(CAN_HandleTypeDef *hcan, CAN_RxHeaderTypeDef *pRxHeader, uint8_t *data);

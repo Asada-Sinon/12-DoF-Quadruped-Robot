@@ -19,7 +19,7 @@ KalmanFilter kf;
 float kf_start = 0;
 
 // 一些常量矩阵
-float dt = 0.002; // 离散化采样时间，即计算间隔s
+float dt = 0.003; // 离散化采样时间，即计算间隔s
 float largeVariance = 100; // 大数，用于代替无穷
 float I3dt_f32[3][3] = {0};
 float I3_f32[3][3] = {0};
@@ -278,6 +278,9 @@ float AT_f32[STATE_DIM][STATE_DIM] = {0};
 float APAT_f32[STATE_DIM][STATE_DIM] = {0};
 float CT_f32[STATE_DIM][OUTPUT_DIM] = {0};
 float CP_f32[OUTPUT_DIM][STATE_DIM] = {0};
+float CPCT_f32[OUTPUT_DIM][OUTPUT_DIM] = {0};
+float RCPCT_f32[OUTPUT_DIM][OUTPUT_DIM] = {0};
+float invRCPCT_f32[OUTPUT_DIM][OUTPUT_DIM] = {0};
 float S_f32[OUTPUT_DIM][OUTPUT_DIM] = {0};
 float ST_f32[OUTPUT_DIM][OUTPUT_DIM] = {0};
 float SL_f32[OUTPUT_DIM][OUTPUT_DIM] = {0};
@@ -288,6 +291,8 @@ float y_yhat_f32[OUTPUT_DIM] = {0};
 float invSC_f32[OUTPUT_DIM][STATE_DIM] = {0};
 float invSR_f32[OUTPUT_DIM][OUTPUT_DIM] = {0};
 float invSTC_f32[STATE_DIM][OUTPUT_DIM] = {0};
+float K_f32[STATE_DIM][OUTPUT_DIM] = {0};
+float KT_f32[OUTPUT_DIM][STATE_DIM] = {0};
 float KC_f32[STATE_DIM][STATE_DIM] = {0};
 float I_KC_f32[STATE_DIM][STATE_DIM] = {0};
 float PCT_f32[STATE_DIM][OUTPUT_DIM] = {0};
@@ -296,49 +301,57 @@ float I_KCPI_KCT_f32[STATE_DIM][STATE_DIM] = {0};
 float KR_f32[STATE_DIM][OUTPUT_DIM] = {0};
 float KRKT_f32[STATE_DIM][STATE_DIM] = {0};
 
+arm_matrix_instance_f32 I18; 
+arm_matrix_instance_f32 A; 
+arm_matrix_instance_f32 x; 
+arm_matrix_instance_f32 B; 
+arm_matrix_instance_f32 u;
+arm_matrix_instance_f32 C;
+arm_matrix_instance_f32 y;
+arm_matrix_instance_f32 xhat;
+arm_matrix_instance_f32 yhat;
+arm_matrix_instance_f32 Ax;
+arm_matrix_instance_f32 Bu;
+arm_matrix_instance_f32 Ppri;
+arm_matrix_instance_f32 PpriT;
+arm_matrix_instance_f32 AP;
+arm_matrix_instance_f32 AT;
+arm_matrix_instance_f32 APAT;
+arm_matrix_instance_f32 P;
+arm_matrix_instance_f32 Q;
+arm_matrix_instance_f32 CP;
+arm_matrix_instance_f32 CT;
+arm_matrix_instance_f32 PCT;
+arm_matrix_instance_f32 CPCT;
+arm_matrix_instance_f32 RCPCT;
+arm_matrix_instance_f32 invRCPCT;
+arm_matrix_instance_f32 R;
+arm_matrix_instance_f32 S;
+arm_matrix_instance_f32 ST;
+arm_matrix_instance_f32 y_yhat;
+arm_matrix_instance_f32 invSy;
+arm_matrix_instance_f32 invSC;
+arm_matrix_instance_f32 invSR;
+arm_matrix_instance_f32 invSTC;
+arm_matrix_instance_f32 K;
+arm_matrix_instance_f32 KT;
+arm_matrix_instance_f32 KC;
+arm_matrix_instance_f32 I_KC;
+arm_matrix_instance_f32 I_KCT;
+arm_matrix_instance_f32 I_KCPI_KCT;
+arm_matrix_instance_f32 KR;
+arm_matrix_instance_f32 KRKT;
+
 float start_time[5];
 float use_time[5]; 
 float use_time_all = 0;
+float use_time_greater_than_3 = 0;
+arm_status status;
 void estimation_run() {
     if(kf_start == 0){
         return;
     }
     start_time[0] = getTime();
-    static arm_matrix_instance_f32 I18; 
-    static arm_matrix_instance_f32 A; 
-    static arm_matrix_instance_f32 x; 
-    static arm_matrix_instance_f32 B; 
-    static arm_matrix_instance_f32 u;
-    static arm_matrix_instance_f32 C;
-    static arm_matrix_instance_f32 y;
-    static arm_matrix_instance_f32 xhat;
-    static arm_matrix_instance_f32 yhat;
-    static arm_matrix_instance_f32 Ax;
-    static arm_matrix_instance_f32 Bu;
-    static arm_matrix_instance_f32 Ppri;
-    static arm_matrix_instance_f32 PpriT;
-    static arm_matrix_instance_f32 AP;
-    static arm_matrix_instance_f32 AT;
-    static arm_matrix_instance_f32 APAT;
-    static arm_matrix_instance_f32 P;
-    static arm_matrix_instance_f32 Q;
-    static arm_matrix_instance_f32 CP;
-    static arm_matrix_instance_f32 CT;
-    static arm_matrix_instance_f32 PCT;
-    static arm_matrix_instance_f32 R;
-    static arm_matrix_instance_f32 S;
-    static arm_matrix_instance_f32 ST;
-    static arm_matrix_instance_f32 y_yhat;
-    static arm_matrix_instance_f32 invSy;
-    static arm_matrix_instance_f32 invSC;
-    static arm_matrix_instance_f32 invSR;
-    static arm_matrix_instance_f32 invSTC;
-    static arm_matrix_instance_f32 KC;
-    static arm_matrix_instance_f32 I_KC;
-    static arm_matrix_instance_f32 I_KCT;
-    static arm_matrix_instance_f32 I_KCPI_KCT;
-    static arm_matrix_instance_f32 KR;
-    static arm_matrix_instance_f32 KRKT;
     
     /* -----------根据触底状态更新协方差矩阵------------- */
     for(int i = 0; i < 4; ++i){
@@ -409,75 +422,135 @@ void estimation_run() {
             kf.y[2*i+j] = feetVel_f32[i][j];
         }
     }
-    
-    // S = R + C * Ppri * C^T 28x28
+    start_time[3] = getTime();
+    // 直接求R+CPC^T的逆
+    // (R + CPC^T)^-1
     arm_mat_init_f32(&CP, OUTPUT_DIM, STATE_DIM, (float32_t*)CP_f32);
     arm_mat_init_f32(&CT, STATE_DIM, OUTPUT_DIM, (float32_t*)CT_f32);
+    arm_mat_init_f32(&CPCT, OUTPUT_DIM, OUTPUT_DIM, (float32_t*)CPCT_f32);
     arm_mat_init_f32(&R, OUTPUT_DIM, OUTPUT_DIM, (float32_t*)kf.R);
-    arm_mat_init_f32(&S, OUTPUT_DIM, OUTPUT_DIM, (float32_t*)S_f32);
+    arm_mat_init_f32(&invRCPCT, OUTPUT_DIM, OUTPUT_DIM, (float32_t*)invRCPCT_f32);
+    arm_mat_init_f32(&RCPCT, OUTPUT_DIM, OUTPUT_DIM, (float32_t*)RCPCT_f32);
 
     arm_mat_mult_f32(&C, &Ppri, &CP);
     arm_mat_trans_f32(&C, &CT);
-    arm_mat_mult_f32(&CP, &CT, &S);
-    arm_mat_add_f32(&S, &R, &S);
+    arm_mat_mult_f32(&CP, &CT, &CPCT);
+    arm_mat_add_f32(&CPCT, &R, &RCPCT);
+    status = arm_mat_inverse_f32(&RCPCT, &invRCPCT);
+    // K = PC^T * (R + CPC^T)^-1
+    arm_mat_init_f32(&PCT, STATE_DIM, OUTPUT_DIM, (float32_t*)PCT_f32);
+    arm_mat_init_f32(&K, STATE_DIM, OUTPUT_DIM, (float32_t*)K_f32);
+
+    arm_mat_mult_f32(&Ppri, &CT, &PCT);
+    arm_mat_mult_f32(&PCT, &invRCPCT, &K);
     
-    // S^-1(y - yhat) 28x1
-    start_time[3] = getTime();
+    use_time[3] = (getTime() - start_time[3]) * 1000;
+    
+    start_time[4] = getTime();
+    // x = xhat + K * (y - yhat)
     arm_mat_init_f32(&y, OUTPUT_DIM, 1, (float32_t*)kf.y);
+    arm_mat_init_f32(&yhat, OUTPUT_DIM, 1, (float32_t*)yhat_f32);
     arm_mat_init_f32(&y_yhat, OUTPUT_DIM, 1, (float32_t*)y_yhat_f32);
-    arm_mat_init_f32(&invSy, OUTPUT_DIM, 1, (float32_t*)invSy_f32);
 
     arm_mat_sub_f32(&y, &yhat, &y_yhat);
-    mat_lu_decomp_ptr(OUTPUT_DIM, S.pData, (float*)SL_f32, (float*)SU_f32, LU_P_f32);
-    mat_solve_with_lu_ptr(OUTPUT_DIM, (float*)SL_f32, (float*)SU_f32, LU_P_f32, 1, y_yhat.pData, invSy.pData);
-    // S^-1 * C 28x18
-    arm_mat_init_f32(&invSC, OUTPUT_DIM, STATE_DIM, (float32_t*)invSC_f32);
-    mat_solve_with_lu_ptr(OUTPUT_DIM, (float*)SL_f32, (float*)SU_f32, LU_P_f32, STATE_DIM, C.pData, invSC.pData);
-    // S^-1 * R 28x28
-    arm_mat_init_f32(&invSR, OUTPUT_DIM, OUTPUT_DIM, (float32_t*)invSR_f32);
-    mat_solve_with_lu_ptr(OUTPUT_DIM, (float*)SL_f32, (float*)SU_f32, LU_P_f32, OUTPUT_DIM, R.pData, invSR.pData);
-    // (S^T)^-1 * C 28x18
-    arm_mat_init_f32(&ST, OUTPUT_DIM, OUTPUT_DIM, (float32_t*)ST_f32);
-    arm_mat_init_f32(&invSTC, STATE_DIM, OUTPUT_DIM, (float32_t*)invSTC_f32);
-    arm_mat_trans_f32(&S, &ST);
-    mat_solve_with_lu_ptr(OUTPUT_DIM, (float*)SL_f32, (float*)SU_f32, LU_P_f32, STATE_DIM, C.pData, invSTC.pData);
-    use_time[3] = (getTime() - start_time[3]) * 1000;
-    // I - Ppri * C^T * S^-1 * C 18x18
-    start_time[4] = getTime();
-    arm_mat_init_f32(&PCT, STATE_DIM, OUTPUT_DIM, (float32_t*)PCT_f32);
-    arm_mat_init_f32(&KC, STATE_DIM, STATE_DIM, (float32_t*)KC_f32);
-    arm_mat_init_f32(&I_KC, STATE_DIM, STATE_DIM, (float32_t*)I_KC_f32);
-    arm_mat_init_f32(&I18, STATE_DIM, STATE_DIM, (float32_t*)I18_f32);
-    arm_mat_mult_f32(&Ppri, &CT, &PCT);
-    arm_mat_mult_f32(&PCT, &invSC, &KC);
-    arm_mat_sub_f32(&I18, &KC, &I_KC);
-    // x = xhat + Ppri * C^T * S^-1 * (y - yhat) 18x1
-    arm_mat_mult_f32(&PCT, &invSy, &x);
+    arm_mat_mult_f32(&K, &y_yhat, &x);
     arm_mat_add_f32(&x, &xhat, &x);
     memcpy(kf.x, x.pData, sizeof(kf.x));
-    // P = (I-KC) * Ppri * (I-KC)^T + Ppri * C^T * S^-1 * R * (S^T)^-1 * C * Ppri^T 18x18
-    arm_mat_init_f32(&I_KCPI_KCT, STATE_DIM, STATE_DIM, (float32_t*)I_KCPI_KCT_f32);
-    arm_mat_init_f32(&I_KCT, STATE_DIM, STATE_DIM, (float32_t*)I_KCT_f32);
+    
+    // 测量噪声小的情况下，可以考虑使用简化版本的更新P = (I - KC) * Ppri，保证P的对称性即可
+    // P = (I - KC) * Ppri * (I - KC)^T + K * R * K^T
+    arm_mat_init_f32(&I_KC, STATE_DIM, STATE_DIM, (float32_t*)I_KC_f32);
+    arm_mat_init_f32(&KC, STATE_DIM, STATE_DIM, (float32_t*)KC_f32);
     arm_mat_init_f32(&KR, STATE_DIM, OUTPUT_DIM, (float32_t*)KR_f32);
     arm_mat_init_f32(&KRKT, STATE_DIM, STATE_DIM, (float32_t*)KRKT_f32);
-    arm_mat_init_f32(&PpriT, STATE_DIM, STATE_DIM, (float32_t*)PpriT_f32);
+    arm_mat_init_f32(&I18, STATE_DIM, STATE_DIM, (float32_t*)I18_f32);
+    arm_mat_init_f32(&I_KCPI_KCT, STATE_DIM, STATE_DIM, (float32_t*)I_KCPI_KCT_f32);
+    arm_mat_init_f32(&I_KCT, STATE_DIM, STATE_DIM, (float32_t*)I_KCT_f32);
+    arm_mat_init_f32(&KT, OUTPUT_DIM, STATE_DIM, (float32_t*)KT_f32);
 
+    arm_mat_mult_f32(&K, &C, &KC);
+    arm_mat_sub_f32(&I18, &KC, &I_KC);
     arm_mat_mult_f32(&I_KC, &Ppri, &I_KCPI_KCT);
     arm_mat_trans_f32(&I_KC, &I_KCT);
     arm_mat_mult_f32(&I_KCPI_KCT, &I_KCT, &I_KCPI_KCT);
-
-    arm_mat_mult_f32(&PCT, &invSR, &KR);
-    arm_mat_mult_f32(&KR, &invSTC, &KRKT);
-    arm_mat_trans_f32(&Ppri, &PpriT);
-    arm_mat_mult_f32(&KRKT, &PpriT, &KRKT);
+    
+    arm_mat_mult_f32(&K, &R, &KR);
+    arm_mat_trans_f32(&K, &KT);
+    arm_mat_mult_f32(&KR, &KT, &KRKT);
     arm_mat_add_f32(&I_KCPI_KCT, &KRKT, &P);
     memcpy(kf.P, P.pData, sizeof(kf.P));
+//    // S = R + C * Ppri * C^T 28x28
+//    arm_mat_init_f32(&CP, OUTPUT_DIM, STATE_DIM, (float32_t*)CP_f32);
+//    arm_mat_init_f32(&CT, STATE_DIM, OUTPUT_DIM, (float32_t*)CT_f32);
+//    arm_mat_init_f32(&R, OUTPUT_DIM, OUTPUT_DIM, (float32_t*)kf.R);
+//    arm_mat_init_f32(&S, OUTPUT_DIM, OUTPUT_DIM, (float32_t*)S_f32);
+
+//    arm_mat_mult_f32(&C, &Ppri, &CP);
+//    arm_mat_trans_f32(&C, &CT);
+//    arm_mat_mult_f32(&CP, &CT, &S);
+//    arm_mat_add_f32(&S, &R, &S);
+//    
+//    // S^-1(y - yhat) 28x1
+//    start_time[3] = getTime();
+//    arm_mat_init_f32(&y, OUTPUT_DIM, 1, (float32_t*)kf.y);
+//    arm_mat_init_f32(&y_yhat, OUTPUT_DIM, 1, (float32_t*)y_yhat_f32);
+//    arm_mat_init_f32(&invSy, OUTPUT_DIM, 1, (float32_t*)invSy_f32);
+
+//    arm_mat_sub_f32(&y, &yhat, &y_yhat);
+//    mat_lu_decomp_ptr(OUTPUT_DIM, S.pData, (float*)SL_f32, (float*)SU_f32, LU_P_f32);
+//    mat_solve_with_lu_ptr(OUTPUT_DIM, (float*)SL_f32, (float*)SU_f32, LU_P_f32, 1, y_yhat.pData, invSy.pData);
+    
+    
+//    // S^-1 * C 28x18
+//    arm_mat_init_f32(&invSC, OUTPUT_DIM, STATE_DIM, (float32_t*)invSC_f32);
+//    mat_solve_with_lu_ptr(OUTPUT_DIM, (float*)SL_f32, (float*)SU_f32, LU_P_f32, STATE_DIM, C.pData, invSC.pData);
+//    // S^-1 * R 28x28
+//    arm_mat_init_f32(&invSR, OUTPUT_DIM, OUTPUT_DIM, (float32_t*)invSR_f32);
+//    mat_solve_with_lu_ptr(OUTPUT_DIM, (float*)SL_f32, (float*)SU_f32, LU_P_f32, OUTPUT_DIM, R.pData, invSR.pData);
+//    // (S^T)^-1 * C 28x18
+//    arm_mat_init_f32(&ST, OUTPUT_DIM, OUTPUT_DIM, (float32_t*)ST_f32);
+//    arm_mat_init_f32(&invSTC, STATE_DIM, OUTPUT_DIM, (float32_t*)invSTC_f32);
+//    arm_mat_trans_f32(&S, &ST);
+//    mat_solve_with_lu_ptr(OUTPUT_DIM, (float*)SL_f32, (float*)SU_f32, LU_P_f32, STATE_DIM, C.pData, invSTC.pData);
+//    use_time[3] = (getTime() - start_time[3]) * 1000;
+//    // I - Ppri * C^T * S^-1 * C 18x18
+//    start_time[4] = getTime();
+//    arm_mat_init_f32(&PCT, STATE_DIM, OUTPUT_DIM, (float32_t*)PCT_f32);
+//    arm_mat_init_f32(&KC, STATE_DIM, STATE_DIM, (float32_t*)KC_f32);
+//    arm_mat_init_f32(&I_KC, STATE_DIM, STATE_DIM, (float32_t*)I_KC_f32);
+//    arm_mat_init_f32(&I18, STATE_DIM, STATE_DIM, (float32_t*)I18_f32);
+//    arm_mat_mult_f32(&Ppri, &CT, &PCT);
+//    arm_mat_mult_f32(&PCT, &invSC, &KC);
+//    arm_mat_sub_f32(&I18, &KC, &I_KC);
+//    // x = xhat + Ppri * C^T * S^-1 * (y - yhat) 18x1
+//    arm_mat_mult_f32(&PCT, &invSy, &x);
+//    arm_mat_add_f32(&x, &xhat, &x);
+//    memcpy(kf.x, x.pData, sizeof(kf.x));
+//    // P = (I-KC) * Ppri * (I-KC)^T + Ppri * C^T * S^-1 * R * (S^T)^-1 * C * Ppri^T 18x18
+//    arm_mat_init_f32(&I_KCPI_KCT, STATE_DIM, STATE_DIM, (float32_t*)I_KCPI_KCT_f32);
+//    arm_mat_init_f32(&I_KCT, STATE_DIM, STATE_DIM, (float32_t*)I_KCT_f32);
+//    arm_mat_init_f32(&KR, STATE_DIM, OUTPUT_DIM, (float32_t*)KR_f32);
+//    arm_mat_init_f32(&KRKT, STATE_DIM, STATE_DIM, (float32_t*)KRKT_f32);
+//    arm_mat_init_f32(&PpriT, STATE_DIM, STATE_DIM, (float32_t*)PpriT_f32);
+
+//    arm_mat_mult_f32(&I_KC, &Ppri, &I_KCPI_KCT);
+//    arm_mat_trans_f32(&I_KC, &I_KCT);
+//    arm_mat_mult_f32(&I_KCPI_KCT, &I_KCT, &I_KCPI_KCT);
+
+//    arm_mat_mult_f32(&PCT, &invSR, &KR);
+//    arm_mat_mult_f32(&KR, &invSTC, &KRKT);
+//    arm_mat_trans_f32(&Ppri, &PpriT);
+//    arm_mat_mult_f32(&KRKT, &PpriT, &KRKT);
+//    arm_mat_add_f32(&I_KCPI_KCT, &KRKT, &P);
+//    memcpy(kf.P, P.pData, sizeof(kf.P));
 
     // 对速度进行低通滤波
     LPFilter(kf.x[2]);
     LPFilter(kf.x[3]);
     use_time[4] = (getTime() - start_time[4]) * 1000;
     use_time_all = (getTime() - start_time[0]) * 1000;
+    if (use_time_all > 3)
+        use_time_greater_than_3 = 1;
 }
 
 void estimation_start(void)
