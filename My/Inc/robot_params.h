@@ -55,21 +55,27 @@
  * 默认姿态参数
  ************************************************************/
 // 站立高度（米）
-#define DEFAULT_STAND_HEIGHT 0.33f //0.3
+#define DEFAULT_STAND_HEIGHT 0.28f //0.3
 
-// 站立时重心位置
-#define DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_X 0.01f
-#define DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_Y 0.001f
+// 站立时重心位置，单位m
+#define DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_X 0.1f
+#define DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_Y 0.0f
 #define DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_Z 0.0f
 
-#define DEFAULT_CENTER_OF_GRAVITY_ROTATION_X 0.0f
-#define DEFAULT_CENTER_OF_GRAVITY_ROTATION_Y 0.0f
-#define DEFAULT_CENTER_OF_GRAVITY_ROTATION_Z 0.0f
+// 站立时重心旋转，单位m，注意单位不是弧度是米
+// pitch为正前腿抬高，roll为正左腿抬高，yaw没用
+#define DEFAULT_CENTER_OF_GRAVITY_ROTATION_PITCH -0.01f
+#define DEFAULT_CENTER_OF_GRAVITY_ROTATION_YAW 0.0f
+#define DEFAULT_CENTER_OF_GRAVITY_ROTATION_ROLL -0.001f
+
+// 足间距，X为前腿与后腿间距，Y为左腿与右腿间距
+#define DEFAULT_CENTER_OF_GRAVITY_FOOT_OFFEST_X 0.0f
+#define DEFAULT_CENTER_OF_GRAVITY_FOOT_OFFEST_Y 0.01f
 
 // 速度补偿，原地踏步时狗往前往后退自转的话改这个值
-#define DEFAULT_CENTER_OF_GRAVITY_VX 0.11f
-#define DEFAULT_CENTER_OF_GRAVITY_VY -0.02f
-#define DEFAULT_CENTER_OF_GRAVITY_VW -0.01f
+#define DEFAULT_CENTER_OF_GRAVITY_VX 0
+#define DEFAULT_CENTER_OF_GRAVITY_VY 0
+#define DEFAULT_CENTER_OF_GRAVITY_VW 0
 
 // 重心偏移量限制
 #define DEFAULT_CENTER_OF_GRAVITY_MAX_X 0.2f
@@ -256,6 +262,7 @@ typedef struct {
     float translation[3];
     float rotation[3];
     float velocity[3];
+    float foot_offset[2];
 } CenterOfGravity;
 
 

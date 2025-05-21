@@ -40,3 +40,4 @@ quadruped_f767\motor.o: ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h
 quadruped_f767\motor.o: ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h
 quadruped_f767\motor.o: ../Core/Inc/can.h
 quadruped_f767\motor.o: D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin\..\include\stdio.h
+quadruped_f767\motor.o: ../My/Inc/dog.h

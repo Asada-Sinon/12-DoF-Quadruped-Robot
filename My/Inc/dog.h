@@ -228,6 +228,11 @@ void dog_get_body_vel_without_cog(float velocity[3]);
 float dog_get_stand_height(void);
 
 /**
+ * @brief 获取狗参数
+ * @return RobotParams* 狗参数结构体
+ */
+RobotParams* get_dog_params(void);
+/**
  * @brief 获取指定腿的接触状态
  * @param leg_idx 腿的ID (0:FL, 1:FR, 2:HL, 3:HR)
  * @return int 接触状态 (0: 不接触, 1: 接触)

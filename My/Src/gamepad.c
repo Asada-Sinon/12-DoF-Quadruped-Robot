@@ -2,6 +2,29 @@
 #include "dog.h"
 #include "fsm.h"
 
+int16_t _channels[16];
+// 通道定义
+#define LEFT_X_CH   2
+#define LEFT_Y_CH   3
+#define RIGHT_X_CH  0
+#define RIGHT_Y_CH  1
+
+#define SWITCH_CH1   4
+#define SWITCH_CH2   5
+#define SWITCH_CH3   6
+#define SWITCH_CH4   7
+
+#define CHANNEL_MIDDLE 992 
+
+// 拨杆位置阈值定义
+#define SWITCH_UP_THRESHOLD      500
+#define SWITCH_DOWN_THRESHOLD    1500
+
+// 拨杆状态判断宏
+#define SWITCH_UP(ch)          (_channels[ch] < SWITCH_UP_THRESHOLD)
+#define SWITCH_DOWN(ch)        (_channels[ch] > SWITCH_DOWN_THRESHOLD)
+#define SWITCH_MIDDLE(ch)      (_channels[ch] <= SWITCH_DOWN_THRESHOLD && _channels[ch] >= SWITCH_UP_THRESHOLD)
+
 float vx = 0.0f;
 float vy = 0.0f;
 float w = 0.0f;
@@ -10,11 +33,12 @@ float vx_smooth = 0.0f;
 float vy_smooth = 0.0f;
 float w_smooth = 0.0f;
 
-float default_vx = 0.8f;
-float default_vy = 0.8f;
-float default_w = 0.5f;
-
-int16_t _channels[16];
+int dead_zone = 50;
+float v_inc = 0.005f;
+float v_dead_zone = 0.05f;
+float vx_scale = 0.001;
+float vy_scale = 0.001;
+float w_scale = 0.001;
 
 void HT10A_process(uint8_t buffer[30])
 {
@@ -50,29 +74,24 @@ void HT10A_process(uint8_t buffer[30])
     // 通道15: bits 165-175 (byte21低3位 + byte22全8位)
     _channels[15] = ((buffer[21] >> 5) | (buffer[22] << 3)) & 0x07FF;
     
-    int middle = 992;
-    int dead_zone = 50;
-    float vx_scale = 0.001;
-    float vy_scale = 0.001;
-    float w_scale = 0.001;
-    if (_channels[2] - middle > dead_zone)
-        vx = (_channels[2] - middle - dead_zone) * vx_scale;
-    else if (_channels[2] - middle < -dead_zone)
-        vx = (_channels[2] - middle + dead_zone) * vx_scale;
+    if (_channels[LEFT_X_CH] - CHANNEL_MIDDLE > dead_zone)
+        vx = (_channels[LEFT_X_CH] - CHANNEL_MIDDLE - dead_zone) * vx_scale;
+    else if (_channels[LEFT_X_CH] - CHANNEL_MIDDLE < -dead_zone)
+        vx = (_channels[LEFT_X_CH] - CHANNEL_MIDDLE + dead_zone) * vx_scale;
     else
         vx = 0;
 
-    if (_channels[3] - middle > dead_zone)
-        vy = -(_channels[3] - middle - dead_zone) * vy_scale;
-    else if (_channels[3] - middle < -dead_zone)
-        vy = -(_channels[3] - middle + dead_zone) * vy_scale;
+    if (_channels[LEFT_Y_CH] - CHANNEL_MIDDLE > dead_zone)
+        vy = -(_channels[LEFT_Y_CH] - CHANNEL_MIDDLE - dead_zone) * vy_scale;
+    else if (_channels[LEFT_Y_CH] - CHANNEL_MIDDLE < -dead_zone)
+        vy = -(_channels[LEFT_Y_CH] - CHANNEL_MIDDLE + dead_zone) * vy_scale;
     else
         vy = 0;
     
-    if (_channels[0] - middle > dead_zone)
-        w = -(_channels[0] - middle - dead_zone) * w_scale;
-    else if (_channels[0] - middle < -dead_zone)
-        w = -(_channels[0] - middle + dead_zone) * w_scale;
+    if (_channels[RIGHT_X_CH] - CHANNEL_MIDDLE > dead_zone)
+        w = -(_channels[RIGHT_X_CH] - CHANNEL_MIDDLE - dead_zone) * w_scale;
+    else if (_channels[RIGHT_X_CH] - CHANNEL_MIDDLE < -dead_zone)
+        w = -(_channels[RIGHT_X_CH] - CHANNEL_MIDDLE + dead_zone) * w_scale;
     else
         w = 0;
 }
@@ -88,50 +107,20 @@ void gamepad_control()
 {
     if (!start_gamepad_control)
         return;
-//    if (_kbhit())//检测键盘缓冲区中是否有数据
-//    {
-//        char ch = _getch();
-//        printf("%c",ch);
-//        switch (ch)
-//        {
-//        case 'w':
-//            vx = default_vx;
-//            break;
-//        case 's':
-//            vx = -default_vx;
-//            break;
-//        case 'a':
-//            vy = default_vy;
-//            break;
-//        case 'd':
-//            vy = -default_vy;
-//            break;
-//        case 'q':
-//            w = default_w;
-//            break;
-//        case 'e':
-//            w = -default_w;
-//            break;
-//        case 'z':
-//            vx = vy = w = 0.0f;
-//            break;
-//        }
-//    }
-    vx_smooth = smooth(vx_smooth, vx, 0.005f);
-    vy_smooth = smooth(vy_smooth, vy, 0.005f);
-    w_smooth = smooth(w_smooth, w, 0.005f);
+    vx_smooth = smooth(vx_smooth, vx, v_inc);
+    vy_smooth = smooth(vy_smooth, vy, v_inc);
+    w_smooth = smooth(w_smooth, w, v_inc);
     dog_set_body_vel(vx_smooth, vy_smooth, w_smooth);
-    if (_channels[6] > 1700)
+    if (SWITCH_DOWN(SWITCH_CH3))
     {
         fsm_change_to(STATE_PASSIVE);
         return;
     }   
-    if (fabs(vx_smooth) < 0.05f && fabs(vy_smooth) < 0.05f && fabs(w_smooth) < 0.05f) {
+    if (fabs(vx_smooth) < v_dead_zone && fabs(vy_smooth) < v_dead_zone && fabs(w_smooth) < v_dead_zone && SWITCH_UP(SWITCH_CH2)) {
         fsm_change_to(STATE_STAND);
     }
     else
     {
         fsm_change_to(STATE_TROT);
-    }
-    
+    } 
 }

@@ -95,6 +95,7 @@ void kf_get_foot_relative_velocities(KalmanFilter* kf, float vsfB[][3]);
 void estimation_init(void);
 void estimation_start(void);
 void estimation_run(void);
+void estimation_ano_tc(void); // 调试的用上位机
 #endif /* ESTIMATOR_H */
 
 

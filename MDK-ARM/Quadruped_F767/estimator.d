@@ -48,3 +48,5 @@ quadruped_f767\estimator.o: ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_ua
 quadruped_f767\estimator.o: ../Core/Inc/can.h
 quadruped_f767\estimator.o: ../My/Inc/imu.h
 quadruped_f767\estimator.o: ../My/Inc/timer.h
+quadruped_f767\estimator.o: ../My/Inc/ANO_TC.h
+quadruped_f767\estimator.o: ../Core/Inc/usart.h

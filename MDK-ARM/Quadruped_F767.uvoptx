@@ -762,6 +762,56 @@
           <WinNumber>2</WinNumber>
           <ItemText>status</ItemText>
         </Ww>
+        <Ww>
+          <count>58</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>\\Quadruped_F767\../My/Src/robot_params.c\robot_params.trot_gait</ItemText>
+        </Ww>
+        <Ww>
+          <count>59</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>trot_forward_cog_offset</ItemText>
+        </Ww>
+        <Ww>
+          <count>60</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>\\Quadruped_F767\../My/Src/robot_params.c\robot_params.posture.center_of_gravity.translation</ItemText>
+        </Ww>
+        <Ww>
+          <count>61</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>\\Quadruped_F767\../My/Src/robot_params.c\robot_params.posture.center_of_gravity.velocity</ItemText>
+        </Ww>
+        <Ww>
+          <count>62</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>trot_backward_cog_offset</ItemText>
+        </Ww>
+        <Ww>
+          <count>63</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>\\Quadruped_F767\../My/Src/robot_params.c\robot_params.posture.stand_height</ItemText>
+        </Ww>
+        <Ww>
+          <count>64</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>dog</ItemText>
+        </Ww>
+        <Ww>
+          <count>65</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>\\Quadruped_F767\../My/Src/dog.c\dog.params.posture.center_of_gravity.translation</ItemText>
+        </Ww>
+        <Ww>
+          <count>66</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>\\Quadruped_F767\../My/Src/dog.c\dog.params.posture.center_of_gravity.rotation</ItemText>
+        </Ww>
+        <Ww>
+          <count>67</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>\\Quadruped_F767\../My/Src/trot_state.c\trot_forward_cog_offset</ItemText>
+        </Ww>
       </WatchWindow2>
       <MemoryWindow1>
         <Mm>
@@ -1276,8 +1326,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\My\Src\matrix.c</PathWithFileName>
-      <FilenameWithoutPath>matrix.c</FilenameWithoutPath>
+      <PathWithFileName>..\My\Src\gamepad.c</PathWithFileName>
+      <FilenameWithoutPath>gamepad.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1352,8 +1402,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\My\Src\motor.c</PathWithFileName>
-      <FilenameWithoutPath>motor.c</FilenameWithoutPath>
+      <PathWithFileName>..\My\Src\matrix.c</PathWithFileName>
+      <FilenameWithoutPath>matrix.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1364,8 +1414,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\My\Src\gamepad.c</PathWithFileName>
-      <FilenameWithoutPath>gamepad.c</FilenameWithoutPath>
+      <PathWithFileName>..\My\Src\motor.c</PathWithFileName>
+      <FilenameWithoutPath>motor.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -1405,6 +1455,18 @@
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
+    <File>
+      <GroupNumber>7</GroupNumber>
+      <FileNumber>45</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>..\My\Src\ANO_TC.c</PathWithFileName>
+      <FilenameWithoutPath>ANO_TC.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
   </Group>
 
   <Group>
@@ -1415,7 +1477,7 @@
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>8</GroupNumber>
-      <FileNumber>45</FileNumber>
+      <FileNumber>46</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -1427,7 +1489,7 @@
     </File>
     <File>
       <GroupNumber>8</GroupNumber>
-      <FileNumber>46</FileNumber>
+      <FileNumber>47</FileNumber>
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>

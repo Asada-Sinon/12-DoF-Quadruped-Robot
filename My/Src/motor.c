@@ -2,7 +2,7 @@
 #include "robot_params.h"
 #include "stdio.h"
 #include "j60.h"
-
+#include "dog.h"
 // 初始化电机回传
 
 void motor_init()
@@ -50,7 +50,6 @@ void motor_init()
         }
     }
     // 清空电机控制参数，只接收电机回传数据
-    const RobotParams* params = get_robot_params();
     for (int i = 0; i < 12; i++) {
         J60_GetMotor(i)->kp = 0;
         J60_GetMotor(i)->kd = 0;
@@ -66,7 +65,7 @@ void motor_init()
 void check_motor_limit(float *motor_target_pos)
 {
     // 获取机器人参数
-    const RobotParams* params = get_robot_params();
+    const RobotParams* params = get_dog_params();
     
     // 关节类型名称，用于警告信息
     const char* joint_names[] = {"hip", "thigh", "calf"};

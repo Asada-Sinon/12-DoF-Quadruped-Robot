@@ -24,6 +24,7 @@ void timer_init()
     HAL_TIM_Base_Start_IT(&htim2); // 4ms发送电机信息
     HAL_TIM_Base_Start_IT(&htim3); // 2ms状态机
     HAL_TIM_Base_Start_IT(&htim4); // 3ms状态观测器
+    HAL_TIM_Base_Start_IT(&htim5); // 10ms上位机
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
@@ -47,5 +48,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     if (htim->Instance == TIM4) {
         // 状态观测器
         estimation_run();
+    }
+    if (htim->Instance == TIM5) {
+        // 上位机
+        estimation_ano_tc();
     }
 }

@@ -13,10 +13,11 @@
 #include "matrix.h"
 #include "imu.h"
 #include "timer.h"
-
+#include "ANO_TC.h"
 KalmanFilter kf;
 
 float kf_start = 0;
+float ano_data[12]; // 上位机
 
 // 一些常量矩阵
 float dt = 0.003; // 离散化采样时间，即计算间隔s
@@ -149,6 +150,7 @@ void world_foot_to_body_vel(uint8_t leg_id, float R[3][3], float VsfBi[3]) {
     leg_get_current_joint_vel(leg_id, joint_vel);
     
     leg_forward_kinematics_vel(leg_id, joint_pos, joint_vel, VbfBi);
+//    memcpy(VsfBi, VbfBi, sizeof(VbfBi));
     vec_add_ptr(3, WbxPbfBi, VbfBi, Wb_add_Vb);
     
     mat_mult_vec_ptr(3, 3, &R[0][0], Wb_add_Vb, VsfBi);  // 添加&R[0][0]以获取指针
@@ -368,6 +370,8 @@ void estimation_run() {
                 kf.R[2*i+j][2*i+j] = (1 + (1-trust)*largeVariance) * kf.R_init[2*i+j][2*i+j];
             }
         }
+//        if (i == 0)
+            // ano_data[2] = leg_get_contact_state(i);
     }
     use_time[0] = (getTime() - start_time[0]) * 1000;
     /* -----------预测部分------------- */
@@ -422,6 +426,20 @@ void estimation_run() {
             kf.y[2*i+j] = feetVel_f32[i][j];
         }
     }
+    ano_data[0] = kf.y[0];
+    ano_data[1] = kf.y[1];
+    ano_data[2] = kf.y[2];
+    ano_data[3] = kf.y[3];
+    ano_data[4] = kf.y[4];
+    ano_data[5] = kf.y[5];
+
+    ano_data[6] = kf.y[6];
+    ano_data[7] = kf.y[7];
+//    ano_data[8] = kf.y[8];
+
+//    ano_data[9] = kf.y[9];
+//    ano_data[10] = kf.y[10];
+//    ano_data[11] = kf.y[11];
     start_time[3] = getTime();
     // 直接求R+CPC^T的逆
     // (R + CPC^T)^-1
@@ -556,4 +574,9 @@ void estimation_run() {
 void estimation_start(void)
 {
     kf_start = 1;
+}
+
+void estimation_ano_tc()
+{
+    ano_tc(ano_data);
 }

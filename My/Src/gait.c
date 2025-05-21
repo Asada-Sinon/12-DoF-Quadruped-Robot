@@ -7,7 +7,7 @@
 
 // 获取步态参数
 GaitParams* get_trot_params() {
-    return (GaitParams*)&get_robot_params()->trot_gait;
+    return (GaitParams*)&get_dog_params()->trot_gait;
 }
 
 // 贝塞尔曲线未移植完成，部分移植完成的代码在4.10号上传的第一版中，现已删除
@@ -108,8 +108,8 @@ void phase_wave_generator(GaitParams *gait, WaveStatus status, float start_time,
     }
     for(int i = 0; i < 4; ++i){
         // 实时更新机器人的步态状态
-        get_robot_params()->posture.contact[i] = contact[i];
-        get_robot_params()->posture.phase[i] = phase[i];
+        get_dog_params()->posture.contact[i] = contact[i];
+        get_dog_params()->posture.phase[i] = phase[i];
     }
 }
 

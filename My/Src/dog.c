@@ -251,6 +251,14 @@ void leg_motor_to_joint(uint8_t leg_id, const float *motor_pos, float *joint_pos
     leg_transform(leg_id, motor_pos, joint_pos, MOTOR_TO_JOINT);
 }
 
+void leg_motor_to_joint_vel(uint8_t leg_id, const float *motor_vel, float *joint_vel)
+{
+    const MotorJointDirConfig *dir = &dog.params.motor_param.motor_dir[leg_id];
+    joint_vel[HIP_IDX] = dir->hip_dir * motor_vel[HIP_IDX];
+    joint_vel[THIGH_IDX] = dir->thigh_dir * motor_vel[THIGH_IDX];
+    joint_vel[CALF_IDX] = dir->calf_dir * motor_vel[CALF_IDX];
+}
+
 void leg_thigh_to_hip(uint8_t leg_id, const float thigh_pos[3], float hip_pos[3])
 {
     const LegLinkParams *leg_links = &dog.params.leg_links;
@@ -281,7 +289,7 @@ void leg_foot_to_motor(uint8_t leg_id, const float foot_pos[3], float motor_pos[
  * @param center_of_gravity 重心偏移量，方向与机体坐标系相同
  * @param foot_neutral_points 髋关节坐标系下，输出的足端中性点位置数组
  */
-void dog_cog_to_foot(const float cog_translation[3], const float cog_rotation[3], float foot_points[4][3])
+void dog_cog_to_foot(const float cog_translation[3], const float cog_rotation[3], const float cog_foot_offset[2], float foot_points[4][3])
 {
     float stand_height = dog.params.posture.stand_height;
     CenterOfGravityLimits *cog_limit = &dog.params.posture.center_of_gravity_limit;
@@ -289,6 +297,9 @@ void dog_cog_to_foot(const float cog_translation[3], const float cog_rotation[3]
     float cog_x = cog_translation[X_IDX];
     float cog_y = cog_translation[Y_IDX];
     float cog_z = cog_translation[Z_IDX];
+    float pitch_length = cog_rotation[X_IDX];
+    float roll_length = cog_rotation[Z_IDX];
+    
     // 安全限制，防止重心偏移过大导致不稳定
     float cog_x_max = cog_limit->cog_x_max;
     float cog_x_min = cog_limit->cog_x_min;
@@ -296,20 +307,44 @@ void dog_cog_to_foot(const float cog_translation[3], const float cog_rotation[3]
     float cog_y_min = cog_limit->cog_y_min;
     float cog_z_max = cog_limit->cog_z_max;
     float cog_z_min = cog_limit->cog_z_min;
-
-    // 限幅
-    if (cog_x >  cog_x_max) cog_x =  cog_x_max;
-    if (cog_x <  cog_x_min) cog_x =  cog_x_min;
-    if (cog_y >  cog_y_max) cog_y =  cog_y_max;
-    if (cog_y <  cog_y_min) cog_y =  cog_y_min;
-    if (cog_z >  cog_z_max) cog_z =  cog_z_max;
-    if (cog_z <  cog_z_min) cog_z =  cog_z_min;
+    
     // 根据重心偏移调整所有足端中性点(髋关节坐标系)
     for (int i = 0; i < 4; i++) {
         // 反向补偿重心偏移（机体重心移动到左前方，足端中性点需要向右后方移动）
+        if (i == LEG_FL)
+        {
+            cog_x = cog_translation[X_IDX] - cog_foot_offset[X_IDX];
+            cog_y = cog_translation[Y_IDX] - cog_foot_offset[Y_IDX];
+            cog_z = cog_translation[Z_IDX] + pitch_length + roll_length;
+        }
+        else if (i == LEG_FR)
+        {
+            cog_x = cog_translation[X_IDX] - cog_foot_offset[X_IDX];
+            cog_y = cog_translation[Y_IDX] + cog_foot_offset[Y_IDX];
+            cog_z = cog_translation[Z_IDX] + pitch_length - roll_length;
+        }
+        else if (i == LEG_HL)
+        {
+            cog_x = cog_translation[X_IDX] + cog_foot_offset[X_IDX];
+            cog_y = cog_translation[Y_IDX] - cog_foot_offset[Y_IDX];
+            cog_z = cog_translation[Z_IDX] - pitch_length + roll_length;
+        }
+        else if (i == LEG_HR)
+        {
+            cog_x = cog_translation[X_IDX] + cog_foot_offset[X_IDX];
+            cog_y = cog_translation[Y_IDX] + cog_foot_offset[Y_IDX];
+            cog_z = cog_translation[Z_IDX] - pitch_length - roll_length;
+        }
+        // 限幅
+        if (cog_x >  cog_x_max) cog_x =  cog_x_max;
+        if (cog_x <  cog_x_min) cog_x =  cog_x_min;
+        if (cog_y >  cog_y_max) cog_y =  cog_y_max;
+        if (cog_y <  cog_y_min) cog_y =  cog_y_min;
+        if (cog_z >  cog_z_max) cog_z =  cog_z_max;
+        if (cog_z <  cog_z_min) cog_z =  cog_z_min;
         foot_points[i][X_IDX] = -cog_x;
         foot_points[i][Y_IDX] = -cog_y;
-        foot_points[i][Z_IDX] = -stand_height-cog_z;
+        foot_points[i][Z_IDX] = -stand_height - cog_z;
     }
 }
 
@@ -332,7 +367,7 @@ void dog_smooth_cog(float step_increment)
 {
     // 计算目标足端中性点位置
     float target_neutral_points[4][3];
-    dog_cog_to_foot(get_robot_params()->posture.center_of_gravity.translation, /* rotation */ NULL, target_neutral_points);
+    dog_cog_to_foot(get_dog_params()->posture.center_of_gravity.translation, get_dog_params()->posture.center_of_gravity.rotation, get_dog_params()->posture.center_of_gravity.foot_offset, target_neutral_points);
     // 计算每步增量 
     for (int i = 0; i < 4; i++) {
         dog.leg[i].foot_neutral_pos[X_IDX] = smooth(dog.leg[i].foot_neutral_pos[X_IDX], target_neutral_points[i][X_IDX], step_increment);
@@ -374,12 +409,13 @@ void leg_get_current_foot_pos(uint8_t leg_idx, float foot_pos[3])
     leg_get_current_joint_pos(leg_idx, joint_current_pos);
     leg_time = (getTime() - leg_time_start) * 1000;
     leg_forward_kinematics(leg_idx, joint_current_pos, foot_pos);
-    
 }
 
 void leg_get_current_joint_vel(uint8_t leg_idx, float joint_current_vel[3])
 {
-    leg_get_motors_current_vel(leg_idx, joint_current_vel);
+    float motor_current_vel[3];
+    leg_get_motors_current_vel(leg_idx, motor_current_vel);
+    leg_motor_to_joint_vel(leg_idx, motor_current_vel, joint_current_vel);
 }
 
 // 机身坐标系原点为机体中心，x轴正方向为前进方向，y轴正方向为左，z轴正方向为上
@@ -436,27 +472,27 @@ void dog_get_body_vel(float velocity[3])
 
 void dog_get_body_vel_without_cog(float velocity[3])
 {
-    velocity[X_IDX] = body_vel[X_IDX] - get_robot_params()->posture.center_of_gravity.velocity[X_IDX];
-    velocity[Y_IDX] = body_vel[Y_IDX] - get_robot_params()->posture.center_of_gravity.velocity[Y_IDX];
-    velocity[Z_IDX] = body_vel[Z_IDX] - get_robot_params()->posture.center_of_gravity.velocity[Z_IDX];
+    velocity[X_IDX] = body_vel[X_IDX] - get_dog_params()->posture.center_of_gravity.velocity[X_IDX];
+    velocity[Y_IDX] = body_vel[Y_IDX] - get_dog_params()->posture.center_of_gravity.velocity[Y_IDX];
+    velocity[Z_IDX] = body_vel[Z_IDX] - get_dog_params()->posture.center_of_gravity.velocity[Z_IDX];
 }
 
 int leg_get_contact_state(uint8_t leg_idx)
 {
-    return get_robot_params()->posture.contact[leg_idx];
+    return get_dog_params()->posture.contact[leg_idx];
 }
 
 float leg_get_phase(uint8_t leg_idx)
 {
-    return get_robot_params()->posture.phase[leg_idx];
+    return get_dog_params()->posture.phase[leg_idx];
 }
 
 void dog_set_body_vel(float vx, float vy, float w)
 {
     // 速度加上重心补偿速度
-    body_vel[X_IDX] = vx + get_robot_params()->posture.center_of_gravity.velocity[X_IDX];
-    body_vel[Y_IDX] = vy + get_robot_params()->posture.center_of_gravity.velocity[Y_IDX];
-    body_vel[Z_IDX] = w + get_robot_params()->posture.center_of_gravity.velocity[Z_IDX];
+    body_vel[X_IDX] = vx + get_dog_params()->posture.center_of_gravity.velocity[X_IDX];
+    body_vel[Y_IDX] = vy + get_dog_params()->posture.center_of_gravity.velocity[Y_IDX];
+    body_vel[Z_IDX] = w + get_dog_params()->posture.center_of_gravity.velocity[Z_IDX];
 }
 
 float dog_get_stand_height()
@@ -497,44 +533,6 @@ void dog_send_motors_from_joints()
     send_motors_target_pos(motors_target_pos);
 }
      
-/**
- * @brief 重心控制测试示例
- */
-// void dog_cog_test(void)
-// {
-//     // 初始化重心位置（默认在几何中心点）
-//     Point center_of_gravity = {0.0f, 0.0f, 0.0f};
-    
-//     // 站立高度
-//     float stand_height = -0.33f;
-    
-//     // 前向倾斜演示
-//     printf("前向倾斜重心...\n");
-//     center_of_gravity.x = 0.05f;  // 向前偏移5cm
-//     dog_smooth_cog(&center_of_gravity, 1.0f);
-//     extApi_sleepMs(1000);
-    
-//     // 向右侧倾斜演示
-//     printf("向右侧倾斜重心...\n");
-//     center_of_gravity.x = 0.0f;
-//     center_of_gravity.y = -0.05f;  // 向右偏移5cm
-//     dog_smooth_cog(&center_of_gravity, 1.0f);
-//     extApi_sleepMs(1000);
-    
-//     // 向左前方倾斜演示
-//     printf("向左前方倾斜重心...\n");
-//     center_of_gravity.x = 0.05f;   // 向前偏移5cm
-//     center_of_gravity.y = 0.05f;   // 向左偏移5cm
-//     dog_smooth_cog(&center_of_gravity, 1.0f);
-//     extApi_sleepMs(1000);
-    
-//     // 返回中心位置
-//     printf("返回中心位置...\n");
-//     center_of_gravity.x = 0.0f;
-//     center_of_gravity.y = 0.0f;
-//     center_of_gravity.z = 0.0f;
-//     dog_smooth_cog(&center_of_gravity, 1.0f);
-// }
 /*========================= 初始化函数 =========================*/
 void dog_init(const RobotParams* init_params)
 {
@@ -555,7 +553,7 @@ void dog_init(const RobotParams* init_params)
     float foot_neutral_points[4][3];
     dog_cog_to_foot(dog.params.posture.center_of_gravity.translation, 
                      dog.params.posture.center_of_gravity.rotation, 
-                     foot_neutral_points);
+                     dog.params.posture.center_of_gravity.foot_offset, foot_neutral_points);
     
     for (int leg_idx = 0; leg_idx < 4; leg_idx++) {
         memcpy(dog.leg[leg_idx].foot_neutral_pos, foot_neutral_points[leg_idx], 3 * sizeof(float));
@@ -597,40 +595,7 @@ void dog_data_update()
     }
 }
 
-/*========================= 测试数据与代码 =========================*/
-// 测试用的目标关节角度
-float joint_target_pos_test[4][3] = {
-    {0.3, 0.67, -1.3}, // FL
-    {0.3, 0.67, -1.3}, // FR
-    {-0.5, 0.3, -1},   // HL
-    {-0.5, 0.3, -1}    // HR
-};
-
-// 测试用的目标电机位置
-float motor_target_pos_test[12];
-
-// 测试用的足端位置
-float foot_pos_test[4][3];
-float foot_pos_test_inverse[4][3] = {
-    {-0.006368, 0.174142, -0.279386},
-    {-0.006368, 0.014028, -0.328915},
-    {0.069739, -0.091398, -0.342096},
-    {0.069739, -0.238481, -0.261744}
-};
-
-// 测试用的关节角度
-float joint_pos_test_inverse[4][3];
-
-float cog_test[3] = {0.1f, 0.0f, 0.0f};
-float foot_neutral_points_test_now[4][3] = {0};
-float foot_neutral_points_test_next[4][3] = {0};
-
-uint8_t first_run = 1;
-// 获取各腿足端中性点位置
-float neutral_pos[4][3]; 
-float foot_target_pos[4][3];
-int t = 0;
-void test_robot_control()
-{
-    
+/* 获取狗参数 */
+RobotParams* get_dog_params(void) {
+    return &dog.params;
 }

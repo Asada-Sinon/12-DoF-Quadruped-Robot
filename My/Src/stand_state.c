@@ -16,12 +16,13 @@ static float motor_current_pos[4][3];
 float stand_test_foot_start_pos[4][3];
 float stand_test_foot_target_pos[4][3];
 
-float hip_kp = 100;
-float hip_kd = 2;   
-float thigh_kp = 98;
-float thigh_kd = 2;
-float calf_kp = 128;
-float calf_kd = 1.6;
+typedef struct pd{
+    float kp;
+    float kd;
+}pd;
+pd hip[4] = { {100 , 2}, {100, 2}, {100, 2}, {100, 2} };
+pd thigh[4] = { {100 , 2}, {100, 2}, {100, 2}, {100, 2} };
+pd calf[4] = { {128 , 1.5}, {128, 1.5}, {128, 1.5}, {128, 1.5} };
 
 //float hip_kp = 10;
 //float hip_kd = 0.1;
@@ -40,7 +41,7 @@ float calf_kd = 1.6;
 /* 站立状态的处理函数 */
 static void stand_enter(void) {
     // printf("进入站立状态\n");
-    RobotParams* params = get_robot_params();
+    RobotParams* params = get_dog_params();
     time_start = getTime();
     for (int i = 0; i < 4; i++){
         if (fsm_get_previous_state() == STATE_TROT) // 上一个状态是对角步态，仿真中把上一时刻的目标值当做起始值，防止电机回传延迟。实机正常把当前值做起始值就行。
@@ -60,7 +61,7 @@ static void stand_enter(void) {
     memcpy(stand_test_foot_start_pos, foot_start_pos, sizeof(foot_start_pos));
     for (int i = 0; i < 4; i++)
     {
-        leg_set_motor_kp_kd(i, hip_kp, hip_kd, thigh_kp, thigh_kd, calf_kp, calf_kd);
+        leg_set_motor_kp_kd(i, hip[i].kp, hip[i].kd, thigh[i].kp, thigh[i].kd, calf[i].kp, calf[i].kd);
     }
 }
 
@@ -69,7 +70,7 @@ static void stand_run(void) {
     t = getTime() - time_start;
     float stand_height = dog_get_stand_height();
     float neutral_pos[4][3]; 
-    RobotParams* params = get_robot_params();
+    RobotParams* params = get_dog_params();
     float motor_target_pos[4][3];
 
     for (int i = 0; i < 4; i++)
