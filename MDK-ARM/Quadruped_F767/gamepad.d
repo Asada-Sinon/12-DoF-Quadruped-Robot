@@ -1,7 +1,7 @@
 quadruped_f767\gamepad.o: ..\My\Src\gamepad.c
 quadruped_f767\gamepad.o: ../My/Inc/gamepad.h
-quadruped_f767\gamepad.o: ../My/Inc/dog.h
 quadruped_f767\gamepad.o: D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin\..\include\stdint.h
+quadruped_f767\gamepad.o: ../My/Inc/dog.h
 quadruped_f767\gamepad.o: ../My/Inc/robot_params.h
 quadruped_f767\gamepad.o: D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin\..\include\math.h
 quadruped_f767\gamepad.o: ../My/Inc/j60.h

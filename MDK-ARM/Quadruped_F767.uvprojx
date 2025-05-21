@@ -183,7 +183,7 @@
             <hadIRAM>1</hadIRAM>
             <hadXRAM>0</hadXRAM>
             <uocXRam>0</uocXRam>
-            <RvdsVP>3</RvdsVP>
+            <RvdsVP>2</RvdsVP>
             <RvdsMve>0</RvdsMve>
             <hadIRAM2>0</hadIRAM2>
             <hadIROM2>0</hadIROM2>
@@ -312,7 +312,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>3</Optim>
+            <Optim>4</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -844,9 +844,9 @@
           <GroupName>Drivers/CMSIS</GroupName>
           <Files>
             <File>
-              <FileName>arm_cortexM7lfdp_math.lib</FileName>
+              <FileName>arm_cortexM7lfsp_math.lib</FileName>
               <FileType>4</FileType>
-              <FilePath>..\Drivers\CMSIS\Lib\ARM\arm_cortexM7lfdp_math.lib</FilePath>
+              <FilePath>..\Drivers\CMSIS\Lib\ARM\arm_cortexM7lfsp_math.lib</FilePath>
             </File>
             <File>
               <FileName>system_stm32f7xx.c</FileName>
@@ -869,14 +869,19 @@
               <FilePath>..\My\Src\gait.c</FilePath>
             </File>
             <File>
+              <FileName>estimator.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\My\Src\estimator.c</FilePath>
+            </File>
+            <File>
               <FileName>timer.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\My\Src\timer.c</FilePath>
             </File>
             <File>
-              <FileName>estimator.c</FileName>
+              <FileName>matrix.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\My\Src\estimator.c</FilePath>
+              <FilePath>..\My\Src\matrix.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -927,6 +932,11 @@
               <FileName>imu.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\My\Src\imu.c</FilePath>
+            </File>
+            <File>
+              <FileName>my_usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\My\Src\my_usart.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -61,7 +61,7 @@ ARM Macro Assembler    Page 1
    40 00002000         ;   <o>  Heap Size (in Bytes) <0x0-0xFFFFFFFF:8>
    41 00002000         ; </h>
    42 00002000         
-   43 00002000 00000200 
+   43 00002000 00004000 
                        Heap_Size
 
 
@@ -69,21 +69,21 @@ ARM Macro Assembler    Page 1
 ARM Macro Assembler    Page 2 
 
 
-                               EQU              0x200
+                               EQU              0x4000
    44 00002000         
    45 00002000                 AREA             HEAP, NOINIT, READWRITE, ALIGN=
 3
    46 00000000         __heap_base
    47 00000000         Heap_Mem
                                SPACE            Heap_Size
-   48 00000200         __heap_limit
-   49 00000200         
-   50 00000200                 PRESERVE8
-   51 00000200                 THUMB
-   52 00000200         
-   53 00000200         
-   54 00000200         ; Vector Table Mapped to Address 0 at Reset
-   55 00000200                 AREA             RESET, DATA, READONLY
+   48 00004000         __heap_limit
+   49 00004000         
+   50 00004000                 PRESERVE8
+   51 00004000                 THUMB
+   52 00004000         
+   53 00004000         
+   54 00004000         ; Vector Table Mapped to Address 0 at Reset
+   55 00004000                 AREA             RESET, DATA, READONLY
    56 00000000                 EXPORT           __Vectors
    57 00000000                 EXPORT           __Vectors_End
    58 00000000                 EXPORT           __Vectors_Size
@@ -960,7 +960,7 @@ ARM Macro Assembler    Page 15
   501 0000001C                 END
               00000000 
               00000000 
-Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M7.fp.dp --apcs=
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M7.fp.sp --apcs=
 interwork --depend=quadruped_f767\startup_stm32f767xx.d -oquadruped_f767\startu
 p_stm32f767xx.o -I.\RTE\_Quadruped_F767 -ID:\1.Work\Flushbonading\keil\ARM\PACK
 \ARM\CMSIS\5.9.0\CMSIS\Core\Include -ID:\1.Work\Flushbonading\keil\ARM\PACK\Kei
@@ -1030,7 +1030,7 @@ Symbol: __heap_base
    Uses
       At line 481 in file startup_stm32f767xx.s
 Comment: __heap_base used once
-__heap_limit 00000200
+__heap_limit 00004000
 
 Symbol: __heap_limit
    Definitions
@@ -2271,7 +2271,7 @@ Symbol: WWDG_IRQHandler
 ARM Macro Assembler    Page 1 Alphabetic symbol ordering
 Absolute symbols
 
-Heap_Size 00000200
+Heap_Size 00004000
 
 Symbol: Heap_Size
    Definitions

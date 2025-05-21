@@ -16,12 +16,12 @@ static float motor_current_pos[4][3];
 float stand_test_foot_start_pos[4][3];
 float stand_test_foot_target_pos[4][3];
 
-float hip_kp = 90;
-float hip_kd = 0.8;
-float thigh_kp = 90;
-float thigh_kd = 0.5;
-float calf_kp = 120;
-float calf_kd = 0.8;
+float hip_kp = 100;
+float hip_kd = 2;   
+float thigh_kp = 98;
+float thigh_kd = 2;
+float calf_kp = 128;
+float calf_kd = 1.6;
 
 //float hip_kp = 10;
 //float hip_kd = 0.1;

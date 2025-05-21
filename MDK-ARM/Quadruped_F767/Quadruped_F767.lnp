@@ -1,4 +1,4 @@
---cpu Cortex-M7.fp.dp
+--cpu Cortex-M7.fp.sp
 "quadruped_f767\startup_stm32f767xx.o"
 "quadruped_f767\main.o"
 "quadruped_f767\gpio.o"
@@ -27,12 +27,13 @@
 "quadruped_f767\stm32f7xx_hal_tim_ex.o"
 "quadruped_f767\stm32f7xx_hal_uart.o"
 "quadruped_f767\stm32f7xx_hal_uart_ex.o"
-"..\Drivers\CMSIS\Lib\ARM\arm_cortexM7lfdp_math.lib"
+"..\Drivers\CMSIS\Lib\ARM\arm_cortexM7lfsp_math.lib"
 "quadruped_f767\system_stm32f7xx.o"
 "quadruped_f767\dog.o"
 "quadruped_f767\gait.o"
-"quadruped_f767\timer.o"
 "quadruped_f767\estimator.o"
+"quadruped_f767\timer.o"
+"quadruped_f767\matrix.o"
 "quadruped_f767\fsm.o"
 "quadruped_f767\passive_state.o"
 "quadruped_f767\stand_state.o"
@@ -41,6 +42,7 @@
 "quadruped_f767\gamepad.o"
 "quadruped_f767\j60.o"
 "quadruped_f767\imu.o"
+"quadruped_f767\my_usart.o"
 "quadruped_f767\robot_params.o"
 --library_type=microlib --strict --scatter "Quadruped_F767\Quadruped_F767.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols

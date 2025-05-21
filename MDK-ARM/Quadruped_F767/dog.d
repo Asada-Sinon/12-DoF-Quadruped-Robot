@@ -46,3 +46,7 @@ quadruped_f767\dog.o: ../Core/Inc/can.h
 quadruped_f767\dog.o: ../My/Inc/motor.h
 quadruped_f767\dog.o: ../My/Inc/gait.h
 quadruped_f767\dog.o: ../My/Inc/estimator.h
+quadruped_f767\dog.o: ../My/Inc/matrix.h
+quadruped_f767\dog.o: ../Drivers/CMSIS/DSP/Include/arm_math.h
+quadruped_f767\dog.o: ../Drivers/CMSIS/Include/core_cm7.h
+quadruped_f767\dog.o: ../My/Inc/timer.h

@@ -1,7 +1,7 @@
 quadruped_f767\imu.o: ..\My\Src\imu.c
 quadruped_f767\imu.o: ../My/Inc/imu.h
-quadruped_f767\imu.o: ../My/Inc/robot_params.h
 quadruped_f767\imu.o: D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin\..\include\stdint.h
+quadruped_f767\imu.o: ../My/Inc/robot_params.h
 quadruped_f767\imu.o: D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin\..\include\math.h
 quadruped_f767\imu.o: ../My/Inc/j60.h
 quadruped_f767\imu.o: ../Core/Inc/main.h
@@ -39,3 +39,5 @@ quadruped_f767\imu.o: ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim_ex.h
 quadruped_f767\imu.o: ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h
 quadruped_f767\imu.o: ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h
 quadruped_f767\imu.o: ../Core/Inc/can.h
+quadruped_f767\imu.o: ../Core/Inc/usart.h
+quadruped_f767\imu.o: D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin\..\include\string.h

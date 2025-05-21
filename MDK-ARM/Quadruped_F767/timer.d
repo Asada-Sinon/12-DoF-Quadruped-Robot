@@ -44,3 +44,9 @@ quadruped_f767\timer.o: ../Core/Inc/can.h
 quadruped_f767\timer.o: ../My/Inc/fsm.h
 quadruped_f767\timer.o: D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin\..\include\stdbool.h
 quadruped_f767\timer.o: ../My/Inc/motor.h
+quadruped_f767\timer.o: ../My/Inc/estimator.h
+quadruped_f767\timer.o: ../My/Inc/matrix.h
+quadruped_f767\timer.o: ../Drivers/CMSIS/DSP/Include/arm_math.h
+quadruped_f767\timer.o: ../Drivers/CMSIS/Include/core_cm7.h
+quadruped_f767\timer.o: D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin\..\include\string.h
+quadruped_f767\timer.o: ../My/Inc/gamepad.h
