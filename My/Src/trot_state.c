@@ -3,11 +3,26 @@
 #include "timer.h"
 #include "gait.h"
 #include "stdio.h"
+#include "motor.h"
 
-float trot_forward_cog_offset = 0.1;
-float trot_backward_cog_offset = 0.1;
+float trot_forward_cog_offset = 0.08;
+float trot_backward_cog_offset = 0.03;
 
 GaitState trot_state;    
+
+typedef struct pd{
+    float kp;
+    float kd;
+}pd;
+
+pd swing_hip[4] = { {120 , 2}, {120, 2}, {120, 2}, {120, 2} };
+pd swing_thigh[4] = { {100 , 0.5}, {150, 3}, {150, 3}, {150, 3} };
+pd swing_calf[4] = { {100 , 0.5}, {120, 4}, {120, 4}, {120, 4} };
+
+pd stance_hip[4] = { {120 , 2}, {120, 2}, {120, 2}, {120, 2} };
+pd stance_thigh[4] = { {100 , 5}, {150, 3}, {150, 3}, {150, 3} };
+pd stance_calf[4] = { {100 , 5}, {120, 4}, {120, 4}, {120, 4} };
+
 /* 对角步态状态的处理函数 */
 static void trot_enter(void) {
     // printf("进入对角步态状态\n");
@@ -20,18 +35,28 @@ static void trot_run(void) {
     float motor_target_pos[4][3];
     float s_body_vel[3];
     dog_get_body_vel_without_cog(s_body_vel); // 获取当前机体速度
-    if (s_body_vel[X_IDX] >= 0) // 前进时使用前进的重心补偿
+    if (s_body_vel[X_IDX] > 0) // 前进时使用前进的重心补偿
     {
         get_dog_params()->posture.center_of_gravity.translation[X_IDX] = trot_forward_cog_offset;
     }
-    else // 后退时使用后退的重心补偿
+    else if(s_body_vel[X_IDX] < 0)// 后退时使用后退的重心补偿
     {
         get_dog_params()->posture.center_of_gravity.translation[X_IDX] = trot_backward_cog_offset;
     }
+    else // 站立时重心
+    {
+        get_dog_params()->posture.center_of_gravity.translation[X_IDX] = DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_X;
+    }
+    
     phase_wave_generator(get_trot_params(), trot_state.wave_status, trot_state.time_start, phase, trot_state.contact);
     gait_generator(get_trot_params(), phase, trot_state.contact, trot_state.foot_target_pos);
     
     for(int i = 0; i < 4; i++){
+        if (trot_state.contact[i] == 0) // 摆动腿
+            leg_set_motor_kp_kd(i, swing_hip[0].kp, swing_hip[0].kd, swing_thigh[0].kp, swing_thigh[0].kd, swing_calf[0].kp, swing_calf[0].kd);
+        else // 支撑腿
+            leg_set_motor_kp_kd(i, stance_hip[0].kp, stance_hip[0].kd, stance_thigh[0].kp, stance_thigh[0].kd, stance_calf[0].kp, stance_calf[0].kd);
+
         leg_set_target_foot_pos(i, trot_state.foot_target_pos[i]); // 调试用
         leg_foot_to_motor(i, trot_state.foot_target_pos[i], motor_target_pos[i]);
         leg_set_motor_pos(i, motor_target_pos[i]);

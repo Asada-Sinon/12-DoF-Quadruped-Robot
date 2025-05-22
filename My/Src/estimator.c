@@ -28,33 +28,35 @@ float _I3_f32[3][3] = {0};
 float I12_f32[12][12] = {0};
 float I18_f32[18][18] = {0};
 
-struct LPFilter{
+typedef struct s_LPFilter{
     float weight;
     uint8_t start;
     float pastValue;
-} lpf;
+}s_LPFilter;
+
+s_LPFilter lpf_x, lpf_y;
 
 // 低通滤波器
-void LPFilter_init(float samplePeriod, float cutFrequency){
-    lpf.weight = 1.0f / ( 1.0f + 1.0f/(2.0f * PI * samplePeriod * cutFrequency) );
-    lpf.start  = 0;
+void LPFilter_init(s_LPFilter* lpf, float samplePeriod, float cutFrequency){
+    lpf->weight = 1.0f / ( 1.0f + 1.0f/(2.0f * PI * samplePeriod * cutFrequency) );
+    lpf->start  = 0;
 }
 
-void LPFilter(float newValue){
-    if(!lpf.start){
-        lpf.start = 1;
-        lpf.pastValue = newValue;
+void LPFilter(s_LPFilter* lpf, float newValue){
+    if(!lpf->start){
+        lpf->start = 1;
+        lpf->pastValue = newValue;
     }
-    lpf.pastValue = lpf.weight*newValue + (1-lpf.weight)*lpf.pastValue;
+    lpf->pastValue = lpf->weight*newValue + (1-lpf->weight)*lpf->pastValue;
 }
 
-float LPF_get_value(){
-    return lpf.pastValue;
+float LPF_get_value(s_LPFilter* lpf){
+    return lpf->pastValue;
 }
 
-void LPF_clear(){
-    lpf.start = 0;
-    lpf.pastValue = 0;
+void LPF_clear(s_LPFilter* lpf){
+    lpf->start = 0;
+    lpf->pastValue = 0;
 }
 
 /**
@@ -239,7 +241,8 @@ void estimation_init() {
     // 初始化状态变量x
     memset(kf.x, 0, sizeof(kf.x));
     // 初始化低通滤波器
-    LPFilter_init(dt, 3.0);
+    LPFilter_init(&lpf_x, dt, 3.0);
+    LPFilter_init(&lpf_y, dt, 3.0);
 }
 
 // 窗口函数，用于降低触底抖动对状态估计的影响
@@ -563,12 +566,14 @@ void estimation_run() {
 //    memcpy(kf.P, P.pData, sizeof(kf.P));
 
     // 对速度进行低通滤波
-    LPFilter(kf.x[2]);
-    LPFilter(kf.x[3]);
+    LPFilter(&lpf_x, kf.x[2]);
+    LPFilter(&lpf_y, kf.x[3]);
     use_time[4] = (getTime() - start_time[4]) * 1000;
     use_time_all = (getTime() - start_time[0]) * 1000;
     if (use_time_all > 3)
         use_time_greater_than_3 = 1;
+    ano_data[8] = LPF_get_value(&lpf_x);
+    ano_data[9] = LPF_get_value(&lpf_y);
 }
 
 void estimation_start(void)

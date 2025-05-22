@@ -3,7 +3,7 @@
 <title>Static Call Graph - [Quadruped_F767\Quadruped_F767.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image Quadruped_F767\Quadruped_F767.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Wed May 21 20:57:46 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Thu May 22 21:08:34 2025
 <BR><P>
 <H3>Maximum Stack Usage =        548 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -1552,11 +1552,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_RxFifo0MsgPendingCallback
 </UL>
 
-<P><STRONG><a name="[170]"></a>LPFilter</STRONG> (Thumb, 44 bytes, Stack size 0 bytes, estimator.o(i.LPFilter))
+<P><STRONG><a name="[170]"></a>LPFilter</STRONG> (Thumb, 42 bytes, Stack size 0 bytes, estimator.o(i.LPFilter))
 <BR><BR>[Called By]<UL><LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_run
 </UL>
 
-<P><STRONG><a name="[161]"></a>LPFilter_init</STRONG> (Thumb, 40 bytes, Stack size 0 bytes, estimator.o(i.LPFilter_init))
+<P><STRONG><a name="[161]"></a>LPFilter_init</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, estimator.o(i.LPFilter_init))
 <BR><BR>[Called By]<UL><LI><a href="#[15d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_init
 </UL>
 
@@ -2274,7 +2274,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_PeriodElapsedCallback
 </UL>
 
-<P><STRONG><a name="[15d]"></a>estimation_init</STRONG> (Thumb, 484 bytes, Stack size 448 bytes, estimator.o(i.estimation_init))
+<P><STRONG><a name="[15d]"></a>estimation_init</STRONG> (Thumb, 502 bytes, Stack size 448 bytes, estimator.o(i.estimation_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 524<LI>Call Chain = estimation_init &rArr; mat_transpose_ptr &rArr; arm_mat_trans_f32
 </UL>
 <BR>[Calls]<UL><LI><a href="#[15f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mat_transpose_ptr
@@ -2287,7 +2287,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[e6]"></a>estimation_run</STRONG> (Thumb, 1688 bytes, Stack size 64 bytes, estimator.o(i.estimation_run))
+<P><STRONG><a name="[e6]"></a>estimation_run</STRONG> (Thumb, 1708 bytes, Stack size 64 bytes, estimator.o(i.estimation_run))
 <BR><BR>[Stack]<UL><LI>Max Depth = 384<LI>Call Chain = estimation_run &rArr; world_foot_to_body_vel &rArr; leg_get_current_foot_pos_body &rArr; leg_get_current_foot_pos &rArr; leg_forward_kinematics &rArr; getTime &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;imu_get_data
@@ -2367,8 +2367,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;trot_run
 </UL>
 
-<P><STRONG><a name="[e4]"></a>gamepad_control</STRONG> (Thumb, 188 bytes, Stack size 8 bytes, gamepad.o(i.gamepad_control))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = gamepad_control
+<P><STRONG><a name="[e4]"></a>gamepad_control</STRONG> (Thumb, 256 bytes, Stack size 16 bytes, gamepad.o(i.gamepad_control))
+<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = gamepad_control
 </UL>
 <BR>[Calls]<UL><LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fsm_change_to
 <LI><a href="#[15c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth
@@ -2591,7 +2591,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[15a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_GetMotor
 </UL>
-<BR>[Called By]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_enter
+<BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;trot_run
+<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_enter
 <LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;passive_run
 </UL>
 
@@ -3030,7 +3031,7 @@ Local Symbols
 <P><STRONG><a name="[8b]"></a>trot_exit</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, trot_state.o(i.trot_exit))
 <BR>[Address Reference Count : 1]<UL><LI> trot_state.o(i.register_trot_state)
 </UL>
-<P><STRONG><a name="[8c]"></a>trot_run</STRONG> (Thumb, 156 bytes, Stack size 120 bytes, trot_state.o(i.trot_run))
+<P><STRONG><a name="[8c]"></a>trot_run</STRONG> (Thumb, 228 bytes, Stack size 120 bytes, trot_state.o(i.trot_run))
 <BR><BR>[Stack]<UL><LI>Max Depth = 484<LI>Call Chain = trot_run &rArr; gait_generator &rArr; cal_foot_end_pos &rArr; __hardfp_sinf &rArr; __mathlib_rredf2
 </UL>
 <BR>[Calls]<UL><LI><a href="#[194]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
@@ -3041,6 +3042,7 @@ Local Symbols
 <LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_foot_to_motor
 <LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_dog_params
 <LI><a href="#[198]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_get_body_vel_without_cog
+<LI><a href="#[189]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_kp_kd
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> trot_state.o(i.register_trot_state)
 </UL>

@@ -8,12 +8,12 @@ RobotParams robot_params = {
     /* 步态参数 */
     .trot_gait = {
         .phase = {0.0, 0.5, 0.5, 0.0}, 
-        .T = 0.35, //0.3
+        .T = 0.38, //0.3
         .stance_ratio = 0.52,
         .swing_ratio = 1- 0.52,
         .step_length = 0,
         .swing_height = 0.07,
-        .stance_depth = 0.008,
+        .stance_depth = 0,//0.008
         .stand_height = DEFAULT_STAND_HEIGHT
     },
     /* 电机参数 */

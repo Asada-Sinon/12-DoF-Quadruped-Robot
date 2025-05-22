@@ -39,7 +39,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     }
     if (htim->Instance == TIM3) {
         // 全局调整重心
-        dog_smooth_cog(0.005);
+        dog_smooth_cog(0.0007);
         // 手柄
         gamepad_control();
         // 2ms状态机

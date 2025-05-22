@@ -16,6 +16,8 @@ int16_t _channels[16];
 
 #define CHANNEL_MIDDLE 992 
 
+#define GAMEPAD_CONNECTED (_channels[0] || _channels[1] || _channels[2] || _channels[3] || _channels[4] || _channels[5] || _channels[6] || _channels[7] || _channels[8] || _channels[9] || _channels[10] || _channels[11] || _channels[12] || _channels[13] || _channels[14] || _channels[15])
+
 // 拨杆位置阈值定义
 #define SWITCH_UP_THRESHOLD      500
 #define SWITCH_DOWN_THRESHOLD    1500
@@ -24,6 +26,7 @@ int16_t _channels[16];
 #define SWITCH_UP(ch)          (_channels[ch] < SWITCH_UP_THRESHOLD)
 #define SWITCH_DOWN(ch)        (_channels[ch] > SWITCH_DOWN_THRESHOLD)
 #define SWITCH_MIDDLE(ch)      (_channels[ch] <= SWITCH_DOWN_THRESHOLD && _channels[ch] >= SWITCH_UP_THRESHOLD)
+
 
 float vx = 0.0f;
 float vy = 0.0f;
@@ -36,8 +39,8 @@ float w_smooth = 0.0f;
 int dead_zone = 50;
 float v_inc = 0.005f;
 float v_dead_zone = 0.05f;
-float vx_scale = 0.001;
-float vy_scale = 0.001;
+float vx_scale = 0.005;
+float vy_scale = 0.005;
 float w_scale = 0.001;
 
 void HT10A_process(uint8_t buffer[30])
@@ -105,7 +108,7 @@ void gamepad_control_init()
 // 手柄控制机体速度
 void gamepad_control()
 {
-    if (!start_gamepad_control)
+    if (!start_gamepad_control || !GAMEPAD_CONNECTED)
         return;
     vx_smooth = smooth(vx_smooth, vx, v_inc);
     vy_smooth = smooth(vy_smooth, vy, v_inc);
