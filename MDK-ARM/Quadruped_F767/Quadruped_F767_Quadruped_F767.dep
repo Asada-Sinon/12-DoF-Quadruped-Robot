@@ -41,7 +41,7 @@ I (../Core/Inc/tim.h)(0x67FCAEB3)
 I (../Core/Inc/usart.h)(0x682C67FF)
 I (../Core/Inc/gpio.h)(0x67FB9EE6)
 I (../My/Inc/dog.h)(0x682DB6CF)
-I (../My/Inc/robot_params.h)(0x682F1A99)
+I (../My/Inc/robot_params.h)(0x682FFEB7)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\math.h)(0x599EDB3E)
 I (../My/Inc/j60.h)(0x682D5009)
 I (../My/Inc/fsm.h)(0x67FCF542)
@@ -995,7 +995,7 @@ I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\math.h)(0x599EDB3E)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\time.h)(0x599EDB3E)
 I (../My/Inc/dog.h)(0x682DB6CF)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\stdint.h)(0x599EDB3E)
-I (../My/Inc/robot_params.h)(0x682F1A99)
+I (../My/Inc/robot_params.h)(0x682FFEB7)
 I (../My/Inc/j60.h)(0x682D5009)
 I (../Core/Inc/main.h)(0x67FB9EE8)
 I (../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h)(0x67FCA83B)
@@ -1039,7 +1039,7 @@ I (../Drivers/CMSIS/DSP/Include/arm_math.h)(0x67FCA803)
 I (../My/Inc/timer.h)(0x67FCFB69)
 F (..\My\Src\gait.c)(0x682DB738)(--c99 -c --cpu Cortex-M7.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F7xx/Include -I ../Drivers/CMSIS/Include -I ../My/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp-I.\RTE\_Quadruped_F767-ID:\1.Work\Flushbonading\keil\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\1.Work\Flushbonading\keil\ARM\PACK\Keil\STM32F7xx_DFP\2.15.2\Drivers\CMSIS\Device\ST\STM32F7xx\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F767xx -DUSE_HAL_DRIVER -DSTM32F767xx -DARM_MATH_CM7 -D__TARGET_FPU_VFP-o quadruped_f767\gait.o --omf_browse quadruped_f767\gait.crf --depend quadruped_f767\gait.d)
 I (../My/Inc/gait.h)(0x67FC92A8)
-I (../My/Inc/robot_params.h)(0x682F1A99)
+I (../My/Inc/robot_params.h)(0x682FFEB7)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\stdint.h)(0x599EDB3E)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\math.h)(0x599EDB3E)
 I (../My/Inc/j60.h)(0x682D5009)
@@ -1097,7 +1097,7 @@ I (../Drivers/CMSIS/Include/mpu_armv7.h)(0x67FCA803)
 I (../Drivers/CMSIS/Device/ST/STM32F7xx/Include/system_stm32f7xx.h)(0x67FCA83B)
 I (../Drivers/CMSIS/DSP/Include/arm_math.h)(0x67FCA803)
 I (../My/Inc/dog.h)(0x682DB6CF)
-I (../My/Inc/robot_params.h)(0x682F1A99)
+I (../My/Inc/robot_params.h)(0x682FFEB7)
 I (../My/Inc/j60.h)(0x682D5009)
 I (../Core/Inc/main.h)(0x67FB9EE8)
 I (../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h)(0x67FCA83B)
@@ -1168,7 +1168,7 @@ I (../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim_ex.h)(0x67FCA83B)
 I (../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h)(0x67FCA83B)
 I (../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h)(0x67FCA83B)
 I (../My/Inc/dog.h)(0x682DB6CF)
-I (../My/Inc/robot_params.h)(0x682F1A99)
+I (../My/Inc/robot_params.h)(0x682FFEB7)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\math.h)(0x599EDB3E)
 I (../My/Inc/j60.h)(0x682D5009)
 I (../Core/Inc/can.h)(0x67FCAEB2)
@@ -1180,11 +1180,11 @@ I (../My/Inc/matrix.h)(0x682C182A)
 I (../Drivers/CMSIS/DSP/Include/arm_math.h)(0x67FCA803)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\string.h)(0x599EDB3C)
 I (../My/Inc/gamepad.h)(0x682C6F88)
-F (..\My\Src\gamepad.c)(0x682F07E1)(--c99 -c --cpu Cortex-M7.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F7xx/Include -I ../Drivers/CMSIS/Include -I ../My/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp-I.\RTE\_Quadruped_F767-ID:\1.Work\Flushbonading\keil\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\1.Work\Flushbonading\keil\ARM\PACK\Keil\STM32F7xx_DFP\2.15.2\Drivers\CMSIS\Device\ST\STM32F7xx\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F767xx -DUSE_HAL_DRIVER -DSTM32F767xx -DARM_MATH_CM7 -D__TARGET_FPU_VFP-o quadruped_f767\gamepad.o --omf_browse quadruped_f767\gamepad.crf --depend quadruped_f767\gamepad.d)
+F (..\My\Src\gamepad.c)(0x682FFE9B)(--c99 -c --cpu Cortex-M7.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F7xx/Include -I ../Drivers/CMSIS/Include -I ../My/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp-I.\RTE\_Quadruped_F767-ID:\1.Work\Flushbonading\keil\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\1.Work\Flushbonading\keil\ARM\PACK\Keil\STM32F7xx_DFP\2.15.2\Drivers\CMSIS\Device\ST\STM32F7xx\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F767xx -DUSE_HAL_DRIVER -DSTM32F767xx -DARM_MATH_CM7 -D__TARGET_FPU_VFP-o quadruped_f767\gamepad.o --omf_browse quadruped_f767\gamepad.crf --depend quadruped_f767\gamepad.d)
 I (../My/Inc/gamepad.h)(0x682C6F88)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\stdint.h)(0x599EDB3E)
 I (../My/Inc/dog.h)(0x682DB6CF)
-I (../My/Inc/robot_params.h)(0x682F1A99)
+I (../My/Inc/robot_params.h)(0x682FFEB7)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\math.h)(0x599EDB3E)
 I (../My/Inc/j60.h)(0x682D5009)
 I (../Core/Inc/main.h)(0x67FB9EE8)
@@ -1230,7 +1230,7 @@ I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\stdbool.h)(0x599EDB3E)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\string.h)(0x599EDB3C)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\stdio.h)(0x599EDB3C)
 I (../My/Inc/dog.h)(0x682DB6CF)
-I (../My/Inc/robot_params.h)(0x682F1A99)
+I (../My/Inc/robot_params.h)(0x682FFEB7)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\math.h)(0x599EDB3E)
 I (../My/Inc/j60.h)(0x682D5009)
 I (../Core/Inc/main.h)(0x67FB9EE8)
@@ -1272,7 +1272,7 @@ I (../My/Inc/fsm.h)(0x67FCF542)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\stdint.h)(0x599EDB3E)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\stdbool.h)(0x599EDB3E)
 I (../My/Inc/dog.h)(0x682DB6CF)
-I (../My/Inc/robot_params.h)(0x682F1A99)
+I (../My/Inc/robot_params.h)(0x682FFEB7)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\math.h)(0x599EDB3E)
 I (../My/Inc/j60.h)(0x682D5009)
 I (../Core/Inc/main.h)(0x67FB9EE8)
@@ -1313,12 +1313,12 @@ I (../My/Inc/timer.h)(0x67FCFB69)
 I (../My/Inc/gait.h)(0x67FC92A8)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\stdio.h)(0x599EDB3C)
 I (../My/Inc/motor.h)(0x6824B5E9)
-F (..\My\Src\stand_state.c)(0x682F11B4)(--c99 -c --cpu Cortex-M7.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F7xx/Include -I ../Drivers/CMSIS/Include -I ../My/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp-I.\RTE\_Quadruped_F767-ID:\1.Work\Flushbonading\keil\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\1.Work\Flushbonading\keil\ARM\PACK\Keil\STM32F7xx_DFP\2.15.2\Drivers\CMSIS\Device\ST\STM32F7xx\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F767xx -DUSE_HAL_DRIVER -DSTM32F767xx -DARM_MATH_CM7 -D__TARGET_FPU_VFP-o quadruped_f767\stand_state.o --omf_browse quadruped_f767\stand_state.crf --depend quadruped_f767\stand_state.d)
+F (..\My\Src\stand_state.c)(0x682FFE9B)(--c99 -c --cpu Cortex-M7.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F7xx/Include -I ../Drivers/CMSIS/Include -I ../My/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp-I.\RTE\_Quadruped_F767-ID:\1.Work\Flushbonading\keil\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\1.Work\Flushbonading\keil\ARM\PACK\Keil\STM32F7xx_DFP\2.15.2\Drivers\CMSIS\Device\ST\STM32F7xx\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F767xx -DUSE_HAL_DRIVER -DSTM32F767xx -DARM_MATH_CM7 -D__TARGET_FPU_VFP-o quadruped_f767\stand_state.o --omf_browse quadruped_f767\stand_state.crf --depend quadruped_f767\stand_state.d)
 I (../My/Inc/fsm.h)(0x67FCF542)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\stdint.h)(0x599EDB3E)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\stdbool.h)(0x599EDB3E)
 I (../My/Inc/dog.h)(0x682DB6CF)
-I (../My/Inc/robot_params.h)(0x682F1A99)
+I (../My/Inc/robot_params.h)(0x682FFEB7)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\math.h)(0x599EDB3E)
 I (../My/Inc/j60.h)(0x682D5009)
 I (../Core/Inc/main.h)(0x67FB9EE8)
@@ -1364,7 +1364,7 @@ I (../My/Inc/fsm.h)(0x67FCF542)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\stdint.h)(0x599EDB3E)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\stdbool.h)(0x599EDB3E)
 I (../My/Inc/dog.h)(0x682DB6CF)
-I (../My/Inc/robot_params.h)(0x682F1A99)
+I (../My/Inc/robot_params.h)(0x682FFEB7)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\math.h)(0x599EDB3E)
 I (../My/Inc/j60.h)(0x682D5009)
 I (../Core/Inc/main.h)(0x67FB9EE8)
@@ -1422,7 +1422,7 @@ I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\stdio.h)(0x599EDB3C)
 F (..\My\Src\motor.c)(0x682DB715)(--c99 -c --cpu Cortex-M7.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F7xx/Include -I ../Drivers/CMSIS/Include -I ../My/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp-I.\RTE\_Quadruped_F767-ID:\1.Work\Flushbonading\keil\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\1.Work\Flushbonading\keil\ARM\PACK\Keil\STM32F7xx_DFP\2.15.2\Drivers\CMSIS\Device\ST\STM32F7xx\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F767xx -DUSE_HAL_DRIVER -DSTM32F767xx -DARM_MATH_CM7 -D__TARGET_FPU_VFP-o quadruped_f767\motor.o --omf_browse quadruped_f767\motor.crf --depend quadruped_f767\motor.d)
 I (../My/Inc/motor.h)(0x6824B5E9)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\stdint.h)(0x599EDB3E)
-I (../My/Inc/robot_params.h)(0x682F1A99)
+I (../My/Inc/robot_params.h)(0x682FFEB7)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\math.h)(0x599EDB3E)
 I (../My/Inc/j60.h)(0x682D5009)
 I (../Core/Inc/main.h)(0x67FB9EE8)
@@ -1502,7 +1502,7 @@ I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\string.h)(0x599EDB3C)
 F (..\My\Src\imu.c)(0x68287AD5)(--c99 -c --cpu Cortex-M7.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F7xx/Include -I ../Drivers/CMSIS/Include -I ../My/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp-I.\RTE\_Quadruped_F767-ID:\1.Work\Flushbonading\keil\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\1.Work\Flushbonading\keil\ARM\PACK\Keil\STM32F7xx_DFP\2.15.2\Drivers\CMSIS\Device\ST\STM32F7xx\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F767xx -DUSE_HAL_DRIVER -DSTM32F767xx -DARM_MATH_CM7 -D__TARGET_FPU_VFP-o quadruped_f767\imu.o --omf_browse quadruped_f767\imu.crf --depend quadruped_f767\imu.d)
 I (../My/Inc/imu.h)(0x68287ADD)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\stdint.h)(0x599EDB3E)
-I (../My/Inc/robot_params.h)(0x682F1A99)
+I (../My/Inc/robot_params.h)(0x682FFEB7)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\math.h)(0x599EDB3E)
 I (../My/Inc/j60.h)(0x682D5009)
 I (../Core/Inc/main.h)(0x67FB9EE8)
@@ -1619,7 +1619,7 @@ I (../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h)(0x67FCA83B)
 I (../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h)(0x67FCA83B)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\string.h)(0x599EDB3C)
 F (..\My\Src\robot_params.c)(0x682EC90C)(--c99 -c --cpu Cortex-M7.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F7xx/Include -I ../Drivers/CMSIS/Include -I ../My/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp-I.\RTE\_Quadruped_F767-ID:\1.Work\Flushbonading\keil\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\1.Work\Flushbonading\keil\ARM\PACK\Keil\STM32F7xx_DFP\2.15.2\Drivers\CMSIS\Device\ST\STM32F7xx\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F767xx -DUSE_HAL_DRIVER -DSTM32F767xx -DARM_MATH_CM7 -D__TARGET_FPU_VFP-o quadruped_f767\robot_params.o --omf_browse quadruped_f767\robot_params.crf --depend quadruped_f767\robot_params.d)
-I (../My/Inc/robot_params.h)(0x682F1A99)
+I (../My/Inc/robot_params.h)(0x682FFEB7)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\stdint.h)(0x599EDB3E)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\math.h)(0x599EDB3E)
 I (../My/Inc/j60.h)(0x682D5009)
@@ -1658,4 +1658,4 @@ I (../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h)(0x67FCA83B)
 I (../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h)(0x67FCA83B)
 I (../Core/Inc/can.h)(0x67FCAEB2)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\stdio.h)(0x599EDB3C)
-F (..\My\Inc\robot_params.h)(0x682F1A99)()
+F (..\My\Inc\robot_params.h)(0x682FFEB7)()
