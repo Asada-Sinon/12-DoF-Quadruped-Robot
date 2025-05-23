@@ -3,7 +3,11 @@
 <title>Static Call Graph - [Quadruped_F767\Quadruped_F767.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image Quadruped_F767\Quadruped_F767.axf</H1><HR>
+<<<<<<< HEAD
 <BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Fri May 23 12:54:09 2025
+=======
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Fri May 23 14:29:44 2025
+>>>>>>> 运动会版本
 <BR><P>
 <H3>Maximum Stack Usage =        548 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -2253,7 +2257,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_PeriodElapsedCallback
 </UL>
 
-<P><STRONG><a name="[176]"></a>dog_set_body_vel</STRONG> (Thumb, 44 bytes, Stack size 0 bytes, dog.o(i.dog_set_body_vel))
+<P><STRONG><a name="[177]"></a>dog_set_body_vel</STRONG> (Thumb, 44 bytes, Stack size 0 bytes, dog.o(i.dog_set_body_vel))
 <BR><BR>[Called By]<UL><LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gamepad_control
 </UL>
 
@@ -2324,7 +2328,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ieee754_rem_pio2
 </UL>
 
-<P><STRONG><a name="[177]"></a>fsm_change_to</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, fsm.o(i.fsm_change_to))
+<P><STRONG><a name="[178]"></a>fsm_change_to</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, fsm.o(i.fsm_change_to))
 <BR><BR>[Called By]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gamepad_control
 </UL>
@@ -2367,12 +2371,13 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;trot_run
 </UL>
 
-<P><STRONG><a name="[e4]"></a>gamepad_control</STRONG> (Thumb, 256 bytes, Stack size 16 bytes, gamepad.o(i.gamepad_control))
-<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = gamepad_control
+<P><STRONG><a name="[e4]"></a>gamepad_control</STRONG> (Thumb, 542 bytes, Stack size 32 bytes, gamepad.o(i.gamepad_control))
+<BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = gamepad_control
 </UL>
-<BR>[Calls]<UL><LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fsm_change_to
+<BR>[Calls]<UL><LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fsm_change_to
 <LI><a href="#[15c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth
-<LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_set_body_vel
+<LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_dog_params
+<LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_set_body_vel
 </UL>
 <BR>[Called By]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_PeriodElapsedCallback
 </UL>
@@ -2398,9 +2403,10 @@ Global Symbols
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_enter
 </UL>
 
-<P><STRONG><a name="[179]"></a>get_dog_params</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, dog.o(i.get_dog_params))
-<BR><BR>[Called By]<UL><LI><a href="#[194]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
-<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_trot_params
+<P><STRONG><a name="[176]"></a>get_dog_params</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, dog.o(i.get_dog_params))
+<BR><BR>[Called By]<UL><LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gamepad_control
+<LI><a href="#[194]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
+<LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_trot_params
 <LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;trot_run
 <LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_enter
@@ -2410,10 +2416,10 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[154]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_init
 </UL>
 
-<P><STRONG><a name="[178]"></a>get_trot_params</STRONG> (Thumb, 12 bytes, Stack size 8 bytes, gait.o(i.get_trot_params))
+<P><STRONG><a name="[179]"></a>get_trot_params</STRONG> (Thumb, 12 bytes, Stack size 8 bytes, gait.o(i.get_trot_params))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = get_trot_params
 </UL>
-<BR>[Calls]<UL><LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_dog_params
+<BR>[Calls]<UL><LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_dog_params
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;trot_run
 </UL>
@@ -2630,7 +2636,7 @@ Global Symbols
 <LI><a href="#[190]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;my_usart_init
 <LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_init
 <LI><a href="#[191]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gamepad_control_init
-<LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fsm_change_to
+<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fsm_change_to
 <LI><a href="#[192]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_start
 <LI><a href="#[15d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_init
 <LI><a href="#[154]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_init
@@ -2725,7 +2731,7 @@ Global Symbols
 <LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
 <LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
-<LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_dog_params
+<LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_dog_params
 <LI><a href="#[13e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_fmod
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;trot_run
@@ -2987,7 +2993,7 @@ Local Symbols
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
 <LI><a href="#[159]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_pos
 <LI><a href="#[182]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_pos
-<LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_dog_params
+<LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_dog_params
 <LI><a href="#[189]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_kp_kd
 <LI><a href="#[196]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fsm_get_previous_state
 <LI><a href="#[14e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
@@ -3008,7 +3014,7 @@ Local Symbols
 <LI><a href="#[159]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_pos
 <LI><a href="#[174]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_neutral_current_pos
 <LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_foot_to_motor
-<LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_dog_params
+<LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_dog_params
 <LI><a href="#[172]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_get_stand_height
 <LI><a href="#[14e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 <LI><a href="#[145]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_sqrtf
@@ -3031,16 +3037,16 @@ Local Symbols
 <P><STRONG><a name="[8b]"></a>trot_exit</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, trot_state.o(i.trot_exit))
 <BR>[Address Reference Count : 1]<UL><LI> trot_state.o(i.register_trot_state)
 </UL>
-<P><STRONG><a name="[8c]"></a>trot_run</STRONG> (Thumb, 228 bytes, Stack size 120 bytes, trot_state.o(i.trot_run))
-<BR><BR>[Stack]<UL><LI>Max Depth = 484<LI>Call Chain = trot_run &rArr; gait_generator &rArr; cal_foot_end_pos &rArr; __hardfp_sinf &rArr; __mathlib_rredf2
+<P><STRONG><a name="[8c]"></a>trot_run</STRONG> (Thumb, 250 bytes, Stack size 128 bytes, trot_state.o(i.trot_run))
+<BR><BR>[Stack]<UL><LI>Max Depth = 492<LI>Call Chain = trot_run &rArr; gait_generator &rArr; cal_foot_end_pos &rArr; __hardfp_sinf &rArr; __mathlib_rredf2
 </UL>
 <BR>[Calls]<UL><LI><a href="#[194]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
-<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_trot_params
+<LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_trot_params
 <LI><a href="#[171]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
 <LI><a href="#[199]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_target_foot_pos
 <LI><a href="#[159]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_pos
 <LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_foot_to_motor
-<LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_dog_params
+<LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_dog_params
 <LI><a href="#[198]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_get_body_vel_without_cog
 <LI><a href="#[189]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_kp_kd
 </UL>

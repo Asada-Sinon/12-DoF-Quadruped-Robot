@@ -42,3 +42,4 @@ quadruped_f767\gamepad.o: ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart
 quadruped_f767\gamepad.o: ../Core/Inc/can.h
 quadruped_f767\gamepad.o: ../My/Inc/fsm.h
 quadruped_f767\gamepad.o: D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin\..\include\stdbool.h
+quadruped_f767\gamepad.o: D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin\..\include\stdlib.h

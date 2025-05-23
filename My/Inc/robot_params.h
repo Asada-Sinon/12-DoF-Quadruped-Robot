@@ -57,10 +57,14 @@
 // 站立高度（米）
 #define DEFAULT_STAND_HEIGHT 0.35f //0.3
 
-// 站立时重心位置，单位m
+// 默认重心位置，单位m
 #define DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_X 0.05f
 #define DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_Y 0.0f
 #define DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_Z 0.0f
+
+// 站立时重心偏移量
+#define DEFAULT_CENTER_OF_GRAVITY_STAND_COG_OFFSET_X 0.05f
+#define DEFAULT_CENTER_OF_GRAVITY_STAND_COG_OFFSET_Y 0.0f
 
 // 站立时重心旋转，单位m，注意单位不是弧度是米
 // pitch为正前腿抬高，roll为正左腿抬高，yaw没用
@@ -71,6 +75,10 @@
 // 足间距，X为前腿与后腿间距，Y为左腿与右腿间距
 #define DEFAULT_CENTER_OF_GRAVITY_FOOT_OFFEST_X 0.0f
 #define DEFAULT_CENTER_OF_GRAVITY_FOOT_OFFEST_Y 0.0f
+
+// 前进后退重心偏移量
+#define DEFAULT_CENTER_OF_GRAVITY_TROT_COG_FORWARD_OFFSET_X 0.05f
+#define DEFAULT_CENTER_OF_GRAVITY_TROT_COG_BACKWARD_OFFSET_X 0.03f
 
 // 速度补偿，原地踏步时狗往前往后退自转的话改这个值
 #define DEFAULT_CENTER_OF_GRAVITY_VX 0
@@ -263,10 +271,13 @@ typedef struct {
 
 // 重心
 typedef struct {
-    float translation[3];
-    float rotation[3];
-    float velocity[3];
-    float foot_offset[2];
+    float translation[3]; // 当前重心位置
+    float rotation[3]; // 当前重心旋转
+    float velocity[3]; // 当前重心速度
+    float foot_offset[2]; // 足间距
+    float stand_cog_offset[2]; // 站立重心偏移量xy
+    float trot_cog_forward_offset[2]; // 前进重心偏移量xy
+    float trot_cog_backward_offset[2]; // 后退重心偏移量xy
 } CenterOfGravity;
 
 
