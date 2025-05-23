@@ -5,8 +5,6 @@
 #include "stdio.h"
 #include "motor.h"
 
-float trot_forward_cog_offset = 0.05;
-float trot_backward_cog_offset = 0.03;
 
 GaitState trot_state;    
 
@@ -23,6 +21,22 @@ pd stance_hip[4] = { {120 , 2}, {120, 2}, {120, 2}, {120, 2} };
 pd stance_thigh[4] = { {140 , 5}, {150, 3}, {150, 3}, {150, 3} };
 pd stance_calf[4] = { {100 , 5}, {120, 4}, {120, 4}, {120, 4} };
 
+// pd swing_hip[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
+// pd swing_thigh[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
+// pd swing_calf[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
+
+// pd stance_hip[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
+// pd stance_thigh[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
+// pd stance_calf[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
+
+//pd swing_hip[4] = { {10 , 3}, {10, 3}, {10, 3}, {10, 3} };
+//pd swing_thigh[4] = { {10 , 3}, {10, 3}, {10, 3}, {10, 3} };
+//pd swing_calf[4] = { {10 , 3}, {10, 3}, {10, 3}, {10, 3} };
+
+//pd stance_hip[4] = { {10 , 3}, {10, 3}, {10, 3}, {10, 3} };
+//pd stance_thigh[4] = { {10 , 3}, {10, 3}, {10, 3}, {10, 3} };
+//pd stance_calf[4] = { {10 , 3}, {10, 3}, {10, 3}, {10, 3} };
+
 /* 对角步态状态的处理函数 */
 static void trot_enter(void) {
     // printf("进入对角步态状态\n");
@@ -37,15 +51,15 @@ static void trot_run(void) {
     dog_get_body_vel_without_cog(s_body_vel); // 获取当前机体速度
     if (s_body_vel[X_IDX] > 0) // 前进时使用前进的重心补偿
     {
-        get_dog_params()->posture.center_of_gravity.translation[X_IDX] = trot_forward_cog_offset;
+        get_dog_params()->posture.center_of_gravity.translation[X_IDX] = get_dog_params()->posture.center_of_gravity.trot_cog_forward_offset[X_IDX];
     }
     else if(s_body_vel[X_IDX] < 0)// 后退时使用后退的重心补偿
     {
-        get_dog_params()->posture.center_of_gravity.translation[X_IDX] = trot_backward_cog_offset;
+        get_dog_params()->posture.center_of_gravity.translation[X_IDX] = get_dog_params()->posture.center_of_gravity.trot_cog_backward_offset[X_IDX];
     }
     else // 站立时重心
     {
-        get_dog_params()->posture.center_of_gravity.translation[X_IDX] = DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_X;
+        get_dog_params()->posture.center_of_gravity.translation[X_IDX] = get_dog_params()->posture.center_of_gravity.stand_cog_offset[X_IDX];
     }
     
     phase_wave_generator(get_trot_params(), trot_state.wave_status, trot_state.time_start, phase, trot_state.contact);

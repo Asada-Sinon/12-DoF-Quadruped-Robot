@@ -1,11 +1,12 @@
 #include "gamepad.h"
 #include "dog.h"
 #include "fsm.h"
+#include "stdlib.h"
 
 int16_t _channels[16];
 // 通道定义
-#define LEFT_X_CH   2
-#define LEFT_Y_CH   3
+#define LEFT_X_CH   3
+#define LEFT_Y_CH   2
 #define RIGHT_X_CH  0
 #define RIGHT_Y_CH  1
 
@@ -37,11 +38,19 @@ float vy_smooth = 0.0f;
 float w_smooth = 0.0f;
 
 int dead_zone = 50;
+int big_dead_zone = 200;
 float v_inc = 0.005f;
 float v_dead_zone = 0.05f;
 float vx_scale = 0.002;
 float vy_scale = 0.002;
 float w_scale = 0.001;
+
+// 重心调整步长
+#define COG_ADJUST_STEP 0.01f
+
+// 记录上一次摇杆位置
+static int16_t prev_right_x = CHANNEL_MIDDLE;
+static int16_t prev_right_y = CHANNEL_MIDDLE;
 
 void HT10A_process(uint8_t buffer[30])
 {
@@ -77,17 +86,17 @@ void HT10A_process(uint8_t buffer[30])
     // 通道15: bits 165-175 (byte21低3位 + byte22全8位)
     _channels[15] = ((buffer[21] >> 5) | (buffer[22] << 3)) & 0x07FF;
     
-    if (_channels[LEFT_X_CH] - CHANNEL_MIDDLE > dead_zone)
-        vx = (_channels[LEFT_X_CH] - CHANNEL_MIDDLE - dead_zone) * vx_scale;
-    else if (_channels[LEFT_X_CH] - CHANNEL_MIDDLE < -dead_zone)
-        vx = (_channels[LEFT_X_CH] - CHANNEL_MIDDLE + dead_zone) * vx_scale;
+    if (_channels[LEFT_Y_CH] - CHANNEL_MIDDLE > dead_zone)
+        vx = (_channels[LEFT_Y_CH] - CHANNEL_MIDDLE - dead_zone) * vx_scale;
+    else if (_channels[LEFT_Y_CH] - CHANNEL_MIDDLE < -dead_zone)
+        vx = (_channels[LEFT_Y_CH] - CHANNEL_MIDDLE + dead_zone) * vx_scale;
     else
         vx = 0;
 
-    if (_channels[LEFT_Y_CH] - CHANNEL_MIDDLE > dead_zone)
-        vy = -(_channels[LEFT_Y_CH] - CHANNEL_MIDDLE - dead_zone) * vy_scale;
-    else if (_channels[LEFT_Y_CH] - CHANNEL_MIDDLE < -dead_zone)
-        vy = -(_channels[LEFT_Y_CH] - CHANNEL_MIDDLE + dead_zone) * vy_scale;
+    if (_channels[LEFT_X_CH] - CHANNEL_MIDDLE > dead_zone)
+        vy = -(_channels[LEFT_X_CH] - CHANNEL_MIDDLE - dead_zone) * vy_scale;
+    else if (_channels[LEFT_X_CH] - CHANNEL_MIDDLE < -dead_zone)
+        vy = -(_channels[LEFT_X_CH] - CHANNEL_MIDDLE + dead_zone) * vy_scale;
     else
         vy = 0;
     
@@ -110,20 +119,86 @@ void gamepad_control()
 {
     if (!start_gamepad_control || !GAMEPAD_CONNECTED)
         return;
+        
+    // 当拨杆4在中间位置时调整前进后退的重心
+    if (!SWITCH_UP(SWITCH_CH4)) {
+        // 获取当前重心位置
+        float *cog_forward_offset = get_dog_params()->posture.center_of_gravity.trot_cog_forward_offset;
+        float *cog_backward_offset = get_dog_params()->posture.center_of_gravity.trot_cog_backward_offset;
+        
+        // 检测右摇杆Y轴（前后）变化，调整机体X方向重心
+        if (abs(_channels[RIGHT_Y_CH] - CHANNEL_MIDDLE) > big_dead_zone && 
+            abs(prev_right_y - CHANNEL_MIDDLE) <= big_dead_zone) {
+            // 从中位开始推动摇杆的瞬间
+            if (_channels[RIGHT_Y_CH] > CHANNEL_MIDDLE) {
+                // 向前推
+                if (SWITCH_MIDDLE(SWITCH_CH4)) { // 如果拨杆4在中间位置
+                    cog_forward_offset[X_IDX] += COG_ADJUST_STEP;
+                }
+                else if(SWITCH_DOWN(SWITCH_CH4)) { // 如果拨杆4在向下位置
+                    cog_backward_offset[X_IDX] += COG_ADJUST_STEP;
+                }
+            }   
+            else {
+                // 向后推
+                if (SWITCH_MIDDLE(SWITCH_CH4)) { // 如果拨杆4在中间位置
+                    cog_forward_offset[X_IDX] -= COG_ADJUST_STEP;
+                }
+                else if(SWITCH_DOWN(SWITCH_CH4)) { // 如果拨杆4在向下位置
+                    cog_backward_offset[X_IDX] -= COG_ADJUST_STEP;
+                }
+            }
+        }
+        
+        // 检测右摇杆X轴（左右）变化，调整Y方向重心
+        if (abs(_channels[RIGHT_X_CH] - CHANNEL_MIDDLE) > big_dead_zone && 
+            abs(prev_right_x - CHANNEL_MIDDLE) <= big_dead_zone) {
+            // 从中位开始推动摇杆的瞬间
+            if (_channels[RIGHT_X_CH] > CHANNEL_MIDDLE) {
+                // 向右推
+                if (SWITCH_MIDDLE(SWITCH_CH4)) { // 如果拨杆4在中间位置
+                    cog_forward_offset[Y_IDX] -= COG_ADJUST_STEP;
+                }
+                else if(SWITCH_DOWN(SWITCH_CH4)) { // 如果拨杆4在向下位置
+                    cog_backward_offset[Y_IDX] -= COG_ADJUST_STEP;
+                }
+            } else {
+                // 向左推
+                if (SWITCH_MIDDLE(SWITCH_CH4)) { // 如果拨杆4在中间位置
+                    cog_forward_offset[Y_IDX] += COG_ADJUST_STEP;
+                }
+                else if(SWITCH_DOWN(SWITCH_CH4)) { // 如果拨杆4在向下位置
+                    cog_backward_offset[Y_IDX] += COG_ADJUST_STEP;
+                }
+            }
+        }
+        // 更新上一次摇杆位置
+        prev_right_x = _channels[RIGHT_X_CH];
+        prev_right_y = _channels[RIGHT_Y_CH];
+        w = 0;
+    } else {
+        // 不在重心调整模式时，重置摇杆位置记录
+        prev_right_x = CHANNEL_MIDDLE;
+        prev_right_y = CHANNEL_MIDDLE;
+    }
+    
+    // 计算机体速度
     vx_smooth = smooth(vx_smooth, vx, v_inc);
     vy_smooth = smooth(vy_smooth, vy, v_inc);
     w_smooth = smooth(w_smooth, w, v_inc);
     dog_set_body_vel(vx_smooth, vy_smooth, w_smooth);
-    if (SWITCH_DOWN(SWITCH_CH3))
-    {
+    
+    if (SWITCH_DOWN(SWITCH_CH3)) {
         fsm_change_to(STATE_PASSIVE);
         return;
     }   
-    if (fabs(vx_smooth) < v_dead_zone && fabs(vy_smooth) < v_dead_zone && fabs(w_smooth) < v_dead_zone && SWITCH_UP(SWITCH_CH2)) {
+    
+    if (fabs(vx_smooth) < v_dead_zone && 
+        fabs(vy_smooth) < v_dead_zone && 
+        fabs(w_smooth) < v_dead_zone && 
+        SWITCH_UP(SWITCH_CH2)) {
         fsm_change_to(STATE_STAND);
-    }
-    else
-    {
+    } else {
         fsm_change_to(STATE_TROT);
     } 
 }
