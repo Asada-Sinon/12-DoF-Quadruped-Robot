@@ -5,7 +5,7 @@
 #include "stdio.h"
 #include "motor.h"
 
-float trot_forward_cog_offset = 0.08;
+float trot_forward_cog_offset = 0.05;
 float trot_backward_cog_offset = 0.03;
 
 GaitState trot_state;    
@@ -15,12 +15,12 @@ typedef struct pd{
     float kd;
 }pd;
 
-pd swing_hip[4] = { {120 , 2}, {120, 2}, {120, 2}, {120, 2} };
-pd swing_thigh[4] = { {100 , 0.5}, {150, 3}, {150, 3}, {150, 3} };
-pd swing_calf[4] = { {100 , 0.5}, {120, 4}, {120, 4}, {120, 4} };
+pd swing_hip[4] = { {120 , 0.5}, {120, 2}, {120, 2}, {120, 2} };
+pd swing_thigh[4] = { {100 , 3}, {150, 3}, {150, 3}, {150, 3} };
+pd swing_calf[4] = { {100 , 3}, {120, 4}, {120, 4}, {120, 4} };
 
 pd stance_hip[4] = { {120 , 2}, {120, 2}, {120, 2}, {120, 2} };
-pd stance_thigh[4] = { {100 , 5}, {150, 3}, {150, 3}, {150, 3} };
+pd stance_thigh[4] = { {140 , 5}, {150, 3}, {150, 3}, {150, 3} };
 pd stance_calf[4] = { {100 , 5}, {120, 4}, {120, 4}, {120, 4} };
 
 /* 对角步态状态的处理函数 */
