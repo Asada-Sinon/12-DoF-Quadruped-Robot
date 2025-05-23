@@ -39,8 +39,8 @@ float w_smooth = 0.0f;
 int dead_zone = 50;
 float v_inc = 0.005f;
 float v_dead_zone = 0.05f;
-float vx_scale = 0.005;
-float vy_scale = 0.005;
+float vx_scale = 0.002;
+float vy_scale = 0.002;
 float w_scale = 0.001;
 
 void HT10A_process(uint8_t buffer[30])
