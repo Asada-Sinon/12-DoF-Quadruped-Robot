@@ -3683,9 +3683,9 @@
       </Doc>
       <Doc>
         <Name>..\My\Inc\robot_params.h</Name>
-        <ColumnNumber>0</ColumnNumber>
-        <TopLine>145</TopLine>
-        <CurrentLine>157</CurrentLine>
+        <ColumnNumber>61</ColumnNumber>
+        <TopLine>22</TopLine>
+        <CurrentLine>34</CurrentLine>
         <Folding>1</Folding>
         <ContractedFolders></ContractedFolders>
         <PaneID>0</PaneID>
