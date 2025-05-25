@@ -148,6 +148,7 @@ int main(void)
     /* USER CODE BEGIN 3 */
       if (get_motor_status_flag)
       {
+          
           J60_GetMotorStatus(motor_custom_id);
 //          J60_ResetMotorError(motor_custom_id);
           get_motor_status_flag = 0;
