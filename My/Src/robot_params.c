@@ -8,7 +8,7 @@ RobotParams robot_params = {
     /* ²½Ì¬²ÎÊý */
     .trot_gait = {
         .phase = {0.0, 0.5, 0.5, 0.0}, 
-        .T = 0.38, //0.3
+        .T = 0.5, //0.38
         .stance_ratio = 0.52,
         .swing_ratio = 1- 0.52,
         .step_length = 0,

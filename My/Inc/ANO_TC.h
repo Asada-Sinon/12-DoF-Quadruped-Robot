@@ -13,8 +13,7 @@
 #define BYTE2(dwTemp)       ( *( (char *)(&dwTemp) + 2) )
 #define BYTE3(dwTemp)       ( *( (char *)(&dwTemp) + 3) )
 
-void ANO_TC_To_Send(void);
-void ano_tc(float *data);
-void Usart_Send_To_Show32(UART_HandleTypeDef* huart, float *data_ts);
+void set_debug_data(uint8_t idx, float data);
+void send_debug_data(void);
 
 #endif

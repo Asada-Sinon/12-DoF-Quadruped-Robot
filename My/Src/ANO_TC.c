@@ -2,6 +2,7 @@
 #include "usart.h"
 #include "string.h" 
 
+float debug_data[LAN32];
 static uint8_t data[4+LAN32*4+1];
 void Usart_Send_To_Show32(UART_HandleTypeDef* huart, float *data_ts)
 {
@@ -21,7 +22,13 @@ void Usart_Send_To_Show32(UART_HandleTypeDef* huart, float *data_ts)
 //    HAL_UART_Transmit(huart,data,4+LAN32*4+1,0xFFF);
 }
 
-void ano_tc(float *data)
+void set_debug_data(uint8_t idx, float data)
 {
-    Usart_Send_To_Show32(&huart4, data);
+    if (idx >= LAN32)
+        return;
+    debug_data[idx] = data;
+}
+void send_debug_data()
+{
+    Usart_Send_To_Show32(&huart4, debug_data);
 }

@@ -6,6 +6,7 @@
 #include "motor.h"
 #include "estimator.h"
 #include "gamepad.h"
+#include "ANO_TC.h"
 
 // 获取系统时间
 // long long getSystemTime() {
@@ -51,6 +52,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     }
     if (htim->Instance == TIM5) {
         // 上位机
-        estimation_ano_tc();
+        send_debug_data();
     }
 }

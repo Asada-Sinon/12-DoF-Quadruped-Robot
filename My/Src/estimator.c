@@ -17,7 +17,6 @@
 KalmanFilter kf;
 
 float kf_start = 0;
-float ano_data[12]; // 上位机
 
 // 一些常量矩阵
 float dt = 0.003; // 离散化采样时间，即计算间隔s
@@ -27,12 +26,6 @@ float I3_f32[3][3] = {0};
 float _I3_f32[3][3] = {0};
 float I12_f32[12][12] = {0};
 float I18_f32[18][18] = {0};
-
-typedef struct s_LPFilter{
-    float weight;
-    uint8_t start;
-    float pastValue;
-}s_LPFilter;
 
 s_LPFilter lpf_x, lpf_y;
 
@@ -152,10 +145,11 @@ void world_foot_to_body_vel(uint8_t leg_id, float R[3][3], float VsfBi[3]) {
     leg_get_current_joint_vel(leg_id, joint_vel);
     
     leg_forward_kinematics_vel(leg_id, joint_pos, joint_vel, VbfBi);
-//    memcpy(VsfBi, VbfBi, sizeof(VbfBi));
-    vec_add_ptr(3, WbxPbfBi, VbfBi, Wb_add_Vb);
-    
-    mat_mult_vec_ptr(3, 3, &R[0][0], Wb_add_Vb, VsfBi);  // 添加&R[0][0]以获取指针
+    //不考虑旋转角速度
+    memcpy(VsfBi, VbfBi, sizeof(VbfBi));
+//    vec_add_ptr(3, WbxPbfBi, VbfBi, Wb_add_Vb);
+//    
+//    mat_mult_vec_ptr(3, 3, &R[0][0], Wb_add_Vb, VsfBi);  // 添加&R[0][0]以获取指针
     
 }
 
@@ -205,10 +199,13 @@ void estimation_init() {
     // 状态变量的噪声协方差，前六个方差较小，后12个因为足端触底有抖动，因此方差较大
     float Qdig[STATE_DIM][STATE_DIM] = {0};
     for (int i = 0; i < STATE_DIM; i++) {
-        if (i < 2)
-            Qdig[i][i] = 3; //0.0003
-        else
-            Qdig[i][i] = 3;
+        if (i < 2) // Q越大速度抖动越大，Q越小越平滑越滞后
+            Qdig[i][i] = 0.5; // 位置估计协方差，没用
+        else if(i == 2) // vx
+            Qdig[i][i] = 2;
+        else if(i == 3) // vy，发现vy收敛比vx慢，所以vy对应的协方差的大一点
+            Qdig[i][i] = 4;
+            
     }
     // 构造过程噪声协方差矩阵Q = Qdig + B * Cu * B^T
     float BCu[STATE_DIM][CTRL_DIM] = {0};
@@ -368,6 +365,8 @@ void estimation_run() {
         }
         else{ //完全触地时信任测量值
             float trust = windowFunc(leg_get_phase(i), 0.2); // 使用窗口函数降低触地时的噪声
+            if (i == 0)
+                set_debug_data(3, trust);
             for (int j = 0; j < 2; j ++)
             {
                 kf.R[2*i+j][2*i+j] = (1 + (1-trust)*largeVariance) * kf.R_init[2*i+j][2*i+j];
@@ -379,7 +378,12 @@ void estimation_run() {
     use_time[0] = (getTime() - start_time[0]) * 1000;
     /* -----------预测部分------------- */
     // R
-    quaternion_to_rotation_matrix_zyx(imu_get_data()->quaternion, Rot_f32);
+    // quaternion_to_rotation_matrix_zyx(imu_get_data()->quaternion, Rot_f32);
+    // 狗运动时角速度波动较大，转换到世界坐标系波动很大，这里直接使用单位阵代替旋转矩阵，计算出的vxvy为机体坐标系下的速度
+    memset(Rot_f32, 0, sizeof(Rot_f32));
+    for(int i = 0; i < 3; i ++){
+        Rot_f32[i][i] = 1;
+    }
     // u = R * acc + g
     body_to_world_acc(Rot_f32, imu_get_data()->acc, u_f32);
     // xhat = A * x + B * u
@@ -429,20 +433,10 @@ void estimation_run() {
             kf.y[2*i+j] = feetVel_f32[i][j];
         }
     }
-    ano_data[0] = kf.y[0];
-    ano_data[1] = kf.y[1];
-    ano_data[2] = kf.y[2];
-    ano_data[3] = kf.y[3];
-    ano_data[4] = kf.y[4];
-    ano_data[5] = kf.y[5];
+    set_debug_data(0, kf.y[0]);
+    set_debug_data(1, kf.y[1]);
 
-    ano_data[6] = kf.y[6];
-    ano_data[7] = kf.y[7];
-//    ano_data[8] = kf.y[8];
-
-//    ano_data[9] = kf.y[9];
-//    ano_data[10] = kf.y[10];
-//    ano_data[11] = kf.y[11];
+    set_debug_data(2, imu_get_data()->gyro[2]);
     start_time[3] = getTime();
     // 直接求R+CPC^T的逆
     // (R + CPC^T)^-1
@@ -476,7 +470,16 @@ void estimation_run() {
     arm_mat_sub_f32(&y, &yhat, &y_yhat);
     arm_mat_mult_f32(&K, &y_yhat, &x);
     arm_mat_add_f32(&x, &xhat, &x);
-    memcpy(kf.x, x.pData, sizeof(kf.x));
+
+    if (x.pData[0] > 100) // 算出来nan
+    {
+        memset(x.pData, 0, sizeof(x.pData));
+        memset(kf.x, 0, sizeof(kf.x));
+    }
+    else
+        memcpy(kf.x, x.pData, sizeof(kf.x));
+
+   
     
     // 测量噪声小的情况下，可以考虑使用简化版本的更新P = (I - KC) * Ppri，保证P的对称性即可
     // P = (I - KC) * Ppri * (I - KC)^T + K * R * K^T
@@ -572,16 +575,11 @@ void estimation_run() {
     use_time_all = (getTime() - start_time[0]) * 1000;
     if (use_time_all > 3)
         use_time_greater_than_3 = 1;
-    ano_data[8] = LPF_get_value(&lpf_x);
-    ano_data[9] = LPF_get_value(&lpf_y);
+    set_debug_data(4, LPF_get_value(&lpf_x));
+    set_debug_data(5, LPF_get_value(&lpf_y));
 }
 
 void estimation_start(void)
 {
     kf_start = 1;
-}
-
-void estimation_ano_tc()
-{
-    ano_tc(ano_data);
 }

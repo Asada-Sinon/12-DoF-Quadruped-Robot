@@ -50,3 +50,5 @@ quadruped_f767\timer.o: ../Drivers/CMSIS/DSP/Include/arm_math.h
 quadruped_f767\timer.o: ../Drivers/CMSIS/Include/core_cm7.h
 quadruped_f767\timer.o: D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin\..\include\string.h
 quadruped_f767\timer.o: ../My/Inc/gamepad.h
+quadruped_f767\timer.o: ../My/Inc/ANO_TC.h
+quadruped_f767\timer.o: ../Core/Inc/usart.h

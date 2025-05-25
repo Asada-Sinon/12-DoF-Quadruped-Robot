@@ -61,6 +61,12 @@ typedef struct {
     float prev_time;
 } KalmanFilter;
 
+typedef struct s_LPFilter{
+    float weight;
+    uint8_t start;
+    float pastValue;
+}s_LPFilter;
+
 // 函数声明
 
 /**
@@ -96,6 +102,13 @@ void estimation_init(void);
 void estimation_start(void);
 void estimation_run(void);
 void estimation_ano_tc(void); // 调试的用上位机
+
+// 低通滤波器
+void LPFilter_init(s_LPFilter* lpf, float samplePeriod, float cutFrequency);
+void LPFilter(s_LPFilter* lpf, float newValue);
+float LPF_get_value(s_LPFilter* lpf);
+void LPF_clear(s_LPFilter* lpf);
+
 #endif /* ESTIMATOR_H */
 
 

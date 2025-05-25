@@ -2,6 +2,7 @@
 #include "dog.h"
 #include "fsm.h"
 #include "stdlib.h"
+#include "ANO_TC.h"
 
 int16_t _channels[16];
 // 通道定义
@@ -187,6 +188,9 @@ void gamepad_control()
     vy_smooth = smooth(vy_smooth, vy, v_inc);
     w_smooth = smooth(w_smooth, w, v_inc);
     dog_set_body_vel(vx_smooth, vy_smooth, w_smooth);
+    set_debug_data(6, vx_smooth);
+    set_debug_data(7, vy_smooth);
+    set_debug_data(8, w_smooth);
     
     if (SWITCH_DOWN(SWITCH_CH3)) {
         fsm_change_to(STATE_PASSIVE);

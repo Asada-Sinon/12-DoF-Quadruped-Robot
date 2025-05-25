@@ -4,13 +4,15 @@
 #include "stm32f7xx.h"
 #include "usart.h"
 #include "string.h"
+#include "estimator.h" // 低通滤波器
 
 IMU imu_recv;
 /* 接收数据并使用0x91数据包结构定义来解释数据 */
 __align(4) id0x91_t dat; /* struct must be 4 byte aligned */
 float imu_angle[3];             /* eular angles:R/P/Y */
-
-
+s_LPFilter lpf_w;
+uint8_t lpf_init_flag = 0;
+float lpf_weight = 10;
 static float ABS(float a)
 {
 	return a>0?a:-a;
@@ -43,6 +45,11 @@ static void crc16_update(uint16_t *currect_crc, const uint8_t *src, uint32_t len
 
 void imu_data_process(uint8_t *receive)
 {
+    // 初始化低通滤波器
+    if(!lpf_init_flag){
+        LPFilter_init(&lpf_w, 0.01, lpf_weight);
+        lpf_init_flag = 1;
+    }
     uint16_t CRCReceived = 0;            /* CRC value received from a frame */
     uint16_t CRCCalculated = 0;          /* CRC value caluated from a frame */
     uint8_t payload_len = 0;
@@ -86,9 +93,11 @@ void imu_data_process(uint8_t *receive)
             imu_recv.acc[1] = dat.acc[1];
             imu_recv.acc[2] = dat.acc[2];
 
+            LPFilter(&lpf_w, dat.gyr[2]);
             imu_recv.gyro[0] = dat.gyr[0];
             imu_recv.gyro[1] = dat.gyr[1];
-            imu_recv.gyro[2] = dat.gyr[2];
+            imu_recv.gyro[2] = LPF_get_value(&lpf_w);
+            imu_recv.w_original = dat.gyr[2];
 
             imu_recv.angle[0] = imu_angle[0];
             imu_recv.angle[1] = imu_angle[1];

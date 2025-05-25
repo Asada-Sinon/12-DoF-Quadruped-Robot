@@ -41,3 +41,7 @@ quadruped_f767\imu.o: ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.
 quadruped_f767\imu.o: ../Core/Inc/can.h
 quadruped_f767\imu.o: ../Core/Inc/usart.h
 quadruped_f767\imu.o: D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin\..\include\string.h
+quadruped_f767\imu.o: ../My/Inc/estimator.h
+quadruped_f767\imu.o: ../My/Inc/matrix.h
+quadruped_f767\imu.o: ../Drivers/CMSIS/DSP/Include/arm_math.h
+quadruped_f767\imu.o: ../Drivers/CMSIS/Include/core_cm7.h

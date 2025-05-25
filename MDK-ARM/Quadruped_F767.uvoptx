@@ -897,6 +897,31 @@
           <WinNumber>2</WinNumber>
           <ItemText>prev_right_y,0x0A</ItemText>
         </Ww>
+        <Ww>
+          <count>85</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>kf.Q</ItemText>
+        </Ww>
+        <Ww>
+          <count>86</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>kf.R_init</ItemText>
+        </Ww>
+        <Ww>
+          <count>87</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>kf.R</ItemText>
+        </Ww>
+        <Ww>
+          <count>88</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>Rot_f32</ItemText>
+        </Ww>
+        <Ww>
+          <count>89</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>imu_recv</ItemText>
+        </Ww>
       </WatchWindow2>
       <MemoryWindow1>
         <Mm>

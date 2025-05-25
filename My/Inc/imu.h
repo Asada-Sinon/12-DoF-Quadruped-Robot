@@ -8,6 +8,7 @@ typedef struct
     float gyro[3];
     float angle[3];
     float quaternion[4];
+    float w_original;
 } IMU;
 
 __packed typedef  struct

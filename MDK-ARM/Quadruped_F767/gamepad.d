@@ -43,3 +43,5 @@ quadruped_f767\gamepad.o: ../Core/Inc/can.h
 quadruped_f767\gamepad.o: ../My/Inc/fsm.h
 quadruped_f767\gamepad.o: D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin\..\include\stdbool.h
 quadruped_f767\gamepad.o: D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin\..\include\stdlib.h
+quadruped_f767\gamepad.o: ../My/Inc/ANO_TC.h
+quadruped_f767\gamepad.o: ../Core/Inc/usart.h
