@@ -140,7 +140,7 @@ void phase_wave_generator(GaitParams *gait, WaveStatus status, float start_time,
 
 float p0[4][3] = {0};
 float pf[4][3] = {0};
-float ratio = 1.5; // 如果支撑相滑动，减小ratio
+float ratio = 1.8; // 如果支撑相滑动，减小ratio
 void gait_generator(GaitParams *gait, float *phase, int *contact, float foot_target_pos[4][3], float foot_target_vel[4][3])
 {
     float foot_target_pos_thigh[4][3];

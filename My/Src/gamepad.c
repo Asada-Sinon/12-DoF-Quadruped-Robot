@@ -3,7 +3,7 @@
 #include "fsm.h"
 #include "stdlib.h"
 #include "ANO_TC.h"
-
+#include "estimator.h"
 int16_t _channels[16];
 // 通道定义
 #define LEFT_X_CH   3
@@ -40,8 +40,9 @@ float w_smooth = 0.0f;
 
 int dead_zone = 50;
 int big_dead_zone = 200;
-float v_inc = 0.005f;
+float v_inc = 0.004f; // 高频时可以给高，低频时就给低一点吧
 float v_dead_zone = 0.05f;
+float v_big_dead_zone = 0.1f;
 float vx_scale = 0.005;
 float vy_scale = 0.005;
 float w_scale = 0.001;
@@ -200,9 +201,23 @@ void gamepad_control()
     if (fabs(vx_smooth) < v_dead_zone && 
         fabs(vy_smooth) < v_dead_zone && 
         fabs(w_smooth) < v_dead_zone && 
+        fabs(est_get_body_vel(0)) < v_big_dead_zone && 
+        fabs(est_get_body_vel(1)) < v_big_dead_zone && 
         SWITCH_UP(SWITCH_CH2)) {
         fsm_change_to(STATE_STAND);
     } else {
         fsm_change_to(STATE_TROT);
     } 
+}
+
+float get_origin_target_body_vel(int idx)
+{
+    if (idx == 0)
+        return vx;
+    else if (idx == 1)
+        return vy;
+    else if (idx == 2)
+        return w;
+    else 
+        return 0;
 }

@@ -13,11 +13,11 @@ typedef struct pd{
     float kd;
 }pd;
 
-pd swing_hip[4] = { {120 , 0.5}, {120, 2}, {120, 2}, {120, 2} };
-pd swing_thigh[4] = { {50 , 1}, {150, 3}, {150, 3}, {150, 3} };
-pd swing_calf[4] = { {50 , 1}, {120, 4}, {120, 4}, {120, 4} };
+pd swing_hip[4] = { {120 , 3}, {120, 2}, {120, 2}, {120, 2} };
+pd swing_thigh[4] = { {50 , 3}, {150, 3}, {150, 3}, {150, 3} };
+pd swing_calf[4] = { {50 , 3}, {120, 4}, {120, 4}, {120, 4} };
 
-pd stance_hip[4] = { {120 , 2}, {120, 2}, {120, 2}, {120, 2} };
+pd stance_hip[4] = { {120 , 3}, {120, 2}, {120, 2}, {120, 2} };
 pd stance_thigh[4] = { {100 , 5}, {150, 3}, {150, 3}, {150, 3} };
 pd stance_calf[4] = { {80 , 5}, {120, 4}, {120, 4}, {120, 4} };
 
@@ -58,10 +58,10 @@ static void trot_run(void) {
     {
         get_dog_params()->posture.center_of_gravity.translation[X_IDX] = get_dog_params()->posture.center_of_gravity.trot_cog_backward_offset[X_IDX];
     }
-    else // 站立时重心
-    {
-        get_dog_params()->posture.center_of_gravity.translation[X_IDX] = get_dog_params()->posture.center_of_gravity.stand_cog_offset[X_IDX];
-    }
+//    else // 站立时重心
+//    {
+//        get_dog_params()->posture.center_of_gravity.translation[X_IDX] = get_dog_params()->posture.center_of_gravity.stand_cog_offset[X_IDX];
+//    }
     
     phase_wave_generator(get_trot_params(), trot_state.wave_status, trot_state.time_start, phase, trot_state.contact);
     gait_generator(get_trot_params(), phase, trot_state.contact, trot_state.foot_target_pos, trot_state.foot_target_vel);
