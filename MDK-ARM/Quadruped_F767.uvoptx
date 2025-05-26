@@ -967,6 +967,11 @@
           <WinNumber>2</WinNumber>
           <ItemText>ratio</ItemText>
         </Ww>
+        <Ww>
+          <count>99</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>can_queues,0x0A</ItemText>
+        </Ww>
       </WatchWindow2>
       <MemoryWindow1>
         <Mm>
