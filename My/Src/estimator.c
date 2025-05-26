@@ -583,3 +583,12 @@ void estimation_start(void)
 {
     kf_start = 1;
 }
+
+float est_get_body_vel(uint8_t idx){
+    if(idx == 0)
+        return LPF_get_value(&lpf_x);
+    else if(idx == 1)
+        return LPF_get_value(&lpf_y);
+    else
+        return 0;
+}

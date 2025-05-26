@@ -14,7 +14,9 @@ RobotParams robot_params = {
         .step_length = 0,
         .swing_height = 0.07,
         .stance_depth = 0,//0.008
-        .stand_height = DEFAULT_STAND_HEIGHT
+        .stand_height = DEFAULT_STAND_HEIGHT,
+        .kx = 0.01,
+        .ky = 0.005
     },
     /* 电机参数 */
     .motor_param = {

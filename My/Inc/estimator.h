@@ -103,6 +103,8 @@ void estimation_start(void);
 void estimation_run(void);
 void estimation_ano_tc(void); // 调试的用上位机
 
+float est_get_body_vel(uint8_t idx);
+
 // 低通滤波器
 void LPFilter_init(s_LPFilter* lpf, float samplePeriod, float cutFrequency);
 void LPFilter(s_LPFilter* lpf, float newValue);

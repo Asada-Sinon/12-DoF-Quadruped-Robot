@@ -123,12 +123,12 @@ void check_motor_limit(float *motor_target_pos)
 }
 
 // 发送电机目标位置
-void send_motors_target_pos(float *motors_target_pos)
+void send_motors_target_pos_vel(float *motors_target_pos, float *motors_target_vel)
 {
 //    check_motor_limit(motors_target_pos);  // 先检查限位
     
     for (int i = 0; i < 12; i++) {
-        J60_MotorControl(i, motors_target_pos[i], 0, J60_GetMotor(i)->kp, J60_GetMotor(i)->kd, 0);
+        J60_MotorControl(i, motors_target_pos[i], motors_target_vel[i], J60_GetMotor(i)->kp, J60_GetMotor(i)->kd, 0);
     } 
 }   
 

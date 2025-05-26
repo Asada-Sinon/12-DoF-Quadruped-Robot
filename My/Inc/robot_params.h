@@ -58,12 +58,12 @@
 #define DEFAULT_STAND_HEIGHT 0.35f //0.3
 
 // 默认重心位置，单位m
-#define DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_X 0.05f
+#define DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_X 0.025f
 #define DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_Y 0.0f
 #define DEFAULT_CENTER_OF_GRAVITY_TRANSLATION_Z 0.0f
 
 // 站立时重心偏移量
-#define DEFAULT_CENTER_OF_GRAVITY_STAND_COG_OFFSET_X 0.05f
+#define DEFAULT_CENTER_OF_GRAVITY_STAND_COG_OFFSET_X 0.025f
 #define DEFAULT_CENTER_OF_GRAVITY_STAND_COG_OFFSET_Y 0.0f
 
 // 站立时重心旋转，单位m，注意单位不是弧度是米
@@ -77,8 +77,8 @@
 #define DEFAULT_CENTER_OF_GRAVITY_FOOT_OFFEST_Y 0.0f
 
 // 前进后退重心偏移量
-#define DEFAULT_CENTER_OF_GRAVITY_TROT_COG_FORWARD_OFFSET_X 0.05f
-#define DEFAULT_CENTER_OF_GRAVITY_TROT_COG_BACKWARD_OFFSET_X 0.03f
+#define DEFAULT_CENTER_OF_GRAVITY_TROT_COG_FORWARD_OFFSET_X 0.025f
+#define DEFAULT_CENTER_OF_GRAVITY_TROT_COG_BACKWARD_OFFSET_X 0.01f
 
 // 速度补偿，原地踏步时狗往前往后退自转的话改这个值
 #define DEFAULT_CENTER_OF_GRAVITY_VX 0
@@ -341,7 +341,9 @@ typedef struct {
     float step_length;     // 步长
     float swing_height;    // 摆动高度
     float stance_depth;    // 支撑深度
-    float stand_height;   // 站立高度
+    float stand_height;    // 站立高度
+    float kx;              // x方向速度调整系数
+    float ky;              // y方向速度调整系数
 } GaitParams;
 
 // PID控制参数结构体

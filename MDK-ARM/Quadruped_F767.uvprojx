@@ -883,6 +883,11 @@
               <FileType>1</FileType>
               <FilePath>..\My\Src\gamepad.c</FilePath>
             </File>
+            <File>
+              <FileName>force_calculate.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\My\Src\force_calculate.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

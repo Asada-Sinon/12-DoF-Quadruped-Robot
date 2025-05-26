@@ -47,6 +47,7 @@ static void trot_enter(void) {
 static void trot_run(void) {
     float phase[4] = {0};
     float motor_target_pos[4][3];
+    float motor_target_vel[4][3];
     float s_body_vel[3];
     dog_get_body_vel_without_cog(s_body_vel); // 获取当前机体速度
     if (s_body_vel[X_IDX] > 0) // 前进时使用前进的重心补偿
@@ -63,7 +64,7 @@ static void trot_run(void) {
     }
     
     phase_wave_generator(get_trot_params(), trot_state.wave_status, trot_state.time_start, phase, trot_state.contact);
-    gait_generator(get_trot_params(), phase, trot_state.contact, trot_state.foot_target_pos);
+    gait_generator(get_trot_params(), phase, trot_state.contact, trot_state.foot_target_pos, trot_state.foot_target_vel);
     
     for(int i = 0; i < 4; i++){
         if (trot_state.contact[i] == 0) // 摆动腿
@@ -72,8 +73,12 @@ static void trot_run(void) {
             leg_set_motor_kp_kd(i, stance_hip[0].kp, stance_hip[0].kd, stance_thigh[0].kp, stance_thigh[0].kd, stance_calf[0].kp, stance_calf[0].kd);
 
         leg_set_target_foot_pos(i, trot_state.foot_target_pos[i]); // 调试用
-        leg_foot_to_motor(i, trot_state.foot_target_pos[i], motor_target_pos[i]);
-        leg_set_motor_pos(i, motor_target_pos[i]);
+        
+        // leg_foot_to_motor(i, trot_state.foot_target_pos[i], motor_target_pos[i]);
+        // leg_set_motor_pos(i, motor_target_pos[i]);
+
+        leg_foot_to_motor_pos_vel(i, trot_state.foot_target_pos[i], trot_state.foot_target_vel[i], motor_target_pos[i], motor_target_vel[i]);
+        leg_set_motor_pos_vel(i, motor_target_pos[i], motor_target_vel[i]);
     }
 }
 

@@ -4,6 +4,13 @@
 #include "dog.h"
 #include "robot_params.h"
 #include "stdio.h"
+#include "estimator.h"
+
+void limit(float *value, float min, float max)
+{
+    if (*value < min) *value = min;
+    if (*value > max) *value = max;
+}
 
 // 获取步态参数
 GaitParams* get_trot_params() {
@@ -21,7 +28,11 @@ GaitParams* get_trot_params() {
  * @param end_pos 输出参数，足端位置 [x, y, z]
  * @return 步长
  */
-float cal_foot_end_pos(int leg_id, const float body_vel[3], float stance_duration, float end_pos[3])
+float vbx = 0;
+float vby = 0;
+float x_adjust = 0;
+float y_adjust = 0;
+float cal_foot_end_pos(int leg_id, GaitParams *gait, const float body_vel[3], float end_pos[3])
 {
     // 提取速度分量
     float vx = body_vel[X_IDX];
@@ -42,8 +53,22 @@ float cal_foot_end_pos(int leg_id, const float body_vel[3], float stance_duratio
 
     // 使用Raibert启发式方法将速度转换为步长
     // 步长 = (支撑相时间/2) * 速度
-    end_pos[X_IDX] = (stance_duration / 2.0f) * vx;
-    end_pos[Y_IDX] = (stance_duration / 2.0f) * vy;
+
+    vbx = est_get_body_vel(0);
+    vby = est_get_body_vel(1);
+    float phase = get_dog_params()->posture.phase[leg_id];
+    float Tswing = gait->T * gait->swing_ratio;
+    float Tstance = gait->T * gait->stance_ratio;
+    float kx = gait->kx;
+    float ky = gait->ky;
+    // tudo kx*(vbx - vx)加范围,调大kx
+    x_adjust = kx*(vbx - vx);
+    y_adjust = ky*(vby - vy);
+    limit(&x_adjust, -0.05f, 0.05f);
+    limit(&y_adjust, -0.05f, 0.05f);
+
+    end_pos[X_IDX] = vbx*(1-phase)*Tswing + vbx*Tstance/2.0f + x_adjust;
+    end_pos[Y_IDX] = vby*(1-phase)*Tswing + vby*Tstance/2.0f + y_adjust;
     end_pos[Z_IDX] = 0.0f;  // 默认高度为0
 
     return 2*sqrtf(end_pos[X_IDX]*end_pos[X_IDX] + end_pos[Y_IDX]*end_pos[Y_IDX]);
@@ -113,20 +138,27 @@ void phase_wave_generator(GaitParams *gait, WaveStatus status, float start_time,
     }
 }
 
-void gait_generator(GaitParams *gait, float *phase, int *contact, float foot_target_pos[4][3])
+float p0[4][3] = {0};
+float pf[4][3] = {0};
+float ratio = 1.5; // 如果支撑相滑动，减小ratio
+void gait_generator(GaitParams *gait, float *phase, int *contact, float foot_target_pos[4][3], float foot_target_vel[4][3])
 {
-    float stand_height = dog_get_stand_height();
-    float stance_duration = gait->stance_ratio * gait->T;
-    
     float foot_target_pos_thigh[4][3];
     // 获取各腿足端中性点位置
     float neutral_pos[4][3]; 
-    float end_P[4][3];
     float body_vel[3];
     
+    // static float p0[4][3] = {0};
+    float h = gait->swing_height;
+    float T = gait->T;
+
     float x = 0.0f;  
     float y = 0.0f;  
     float z = 0.0f;  
+
+    float vx = 0.0f;
+    float vy = 0.0f;
+    float vz = 0.0f;
     
     // 获取当前速度和中性点位置
     dog_get_body_vel(body_vel);
@@ -138,22 +170,37 @@ void gait_generator(GaitParams *gait, float *phase, int *contact, float foot_tar
 
     for(int i = 0; i < 4; ++i){
         if(contact[i] == 1){ // 处于支撑相   
-            // 计算支撑相落足点位置，后续用力代替
-            cal_foot_end_pos(i, body_vel, stance_duration, end_P[i]);   
-            // 计算支撑相中的水平位置：从step_length/2到-step_length/2线性变化
-            x = end_P[i][X_IDX] * (1 - (2 * phase[i]));
-            y = end_P[i][Y_IDX] * (1 - (2 * phase[i]));
-            // 支撑相中足端略微下压，提供更好的地面接触
-            z = -gait->stance_depth * cosf(MY_PI * (phase[i] - 0.5f));
+            // 支撑相应尽量保持世界坐标系下足端无滑动
+            // 如果处于支撑相的开始，更新足端起始位置
+            if (phase[i] <= 0.01f)
+                leg_get_current_foot_pos(i, p0[i]);
+            x = p0[i][X_IDX] - body_vel[X_IDX] * T * gait->stance_ratio * phase[i] * ratio;
+            y = p0[i][Y_IDX] - body_vel[Y_IDX] * T * gait->stance_ratio * phase[i] * ratio;
+            z = 0;
+
+            vx = 0;
+            vy = 0;
+            vz = 0;
         }
         else{ // 处于摆动相 
             // 规划落足点位置 
-            cal_foot_end_pos(i, body_vel, stance_duration, end_P[i]);
-
+            cal_foot_end_pos(i, gait, body_vel, pf[i]);
+            leg_thigh_to_hip(i, pf[i], pf[i]);
+            // 如果处于摆动相的开始，更新足端起始位置
+            if (phase[i] <= 0.01f)
+                leg_get_current_foot_pos(i, p0[i]);
+            // 摆线轨迹
             float fai = 2 * MY_PI * phase[i];
-            x = end_P[i][X_IDX] * (fai - sinf(fai)) / MY_PI - end_P[i][X_IDX];
-            y = end_P[i][Y_IDX] * (fai - sinf(fai)) / MY_PI - end_P[i][Y_IDX];
-            z = gait->swing_height * (1 - cosf(fai)) / 2.0f;
+            x = (pf[i][X_IDX] - p0[i][X_IDX]) * (fai - sinf(fai)) / (2*MY_PI) + p0[i][X_IDX];
+            y = (pf[i][Y_IDX] - p0[i][Y_IDX]) * (fai - sinf(fai)) / (2*MY_PI) + p0[i][Y_IDX];
+            z = h * (1 - cosf(fai)) / 2.0f;
+            // 摆线速度
+            vx = (pf[i][X_IDX] - p0[i][X_IDX]) / T * (1 - cosf(fai));
+            vy = (pf[i][Y_IDX] - p0[i][Y_IDX]) / T * (1 - cosf(fai));
+            vz = MY_PI * h / T * sinf(fai);
+//            vx = 0;
+//            vy = 0;
+//            vz = 0;
         }
         // xy转换到thigh坐标系下
         // 调试用重心补偿
@@ -161,12 +208,13 @@ void gait_generator(GaitParams *gait, float *phase, int *contact, float foot_tar
         //{
         //    foot_target_pos_thigh[i].z -= 0.00f;
         //}
-        foot_target_pos_thigh[i][X_IDX] = x + neutral_pos[i][X_IDX];
-        foot_target_pos_thigh[i][Y_IDX] = y + neutral_pos[i][Y_IDX];
-        foot_target_pos_thigh[i][Z_IDX] = z + neutral_pos[i][Z_IDX];
+        foot_target_pos[i][X_IDX] = x + neutral_pos[i][X_IDX];
+        foot_target_pos[i][Y_IDX] = y + neutral_pos[i][Y_IDX];
+        foot_target_pos[i][Z_IDX] = z + neutral_pos[i][Z_IDX];
 
-        // xyz转换到hip坐标系下
-        leg_thigh_to_hip(i, foot_target_pos_thigh[i], foot_target_pos[i]);
+        foot_target_vel[i][X_IDX] = vx;
+        foot_target_vel[i][Y_IDX] = vy;
+        foot_target_vel[i][Z_IDX] = vz;
     }
 }
 

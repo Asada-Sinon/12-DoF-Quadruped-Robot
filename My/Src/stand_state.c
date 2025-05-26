@@ -79,6 +79,7 @@ static void stand_run(void) {
     float neutral_pos[4][3]; 
     RobotParams* params = get_dog_params();
     float motor_target_pos[4][3];
+    float motor_target_vel[4][3] = {0};
 
     for (int i = 0; i < 4; i++)
     {
@@ -111,7 +112,7 @@ static void stand_run(void) {
         foot_target_pos[i][Z_IDX] = z;
 
         leg_foot_to_motor(i, foot_target_pos[i], motor_target_pos[i]);
-        leg_set_motor_pos(i, motor_target_pos[i]);
+        leg_set_motor_pos_vel(i, motor_target_pos[i], motor_target_vel[i]);
     }
     memcpy(stand_test_foot_target_pos, foot_target_pos, sizeof(foot_target_pos));
 }
@@ -124,7 +125,7 @@ static void stand_exit(void) {
 static bool stand_check_transition(StateName next) {
     // 从站立状态可以转到任何状态
     if (next == STATE_TROT)
-        if(t >= T) // 站立T秒再开始对角步态
+        if(t >= T) // 确保完成站立后再进入对角步态
         {
             return true;
         }

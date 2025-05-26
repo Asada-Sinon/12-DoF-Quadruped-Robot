@@ -15,24 +15,16 @@ typedef struct {
     WaveStatus wave_status;
     float foot_start_pos[4][3];
     float foot_target_pos[4][3];
+    float foot_target_vel[4][3];
     int contact[4];
 } GaitState;
 
 // 获取步态参数
 GaitParams* get_trot_params(void);
 
-// 获取步态状态
+//// 获取步态状态
 GaitState* get_gait_state(void);
 
-/**
- * @brief 计算足端目标位置（Raibert落足点算法）
- * @param leg_id 腿的ID (0:FL, 1:FR, 2:HL, 3:HR)
- * @param body_vel 机体目标速度 [x速度, y速度, 角速度]
- * @param stance_duration 支撑相持续时间
- * @param end_pos 输出参数，足端位置 [x, y, z]
- * @return 步长
- */
-float cal_foot_end_pos(int leg_id, const float body_vel[3], float stance_duration, float end_pos[3]);
 
 /**
  * @brief 生成步态相位和接触状态
@@ -49,8 +41,9 @@ void phase_wave_generator(GaitParams *gait, WaveStatus status, float start_time,
  * @param phase 各腿相位值数组[4]
  * @param contact 各腿接触状态数组[4]
  * @param foot_target_pos 输出参数，各腿目标位置 [4][3]
+ * @param foot_target_vel 输出参数，各腿目标速度 [4][3]
  */
-void gait_generator(GaitParams *gait, float *phase, int *contact, float foot_target_pos[4][3]);
+void gait_generator(GaitParams *gait, float *phase, int *contact, float foot_target_pos[4][3], float foot_target_vel[4][3]);
 
 /**
  * @brief 设置步态相位状态

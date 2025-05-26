@@ -180,7 +180,7 @@ void leg_forward_kinematics_vel(uint8_t leg_id, const float joint_pos[3], const 
     }
 }
 
-void leg_inverse_kinematics_pos_vel(uint8_t leg_id, const float foot_vel[3], const float foot_pos[3], float joint_pos[3], float joint_vel[3])
+void leg_inverse_kinematics_pos_vel(uint8_t leg_id, const float foot_pos[3], const float foot_vel[3], float joint_pos[3], float joint_vel[3])
 {
     float jacobian[3][3];
     float jacobian_inv[3][3];
@@ -259,6 +259,14 @@ void leg_motor_to_joint_vel(uint8_t leg_id, const float *motor_vel, float *joint
     joint_vel[CALF_IDX] = dir->calf_dir * motor_vel[CALF_IDX];
 }
 
+void leg_joint_to_motor_vel(uint8_t leg_id, const float *joint_vel, float *motor_vel)
+{
+    const MotorJointDirConfig *dir = &dog.params.motor_param.motor_dir[leg_id];
+    motor_vel[HIP_IDX] = dir->hip_dir * joint_vel[HIP_IDX];
+    motor_vel[THIGH_IDX] = dir->thigh_dir * joint_vel[THIGH_IDX];
+    motor_vel[CALF_IDX] = dir->calf_dir * joint_vel[CALF_IDX];
+}
+
 void leg_thigh_to_hip(uint8_t leg_id, const float thigh_pos[3], float hip_pos[3])
 {
     const LegLinkParams *leg_links = &dog.params.leg_links;
@@ -275,6 +283,15 @@ void leg_foot_to_motor(uint8_t leg_id, const float foot_pos[3], float motor_pos[
 {
     float joint_pos[3];
     leg_inverse_kinematics(leg_id, foot_pos, joint_pos);
+    leg_joint_to_motor(leg_id, joint_pos, motor_pos);
+}
+
+void leg_foot_to_motor_pos_vel(uint8_t leg_id, const float foot_pos[3], const float foot_vel[3], float motor_pos[3], float motor_vel[3])
+{
+    float joint_pos[3];
+    float joint_vel[3];
+    leg_inverse_kinematics_pos_vel(leg_id, foot_pos, foot_vel, joint_pos, joint_vel);
+    leg_joint_to_motor_vel(leg_id, joint_vel, motor_vel);
     leg_joint_to_motor(leg_id, joint_pos, motor_pos);
 }
 
@@ -381,6 +398,12 @@ void leg_set_motor_pos(uint8_t leg_id, const float motor_pos[3])
     memcpy(dog.leg[leg_id].motor_target_pos, motor_pos, 3 * sizeof(float));
 }
 
+void leg_set_motor_pos_vel(uint8_t leg_id, const float motor_pos[3], const float motor_vel[3])
+{
+    memcpy(dog.leg[leg_id].motor_target_pos, motor_pos, 3 * sizeof(float));
+    memcpy(dog.leg[leg_id].motor_target_vel, motor_vel, 3 * sizeof(float));
+}
+
 void leg_set_joint_pos(uint8_t leg_id, const float joint_pos[3])
 {
     memcpy(dog.leg[leg_id].join_target_pos, joint_pos, 3 * sizeof(float));
@@ -400,14 +423,10 @@ void leg_get_current_joint_pos(uint8_t leg_idx, float joint_current_pos[3])
     leg_motor_to_joint(leg_idx, motor_current_pos, joint_current_pos);
 }
 
-float leg_time_start = 0;
-float leg_time = 0;
 void leg_get_current_foot_pos(uint8_t leg_idx, float foot_pos[3])
 {
     float joint_current_pos[3];
-    leg_time_start = getTime();
     leg_get_current_joint_pos(leg_idx, joint_current_pos);
-    leg_time = (getTime() - leg_time_start) * 1000;
     leg_forward_kinematics(leg_idx, joint_current_pos, foot_pos);
 }
 
@@ -511,27 +530,31 @@ void dog_set_stand_height(float height)
 void dog_send_motors()
 {
     float motors_target_pos[12];
+    float motors_target_vel[12];
     for (int leg_idx = 0; leg_idx < 4; leg_idx++) {
         memcpy(motors_target_pos + leg_idx * 3, 
                dog.leg[leg_idx].motor_target_pos, 
                3 * sizeof(float));
+        memcpy(motors_target_vel + leg_idx * 3, 
+               dog.leg[leg_idx].motor_target_vel, 
+               3 * sizeof(float));
     }
-    send_motors_target_pos(motors_target_pos);
+    send_motors_target_pos_vel(motors_target_pos, motors_target_vel);
 }
 
-void dog_send_motors_from_joints()
-{
-    // 创建一个临时数组来存储所有电机目标位置
-    float motors_target_pos[12];
-    for (int leg_idx = 0; leg_idx < 4; leg_idx++) {
-        leg_joint_to_motor(leg_idx, dog.leg[leg_idx].join_target_pos, dog.leg[leg_idx].motor_target_pos);
-        memcpy(motors_target_pos + leg_idx * 3, 
-               dog.leg[leg_idx].motor_target_pos, 
-               3 * sizeof(float));
-    }
-    // 调用电机的发送函数
-    send_motors_target_pos(motors_target_pos);
-}
+//void dog_send_motors_from_joints()
+//{
+//    // 创建一个临时数组来存储所有电机目标位置
+//    float motors_target_pos[12];
+//    for (int leg_idx = 0; leg_idx < 4; leg_idx++) {
+//        leg_joint_to_motor(leg_idx, dog.leg[leg_idx].join_target_pos, dog.leg[leg_idx].motor_target_pos);
+//        memcpy(motors_target_pos + leg_idx * 3, 
+//               dog.leg[leg_idx].motor_target_pos, 
+//               3 * sizeof(float));
+//    }
+//    // 调用电机的发送函数
+//    send_motors_target_pos(motors_target_pos);
+//}
      
 /*========================= 初始化函数 =========================*/
 void dog_init(const RobotParams* init_params)

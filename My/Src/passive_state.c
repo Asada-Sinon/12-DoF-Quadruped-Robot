@@ -5,7 +5,7 @@
 #include "stdio.h"
 #include "motor.h"
 GaitState passive_state;    
-/* 对角步态状态的处理函数 */
+/* 阻尼状态的处理函数 */
 static void passive_enter(void) {
     // printf("进入阻尼状态\n");
     
@@ -22,9 +22,11 @@ static void passive_exit(void) {
 
 }
 
-/* 对角步态状态的转换检查 */
+/* 阻尼状态的转换检查 */
 static bool passive_check_transition(StateName next) {
-    return true;
+    if (next == STATE_STAND) // 阻尼状态只能切换到站立状态
+        return true;
+    return false;
 }
 
 /* 注册站立状态 */
