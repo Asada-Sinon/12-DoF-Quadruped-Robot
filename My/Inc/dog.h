@@ -36,10 +36,12 @@ typedef struct
     uint8_t leg_id;              // 腿的ID (0:FL, 1:FR, 2:HL, 3:HR)
     float join_target_pos[3];    // 目标关节角度 [hip, thigh, calf]
     float motor_target_pos[3];   // 目标电机角度 [hip, thigh, calf]
-    float motor_target_vel[3];  // 目标电机速度 [hip, thigh, calf]
+    float motor_target_vel[3];   // 目标电机速度 [hip, thigh, calf]
+    float motor_target_force[3]; // 目标电机力 [hip, thigh, calf]
     float foot_target_pos[3];    // 足端目标位置 [x, y, z]
     float foot_target_vel[3];    // 足端目标速度 [x, y, z]
     float foot_neutral_pos[3];   // 足端中性点位置 [x, y, z]
+    float foot_target_force[3];  // 足端目标力 [x, y, z]
 } Leg;
 
 /**
@@ -129,7 +131,7 @@ void leg_foot_to_motor(uint8_t leg_id, const float foot_pos[3], float motor_pos[
  * @param motor_pos 输出的电机位置数组 [3]
  * @param motor_vel 输出的电机速度数组 [3]
  */
-void leg_foot_to_motor_pos_vel(uint8_t leg_id, const float foot_pos[3], const float foot_vel[3], float motor_pos[3], float motor_vel[3]);
+void leg_foot_to_motor_force_pos_vel(uint8_t leg_id, const float foot_force[3], const float foot_pos[3], const float foot_vel[3], float motor_force[3], float motor_pos[3], float motor_vel[3]);
 
 /*========================= 机器人初始化函数 =========================*/
 /**
@@ -160,6 +162,15 @@ void leg_set_motor_pos(uint8_t leg_id, const float motor_pos[3]);
 void leg_set_motor_pos_vel(uint8_t leg_id, const float motor_pos[3], const float motor_vel[3]);
 
 /**
+ * @brief 
+ * @param leg_id 腿的ID (0:FL, 1:FR, 2:HL, 3:HR)
+ * @param motor_force 电机目标力数组 [3]
+ * @param motor_pos 电机目标位置数组 [3]
+ * @param motor_vel 电机目标速度数组 [3]
+ */
+void leg_set_motor_force_pos_vel(uint8_t leg_id, const float motor_force[3], const float motor_pos[3], const float motor_vel[3]);
+
+/**
  * @brief 设置指定腿的关节目标位置
  * @param leg_id 腿的ID (0:FL, 1:FR, 2:HL, 3:HR)
  * @param joint_pos 关节目标位置数组 [3]
@@ -172,6 +183,13 @@ void leg_set_joint_pos(uint8_t leg_id, const float joint_pos[3]);
  * @param foot_pos 足端目标位置数组 [3]
  */
 void leg_set_target_foot_pos(uint8_t leg_id, const float foot_pos[3]);
+
+/**
+ * @brief 设置腿的足端目标力
+ * @param leg_id 腿的ID (0:FL, 1:FR, 2:HL, 3:HR)
+ * @param foot_force 足端目标力数组 [3]
+ */
+void leg_set_target_foot_force(uint8_t leg_id, const float foot_force[3]);
 
 /**
  * @brief 设置机体速度

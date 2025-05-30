@@ -16,6 +16,7 @@ typedef struct {
     float foot_start_pos[4][3];
     float foot_target_pos[4][3];
     float foot_target_vel[4][3];
+    float foot_target_force[4][3];
     int contact[4];
 } GaitState;
 

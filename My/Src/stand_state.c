@@ -4,17 +4,22 @@
 #include "stdio.h"
 #include "string.h"
 #include "motor.h"
+#include "force_calculate.h"
 
 static float stand_T = 2.0f; // 站立时间基准
 static float T = 0; // 根据距离计算的站立时间
 static float time_start = 0;
 static float foot_start_pos[4][3];
 static float foot_target_pos[4][3];
+static float foot_target_vel[4][3];
+
 static float p = 0;
 static float t = 0;
 static float motor_current_pos[4][3];
 float stand_test_foot_start_pos[4][3];
 float stand_test_foot_target_pos[4][3];
+
+float stand_test_foot_target_force[4][3];
 
 typedef struct pd{
     float kp;
@@ -80,6 +85,7 @@ static void stand_run(void) {
     RobotParams* params = get_dog_params();
     float motor_target_pos[4][3];
     float motor_target_vel[4][3] = {0};
+    float motor_target_force[4][3] = {0};
 
     for (int i = 0; i < 4; i++)
     {
@@ -111,8 +117,11 @@ static void stand_run(void) {
         foot_target_pos[i][Y_IDX] = y;
         foot_target_pos[i][Z_IDX] = z;
 
-        leg_foot_to_motor(i, foot_target_pos[i], motor_target_pos[i]);
-        leg_set_motor_pos_vel(i, motor_target_pos[i], motor_target_vel[i]);
+        vmc_get_foot_target_force(i, stand_test_foot_target_force[i]);
+        leg_foot_to_motor_force_pos_vel(i, stand_test_foot_target_force[i], foot_target_pos[i], foot_target_vel[i], motor_target_force[i], motor_target_pos[i], motor_target_vel[i]);
+        leg_set_motor_force_pos_vel(i, motor_target_force[i], motor_target_pos[i], motor_target_vel[i]);
+        // leg_foot_to_motor(i, foot_target_pos[i], motor_target_pos[i]);
+        // leg_set_motor_pos_vel(i, motor_target_pos[i], motor_target_vel[i]);
     }
     memcpy(stand_test_foot_target_pos, foot_target_pos, sizeof(foot_target_pos));
 }

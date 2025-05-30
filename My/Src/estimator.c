@@ -586,9 +586,18 @@ void estimation_start(void)
 
 float est_get_body_vel(uint8_t idx){
     if(idx == 0)
-        return LPF_get_value(&lpf_x);
+        return LPF_get_value(&lpf_x); // vx
     else if(idx == 1)
-        return LPF_get_value(&lpf_y);
+        return LPF_get_value(&lpf_y); // vy
+    else if(idx == 2) // vz
+        return 0;
+    else if(idx == 3) // vroll
+        return 0;
+    else if(idx == 4) // vpitch
+        return 0;
+    else if(idx == 5) // vyaw
+        return imu_get_data()->gyro[2];
     else
         return 0;
 }
+

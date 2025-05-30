@@ -48,6 +48,7 @@ static void trot_run(void) {
     float phase[4] = {0};
     float motor_target_pos[4][3];
     float motor_target_vel[4][3];
+    float motor_target_force[4][3];
     float s_body_vel[3];
     dog_get_body_vel_without_cog(s_body_vel); // 获取当前机体速度
     if (s_body_vel[X_IDX] > 0) // 前进时使用前进的重心补偿
@@ -76,8 +77,8 @@ static void trot_run(void) {
         
         // leg_foot_to_motor(i, trot_state.foot_target_pos[i], motor_target_pos[i]);
         // leg_set_motor_pos(i, motor_target_pos[i]);
-
-        leg_foot_to_motor_pos_vel(i, trot_state.foot_target_pos[i], trot_state.foot_target_vel[i], motor_target_pos[i], motor_target_vel[i]);
+        
+        leg_foot_to_motor_force_pos_vel(i, trot_state.foot_target_force[i], trot_state.foot_target_pos[i], trot_state.foot_target_vel[i], motor_target_force[i], motor_target_pos[i], motor_target_vel[i]);
         leg_set_motor_pos_vel(i, motor_target_pos[i], motor_target_vel[i]);
     }
 }

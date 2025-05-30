@@ -28,11 +28,16 @@ Project File Date:  05/26/2025
 *** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin'
 Build target 'Quadruped_F767'
 compiling trot_state.c...
-compiling stand_state.c...
+compiling gait.c...
+..\My\Src\gait.c(146): warning:  #177-D: variable "foot_target_pos_thigh"  was declared but never referenced
+      float foot_target_pos_thigh[4][3];
+..\My\Src\gait.c: 1 warning, 0 errors
+compiling passive_state.c...
+compiling dog.c...
 linking...
-Program Size: Code=39000 RO-data=1512 RW-data=1312 ZI-data=19872  
+Program Size: Code=39332 RO-data=1516 RW-data=1312 ZI-data=20184  
 FromELF: creating hex file...
-"Quadruped_F767\Quadruped_F767.axf" - 0 Error(s), 0 Warning(s).
+"Quadruped_F767\Quadruped_F767.axf" - 0 Error(s), 1 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -56,7 +61,7 @@ Package Vendor: Keil
 
    * Component: ARM::CMSIS:CORE:5.6.0
       Include file:  CMSIS\Core\Include\tz_context.h
-Build Time Elapsed:  00:00:08
+Build Time Elapsed:  00:00:09
 </pre>
 </body>
 </html>
