@@ -135,7 +135,7 @@ int main(void)
     // 状态机切换到初始状态
    fsm_change_to(STATE_STAND);
    HAL_Delay(1000); // 延时1s，等待状态机切换完成
-   gamepad_control_init(); // 启动手柄
+//   gamepad_control_init(); // 启动手柄
    estimation_start(); // 在站立状态下，开始状态观测器，站立过程可能会有影响
   /* USER CODE END 2 */
 

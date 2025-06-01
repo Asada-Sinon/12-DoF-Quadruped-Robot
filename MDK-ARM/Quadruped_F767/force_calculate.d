@@ -45,3 +45,5 @@ quadruped_f767\force_calculate.o: ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_
 quadruped_f767\force_calculate.o: ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h
 quadruped_f767\force_calculate.o: ../Core/Inc/can.h
 quadruped_f767\force_calculate.o: ../My/Inc/estimator.h
+quadruped_f767\force_calculate.o: ../My/Inc/ANO_TC.h
+quadruped_f767\force_calculate.o: ../Core/Inc/usart.h

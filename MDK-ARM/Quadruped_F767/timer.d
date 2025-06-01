@@ -52,3 +52,4 @@ quadruped_f767\timer.o: D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin\..\include\st
 quadruped_f767\timer.o: ../My/Inc/gamepad.h
 quadruped_f767\timer.o: ../My/Inc/ANO_TC.h
 quadruped_f767\timer.o: ../Core/Inc/usart.h
+quadruped_f767\timer.o: ../My/Inc/force_calculate.h

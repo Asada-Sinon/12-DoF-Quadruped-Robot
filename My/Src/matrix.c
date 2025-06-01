@@ -384,10 +384,37 @@ int mat_inverse_ptr(int n, const float *A, float *Ainv) {
     return MAT_SUCCESS;
 }
 
-// 专门处理3x3矩阵的求逆函数 (使用HALDSP库)
+// 专门处理3x3矩阵的求逆函数的指针版本
 int mat_inverse_3x3_ptr(const float *A, float *Ainv) {
-    return mat_inverse_ptr(3, A, Ainv);
+    // 计算行列式
+    float det = A[0] * (A[4] * A[8] - A[5] * A[7])
+              - A[1] * (A[3] * A[8] - A[5] * A[6])
+              + A[2] * (A[3] * A[7] - A[4] * A[6]);
+    
+    // 判断是否可逆
+    if (fabs(det) < 1e-5f) {
+        return MAT_ERROR; // 矩阵不可逆
+    }
+    
+    // 计算伴随矩阵的转置除以行列式
+    float inv_det = 1.0f / det;
+    
+    Ainv[0] = (A[4] * A[8] - A[5] * A[7]) * inv_det;
+    Ainv[1] = (A[2] * A[7] - A[1] * A[8]) * inv_det;
+    Ainv[2] = (A[1] * A[5] - A[2] * A[4]) * inv_det;
+    
+    Ainv[3] = (A[5] * A[6] - A[3] * A[8]) * inv_det;
+    Ainv[4] = (A[0] * A[8] - A[2] * A[6]) * inv_det;
+    Ainv[5] = (A[2] * A[3] - A[0] * A[5]) * inv_det;
+    
+    Ainv[6] = (A[3] * A[7] - A[4] * A[6]) * inv_det;
+    Ainv[7] = (A[1] * A[6] - A[0] * A[7]) * inv_det;
+    Ainv[8] = (A[0] * A[4] - A[1] * A[3]) * inv_det;
+    
+    return MAT_SUCCESS;
 }
+
+
 
 /**
  * 使用LU分解求解矩阵方程 A * X = B，得到 X = A^-1 * B

@@ -366,7 +366,6 @@ void estimation_run() {
         else{ //完全触地时信任测量值
             float trust = windowFunc(leg_get_phase(i), 0.2); // 使用窗口函数降低触地时的噪声
             if (i == 0)
-                set_debug_data(3, trust);
             for (int j = 0; j < 2; j ++)
             {
                 kf.R[2*i+j][2*i+j] = (1 + (1-trust)*largeVariance) * kf.R_init[2*i+j][2*i+j];
@@ -433,10 +432,6 @@ void estimation_run() {
             kf.y[2*i+j] = feetVel_f32[i][j];
         }
     }
-    set_debug_data(0, kf.y[0]);
-    set_debug_data(1, kf.y[1]);
-
-    set_debug_data(2, imu_get_data()->gyro[2]);
     start_time[3] = getTime();
     // 直接求R+CPC^T的逆
     // (R + CPC^T)^-1
@@ -575,8 +570,8 @@ void estimation_run() {
     use_time_all = (getTime() - start_time[0]) * 1000;
     if (use_time_all > 3)
         use_time_greater_than_3 = 1;
-    set_debug_data(4, LPF_get_value(&lpf_x));
-    set_debug_data(5, LPF_get_value(&lpf_y));
+    set_debug_data(3, LPF_get_value(&lpf_x));
+    set_debug_data(4, LPF_get_value(&lpf_y));
 }
 
 void estimation_start(void)

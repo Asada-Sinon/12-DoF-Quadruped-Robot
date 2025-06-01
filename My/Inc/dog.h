@@ -258,6 +258,15 @@ void leg_get_joint_pos(uint8_t leg_idx, float joint_pos[3]);
 void leg_get_target_foot_pos(uint8_t leg_idx, float foot_pos[3]);
 
 /**
+ * @brief 获取指定腿的当前足端力、位置、速度
+ * @param leg_idx 腿的ID (0:FL, 1:FR, 2:HL, 3:HR)
+ * @param foot_force 足端力数组 [3]
+ * @param foot_pos 足端位置数组 [3]
+ * @param foot_vel 足端速度数组 [3]
+ */
+void leg_get_current_foot_force_pos_vel(uint8_t leg_idx, float foot_force[3], float foot_pos[3], float foot_vel[3]);
+
+/**
  * @brief Al获取机体速度
  * @param velocity 机体速度数组 [3]
  */

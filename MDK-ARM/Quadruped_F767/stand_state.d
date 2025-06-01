@@ -46,3 +46,9 @@ quadruped_f767\stand_state.o: D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin\..\incl
 quadruped_f767\stand_state.o: D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin\..\include\string.h
 quadruped_f767\stand_state.o: ../My/Inc/motor.h
 quadruped_f767\stand_state.o: ../My/Inc/force_calculate.h
+quadruped_f767\stand_state.o: ../My/Inc/ANO_TC.h
+quadruped_f767\stand_state.o: ../Core/Inc/usart.h
+quadruped_f767\stand_state.o: ../My/Inc/estimator.h
+quadruped_f767\stand_state.o: ../My/Inc/matrix.h
+quadruped_f767\stand_state.o: ../Drivers/CMSIS/DSP/Include/arm_math.h
+quadruped_f767\stand_state.o: ../Drivers/CMSIS/Include/core_cm7.h

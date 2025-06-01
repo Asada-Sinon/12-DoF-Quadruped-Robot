@@ -7,6 +7,7 @@
 #include "estimator.h"
 #include "gamepad.h"
 #include "ANO_TC.h"
+#include "force_calculate.h"
 
 // 获取系统时间
 // long long getSystemTime() {
@@ -43,6 +44,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         dog_smooth_cog(0.0007);
         // 手柄
         gamepad_control();
+        // 计算vmc支撑力
+        vmc_force_calculate();
         // 2ms状态机
         fsm_update();
     }

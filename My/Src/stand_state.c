@@ -5,6 +5,8 @@
 #include "string.h"
 #include "motor.h"
 #include "force_calculate.h"
+#include "ANO_TC.h"
+#include "estimator.h"
 
 static float stand_T = 2.0f; // 站立时间基准
 static float T = 0; // 根据距离计算的站立时间
@@ -19,23 +21,35 @@ static float motor_current_pos[4][3];
 float stand_test_foot_start_pos[4][3];
 float stand_test_foot_target_pos[4][3];
 
+float stand_test_foot_current_force[4][3] = {0};
+float stand_test_foot_current_pos[4][3] = {0};
+float stand_test_foot_current_vel[4][3] = {0};
+
 float stand_test_foot_target_force[4][3];
 
 typedef struct pd{
     float kp;
     float kd;
 }pd;
-pd hip[4] = { {120 , 2}, {120, 2}, {120, 2}, {120, 2} };
-pd thigh[4] = { {100 , 5}, {150, 3}, {150, 3}, {150, 3} };
-pd calf[4] = { {80 , 5}, {120, 4}, {120, 4}, {120, 4} };
+//pd hip[4] = { {120 , 2}, {120, 2}, {120, 2}, {120, 2} };
+//pd thigh[4] = { {100 , 5}, {150, 3}, {150, 3}, {150, 3} };
+//pd calf[4] = { {80 , 5}, {120, 4}, {120, 4}, {120, 4} };
 
 //pd hip[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
 //pd thigh[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
 //pd calf[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
 
-//pd hip[4] = { {10 , 3}, {10, 3}, {10, 3}, {10, 3} };
-//pd thigh[4] = { {10 , 3}, {10, 3}, {10, 3}, {10, 3} };
-//pd calf[4] = { {10 , 3}, {10, 3}, {10, 3}, {10, 3} };
+pd pos_hip[4] = { {1 , 1}, {1, 1}, {1, 1}, {1, 1} };
+pd pos_thigh[4] = { {1 , 1}, {1, 1}, {1, 1}, {1, 1} };
+pd pos_calf[4] = { {1 , 1}, {1, 1}, {1, 1}, {1, 1} };
+
+// pd hip[4] = { {1 , 0.1}, {1, 0.1}, {1, 0.1}, {1, 0.1} };
+// pd thigh[4] = { {1 , 0.1}, {1, 0.1}, {1, 0.1}, {1, 0.1} };
+// pd calf[4] = { {1 , 0.1}, {1, 0.1}, {1, 0.1}, {1, 0.1} };
+
+pd force_hip[4] = { {1 , 0.1}, {1, 0.1}, {1, 0.1}, {1, 0.1} };
+pd force_thigh[4] = { {1 , 0.1}, {1, 0.1}, {1, 0.1}, {1, 0.1} };
+pd force_calf[4] = { {1 , 0.1}, {1, 0.1}, {1, 0.1}, {1, 0.1} };
 //float hip_kp = 10;
 //float hip_kd = 0.1;
 //float thigh_kp = 10;
@@ -73,10 +87,11 @@ static void stand_enter(void) {
     memcpy(stand_test_foot_start_pos, foot_start_pos, sizeof(foot_start_pos));
     for (int i = 0; i < 4; i++)
     {
-        leg_set_motor_kp_kd(i, hip[i].kp, hip[i].kd, thigh[i].kp, thigh[i].kd, calf[i].kp, calf[i].kd);
+        leg_set_motor_kp_kd(i, pos_hip[i].kp, pos_hip[i].kd, pos_thigh[i].kp, pos_thigh[i].kd, pos_calf[i].kp, pos_calf[i].kd);
     }
 }
 
+float motor_target_force[4][3] = {0};
 // 从当前位置经历stand_T秒到达目标位置
 static void stand_run(void) {
     t = getTime() - time_start;
@@ -85,7 +100,7 @@ static void stand_run(void) {
     RobotParams* params = get_dog_params();
     float motor_target_pos[4][3];
     float motor_target_vel[4][3] = {0};
-    float motor_target_force[4][3] = {0};
+    
 
     for (int i = 0; i < 4; i++)
     {
@@ -116,10 +131,27 @@ static void stand_run(void) {
         foot_target_pos[i][X_IDX] = x;
         foot_target_pos[i][Y_IDX] = y;
         foot_target_pos[i][Z_IDX] = z;
-
-        vmc_get_foot_target_force(i, stand_test_foot_target_force[i]);
+        
+        // 力控，如果是从对角步态切换过来，为了保持稳定性直接用力控
+        if (vmc_get_force_control_state() == 1 && fsm_get_previous_state() == STATE_TROT)
+        {
+            vmc_get_foot_target_force(i, stand_test_foot_target_force[i]);
+            leg_set_motor_kp_kd(i, force_hip[i].kp, force_hip[i].kd, force_thigh[i].kp, force_thigh[i].kd, force_calf[i].kp, force_calf[i].kd);
+        }
+            
+        else // 位控，因为力控没写位置约束，所以站立要用位控
+        {
+            memset(stand_test_foot_target_force[i], 0, sizeof(stand_test_foot_target_force[i]));
+            leg_set_motor_kp_kd(i, pos_hip[i].kp, pos_hip[i].kd, pos_thigh[i].kp, pos_thigh[i].kd, pos_calf[i].kp, pos_calf[i].kd);
+        }
         leg_foot_to_motor_force_pos_vel(i, stand_test_foot_target_force[i], foot_target_pos[i], foot_target_vel[i], motor_target_force[i], motor_target_pos[i], motor_target_vel[i]);
         leg_set_motor_force_pos_vel(i, motor_target_force[i], motor_target_pos[i], motor_target_vel[i]);
+
+        // 获取足端力，调试用
+        leg_get_current_foot_force_pos_vel(i, stand_test_foot_current_force[i], stand_test_foot_current_pos[i], stand_test_foot_current_vel[i]);
+        set_debug_data(5, stand_test_foot_current_force[0][0]);
+        set_debug_data(6, stand_test_foot_current_force[0][1]);
+        set_debug_data(7, stand_test_foot_current_force[0][2]);
         // leg_foot_to_motor(i, foot_target_pos[i], motor_target_pos[i]);
         // leg_set_motor_pos_vel(i, motor_target_pos[i], motor_target_vel[i]);
     }

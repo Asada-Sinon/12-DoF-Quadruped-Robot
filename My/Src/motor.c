@@ -35,11 +35,12 @@ void motor_init()
        J60_GetMotor(i)->is_enable = 1;
    }
 
-    while(J60_GetMotor(0)->is_enable == 1 || J60_GetMotor(1)->is_enable == 1 || J60_GetMotor(2)->is_enable == 1 || J60_GetMotor(3)->is_enable == 1 || \
-    J60_GetMotor(4)->is_enable == 1 || J60_GetMotor(5)->is_enable == 1 || J60_GetMotor(6)->is_enable == 1 || J60_GetMotor(7)->is_enable == 1 || \
-    J60_GetMotor(8)->is_enable == 1 || J60_GetMotor(9)->is_enable == 1 || J60_GetMotor(10)->is_enable == 1 || J60_GetMotor(11)->is_enable == 1)
+//    while(J60_GetMotor(0)->is_enable == 1 || J60_GetMotor(1)->is_enable == 1 || J60_GetMotor(2)->is_enable == 1 || J60_GetMotor(3)->is_enable == 1 || \
+//    J60_GetMotor(4)->is_enable == 1 || J60_GetMotor(5)->is_enable == 1 || J60_GetMotor(6)->is_enable == 1 || J60_GetMotor(7)->is_enable == 1 || \
+//    J60_GetMotor(8)->is_enable == 1 || J60_GetMotor(9)->is_enable == 1 || J60_GetMotor(10)->is_enable == 1 || J60_GetMotor(11)->is_enable == 1)
+while(J60_GetMotor(0)->is_enable == 1 || J60_GetMotor(1)->is_enable == 1 || J60_GetMotor(2)->is_enable == 1)
     {
-        for (int i = 0; i < 12; i++) 
+        for (int i = 0; i < 3; i++) 
         {
             if (J60_GetMotor(i)->is_enable == 1)
             {
@@ -146,6 +147,14 @@ void leg_get_motors_current_vel(uint8_t leg_idx, float motors_current_vel[3])
 {
     for (int i = 0; i < 3; i++) {
         motors_current_vel[i] = J60_GetMotor(leg_idx*3+i)->velocity;
+    }
+}
+
+// 获取电机当前力
+void leg_get_motors_current_force(uint8_t leg_idx, float motors_current_force[3])
+{
+    for (int i = 0; i < 3; i++) {
+        motors_current_force[i] = J60_GetMotor(leg_idx*3+i)->torque;
     }
 }
 
