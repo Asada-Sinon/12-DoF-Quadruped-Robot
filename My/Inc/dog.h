@@ -192,6 +192,12 @@ void leg_set_target_foot_pos(uint8_t leg_id, const float foot_pos[3]);
 void leg_set_target_foot_force(uint8_t leg_id, const float foot_force[3]);
 
 /**
+ * @brief 设置指定腿的电机目标力、速度为0
+ * @param leg_id 腿的ID (0:FL, 1:FR, 2:HL, 3:HR)
+ */
+void leg_set_motor_force_vel_zero(uint8_t leg_id);
+
+/**
  * @brief 设置机体速度
  * @param vx 机体前进速度
  * @param vy 机体侧移速度
@@ -256,6 +262,13 @@ void leg_get_joint_pos(uint8_t leg_idx, float joint_pos[3]);
  * @param foot_pos 足端目标位置数组 [3]
  */
 void leg_get_target_foot_pos(uint8_t leg_idx, float foot_pos[3]);
+
+/**
+ * @brief 获取指定腿的当前足端速度
+ * @param leg_idx 腿的ID (0:FL, 1:FR, 2:HL, 3:HR)
+ * @param foot_vel 足端速度数组 [3]
+ */
+void leg_get_current_foot_vel(uint8_t leg_idx, float foot_vel[3]);
 
 /**
  * @brief 获取指定腿的当前足端力、位置、速度

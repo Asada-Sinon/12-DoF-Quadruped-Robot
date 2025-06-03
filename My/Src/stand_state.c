@@ -31,38 +31,26 @@ typedef struct pd{
     float kp;
     float kd;
 }pd;
-//pd hip[4] = { {120 , 2}, {120, 2}, {120, 2}, {120, 2} };
-//pd thigh[4] = { {100 , 5}, {150, 3}, {150, 3}, {150, 3} };
-//pd calf[4] = { {80 , 5}, {120, 4}, {120, 4}, {120, 4} };
+pd pos_hip[4] = { {120 , 2}, {120, 2}, {120, 2}, {120, 2} };
+pd pos_thigh[4] = { {100 , 5}, {100 , 5}, {100 , 5}, {100 , 5} };
+pd pos_calf[4] = { {80 , 5}, {80, 5}, {80, 5}, {80, 5} };
 
-//pd hip[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
-//pd thigh[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
-//pd calf[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
+//pd pos_hip[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
+//pd pos_thigh[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
+//pd pos_calf[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
 
-pd pos_hip[4] = { {1 , 1}, {1, 1}, {1, 1}, {1, 1} };
-pd pos_thigh[4] = { {1 , 1}, {1, 1}, {1, 1}, {1, 1} };
-pd pos_calf[4] = { {1 , 1}, {1, 1}, {1, 1}, {1, 1} };
+//pd pos_hip[4] = { {5 , 1}, {5, 1}, {5, 1}, {5, 1} };
+//pd pos_thigh[4] = { {5 , 1}, {5, 1}, {5, 1}, {5, 1} };
+//pd pos_calf[4] = { {5 , 1}, {5, 1}, {5, 1}, {5, 1} };
 
-// pd hip[4] = { {1 , 0.1}, {1, 0.1}, {1, 0.1}, {1, 0.1} };
-// pd thigh[4] = { {1 , 0.1}, {1, 0.1}, {1, 0.1}, {1, 0.1} };
-// pd calf[4] = { {1 , 0.1}, {1, 0.1}, {1, 0.1}, {1, 0.1} };
+//pd force_hip[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
+//pd force_thigh[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
+//pd force_calf[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
 
-pd force_hip[4] = { {1 , 0.1}, {1, 0.1}, {1, 0.1}, {1, 0.1} };
-pd force_thigh[4] = { {1 , 0.1}, {1, 0.1}, {1, 0.1}, {1, 0.1} };
-pd force_calf[4] = { {1 , 0.1}, {1, 0.1}, {1, 0.1}, {1, 0.1} };
-//float hip_kp = 10;
-//float hip_kd = 0.1;
-//float thigh_kp = 10;
-//float thigh_kd = 0.1;
-//float calf_kp = 10;
-//float calf_kd = 0.1;
+pd force_hip[4] = { {1 , 0.5}, {1, 0.5}, {1, 0.5}, {1, 0.5} };
+pd force_thigh[4] = { {1 , 0.5}, {1, 0.5}, {1, 0.5}, {1, 0.5} };
+pd force_calf[4] = { {1 , 1}, {1, 1}, {1, 1}, {1, 1} };
 
-//float hip_kp = 0;
-//float hip_kd = 0;
-//float thigh_kp = 0;
-//float thigh_kd = 0;
-//float calf_kp = 0;
-//float calf_kd = 0;
 
 /* 站立状态的处理函数 */
 static void stand_enter(void) {
@@ -144,6 +132,9 @@ static void stand_run(void) {
             memset(stand_test_foot_target_force[i], 0, sizeof(stand_test_foot_target_force[i]));
             leg_set_motor_kp_kd(i, pos_hip[i].kp, pos_hip[i].kd, pos_thigh[i].kp, pos_thigh[i].kd, pos_calf[i].kp, pos_calf[i].kd);
         }
+        // 调试用
+//        memset(stand_test_foot_target_force[i], 0, sizeof(stand_test_foot_target_force[i]));
+        
         leg_foot_to_motor_force_pos_vel(i, stand_test_foot_target_force[i], foot_target_pos[i], foot_target_vel[i], motor_target_force[i], motor_target_pos[i], motor_target_vel[i]);
         leg_set_motor_force_pos_vel(i, motor_target_force[i], motor_target_pos[i], motor_target_vel[i]);
 

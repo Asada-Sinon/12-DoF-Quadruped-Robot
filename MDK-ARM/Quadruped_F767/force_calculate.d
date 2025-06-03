@@ -47,3 +47,4 @@ quadruped_f767\force_calculate.o: ../Core/Inc/can.h
 quadruped_f767\force_calculate.o: ../My/Inc/estimator.h
 quadruped_f767\force_calculate.o: ../My/Inc/ANO_TC.h
 quadruped_f767\force_calculate.o: ../Core/Inc/usart.h
+quadruped_f767\force_calculate.o: ../My/Inc/timer.h

@@ -54,3 +54,4 @@ quadruped_f767\main.o: D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin\..\include\str
 quadruped_f767\main.o: ../My/Inc/my_usart.h
 quadruped_f767\main.o: ../My/Inc/estimator.h
 quadruped_f767\main.o: ../My/Inc/matrix.h
+quadruped_f767\main.o: ../My/Inc/force_calculate.h

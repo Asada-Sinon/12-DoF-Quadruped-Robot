@@ -238,8 +238,8 @@ void estimation_init() {
     // 初始化状态变量x
     memset(kf.x, 0, sizeof(kf.x));
     // 初始化低通滤波器
-    LPFilter_init(&lpf_x, dt, 3.0);
-    LPFilter_init(&lpf_y, dt, 3.0);
+    LPFilter_init(&lpf_x, dt, 2.0);
+    LPFilter_init(&lpf_y, dt, 2.0);
 }
 
 // 窗口函数，用于降低触底抖动对状态估计的影响
@@ -478,6 +478,27 @@ void estimation_run() {
     
     // 测量噪声小的情况下，可以考虑使用简化版本的更新P = (I - KC) * Ppri，保证P的对称性即可
     // P = (I - KC) * Ppri * (I - KC)^T + K * R * K^T
+    // arm_mat_init_f32(&I_KC, STATE_DIM, STATE_DIM, (float32_t*)I_KC_f32);
+    // arm_mat_init_f32(&KC, STATE_DIM, STATE_DIM, (float32_t*)KC_f32);
+    // arm_mat_init_f32(&KR, STATE_DIM, OUTPUT_DIM, (float32_t*)KR_f32);
+    // arm_mat_init_f32(&KRKT, STATE_DIM, STATE_DIM, (float32_t*)KRKT_f32);
+    // arm_mat_init_f32(&I18, STATE_DIM, STATE_DIM, (float32_t*)I18_f32);
+    // arm_mat_init_f32(&I_KCPI_KCT, STATE_DIM, STATE_DIM, (float32_t*)I_KCPI_KCT_f32);
+    // arm_mat_init_f32(&I_KCT, STATE_DIM, STATE_DIM, (float32_t*)I_KCT_f32);
+    // arm_mat_init_f32(&KT, OUTPUT_DIM, STATE_DIM, (float32_t*)KT_f32);
+
+    // arm_mat_mult_f32(&K, &C, &KC);
+    // arm_mat_sub_f32(&I18, &KC, &I_KC);
+    // arm_mat_mult_f32(&I_KC, &Ppri, &I_KCPI_KCT);
+    // arm_mat_trans_f32(&I_KC, &I_KCT);
+    // arm_mat_mult_f32(&I_KCPI_KCT, &I_KCT, &I_KCPI_KCT);
+    
+    // arm_mat_mult_f32(&K, &R, &KR);
+    // arm_mat_trans_f32(&K, &KT);
+    // arm_mat_mult_f32(&KR, &KT, &KRKT);
+    // arm_mat_add_f32(&I_KCPI_KCT, &KRKT, &P);
+
+    // P = (I - KC) * Ppri * (I - KC)^T + K * R * K^T
     arm_mat_init_f32(&I_KC, STATE_DIM, STATE_DIM, (float32_t*)I_KC_f32);
     arm_mat_init_f32(&KC, STATE_DIM, STATE_DIM, (float32_t*)KC_f32);
     arm_mat_init_f32(&KR, STATE_DIM, OUTPUT_DIM, (float32_t*)KR_f32);
@@ -487,16 +508,75 @@ void estimation_run() {
     arm_mat_init_f32(&I_KCT, STATE_DIM, STATE_DIM, (float32_t*)I_KCT_f32);
     arm_mat_init_f32(&KT, OUTPUT_DIM, STATE_DIM, (float32_t*)KT_f32);
 
+    // 1. 在计算K之前，确保(R + CPCT)的数值稳定性
+    for(int i = 0; i < OUTPUT_DIM; i++) {
+        for(int j = 0; j < OUTPUT_DIM; j++) {
+            if(fabs(RCPCT.pData[i * OUTPUT_DIM + j]) < 1e-10f) {
+                RCPCT.pData[i * OUTPUT_DIM + j] = 1e-10f;
+            }
+        }
+        // 确保对角线元素足够大
+        RCPCT.pData[i * OUTPUT_DIM + i] = fmax(RCPCT.pData[i * OUTPUT_DIM + i], 1e-6f);
+    }
+    // 2. 计算I - KC
     arm_mat_mult_f32(&K, &C, &KC);
     arm_mat_sub_f32(&I18, &KC, &I_KC);
+
+    // 3. 计算第一部分：(I - KC) * Ppri * (I - KC)^T
     arm_mat_mult_f32(&I_KC, &Ppri, &I_KCPI_KCT);
     arm_mat_trans_f32(&I_KC, &I_KCT);
     arm_mat_mult_f32(&I_KCPI_KCT, &I_KCT, &I_KCPI_KCT);
-    
+
+    // 4. 计算第二部分：K * R * K^T
     arm_mat_mult_f32(&K, &R, &KR);
     arm_mat_trans_f32(&K, &KT);
     arm_mat_mult_f32(&KR, &KT, &KRKT);
+
+    // 5. 最终P更新
     arm_mat_add_f32(&I_KCPI_KCT, &KRKT, &P);
+
+    // // 计算简化版本的P更新: P = (I - KC) * Ppri
+    // arm_mat_init_f32(&KC, STATE_DIM, STATE_DIM, (float32_t*)KC_f32);
+    // arm_mat_init_f32(&I_KC, STATE_DIM, STATE_DIM, (float32_t*)I_KC_f32);
+    // arm_mat_init_f32(&I18, STATE_DIM, STATE_DIM, (float32_t*)I18_f32);
+
+    // // 2.1 计算I - KC
+    // arm_mat_mult_f32(&K, &C, &KC);
+    // arm_mat_sub_f32(&I18, &KC, &I_KC);
+    
+    // // 2.2 计算P = (I - KC) * Ppri
+    // arm_mat_mult_f32(&I_KC, &Ppri, &P);
+
+   // 3. 确保P矩阵的对称性
+   for(int i = 0; i < STATE_DIM; i++) {
+       for(int j = i; j < STATE_DIM; j++) {
+           // 对称化：取上三角和下三角的平均值
+           float p_symmetric = 0.5f * (P.pData[i * STATE_DIM + j] + 
+                                     P.pData[j * STATE_DIM + i]);
+           P.pData[i * STATE_DIM + j] = p_symmetric;
+           P.pData[j * STATE_DIM + i] = p_symmetric;
+       }
+   }
+    // 4. 添加数值稳定性保护
+    const float P_MAX = 1000.0f;  // 设置一个合理的上限
+    const float P_MIN = 1e-6f;    // 设置一个合理的下限
+    for(int i = 0; i < STATE_DIM; i++) {
+        for(int j = 0; j < STATE_DIM; j++) {
+            // 限制P的范围
+            if(P.pData[i * STATE_DIM + j] > P_MAX) {
+                P.pData[i * STATE_DIM + j] = P_MAX;
+            }
+            else if(P.pData[i * STATE_DIM + j] < -P_MAX) {
+                P.pData[i * STATE_DIM + j] = -P_MAX;
+            }
+            
+            // 确保对角线元素为正
+            if(i == j && P.pData[i * STATE_DIM + i] < P_MIN) {
+                P.pData[i * STATE_DIM + i] = P_MIN;
+            }
+        }
+    }
+    // 5. 更新状态协方差矩阵
     memcpy(kf.P, P.pData, sizeof(kf.P));
 //    // S = R + C * Ppri * C^T 28x28
 //    arm_mat_init_f32(&CP, OUTPUT_DIM, STATE_DIM, (float32_t*)CP_f32);

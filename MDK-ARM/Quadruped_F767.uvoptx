@@ -1092,6 +1092,46 @@
           <WinNumber>2</WinNumber>
           <ItemText>kdz</ItemText>
         </Ww>
+        <Ww>
+          <count>124</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>lpf_y</ItemText>
+        </Ww>
+        <Ww>
+          <count>125</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>lpf_body_height_vel</ItemText>
+        </Ww>
+        <Ww>
+          <count>126</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>test_use_time_all</ItemText>
+        </Ww>
+        <Ww>
+          <count>127</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>test_time_force_cal</ItemText>
+        </Ww>
+        <Ww>
+          <count>128</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>_time</ItemText>
+        </Ww>
+        <Ww>
+          <count>129</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>kx</ItemText>
+        </Ww>
+        <Ww>
+          <count>130</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>leg_current_force</ItemText>
+        </Ww>
+        <Ww>
+          <count>131</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>ky</ItemText>
+        </Ww>
       </WatchWindow2>
       <MemoryWindow1>
         <Mm>

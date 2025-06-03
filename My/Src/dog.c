@@ -480,6 +480,12 @@ void leg_set_motor_force_pos_vel(uint8_t leg_id, const float motor_force[3], con
     memcpy(dog.leg[leg_id].motor_target_vel, motor_vel, 3 * sizeof(float));
 }
 
+void leg_set_motor_force_vel_zero(uint8_t leg_id)
+{
+    memset(dog.leg[leg_id].motor_target_force, 0, 3 * sizeof(float));
+    memset(dog.leg[leg_id].motor_target_vel, 0, 3 * sizeof(float));
+}
+
 void leg_set_joint_pos(uint8_t leg_id, const float joint_pos[3])
 {
     memcpy(dog.leg[leg_id].join_target_pos, joint_pos, 3 * sizeof(float));
@@ -514,6 +520,21 @@ void leg_get_current_joint_vel(uint8_t leg_idx, float joint_current_vel[3])
     float motor_current_vel[3];
     leg_get_motors_current_vel(leg_idx, motor_current_vel);
     leg_motor_to_joint_vel(leg_idx, motor_current_vel, joint_current_vel);
+}
+
+void leg_get_current_foot_vel(uint8_t leg_idx, float foot_vel[3])
+{
+    float motor_current_vel[3];
+    float motor_current_pos[3];
+    float joint_pos[3];
+    float joint_vel[3];
+    leg_get_motors_current_vel(leg_idx, motor_current_vel);
+    leg_get_motors_current_pos(leg_idx, motor_current_pos);
+
+    leg_motor_to_joint_vel(leg_idx, motor_current_vel, joint_vel);
+    leg_motor_to_joint(leg_idx, motor_current_pos, joint_pos);
+
+    leg_forward_kinematics_vel(leg_idx, joint_pos, joint_vel, foot_vel);
 }
 
 void leg_get_current_foot_force_pos_vel(uint8_t leg_idx, float foot_force[3], float foot_pos[3], float foot_vel[3])
@@ -685,6 +706,11 @@ void dog_init(const RobotParams* init_params)
         leg_get_motors_current_pos(leg_idx, motor_current_pos[leg_idx]);
         leg_motor_to_joint(leg_idx, motor_current_pos[leg_idx], dog.leg[leg_idx].join_target_pos);
         leg_set_motor_pos(leg_idx, motor_current_pos[leg_idx]);
+
+        // 计算电机在关节坐标系零点的位置
+        dog.params.motor_param.motor_zero_pos[leg_idx].hip_zero_pos += motor_current_pos[leg_idx][JOINT_HIP];
+        dog.params.motor_param.motor_zero_pos[leg_idx].thigh_zero_pos += motor_current_pos[leg_idx][JOINT_THIGH];
+	    dog.params.motor_param.motor_zero_pos[leg_idx].calf_zero_pos += motor_current_pos[leg_idx][JOINT_CALF];
     }
 
     

@@ -4,7 +4,7 @@
 #include "gait.h"
 #include "stdio.h"
 #include "motor.h"
-
+#include "string.h"
 
 GaitState trot_state;    
 
@@ -13,21 +13,21 @@ typedef struct pd{
     float kd;
 }pd;
 
-//pd swing_hip[4] = { {120 , 3}, {120, 2}, {120, 2}, {120, 2} };
-//pd swing_thigh[4] = { {50 , 3}, {150, 3}, {150, 3}, {150, 3} };
-//pd swing_calf[4] = { {50 , 3}, {120, 4}, {120, 4}, {120, 4} };
+pd swing_hip[4] = { {120 , 3}, {120, 2}, {120, 2}, {120, 2} };
+pd swing_thigh[4] = { {50 , 3}, {150, 3}, {150, 3}, {150, 3} };
+pd swing_calf[4] = { {50 , 3}, {120, 4}, {120, 4}, {120, 4} };
 
-//pd stance_hip[4] = { {120 , 3}, {120, 2}, {120, 2}, {120, 2} };
-//pd stance_thigh[4] = { {100 , 5}, {150, 3}, {150, 3}, {150, 3} };
-//pd stance_calf[4] = { {80 , 5}, {120, 4}, {120, 4}, {120, 4} };
+pd stance_hip[4] = { {120 , 3}, {120, 2}, {120, 2}, {120, 2} };
+pd stance_thigh[4] = { {100 , 5}, {150, 3}, {150, 3}, {150, 3} };
+pd stance_calf[4] = { {80 , 5}, {120, 4}, {120, 4}, {120, 4} };
 
- pd swing_hip[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
- pd swing_thigh[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
- pd swing_calf[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
+// pd swing_hip[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
+// pd swing_thigh[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
+// pd swing_calf[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
 
- pd stance_hip[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
- pd stance_thigh[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
- pd stance_calf[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
+// pd stance_hip[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
+// pd stance_thigh[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
+// pd stance_calf[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
 
 //pd swing_hip[4] = { {10 , 3}, {10, 3}, {10, 3}, {10, 3} };
 //pd swing_thigh[4] = { {10 , 3}, {10, 3}, {10, 3}, {10, 3} };
@@ -77,6 +77,8 @@ static void trot_run(void) {
         
         // leg_foot_to_motor(i, trot_state.foot_target_pos[i], motor_target_pos[i]);
         // leg_set_motor_pos(i, motor_target_pos[i]);
+        // µ˜ ‘”√
+        memset(trot_state.foot_target_force[i], 0, sizeof(trot_state.foot_target_force[i]));
         
         leg_foot_to_motor_force_pos_vel(i, trot_state.foot_target_force[i], trot_state.foot_target_pos[i], trot_state.foot_target_vel[i], motor_target_force[i], motor_target_pos[i], motor_target_vel[i]);
         leg_set_motor_pos_vel(i, motor_target_pos[i], motor_target_vel[i]);

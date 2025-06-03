@@ -27,6 +27,7 @@ void timer_init()
     HAL_TIM_Base_Start_IT(&htim3); // 2ms状态机
     HAL_TIM_Base_Start_IT(&htim4); // 3ms状态观测器
     HAL_TIM_Base_Start_IT(&htim5); // 10ms上位机
+    HAL_TIM_Base_Start_IT(&htim6); // 3ms支撑力计算
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
@@ -44,8 +45,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         dog_smooth_cog(0.0007);
         // 手柄
         gamepad_control();
-        // 计算vmc支撑力
-        vmc_force_calculate();
         // 2ms状态机
         fsm_update();
     }
@@ -56,5 +55,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     if (htim->Instance == TIM5) {
         // 上位机
         send_debug_data();
+    }
+    if (htim->Instance == TIM6) {
+        // 根据机体当前状态计算支撑力
+        vmc_force_calculate();
     }
 }

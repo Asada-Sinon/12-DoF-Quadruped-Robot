@@ -35,6 +35,7 @@
 #include "arm_math.h"
 #include "my_usart.h"
 #include "estimator.h"
+#include "force_calculate.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -146,15 +147,9 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-      if (get_motor_status_flag)
-      {
-          
-          J60_GetMotorStatus(motor_custom_id);
-//          J60_ResetMotorError(motor_custom_id);
-          get_motor_status_flag = 0;
-      }
-//      estimation_run();
-          
+//      test_now_time = getTime();
+//    vmc_force_calculate();
+//          test_use_time_all = (getTime() - test_now_time) * 1000;
       HAL_Delay(1);
   }
   /* USER CODE END 3 */

@@ -6,7 +6,7 @@
 #include "stdio.h"
 #include "estimator.h"
 
-void limit(float *value, float min, float max)
+static void limit(float *value, float min, float max)
 {
     if (*value < min) *value = min;
     if (*value > max) *value = max;
@@ -195,12 +195,12 @@ void gait_generator(GaitParams *gait, float *phase, int *contact, float foot_tar
             y = (pf[i][Y_IDX] - p0[i][Y_IDX]) * (fai - sinf(fai)) / (2*MY_PI) + p0[i][Y_IDX];
             z = h * (1 - cosf(fai)) / 2.0f;
             // 摆线速度
-            vx = (pf[i][X_IDX] - p0[i][X_IDX]) / T * (1 - cosf(fai));
-            vy = (pf[i][Y_IDX] - p0[i][Y_IDX]) / T * (1 - cosf(fai));
-            vz = MY_PI * h / T * sinf(fai);
-//            vx = 0;
-//            vy = 0;
-//            vz = 0;
+//            vx = (pf[i][X_IDX] - p0[i][X_IDX]) / T * (1 - cosf(fai));
+//            vy = (pf[i][Y_IDX] - p0[i][Y_IDX]) / T * (1 - cosf(fai));
+//            vz = MY_PI * h / T * sinf(fai);
+            vx = 0;
+            vy = 0;
+            vz = 0;
         }
         // xy转换到thigh坐标系下
         // 调试用重心补偿

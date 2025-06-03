@@ -35,12 +35,12 @@ void motor_init()
        J60_GetMotor(i)->is_enable = 1;
    }
 
-//    while(J60_GetMotor(0)->is_enable == 1 || J60_GetMotor(1)->is_enable == 1 || J60_GetMotor(2)->is_enable == 1 || J60_GetMotor(3)->is_enable == 1 || \
-//    J60_GetMotor(4)->is_enable == 1 || J60_GetMotor(5)->is_enable == 1 || J60_GetMotor(6)->is_enable == 1 || J60_GetMotor(7)->is_enable == 1 || \
-//    J60_GetMotor(8)->is_enable == 1 || J60_GetMotor(9)->is_enable == 1 || J60_GetMotor(10)->is_enable == 1 || J60_GetMotor(11)->is_enable == 1)
-while(J60_GetMotor(0)->is_enable == 1 || J60_GetMotor(1)->is_enable == 1 || J60_GetMotor(2)->is_enable == 1)
+while(J60_GetMotor(0)->is_enable == 1 || J60_GetMotor(1)->is_enable == 1 || J60_GetMotor(2)->is_enable == 1 || J60_GetMotor(3)->is_enable == 1 || \
+J60_GetMotor(4)->is_enable == 1 || J60_GetMotor(5)->is_enable == 1 || J60_GetMotor(6)->is_enable == 1 || J60_GetMotor(7)->is_enable == 1 || \
+J60_GetMotor(8)->is_enable == 1 || J60_GetMotor(9)->is_enable == 1 || J60_GetMotor(10)->is_enable == 1 || J60_GetMotor(11)->is_enable == 1)
+//    while(J60_GetMotor(3)->is_enable == 1 || J60_GetMotor(4)->is_enable == 1 || J60_GetMotor(5)->is_enable == 1)
     {
-        for (int i = 0; i < 3; i++) 
+        for (int i = 0; i < 12; i++) 
         {
             if (J60_GetMotor(i)->is_enable == 1)
             {
@@ -123,12 +123,19 @@ void check_motor_limit(float *motor_target_pos)
     }
 }
 
+static void limit(float *value, float min, float max)
+{
+    if (*value < min) *value = min;
+    if (*value > max) *value = max;
+}
+
 // 发送电机目标位置
 void send_motors_target_force_pos_vel(float *motors_target_force, float *motors_target_pos, float *motors_target_vel)
 {
 //    check_motor_limit(motors_target_pos);  // 先检查限位
-    
     for (int i = 0; i < 12; i++) {
+        // 力矩限幅
+        limit(&motors_target_force[i], -15, 15);
         J60_MotorControl(i, motors_target_pos[i], motors_target_vel[i], J60_GetMotor(i)->kp, J60_GetMotor(i)->kd, motors_target_force[i]);
     } 
 }   
