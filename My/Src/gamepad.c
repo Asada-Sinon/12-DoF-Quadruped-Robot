@@ -40,7 +40,7 @@ float w_smooth = 0.0f;
 
 int dead_zone = 50;
 int big_dead_zone = 200;
-float v_inc = 0.004f; // 高频时可以给高，低频时就给低一点吧
+float v_inc = 0.002f; // 高频时可以给高，低频时就给低一点吧
 float v_dead_zone = 0.05f;
 float v_big_dead_zone = 0.1f;
 float vx_scale = 0.005;
@@ -189,9 +189,8 @@ void gamepad_control()
     vy_smooth = smooth(vy_smooth, vy, v_inc);
     w_smooth = smooth(w_smooth, w, v_inc);
     dog_set_body_vel(vx_smooth, vy_smooth, w_smooth);
+    
     set_debug_data(0, vx_smooth);
-    set_debug_data(1, vy_smooth);
-    set_debug_data(2, w_smooth);
     
     if (SWITCH_DOWN(SWITCH_CH3)) {
         fsm_change_to(STATE_PASSIVE);

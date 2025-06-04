@@ -202,9 +202,9 @@ void estimation_init() {
         if (i < 2) // Q越大速度抖动越大，Q越小越平滑越滞后
             Qdig[i][i] = 0.5; // 位置估计协方差，没用
         else if(i == 2) // vx
-            Qdig[i][i] = 2;
+            Qdig[i][i] = 0.1;
         else if(i == 3) // vy，发现vy收敛比vx慢，所以vy对应的协方差的大一点
-            Qdig[i][i] = 4;
+            Qdig[i][i] = 0.1;
             
     }
     // 构造过程噪声协方差矩阵Q = Qdig + B * Cu * B^T
@@ -348,6 +348,8 @@ float start_time[5];
 float use_time[5]; 
 float use_time_all = 0;
 float use_time_greater_than_3 = 0;
+float trust_window = 0.2;
+float trust = 0;
 arm_status status;
 void estimation_run() {
     if(kf_start == 0){
@@ -364,8 +366,7 @@ void estimation_run() {
             }
         }
         else{ //完全触地时信任测量值
-            float trust = windowFunc(leg_get_phase(i), 0.2); // 使用窗口函数降低触地时的噪声
-            if (i == 0)
+            trust = windowFunc(leg_get_phase(i), trust_window); // 使用窗口函数降低触地时的噪声
             for (int j = 0; j < 2; j ++)
             {
                 kf.R[2*i+j][2*i+j] = (1 + (1-trust)*largeVariance) * kf.R_init[2*i+j][2*i+j];
@@ -650,8 +651,8 @@ void estimation_run() {
     use_time_all = (getTime() - start_time[0]) * 1000;
     if (use_time_all > 3)
         use_time_greater_than_3 = 1;
-    set_debug_data(3, LPF_get_value(&lpf_x));
-    set_debug_data(4, LPF_get_value(&lpf_y));
+    set_debug_data(1, LPF_get_value(&lpf_x));
+//    set_debug_data(4, LPF_get_value(&lpf_y));
 }
 
 void estimation_start(void)

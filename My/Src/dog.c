@@ -345,6 +345,13 @@ void leg_foot_to_motor_force_pos_vel(uint8_t leg_id, const float foot_force[3], 
     float joint_pos[3];
     float joint_vel[3];
     float joint_force[3];
+
+//    // 补偿足端位置
+// float foot_pos_correction[3] = {0};
+//    foot_pos_correction[X_IDX] = foot_pos[X_IDX] + get_dog_params()->posture.center_of_gravity.foot_offest_correction[leg_id][X_IDX];
+//    foot_pos_correction[Y_IDX] = foot_pos[Y_IDX] + get_dog_params()->posture.center_of_gravity.foot_offest_correction[leg_id][Y_IDX];
+//    foot_pos_correction[Z_IDX] = foot_pos[Z_IDX] + get_dog_params()->posture.center_of_gravity.foot_offest_correction[leg_id][Z_IDX];
+
     leg_inverse_kinematics_force_pos_vel(leg_id, foot_force, foot_pos, foot_vel, joint_force, joint_pos, joint_vel);
     leg_joint_to_motor_vel(leg_id, joint_vel, motor_vel);
     leg_joint_to_motor(leg_id, joint_pos, motor_pos);
@@ -452,8 +459,16 @@ float smooth(float current, float target, float step_increment) {
 void dog_smooth_cog(float step_increment)
 {
     // 计算目标足端中性点位置
-    float target_neutral_points[4][3];
+    float target_neutral_points[4][3] = {0};
     dog_cog_to_foot(get_dog_params()->posture.center_of_gravity.translation, get_dog_params()->posture.center_of_gravity.rotation, get_dog_params()->posture.center_of_gravity.foot_offset, target_neutral_points);
+    
+    // 补偿足端位置
+    for (int i = 0; i < 4; i++) {
+        target_neutral_points[i][X_IDX] += get_dog_params()->posture.center_of_gravity.foot_offest_correction[i][X_IDX];
+        target_neutral_points[i][Y_IDX] += get_dog_params()->posture.center_of_gravity.foot_offest_correction[i][Y_IDX];
+        target_neutral_points[i][Z_IDX] += get_dog_params()->posture.center_of_gravity.foot_offest_correction[i][Z_IDX];
+    }
+
     // 计算每步增量 
     for (int i = 0; i < 4; i++) {
         dog.leg[i].foot_neutral_pos[X_IDX] = smooth(dog.leg[i].foot_neutral_pos[X_IDX], target_neutral_points[i][X_IDX], step_increment);
@@ -708,7 +723,8 @@ void dog_init(const RobotParams* init_params)
         leg_set_motor_pos(leg_idx, motor_current_pos[leg_idx]);
 
         // 计算电机在关节坐标系零点的位置
-        dog.params.motor_param.motor_zero_pos[leg_idx].hip_zero_pos += motor_current_pos[leg_idx][JOINT_HIP];
+        // hip关节使用绝对位置、防止误差
+//        dog.params.motor_param.motor_zero_pos[leg_idx].hip_zero_pos += motor_current_pos[leg_idx][JOINT_HIP];
         dog.params.motor_param.motor_zero_pos[leg_idx].thigh_zero_pos += motor_current_pos[leg_idx][JOINT_THIGH];
 	    dog.params.motor_param.motor_zero_pos[leg_idx].calf_zero_pos += motor_current_pos[leg_idx][JOINT_CALF];
     }

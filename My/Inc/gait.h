@@ -69,6 +69,7 @@ int* gait_get_contact(void);
 
 float* gait_get_foot_target_pos(int leg_idx);
 
-
+//根据速度调整步频
+void adjust_gait_frequency();
 #endif
 

@@ -46,3 +46,5 @@ quadruped_f767\trot_state.o: ../My/Inc/gait.h
 quadruped_f767\trot_state.o: D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin\..\include\stdio.h
 quadruped_f767\trot_state.o: ../My/Inc/motor.h
 quadruped_f767\trot_state.o: D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin\..\include\string.h
+quadruped_f767\trot_state.o: ../My/Inc/ANO_TC.h
+quadruped_f767\trot_state.o: ../Core/Inc/usart.h

@@ -92,9 +92,9 @@ void vmc_force_calculate() // 放在定时器里
         }
     }
      // x方向
-    set_debug_data(8, foot_force[0][0]);
-    set_debug_data(9, foot_force[0][1]);
-    set_debug_data(10, foot_force[0][2]);
+//    set_debug_data(8, foot_force[0][0]);
+//    set_debug_data(9, foot_force[0][1]);
+//    set_debug_data(10, foot_force[0][2]);
     test_time_force_cal = (getTime() - _time) * 1000;
 }
 

@@ -8,11 +8,11 @@ RobotParams robot_params = {
     /* ²½Ì¬²ÎÊý */
     .trot_gait = {
         .phase = {0.0, 0.5, 0.5, 0.0}, 
-        .T = 0.35, //0.5
-        .stance_ratio = 0.52,
+        .T = 0.5, //0.5
+        .stance_ratio = 0.52, // 0.52
         .swing_ratio = 1- 0.52,
         .step_length = 0,
-        .swing_height = 0.07,
+        .swing_height = 0.1,
         .stance_depth = 0,//0.008
         .stand_height = DEFAULT_STAND_HEIGHT,
         .kx = 0.1,
@@ -152,7 +152,8 @@ RobotParams robot_params = {
             .foot_offset = {DEFAULT_CENTER_OF_GRAVITY_FOOT_OFFEST_X, DEFAULT_CENTER_OF_GRAVITY_FOOT_OFFEST_Y},
             .stand_cog_offset = {DEFAULT_CENTER_OF_GRAVITY_STAND_COG_OFFSET_X, DEFAULT_CENTER_OF_GRAVITY_STAND_COG_OFFSET_Y},
             .trot_cog_forward_offset = {DEFAULT_CENTER_OF_GRAVITY_TROT_COG_FORWARD_OFFSET_X, 0},
-            .trot_cog_backward_offset = {DEFAULT_CENTER_OF_GRAVITY_TROT_COG_BACKWARD_OFFSET_X, 0}
+            .trot_cog_backward_offset = {DEFAULT_CENTER_OF_GRAVITY_TROT_COG_BACKWARD_OFFSET_X, 0},
+            .foot_offest_correction = {{0.015, 0, 0}, {0.01, 0, 0}, {-0.01, 0, 0}, {0, 0, 0}}
         },
         .center_of_gravity_limit = {
             .cog_x_max = DEFAULT_CENTER_OF_GRAVITY_MAX_X,

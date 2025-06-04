@@ -47,3 +47,5 @@ quadruped_f767\gait.o: ../My/Inc/matrix.h
 quadruped_f767\gait.o: ../Drivers/CMSIS/DSP/Include/arm_math.h
 quadruped_f767\gait.o: ../Drivers/CMSIS/Include/core_cm7.h
 quadruped_f767\gait.o: D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin\..\include\string.h
+quadruped_f767\gait.o: ../My/Inc/ANO_TC.h
+quadruped_f767\gait.o: ../Core/Inc/usart.h
