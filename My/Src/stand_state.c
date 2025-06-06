@@ -31,25 +31,25 @@ typedef struct pd{
     float kp;
     float kd;
 }pd;
- pd pos_hip[4] = { {120 , 2}, {120, 2}, {120, 2}, {120, 2} };
- pd pos_thigh[4] = { {100 , 5}, {100 , 5}, {100 , 5}, {100 , 5} };
- pd pos_calf[4] = { {80 , 5}, {80, 5}, {80, 5}, {80, 5} };
+// pd pos_hip[4] = { {120 , 2}, {120, 2}, {120, 2}, {120, 2} };
+// pd pos_thigh[4] = { {100 , 5}, {100 , 5}, {100 , 5}, {100 , 5} };
+// pd pos_calf[4] = { {80 , 5}, {80, 5}, {80, 5}, {80, 5} };
 
 //pd pos_hip[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
 //pd pos_thigh[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
 //pd pos_calf[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
 
-//pd pos_hip[4] = { {5 , 1}, {5, 1}, {5, 1}, {5, 1} };
-//pd pos_thigh[4] = { {5 , 1}, {5, 1}, {5, 1}, {5, 1} };
-//pd pos_calf[4] = { {5 , 1}, {5, 1}, {5, 1}, {5, 1} };
+pd pos_hip[4] = { {5 , 1}, {5, 1}, {5, 1}, {5, 1} };
+pd pos_thigh[4] = { {5 , 1}, {5, 1}, {5, 1}, {5, 1} };
+pd pos_calf[4] = { {5 , 1}, {5, 1}, {5, 1}, {5, 1} };
 
-pd force_hip[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
-pd force_thigh[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
-pd force_calf[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
+//pd force_hip[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
+//pd force_thigh[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
+//pd force_calf[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
 
-//pd force_hip[4] = { {1 , 0.5}, {1, 0.5}, {1, 0.5}, {1, 0.5} };
-//pd force_thigh[4] = { {1 , 0.5}, {1, 0.5}, {1, 0.5}, {1, 0.5} };
-//pd force_calf[4] = { {1 , 1}, {1, 1}, {1, 1}, {1, 1} };
+pd force_hip[4] = { {1 , 0.5}, {1, 0.5}, {1, 0.5}, {1, 0.5} };
+pd force_thigh[4] = { {1 , 0.5}, {1, 0.5}, {1, 0.5}, {1, 0.5} };
+pd force_calf[4] = { {1 , 1}, {1, 1}, {1, 1}, {1, 1} };
 
 
 /* 站立状态的处理函数 */
@@ -127,17 +127,17 @@ static void stand_run(void) {
         foot_target_pos[i][Z_IDX] = z;
         
         // 力控，如果是从对角步态切换过来，为了保持稳定性直接用力控
-        if (vmc_get_force_control_state() == 1 && fsm_get_previous_state() == STATE_TROT)
-        {
-            vmc_get_foot_target_force(i, stand_test_foot_target_force[i]);
-            leg_set_motor_kp_kd(i, force_hip[i].kp, force_hip[i].kd, force_thigh[i].kp, force_thigh[i].kd, force_calf[i].kp, force_calf[i].kd);
-        }
+//        if (vmc_get_force_control_state() == 1 && fsm_get_previous_state() == STATE_TROT)
+//        {
+//            vmc_get_foot_target_force(i, stand_test_foot_target_force[i]);
+//            leg_set_motor_kp_kd(i, force_hip[i].kp, force_hip[i].kd, force_thigh[i].kp, force_thigh[i].kd, force_calf[i].kp, force_calf[i].kd);
+//        }
             
-        else // 位控，因为力控没写位置约束，所以站立要用位控
-        {
+//        else // 位控，因为力控没写位置约束，所以站立要用位控
+//        {
             memset(stand_test_foot_target_force[i], 0, sizeof(stand_test_foot_target_force[i]));
             leg_set_motor_kp_kd(i, pos_hip[i].kp, pos_hip[i].kd, pos_thigh[i].kp, pos_thigh[i].kd, pos_calf[i].kp, pos_calf[i].kd);
-        }
+//        }
         // 调试用
 //        memset(stand_test_foot_target_force[i], 0, sizeof(stand_test_foot_target_force[i]));
         
