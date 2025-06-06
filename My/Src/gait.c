@@ -6,6 +6,7 @@
 #include "stdio.h"
 #include "estimator.h"
 #include "ANO_TC.h"
+#include "force_calculate.h"
 
 static void limit(float *value, float min, float max)
 {
@@ -105,6 +106,7 @@ void phase_wave_generator(GaitParams *gait, WaveStatus status, float start_time,
                 // 计算归一化时间，考虑相位偏移
                 float normalized_time = fmod(t + gait->T - gait->T * gait->phase[i], gait->T) / gait->T;
                 // 判断是否在支撑相
+                // 时间周期判断
                 if (normalized_time < gait->stance_ratio)
                 {
                     // 支撑相
@@ -116,7 +118,7 @@ void phase_wave_generator(GaitParams *gait, WaveStatus status, float start_time,
                     // 摆动相
                     contact[i] = 0;
                     phase[i] = (normalized_time - gait->stance_ratio) / (1 - gait->stance_ratio);
-                }
+                }  
             }
             break;
         }
@@ -137,6 +139,107 @@ void phase_wave_generator(GaitParams *gait, WaveStatus status, float start_time,
             }
             break;
     }
+    for(int i = 0; i < 4; ++i){
+        // 实时更新机器人的步态状态
+        get_dog_params()->posture.contact[i] = contact[i];
+        get_dog_params()->posture.phase[i] = phase[i];
+    }
+}
+
+uint8_t swing_leg[4] = {1, 0, 0, 1}; // 当前摆动腿
+uint8_t all_legs_contact = 1;
+/**
+ * @brief 生成步态相位和接触状态
+ * 
+ * @param gait 步态参数
+ * @param status 步态状态：正常步态、全摆动、全支撑
+ * @param phase 输出参数，各腿相位值数组[4]，范围0~1
+ * @param contact 输出参数，各腿接触状态数组[4]，1=支撑相，0=摆动相
+ */
+void phase_wave_generator_with_force(GaitParams *gait, WaveStatus status, float start_time, float *phase, int *contact)
+{
+    static uint8_t all_contact_flag = 0;  // 防止连续触地
+    static float last_cycle_time = 0;     // 上一个周期的开始时间
+    
+    
+    // 全部腿的默认相位值
+    const float default_phase = 0.5f;
+    
+    // 根据步态状态生成相应的相位和接触状态
+    switch(status)
+    {
+        case WAVE_ALL:  // 正常步态模式
+        {
+            // 计算从开始时间到现在的时间（秒）
+            float t = getTime() - last_cycle_time - start_time;
+            if (t < 0)
+                t = 0;
+            // 检查是否全部触地
+            all_legs_contact = 1;
+            for (int i = 0; i < 2; i++)
+            {
+                if (contact_judge_with_force(i) == 1)
+                {
+                    contact[i] = 1;
+                }
+                else
+                {
+                    contact[i] = 0;
+                    all_legs_contact = 0;
+                }
+            }
+            // 如果全部触地，迈出另一条对角线的两只腿
+            if (all_legs_contact && !all_contact_flag)
+            {
+                all_contact_flag = 1;
+                last_cycle_time = getTime() - start_time;
+                t = 0;
+                for(int i = 0; i < 4; ++i){
+                    swing_leg[i] = !swing_leg[i];
+                }
+            }
+            else if (!all_legs_contact)
+            {
+                all_contact_flag = 0;
+            }
+            
+            // 计算每条腿的相位
+            for (int i = 0; i < 2; i++)
+            {
+                // float normalized_time = fmod(t + gait->T - gait->T * gait->phase[i], gait->T) / gait->T;
+                if (contact[i] == 1)
+                {
+                    phase[i] = t / (gait->stance_ratio * gait->T);
+                }
+                else
+                {
+                    phase[i] = t / ((1 - gait->stance_ratio) * gait->T);
+                }
+                if (phase[i] < 0)
+                    phase[i] = 0;
+                if (phase[i] > 1)
+                    phase[i] = 1;
+            }
+            break;
+        }
+        case SWING_ALL:  // 全摆动模式
+            // 所有腿都处于摆动相
+            for (int i = 0; i < 4; i++) 
+            {
+                contact[i] = 0;
+                phase[i] = default_phase;
+            }
+            break;
+        case STANCE_ALL:  // 全支撑模式
+            // 所有腿都处于支撑相
+            for (int i = 0; i < 4; i++) 
+            {
+                contact[i] = 1;
+                phase[i] = default_phase;
+            }
+            break;
+    }
+    
     for(int i = 0; i < 4; ++i){
         // 实时更新机器人的步态状态
         get_dog_params()->posture.contact[i] = contact[i];

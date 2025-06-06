@@ -98,6 +98,27 @@ void vmc_force_calculate() // 放在定时器里
     test_time_force_cal = (getTime() - _time) * 1000;
 }
 
+float CONTACT_FORCE_THRESHOLD = 5;
+uint8_t contact_judge_with_force(uint8_t leg_id)
+{
+    float foot_force[3];
+    float foot_pos[3];
+    float foot_vel[3];
+    
+    // 获取足端力和位置信息
+    leg_get_current_foot_force_pos_vel(leg_id, foot_force, foot_pos, foot_vel);
+    
+    // 判断z轴力是否超过阈值
+    if(foot_force[2] > CONTACT_FORCE_THRESHOLD)
+    {
+        return 1;  // 触地
+    }
+    else
+    {
+        return 0;  // 未触地
+    }
+}
+
 void vmc_get_foot_target_force(uint8_t leg_id, float foot_target_force[3])
 {
     memcpy(foot_target_force, foot_force[leg_id], sizeof(foot_force[leg_id]));

@@ -37,6 +37,15 @@ GaitState* get_gait_state(void);
 void phase_wave_generator(GaitParams *gait, WaveStatus status, float start_time, float *phase, int *contact);
 
 /**
+ * @brief 根据接触力生成步态相位和接触状态
+ * @param gait 步态参数
+ * @param status 步态状态：正常步态、全摆动、全支撑
+ * @param phase 输出参数，各腿相位值数组[4]，范围0~1
+ * @param contact 输出参数，各腿接触状态数组[4]，1=支撑相，0=摆动相
+ */
+void phase_wave_generator_with_force(GaitParams *gait, WaveStatus status, float start_time, float *phase, int *contact);
+
+/**
  * @brief 生成步态
  * @param gait 步态参数
  * @param phase 各腿相位值数组[4]
@@ -70,6 +79,6 @@ int* gait_get_contact(void);
 float* gait_get_foot_target_pos(int leg_idx);
 
 //根据速度调整步频
-void adjust_gait_frequency();
+void adjust_gait_frequency(void);
 #endif
 

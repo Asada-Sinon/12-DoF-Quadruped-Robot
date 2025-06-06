@@ -47,8 +47,6 @@ typedef enum {
  * 注：左侧腿FL，HL 的y轴向身体外侧；右侧腿FR，HR的y轴向身体内侧。
  */
 
-float sin_time_start = 0;
-float sin_time = 0;
 
 void leg_forward_kinematics(uint8_t leg_id, const float joint_pos[3], float foot_pos[3])
 {
@@ -81,9 +79,6 @@ void leg_forward_kinematics(uint8_t leg_id, const float joint_pos[3], float foot
     foot_pos[X_IDX] = l3 * s23 + l2 * s2;
     foot_pos[Y_IDX] = -l3 * s1 * c23 + l1 * c1 - l2 * c2 * s1;
     foot_pos[Z_IDX] =  l3 * c1 * c23 + l1 * s1 + l2 * c1 * c2;
-    sin_time_start = getTime();
-    // printf("foot_pos[%d]: %f %f %f\n", leg_id, foot_pos[X_IDX], foot_pos[Y_IDX], foot_pos[Z_IDX]);
-    sin_time = (getTime() - sin_time_start ) * 1000;
 }
 
 void leg_inverse_kinematics(uint8_t leg_id, const float foot_pos[3], float joint_pos[3])
@@ -189,7 +184,7 @@ void leg_forward_kinematics_force_pos_vel(uint8_t leg_id, const float joint_forc
     leg_jacobian(leg_id, joint_pos, jacobian);
     leg_forward_kinematics(leg_id, joint_pos, foot_pos);
     mat_transpose_ptr(3, 3, (float *)jacobian, (float *)jacobian_T);
-    mat_inverse_ptr(3, &jacobian_T[0][0], &jacobian_T_inv[0][0]);
+    mat_inverse_3x3_ptr(&jacobian_T[0][0], &jacobian_T_inv[0][0]);
 
     for (int i = 0; i < 3; i++) {
         foot_vel[i] = 0;

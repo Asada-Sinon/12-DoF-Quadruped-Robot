@@ -14,13 +14,13 @@ typedef struct pd{
     float kd;
 }pd;
 
-pd swing_hip[4] = { {120 , 3}, {120, 2}, {120, 2}, {120, 2} };
-pd swing_thigh[4] = { {40 , 2}, {50, 2}, {50, 2}, {50, 2} };
-pd swing_calf[4] = { {40 , 2}, {50, 2}, {50, 2}, {50, 2} };
+ pd swing_hip[4] = { {120 , 3}, {120, 2}, {120, 2}, {120, 2} };
+ pd swing_thigh[4] = { {40 , 2}, {50, 2}, {50, 2}, {50, 2} };
+ pd swing_calf[4] = { {40 , 2}, {50, 2}, {50, 2}, {50, 2} };
 
-pd stance_hip[4] = { {120 , 3}, {120, 2}, {120, 2}, {120, 2} };
-pd stance_thigh[4] = { {70 , 5}, {80 , 3}, {80 , 3}, {80 , 3} };
-pd stance_calf[4] = { {70 , 5}, {80 , 3}, {80 , 3}, {80 , 3} };
+ pd stance_hip[4] = { {120 , 3}, {120, 2}, {120, 2}, {120, 2} };
+ pd stance_thigh[4] = { {70 , 5}, {80 , 3}, {80 , 3}, {80 , 3} };
+ pd stance_calf[4] = { {70 , 5}, {80 , 3}, {80 , 3}, {80 , 3} };
 
 // pd swing_hip[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
 // pd swing_thigh[4] = { {0 , 0}, {0, 0}, {0, 0}, {0, 0} };
@@ -50,9 +50,10 @@ static void trot_enter(void) {
     trot_state.time_start = getTime();   
 }
 
+float phase[4] = {0};
 // 从当前位置经历trot_T秒到达目标位置
 static void trot_run(void) {
-    float phase[4] = {0};
+    
     float motor_target_pos[4][3];
     float motor_target_vel[4][3];
     float motor_target_force[4][3];
@@ -73,6 +74,7 @@ static void trot_run(void) {
 //    }
     
     phase_wave_generator(get_trot_params(), trot_state.wave_status, trot_state.time_start, phase, trot_state.contact);
+//    phase_wave_generator_with_force(get_trot_params(), trot_state.wave_status, trot_state.time_start, phase, trot_state.contact);
     gait_generator(get_trot_params(), phase, trot_state.contact, trot_state.foot_target_pos, trot_state.foot_target_vel);
     
     for(int i = 0; i < 4; i++){

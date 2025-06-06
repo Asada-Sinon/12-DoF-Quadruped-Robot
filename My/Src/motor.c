@@ -35,10 +35,10 @@ void motor_init()
        J60_GetMotor(i)->is_enable = 1;
    }
 
-while(J60_GetMotor(0)->is_enable == 1 || J60_GetMotor(1)->is_enable == 1 || J60_GetMotor(2)->is_enable == 1 || J60_GetMotor(3)->is_enable == 1 || \
-J60_GetMotor(4)->is_enable == 1 || J60_GetMotor(5)->is_enable == 1 || J60_GetMotor(6)->is_enable == 1 || J60_GetMotor(7)->is_enable == 1 || \
-J60_GetMotor(8)->is_enable == 1 || J60_GetMotor(9)->is_enable == 1 || J60_GetMotor(10)->is_enable == 1 || J60_GetMotor(11)->is_enable == 1)
-//    while(J60_GetMotor(3)->is_enable == 1 || J60_GetMotor(4)->is_enable == 1 || J60_GetMotor(5)->is_enable == 1)
+ while(J60_GetMotor(0)->is_enable == 1 || J60_GetMotor(1)->is_enable == 1 || J60_GetMotor(2)->is_enable == 1 || J60_GetMotor(3)->is_enable == 1 || \
+ J60_GetMotor(4)->is_enable == 1 || J60_GetMotor(5)->is_enable == 1 || J60_GetMotor(6)->is_enable == 1 || J60_GetMotor(7)->is_enable == 1 || \
+ J60_GetMotor(8)->is_enable == 1 || J60_GetMotor(9)->is_enable == 1 || J60_GetMotor(10)->is_enable == 1 || J60_GetMotor(11)->is_enable == 1)
+   while(J60_GetMotor(0)->is_enable == 1 || J60_GetMotor(1)->is_enable == 1 || J60_GetMotor(2)->is_enable == 1 || J60_GetMotor(3)->is_enable == 1 || J60_GetMotor(4)->is_enable == 1 || J60_GetMotor(5)->is_enable == 1)
     {
         for (int i = 0; i < 12; i++) 
         {
