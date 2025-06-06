@@ -14,7 +14,7 @@ static void passive_enter(void) {
 static void passive_run(void) {
     for(int i = 0; i < 4; i++){
         leg_set_motor_force_vel_zero(i); // 清空电机目标力矩与速度
-        leg_set_motor_kp_kd(i, 0, 8, 0, 8, 0, 8); // 设置电机为阻尼模式
+        leg_set_motor_kp_kd(i, 0, 9, 0, 9, 0, 9); // 设置电机为阻尼模式
     }
 }
 

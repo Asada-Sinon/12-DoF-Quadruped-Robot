@@ -93,11 +93,11 @@ static void trot_run(void) {
         leg_set_motor_pos_vel(i, motor_target_pos[i], motor_target_vel[i]);
     
     // 获取足端力，调试用
-//        leg_get_current_foot_force_pos_vel(i, trot_foot_current_force[i], trot_foot_current_pos[i], trot_foot_current_vel[i]);
-//        set_debug_data(2, trot_foot_current_force[0][2]);
-//        set_debug_data(3, trot_foot_current_force[1][2]);
-//        set_debug_data(4, trot_foot_current_force[2][2]);
-//        set_debug_data(5, trot_foot_current_force[3][2]);
+        leg_get_current_foot_force_pos_vel(i, trot_foot_current_force[i], trot_foot_current_pos[i], trot_foot_current_vel[i]);
+        set_debug_data(2, trot_foot_current_force[0][2]);
+        set_debug_data(3, trot_foot_current_force[1][2]);
+        set_debug_data(4, trot_foot_current_force[2][2]);
+        set_debug_data(5, trot_foot_current_force[3][2]);
 //        
 //        set_debug_data(6, trot_state.contact[0]);
 //        set_debug_data(7, trot_state.contact[1]);

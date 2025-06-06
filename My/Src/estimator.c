@@ -651,7 +651,7 @@ void estimation_run() {
     use_time_all = (getTime() - start_time[0]) * 1000;
     if (use_time_all > 3)
         use_time_greater_than_3 = 1;
-    set_debug_data(1, LPF_get_value(&lpf_x));
+//    set_debug_data(1, LPF_get_value(&lpf_x));
 //    set_debug_data(4, LPF_get_value(&lpf_y));
 }
 

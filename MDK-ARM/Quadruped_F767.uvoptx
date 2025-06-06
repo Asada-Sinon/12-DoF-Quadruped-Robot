@@ -872,6 +872,46 @@
           <WinNumber>2</WinNumber>
           <ItemText>trust</ItemText>
         </Ww>
+        <Ww>
+          <count>80</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>w_smooth</ItemText>
+        </Ww>
+        <Ww>
+          <count>81</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>target_yaw</ItemText>
+        </Ww>
+        <Ww>
+          <count>82</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>kp_yaw</ItemText>
+        </Ww>
+        <Ww>
+          <count>83</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>kd_w</ItemText>
+        </Ww>
+        <Ww>
+          <count>84</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>lpf_weight</ItemText>
+        </Ww>
+        <Ww>
+          <count>85</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>lpf_w</ItemText>
+        </Ww>
+        <Ww>
+          <count>86</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>imu_recv</ItemText>
+        </Ww>
+        <Ww>
+          <count>87</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>vx_smooth</ItemText>
+        </Ww>
       </WatchWindow2>
       <MemoryWindow1>
         <Mm>

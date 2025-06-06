@@ -1019,7 +1019,6 @@ Section Cross References
     estimator.o(i.estimation_run) refers to fmax.o(i.__hardfp_fmax) for __hardfp_fmax
     estimator.o(i.estimation_run) refers to memcpya.o(.text) for __aeabi_memcpy4
     estimator.o(i.estimation_run) refers to estimator.o(i.LPFilter) for LPFilter
-    estimator.o(i.estimation_run) refers to ano_tc.o(i.set_debug_data) for set_debug_data
     estimator.o(i.estimation_start) refers to estimator.o(.data) for .data
     estimator.o(i.quaternion_to_rotation_matrix_zyx) refers to sqrtf_full.o(i.__hardfp_sqrtf) for __hardfp_sqrtf
     estimator.o(i.world_foot_to_body_pos) refers to dog.o(i.leg_get_current_foot_pos_body) for leg_get_current_foot_pos_body
@@ -1052,8 +1051,8 @@ Section Cross References
     gamepad.o(i.HT10A_process) refers to gamepad.o(.bss) for .bss
     gamepad.o(i.HT10A_process) refers to gamepad.o(.data) for .data
     gamepad.o(i.gamepad_control) refers to dog.o(i.smooth) for smooth
+    gamepad.o(i.gamepad_control) refers to imu.o(i.imu_get_data) for imu_get_data
     gamepad.o(i.gamepad_control) refers to dog.o(i.dog_set_body_vel) for dog_set_body_vel
-    gamepad.o(i.gamepad_control) refers to ano_tc.o(i.set_debug_data) for set_debug_data
     gamepad.o(i.gamepad_control) refers to estimator.o(i.est_get_body_vel) for est_get_body_vel
     gamepad.o(i.gamepad_control) refers to fsm.o(i.fsm_change_to) for fsm_change_to
     gamepad.o(i.gamepad_control) refers to gamepad.o(.data) for .data
@@ -1136,6 +1135,8 @@ Section Cross References
     stand_state.o(i.stand_run) refers to dog.o(i.leg_set_target_foot_pos) for leg_set_target_foot_pos
     stand_state.o(i.stand_run) refers to dog.o(i.leg_foot_to_motor_force_pos_vel) for leg_foot_to_motor_force_pos_vel
     stand_state.o(i.stand_run) refers to dog.o(i.leg_set_motor_force_pos_vel) for leg_set_motor_force_pos_vel
+    stand_state.o(i.stand_run) refers to dog.o(i.leg_get_current_foot_force_pos_vel) for leg_get_current_foot_force_pos_vel
+    stand_state.o(i.stand_run) refers to ano_tc.o(i.set_debug_data) for set_debug_data
     stand_state.o(i.stand_run) refers to memcpya.o(.text) for __aeabi_memcpy4
     stand_state.o(i.stand_run) refers to force_calculate.o(i.vmc_get_foot_target_force) for vmc_get_foot_target_force
     stand_state.o(i.stand_run) refers to stand_state.o(.data) for .data
@@ -1160,6 +1161,8 @@ Section Cross References
     trot_state.o(i.trot_run) refers to dog.o(i.leg_set_target_foot_pos) for leg_set_target_foot_pos
     trot_state.o(i.trot_run) refers to dog.o(i.leg_foot_to_motor_force_pos_vel) for leg_foot_to_motor_force_pos_vel
     trot_state.o(i.trot_run) refers to dog.o(i.leg_set_motor_pos_vel) for leg_set_motor_pos_vel
+    trot_state.o(i.trot_run) refers to dog.o(i.leg_get_current_foot_force_pos_vel) for leg_get_current_foot_force_pos_vel
+    trot_state.o(i.trot_run) refers to ano_tc.o(i.set_debug_data) for set_debug_data
     trot_state.o(i.trot_run) refers to trot_state.o(.bss) for .bss
     trot_state.o(i.trot_run) refers to trot_state.o(.data) for .data
     matrix.o(i.mat_add_block_ptr) refers to arm_mat_init_f32.o(.text) for arm_mat_init_f32
@@ -2142,15 +2145,9 @@ Removing Unused input sections from the image.
     Removing stand_state.o(.rev16_text), (4 bytes).
     Removing stand_state.o(.revsh_text), (4 bytes).
     Removing stand_state.o(.rrx_text), (6 bytes).
-    Removing stand_state.o(.bss), (48 bytes).
-    Removing stand_state.o(.bss), (48 bytes).
-    Removing stand_state.o(.bss), (48 bytes).
     Removing trot_state.o(.rev16_text), (4 bytes).
     Removing trot_state.o(.revsh_text), (4 bytes).
     Removing trot_state.o(.rrx_text), (6 bytes).
-    Removing trot_state.o(.bss), (48 bytes).
-    Removing trot_state.o(.bss), (48 bytes).
-    Removing trot_state.o(.bss), (48 bytes).
     Removing matrix.o(.rev16_text), (4 bytes).
     Removing matrix.o(.revsh_text), (4 bytes).
     Removing matrix.o(.rrx_text), (6 bytes).
@@ -2219,7 +2216,7 @@ Removing Unused input sections from the image.
     Removing dsqrt.o(.text), (162 bytes).
     Removing cdcmple.o(.text), (48 bytes).
 
-656 unused section(s) (total 66949 bytes) removed from the image.
+650 unused section(s) (total 66661 bytes) removed from the image.
 
 ==============================================================================
 
@@ -2687,128 +2684,128 @@ Image Symbol Table
     i.est_get_body_vel                       0x0800755c   Section        0  estimator.o(i.est_get_body_vel)
     i.estimation_init                        0x08007598   Section        0  estimator.o(i.estimation_init)
     i.estimation_run                         0x080077d0   Section        0  estimator.o(i.estimation_run)
-    i.estimation_start                       0x08007fdc   Section        0  estimator.o(i.estimation_start)
-    i.fabs                                   0x08007fec   Section        0  fabs.o(i.fabs)
-    i.fsm_change_to                          0x08008004   Section        0  fsm.o(i.fsm_change_to)
-    i.fsm_get_previous_state                 0x0800801c   Section        0  fsm.o(i.fsm_get_previous_state)
-    i.fsm_init                               0x08008028   Section        0  fsm.o(i.fsm_init)
-    i.fsm_register_state                     0x0800806c   Section        0  fsm.o(i.fsm_register_state)
-    i.fsm_update                             0x08008094   Section        0  fsm.o(i.fsm_update)
-    i.gait_generator                         0x080080e0   Section        0  gait.o(i.gait_generator)
-    i.gamepad_control                        0x080083b0   Section        0  gamepad.o(i.gamepad_control)
-    i.gamepad_control_init                   0x080084f4   Section        0  gamepad.o(i.gamepad_control_init)
-    i.getTime                                0x08008500   Section        0  timer.o(i.getTime)
-    i.get_dog_params                         0x08008524   Section        0  dog.o(i.get_dog_params)
-    i.get_robot_params                       0x0800852c   Section        0  robot_params.o(i.get_robot_params)
-    i.get_trot_params                        0x08008534   Section        0  gait.o(i.get_trot_params)
-    i.imu_data_process                       0x08008540   Section        0  imu.o(i.imu_data_process)
-    i.imu_get_data                           0x080086b8   Section        0  imu.o(i.imu_get_data)
-    i.leg_foot_to_motor_force_pos_vel        0x080086c0   Section        0  dog.o(i.leg_foot_to_motor_force_pos_vel)
-    i.leg_forward_kinematics                 0x08008704   Section        0  dog.o(i.leg_forward_kinematics)
-    i.leg_forward_kinematics_force_pos_vel   0x080087e4   Section        0  dog.o(i.leg_forward_kinematics_force_pos_vel)
-    i.leg_forward_kinematics_vel             0x0800889c   Section        0  dog.o(i.leg_forward_kinematics_vel)
-    i.leg_get_contact_state                  0x080088f8   Section        0  dog.o(i.leg_get_contact_state)
-    i.leg_get_current_foot_force_pos_vel     0x08008908   Section        0  dog.o(i.leg_get_current_foot_force_pos_vel)
-    i.leg_get_current_foot_pos               0x0800893e   Section        0  dog.o(i.leg_get_current_foot_pos)
-    i.leg_get_current_foot_pos_body          0x08008958   Section        0  dog.o(i.leg_get_current_foot_pos_body)
-    i.leg_get_current_joint_pos              0x080089d0   Section        0  dog.o(i.leg_get_current_joint_pos)
-    i.leg_get_current_joint_vel              0x080089e8   Section        0  dog.o(i.leg_get_current_joint_vel)
-    i.leg_get_motors_current_force           0x08008a00   Section        0  motor.o(i.leg_get_motors_current_force)
-    i.leg_get_motors_current_pos             0x08008a26   Section        0  motor.o(i.leg_get_motors_current_pos)
-    i.leg_get_motors_current_vel             0x08008a4c   Section        0  motor.o(i.leg_get_motors_current_vel)
-    i.leg_get_neutral_current_pos            0x08008a74   Section        0  dog.o(i.leg_get_neutral_current_pos)
-    i.leg_get_phase                          0x08008a90   Section        0  dog.o(i.leg_get_phase)
-    i.leg_get_target_foot_pos                0x08008aa0   Section        0  dog.o(i.leg_get_target_foot_pos)
-    i.leg_inverse_kinematics                 0x08008abc   Section        0  dog.o(i.leg_inverse_kinematics)
-    i.leg_inverse_kinematics_force_pos_vel   0x08008cc0   Section        0  dog.o(i.leg_inverse_kinematics_force_pos_vel)
-    i.leg_jacobian                           0x08008dac   Section        0  dog.o(i.leg_jacobian)
-    i.leg_joint_to_motor                     0x08008ee0   Section        0  dog.o(i.leg_joint_to_motor)
-    i.leg_joint_to_motor_force               0x08008ee8   Section        0  dog.o(i.leg_joint_to_motor_force)
-    i.leg_joint_to_motor_vel                 0x08008f40   Section        0  dog.o(i.leg_joint_to_motor_vel)
-    i.leg_motor_to_foot_force_pos_vel        0x08008f98   Section        0  dog.o(i.leg_motor_to_foot_force_pos_vel)
-    i.leg_motor_to_joint                     0x08008fde   Section        0  dog.o(i.leg_motor_to_joint)
-    i.leg_motor_to_joint_force               0x08008fe4   Section        0  dog.o(i.leg_motor_to_joint_force)
-    i.leg_motor_to_joint_vel                 0x0800903c   Section        0  dog.o(i.leg_motor_to_joint_vel)
-    i.leg_set_motor_force_pos_vel            0x08009094   Section        0  dog.o(i.leg_set_motor_force_pos_vel)
-    i.leg_set_motor_force_vel_zero           0x080090c0   Section        0  dog.o(i.leg_set_motor_force_vel_zero)
-    i.leg_set_motor_kp_kd                    0x080090e4   Section        0  motor.o(i.leg_set_motor_kp_kd)
-    i.leg_set_motor_pos                      0x0800914c   Section        0  dog.o(i.leg_set_motor_pos)
-    i.leg_set_motor_pos_vel                  0x0800916c   Section        0  dog.o(i.leg_set_motor_pos_vel)
-    i.leg_set_target_foot_pos                0x08009190   Section        0  dog.o(i.leg_set_target_foot_pos)
-    i.leg_thigh_to_hip                       0x080091b0   Section        0  dog.o(i.leg_thigh_to_hip)
-    i.leg_transform                          0x080091e4   Section        0  dog.o(i.leg_transform)
-    i.limit                                  0x0800926c   Section        0  gait.o(i.limit)
-    limit                                    0x0800926d   Thumb Code    40  gait.o(i.limit)
-    i.main                                   0x08009294   Section        0  main.o(i.main)
-    i.mat_add_ptr                            0x0800936a   Section        0  matrix.o(i.mat_add_ptr)
-    i.mat_inverse_3x3_ptr                    0x080093ac   Section        0  matrix.o(i.mat_inverse_3x3_ptr)
-    i.mat_mult_ptr                           0x08009518   Section        0  matrix.o(i.mat_mult_ptr)
-    i.mat_mult_vec_ptr                       0x0800957c   Section        0  matrix.o(i.mat_mult_vec_ptr)
-    i.mat_transpose_ptr                      0x080095bc   Section        0  matrix.o(i.mat_transpose_ptr)
-    i.motor_init                             0x080095e8   Section        0  motor.o(i.motor_init)
-    i.my_usart_init                          0x080097a4   Section        0  my_usart.o(i.my_usart_init)
-    i.passive_check_transition               0x080097b2   Section        0  passive_state.o(i.passive_check_transition)
-    passive_check_transition                 0x080097b3   Thumb Code    12  passive_state.o(i.passive_check_transition)
-    i.passive_enter                          0x080097be   Section        0  passive_state.o(i.passive_enter)
-    passive_enter                            0x080097bf   Thumb Code     2  passive_state.o(i.passive_enter)
-    i.passive_exit                           0x080097c0   Section        0  passive_state.o(i.passive_exit)
-    passive_exit                             0x080097c1   Thumb Code     2  passive_state.o(i.passive_exit)
-    i.passive_run                            0x080097c4   Section        0  passive_state.o(i.passive_run)
-    passive_run                              0x080097c5   Thumb Code    60  passive_state.o(i.passive_run)
-    i.phase_wave_generator                   0x08009804   Section        0  gait.o(i.phase_wave_generator)
-    i.register_passive_state                 0x08009950   Section        0  passive_state.o(i.register_passive_state)
-    i.register_stand_state                   0x08009974   Section        0  stand_state.o(i.register_stand_state)
-    i.register_trot_state                    0x08009998   Section        0  trot_state.o(i.register_trot_state)
-    i.send_debug_data                        0x080099bc   Section        0  ano_tc.o(i.send_debug_data)
-    i.send_motors_target_force_pos_vel       0x080099cc   Section        0  motor.o(i.send_motors_target_force_pos_vel)
-    i.set_debug_data                         0x08009a58   Section        0  ano_tc.o(i.set_debug_data)
-    i.smooth                                 0x08009a6c   Section        0  dog.o(i.smooth)
-    i.sqrtf                                  0x08009a9a   Section        0  sqrtf_full.o(i.sqrtf)
-    i.stand_check_transition                 0x08009ad8   Section        0  stand_state.o(i.stand_check_transition)
-    stand_check_transition                   0x08009ad9   Thumb Code    36  stand_state.o(i.stand_check_transition)
-    i.stand_enter                            0x08009b00   Section        0  stand_state.o(i.stand_enter)
-    stand_enter                              0x08009b01   Thumb Code   204  stand_state.o(i.stand_enter)
-    i.stand_exit                             0x08009bd4   Section        0  stand_state.o(i.stand_exit)
-    stand_exit                               0x08009bd5   Thumb Code     2  stand_state.o(i.stand_exit)
-    i.stand_run                              0x08009bd8   Section        0  stand_state.o(i.stand_run)
-    stand_run                                0x08009bd9   Thumb Code   550  stand_state.o(i.stand_run)
-    i.timer_init                             0x08009e10   Section        0  timer.o(i.timer_init)
-    i.trot_check_transition                  0x08009e54   Section        0  trot_state.o(i.trot_check_transition)
-    trot_check_transition                    0x08009e55   Thumb Code    42  trot_state.o(i.trot_check_transition)
-    i.trot_enter                             0x08009e84   Section        0  trot_state.o(i.trot_enter)
-    trot_enter                               0x08009e85   Thumb Code    62  trot_state.o(i.trot_enter)
-    i.trot_exit                              0x08009ecc   Section        0  trot_state.o(i.trot_exit)
-    trot_exit                                0x08009ecd   Thumb Code     2  trot_state.o(i.trot_exit)
-    i.trot_run                               0x08009ed0   Section        0  trot_state.o(i.trot_run)
-    trot_run                                 0x08009ed1   Thumb Code   276  trot_state.o(i.trot_run)
-    i.usart1_start_recv                      0x08009fec   Section        0  my_usart.o(i.usart1_start_recv)
-    i.usart2_start_recv                      0x0800a014   Section        0  my_usart.o(i.usart2_start_recv)
-    i.vec3_cross                             0x0800a03c   Section        0  matrix.o(i.vec3_cross)
-    i.vmc_force_calculate                    0x0800a094   Section        0  force_calculate.o(i.vmc_force_calculate)
-    i.vmc_get_foot_target_force              0x0800a2b8   Section        0  force_calculate.o(i.vmc_get_foot_target_force)
-    i.vmc_get_force_control_state            0x0800a2d0   Section        0  force_calculate.o(i.vmc_get_force_control_state)
-    i.windowFunc                             0x0800a2dc   Section        0  estimator.o(i.windowFunc)
-    i.world_foot_to_body_vel                 0x0800a324   Section        0  estimator.o(i.world_foot_to_body_vel)
-    .constdata                               0x0800a3bc   Section        8  stm32f7xx_hal_dma.o(.constdata)
-    flagBitshiftOffset                       0x0800a3bc   Data           8  stm32f7xx_hal_dma.o(.constdata)
-    .constdata                               0x0800a3c4   Section       16  system_stm32f7xx.o(.constdata)
-    .constdata                               0x0800a3d4   Section        8  system_stm32f7xx.o(.constdata)
-    .constdata                               0x0800a3dc   Section       64  gait.o(.constdata)
-    .constdata                               0x0800a41c   Section      272  estimator.o(.constdata)
-    .constdata                               0x0800a52c   Section      320  powf.o(.constdata)
-    table                                    0x0800a52c   Data         128  powf.o(.constdata)
-    powersof2to1over16top                    0x0800a5ac   Data          64  powf.o(.constdata)
-    powersof2to1over16bot                    0x0800a5ec   Data          64  powf.o(.constdata)
-    powersof2to1over16all                    0x0800a62c   Data          64  powf.o(.constdata)
-    .constdata                               0x0800a670   Section       48  cos_i.o(.constdata)
-    C                                        0x0800a670   Data          48  cos_i.o(.constdata)
-    .constdata                               0x0800a6a0   Section      200  rred.o(.constdata)
-    pio2s                                    0x0800a6a0   Data          48  rred.o(.constdata)
-    twooverpi                                0x0800a6d0   Data         152  rred.o(.constdata)
-    .constdata                               0x0800a768   Section       32  rredf.o(.constdata)
-    twooverpi                                0x0800a768   Data          32  rredf.o(.constdata)
-    .constdata                               0x0800a788   Section       40  sin_i.o(.constdata)
-    S                                        0x0800a788   Data          40  sin_i.o(.constdata)
+    i.estimation_start                       0x08007fc4   Section        0  estimator.o(i.estimation_start)
+    i.fabs                                   0x08007fd4   Section        0  fabs.o(i.fabs)
+    i.fsm_change_to                          0x08007fec   Section        0  fsm.o(i.fsm_change_to)
+    i.fsm_get_previous_state                 0x08008004   Section        0  fsm.o(i.fsm_get_previous_state)
+    i.fsm_init                               0x08008010   Section        0  fsm.o(i.fsm_init)
+    i.fsm_register_state                     0x08008054   Section        0  fsm.o(i.fsm_register_state)
+    i.fsm_update                             0x0800807c   Section        0  fsm.o(i.fsm_update)
+    i.gait_generator                         0x080080c8   Section        0  gait.o(i.gait_generator)
+    i.gamepad_control                        0x08008398   Section        0  gamepad.o(i.gamepad_control)
+    i.gamepad_control_init                   0x08008550   Section        0  gamepad.o(i.gamepad_control_init)
+    i.getTime                                0x0800855c   Section        0  timer.o(i.getTime)
+    i.get_dog_params                         0x08008580   Section        0  dog.o(i.get_dog_params)
+    i.get_robot_params                       0x08008588   Section        0  robot_params.o(i.get_robot_params)
+    i.get_trot_params                        0x08008590   Section        0  gait.o(i.get_trot_params)
+    i.imu_data_process                       0x0800859c   Section        0  imu.o(i.imu_data_process)
+    i.imu_get_data                           0x08008714   Section        0  imu.o(i.imu_get_data)
+    i.leg_foot_to_motor_force_pos_vel        0x0800871c   Section        0  dog.o(i.leg_foot_to_motor_force_pos_vel)
+    i.leg_forward_kinematics                 0x08008760   Section        0  dog.o(i.leg_forward_kinematics)
+    i.leg_forward_kinematics_force_pos_vel   0x08008840   Section        0  dog.o(i.leg_forward_kinematics_force_pos_vel)
+    i.leg_forward_kinematics_vel             0x080088f8   Section        0  dog.o(i.leg_forward_kinematics_vel)
+    i.leg_get_contact_state                  0x08008954   Section        0  dog.o(i.leg_get_contact_state)
+    i.leg_get_current_foot_force_pos_vel     0x08008964   Section        0  dog.o(i.leg_get_current_foot_force_pos_vel)
+    i.leg_get_current_foot_pos               0x0800899a   Section        0  dog.o(i.leg_get_current_foot_pos)
+    i.leg_get_current_foot_pos_body          0x080089b4   Section        0  dog.o(i.leg_get_current_foot_pos_body)
+    i.leg_get_current_joint_pos              0x08008a2c   Section        0  dog.o(i.leg_get_current_joint_pos)
+    i.leg_get_current_joint_vel              0x08008a44   Section        0  dog.o(i.leg_get_current_joint_vel)
+    i.leg_get_motors_current_force           0x08008a5c   Section        0  motor.o(i.leg_get_motors_current_force)
+    i.leg_get_motors_current_pos             0x08008a82   Section        0  motor.o(i.leg_get_motors_current_pos)
+    i.leg_get_motors_current_vel             0x08008aa8   Section        0  motor.o(i.leg_get_motors_current_vel)
+    i.leg_get_neutral_current_pos            0x08008ad0   Section        0  dog.o(i.leg_get_neutral_current_pos)
+    i.leg_get_phase                          0x08008aec   Section        0  dog.o(i.leg_get_phase)
+    i.leg_get_target_foot_pos                0x08008afc   Section        0  dog.o(i.leg_get_target_foot_pos)
+    i.leg_inverse_kinematics                 0x08008b18   Section        0  dog.o(i.leg_inverse_kinematics)
+    i.leg_inverse_kinematics_force_pos_vel   0x08008d1c   Section        0  dog.o(i.leg_inverse_kinematics_force_pos_vel)
+    i.leg_jacobian                           0x08008e08   Section        0  dog.o(i.leg_jacobian)
+    i.leg_joint_to_motor                     0x08008f3c   Section        0  dog.o(i.leg_joint_to_motor)
+    i.leg_joint_to_motor_force               0x08008f44   Section        0  dog.o(i.leg_joint_to_motor_force)
+    i.leg_joint_to_motor_vel                 0x08008f9c   Section        0  dog.o(i.leg_joint_to_motor_vel)
+    i.leg_motor_to_foot_force_pos_vel        0x08008ff4   Section        0  dog.o(i.leg_motor_to_foot_force_pos_vel)
+    i.leg_motor_to_joint                     0x0800903a   Section        0  dog.o(i.leg_motor_to_joint)
+    i.leg_motor_to_joint_force               0x08009040   Section        0  dog.o(i.leg_motor_to_joint_force)
+    i.leg_motor_to_joint_vel                 0x08009098   Section        0  dog.o(i.leg_motor_to_joint_vel)
+    i.leg_set_motor_force_pos_vel            0x080090f0   Section        0  dog.o(i.leg_set_motor_force_pos_vel)
+    i.leg_set_motor_force_vel_zero           0x0800911c   Section        0  dog.o(i.leg_set_motor_force_vel_zero)
+    i.leg_set_motor_kp_kd                    0x08009140   Section        0  motor.o(i.leg_set_motor_kp_kd)
+    i.leg_set_motor_pos                      0x080091a8   Section        0  dog.o(i.leg_set_motor_pos)
+    i.leg_set_motor_pos_vel                  0x080091c8   Section        0  dog.o(i.leg_set_motor_pos_vel)
+    i.leg_set_target_foot_pos                0x080091ec   Section        0  dog.o(i.leg_set_target_foot_pos)
+    i.leg_thigh_to_hip                       0x0800920c   Section        0  dog.o(i.leg_thigh_to_hip)
+    i.leg_transform                          0x08009240   Section        0  dog.o(i.leg_transform)
+    i.limit                                  0x080092c8   Section        0  gait.o(i.limit)
+    limit                                    0x080092c9   Thumb Code    40  gait.o(i.limit)
+    i.main                                   0x080092f0   Section        0  main.o(i.main)
+    i.mat_add_ptr                            0x080093c6   Section        0  matrix.o(i.mat_add_ptr)
+    i.mat_inverse_3x3_ptr                    0x08009408   Section        0  matrix.o(i.mat_inverse_3x3_ptr)
+    i.mat_mult_ptr                           0x08009574   Section        0  matrix.o(i.mat_mult_ptr)
+    i.mat_mult_vec_ptr                       0x080095d8   Section        0  matrix.o(i.mat_mult_vec_ptr)
+    i.mat_transpose_ptr                      0x08009618   Section        0  matrix.o(i.mat_transpose_ptr)
+    i.motor_init                             0x08009644   Section        0  motor.o(i.motor_init)
+    i.my_usart_init                          0x08009800   Section        0  my_usart.o(i.my_usart_init)
+    i.passive_check_transition               0x0800980e   Section        0  passive_state.o(i.passive_check_transition)
+    passive_check_transition                 0x0800980f   Thumb Code    12  passive_state.o(i.passive_check_transition)
+    i.passive_enter                          0x0800981a   Section        0  passive_state.o(i.passive_enter)
+    passive_enter                            0x0800981b   Thumb Code     2  passive_state.o(i.passive_enter)
+    i.passive_exit                           0x0800981c   Section        0  passive_state.o(i.passive_exit)
+    passive_exit                             0x0800981d   Thumb Code     2  passive_state.o(i.passive_exit)
+    i.passive_run                            0x08009820   Section        0  passive_state.o(i.passive_run)
+    passive_run                              0x08009821   Thumb Code    60  passive_state.o(i.passive_run)
+    i.phase_wave_generator                   0x08009860   Section        0  gait.o(i.phase_wave_generator)
+    i.register_passive_state                 0x080099ac   Section        0  passive_state.o(i.register_passive_state)
+    i.register_stand_state                   0x080099d0   Section        0  stand_state.o(i.register_stand_state)
+    i.register_trot_state                    0x080099f4   Section        0  trot_state.o(i.register_trot_state)
+    i.send_debug_data                        0x08009a18   Section        0  ano_tc.o(i.send_debug_data)
+    i.send_motors_target_force_pos_vel       0x08009a28   Section        0  motor.o(i.send_motors_target_force_pos_vel)
+    i.set_debug_data                         0x08009ab4   Section        0  ano_tc.o(i.set_debug_data)
+    i.smooth                                 0x08009ac8   Section        0  dog.o(i.smooth)
+    i.sqrtf                                  0x08009af6   Section        0  sqrtf_full.o(i.sqrtf)
+    i.stand_check_transition                 0x08009b34   Section        0  stand_state.o(i.stand_check_transition)
+    stand_check_transition                   0x08009b35   Thumb Code    36  stand_state.o(i.stand_check_transition)
+    i.stand_enter                            0x08009b5c   Section        0  stand_state.o(i.stand_enter)
+    stand_enter                              0x08009b5d   Thumb Code   204  stand_state.o(i.stand_enter)
+    i.stand_exit                             0x08009c30   Section        0  stand_state.o(i.stand_exit)
+    stand_exit                               0x08009c31   Thumb Code     2  stand_state.o(i.stand_exit)
+    i.stand_run                              0x08009c34   Section        0  stand_state.o(i.stand_run)
+    stand_run                                0x08009c35   Thumb Code   632  stand_state.o(i.stand_run)
+    i.timer_init                             0x08009ebc   Section        0  timer.o(i.timer_init)
+    i.trot_check_transition                  0x08009f00   Section        0  trot_state.o(i.trot_check_transition)
+    trot_check_transition                    0x08009f01   Thumb Code    42  trot_state.o(i.trot_check_transition)
+    i.trot_enter                             0x08009f30   Section        0  trot_state.o(i.trot_enter)
+    trot_enter                               0x08009f31   Thumb Code    62  trot_state.o(i.trot_enter)
+    i.trot_exit                              0x08009f78   Section        0  trot_state.o(i.trot_exit)
+    trot_exit                                0x08009f79   Thumb Code     2  trot_state.o(i.trot_exit)
+    i.trot_run                               0x08009f7c   Section        0  trot_state.o(i.trot_run)
+    trot_run                                 0x08009f7d   Thumb Code   352  trot_state.o(i.trot_run)
+    i.usart1_start_recv                      0x0800a0e4   Section        0  my_usart.o(i.usart1_start_recv)
+    i.usart2_start_recv                      0x0800a10c   Section        0  my_usart.o(i.usart2_start_recv)
+    i.vec3_cross                             0x0800a134   Section        0  matrix.o(i.vec3_cross)
+    i.vmc_force_calculate                    0x0800a18c   Section        0  force_calculate.o(i.vmc_force_calculate)
+    i.vmc_get_foot_target_force              0x0800a3b0   Section        0  force_calculate.o(i.vmc_get_foot_target_force)
+    i.vmc_get_force_control_state            0x0800a3c8   Section        0  force_calculate.o(i.vmc_get_force_control_state)
+    i.windowFunc                             0x0800a3d4   Section        0  estimator.o(i.windowFunc)
+    i.world_foot_to_body_vel                 0x0800a41c   Section        0  estimator.o(i.world_foot_to_body_vel)
+    .constdata                               0x0800a4b4   Section        8  stm32f7xx_hal_dma.o(.constdata)
+    flagBitshiftOffset                       0x0800a4b4   Data           8  stm32f7xx_hal_dma.o(.constdata)
+    .constdata                               0x0800a4bc   Section       16  system_stm32f7xx.o(.constdata)
+    .constdata                               0x0800a4cc   Section        8  system_stm32f7xx.o(.constdata)
+    .constdata                               0x0800a4d4   Section       64  gait.o(.constdata)
+    .constdata                               0x0800a514   Section      272  estimator.o(.constdata)
+    .constdata                               0x0800a624   Section      320  powf.o(.constdata)
+    table                                    0x0800a624   Data         128  powf.o(.constdata)
+    powersof2to1over16top                    0x0800a6a4   Data          64  powf.o(.constdata)
+    powersof2to1over16bot                    0x0800a6e4   Data          64  powf.o(.constdata)
+    powersof2to1over16all                    0x0800a724   Data          64  powf.o(.constdata)
+    .constdata                               0x0800a768   Section       48  cos_i.o(.constdata)
+    C                                        0x0800a768   Data          48  cos_i.o(.constdata)
+    .constdata                               0x0800a798   Section      200  rred.o(.constdata)
+    pio2s                                    0x0800a798   Data          48  rred.o(.constdata)
+    twooverpi                                0x0800a7c8   Data         152  rred.o(.constdata)
+    .constdata                               0x0800a860   Section       32  rredf.o(.constdata)
+    twooverpi                                0x0800a860   Data          32  rredf.o(.constdata)
+    .constdata                               0x0800a880   Section       40  sin_i.o(.constdata)
+    S                                        0x0800a880   Data          40  sin_i.o(.constdata)
     .data                                    0x20000000   Section        4  can.o(.data)
     HAL_RCC_CAN1_CLK_ENABLED                 0x20000000   Data           4  can.o(.data)
     .data                                    0x20000004   Section       12  stm32f7xx_hal.o(.data)
@@ -2850,69 +2847,69 @@ Image Symbol Table
     I_KCPI_KCT                               0x20000164   Data           8  estimator.o(.data)
     KR                                       0x2000016c   Data           8  estimator.o(.data)
     KRKT                                     0x20000174   Data           8  estimator.o(.data)
-    .data                                    0x2000017c   Section       56  gamepad.o(.data)
-    .data                                    0x200001b4   Section       60  force_calculate.o(.data)
-    .data                                    0x200001f0   Section      212  stand_state.o(.data)
-    stand_T                                  0x200001f0   Data           4  stand_state.o(.data)
-    T                                        0x200001f4   Data           4  stand_state.o(.data)
-    time_start                               0x200001f8   Data           4  stand_state.o(.data)
-    p                                        0x200001fc   Data           4  stand_state.o(.data)
-    t                                        0x20000200   Data           4  stand_state.o(.data)
-    .data                                    0x200002c4   Section      192  trot_state.o(.data)
-    .data                                    0x20000384   Section       20  j60.o(.data)
-    .data                                    0x20000398   Section       12  imu.o(.data)
-    imu_Z_last                               0x200003a0   Data           4  imu.o(.data)
-    .data                                    0x200003a4   Section        2  my_usart.o(.data)
-    .data                                    0x200003a8   Section      600  robot_params.o(.data)
-    .data                                    0x20000600   Section        4  errno.o(.data)
-    _errno                                   0x20000600   Data           4  errno.o(.data)
-    .bss                                     0x20000604   Section      120  can.o(.bss)
-    .bss                                     0x2000067c   Section      684  tim.o(.bss)
-    .bss                                     0x20000928   Section      696  usart.o(.bss)
-    .bss                                     0x20000be0   Section     1108  dog.o(.bss)
-    .bss                                     0x20001034   Section       96  gait.o(.bss)
-    .bss                                     0x20001094   Section     5364  estimator.o(.bss)
-    Rot_f32                                  0x20001850   Data          36  estimator.o(.bss)
-    u_f32                                    0x20001874   Data          12  estimator.o(.bss)
-    feetVel_f32                              0x20001880   Data          48  estimator.o(.bss)
-    Ax_f32                                   0x200018b0   Data          16  estimator.o(.bss)
-    Bu_f32                                   0x200018c0   Data          16  estimator.o(.bss)
-    xhat_f32                                 0x200018d0   Data          16  estimator.o(.bss)
-    yhat_f32                                 0x200018e0   Data          32  estimator.o(.bss)
-    Ppri_f32                                 0x20001900   Data          64  estimator.o(.bss)
-    AP_f32                                   0x20001940   Data          64  estimator.o(.bss)
-    AT_f32                                   0x20001980   Data          64  estimator.o(.bss)
-    APAT_f32                                 0x200019c0   Data          64  estimator.o(.bss)
-    CT_f32                                   0x20001a00   Data         128  estimator.o(.bss)
-    CP_f32                                   0x20001a80   Data         128  estimator.o(.bss)
-    CPCT_f32                                 0x20001b00   Data         256  estimator.o(.bss)
-    RCPCT_f32                                0x20001c00   Data         256  estimator.o(.bss)
-    invRCPCT_f32                             0x20001d00   Data         256  estimator.o(.bss)
-    y_yhat_f32                               0x20001e00   Data          32  estimator.o(.bss)
-    K_f32                                    0x20001e20   Data         128  estimator.o(.bss)
-    KT_f32                                   0x20001ea0   Data         128  estimator.o(.bss)
-    KC_f32                                   0x20001f20   Data          64  estimator.o(.bss)
-    I_KC_f32                                 0x20001f60   Data          64  estimator.o(.bss)
-    PCT_f32                                  0x20001fa0   Data         128  estimator.o(.bss)
-    I_KCT_f32                                0x20002020   Data          64  estimator.o(.bss)
-    I_KCPI_KCT_f32                           0x20002060   Data          64  estimator.o(.bss)
-    KR_f32                                   0x200020a0   Data         128  estimator.o(.bss)
-    KRKT_f32                                 0x20002120   Data          64  estimator.o(.bss)
-    .bss                                     0x20002588   Section       32  gamepad.o(.bss)
-    .bss                                     0x200025a8   Section      356  force_calculate.o(.bss)
-    .bss                                     0x2000270c   Section      116  fsm.o(.bss)
-    .bss                                     0x20002780   Section      384  stand_state.o(.bss)
-    foot_start_pos                           0x200027b0   Data          48  stand_state.o(.bss)
-    foot_target_pos                          0x200027e0   Data          48  stand_state.o(.bss)
-    foot_target_vel                          0x20002810   Data          48  stand_state.o(.bss)
-    motor_current_pos                        0x20002840   Data          48  stand_state.o(.bss)
-    .bss                                     0x20002900   Section      232  trot_state.o(.bss)
-    .bss                                     0x200029e8   Section     2900  j60.o(.bss)
-    .bss                                     0x2000353c   Section      156  imu.o(.bss)
-    .bss                                     0x200035d8   Section      130  my_usart.o(.bss)
-    .bss                                     0x2000365c   Section      101  ano_tc.o(.bss)
-    data                                     0x2000368c   Data          53  ano_tc.o(.bss)
-    STACK                                    0x200036c8   Section     8192  startup_stm32f767xx.o(STACK)
+    .data                                    0x2000017c   Section       68  gamepad.o(.data)
+    .data                                    0x200001c0   Section       60  force_calculate.o(.data)
+    .data                                    0x200001fc   Section      212  stand_state.o(.data)
+    stand_T                                  0x200001fc   Data           4  stand_state.o(.data)
+    T                                        0x20000200   Data           4  stand_state.o(.data)
+    time_start                               0x20000204   Data           4  stand_state.o(.data)
+    p                                        0x20000208   Data           4  stand_state.o(.data)
+    t                                        0x2000020c   Data           4  stand_state.o(.data)
+    .data                                    0x200002d0   Section      192  trot_state.o(.data)
+    .data                                    0x20000390   Section       20  j60.o(.data)
+    .data                                    0x200003a4   Section       12  imu.o(.data)
+    imu_Z_last                               0x200003ac   Data           4  imu.o(.data)
+    .data                                    0x200003b0   Section        2  my_usart.o(.data)
+    .data                                    0x200003b4   Section      600  robot_params.o(.data)
+    .data                                    0x2000060c   Section        4  errno.o(.data)
+    _errno                                   0x2000060c   Data           4  errno.o(.data)
+    .bss                                     0x20000610   Section      120  can.o(.bss)
+    .bss                                     0x20000688   Section      684  tim.o(.bss)
+    .bss                                     0x20000934   Section      696  usart.o(.bss)
+    .bss                                     0x20000bec   Section     1108  dog.o(.bss)
+    .bss                                     0x20001040   Section       96  gait.o(.bss)
+    .bss                                     0x200010a0   Section     5364  estimator.o(.bss)
+    Rot_f32                                  0x2000185c   Data          36  estimator.o(.bss)
+    u_f32                                    0x20001880   Data          12  estimator.o(.bss)
+    feetVel_f32                              0x2000188c   Data          48  estimator.o(.bss)
+    Ax_f32                                   0x200018bc   Data          16  estimator.o(.bss)
+    Bu_f32                                   0x200018cc   Data          16  estimator.o(.bss)
+    xhat_f32                                 0x200018dc   Data          16  estimator.o(.bss)
+    yhat_f32                                 0x200018ec   Data          32  estimator.o(.bss)
+    Ppri_f32                                 0x2000190c   Data          64  estimator.o(.bss)
+    AP_f32                                   0x2000194c   Data          64  estimator.o(.bss)
+    AT_f32                                   0x2000198c   Data          64  estimator.o(.bss)
+    APAT_f32                                 0x200019cc   Data          64  estimator.o(.bss)
+    CT_f32                                   0x20001a0c   Data         128  estimator.o(.bss)
+    CP_f32                                   0x20001a8c   Data         128  estimator.o(.bss)
+    CPCT_f32                                 0x20001b0c   Data         256  estimator.o(.bss)
+    RCPCT_f32                                0x20001c0c   Data         256  estimator.o(.bss)
+    invRCPCT_f32                             0x20001d0c   Data         256  estimator.o(.bss)
+    y_yhat_f32                               0x20001e0c   Data          32  estimator.o(.bss)
+    K_f32                                    0x20001e2c   Data         128  estimator.o(.bss)
+    KT_f32                                   0x20001eac   Data         128  estimator.o(.bss)
+    KC_f32                                   0x20001f2c   Data          64  estimator.o(.bss)
+    I_KC_f32                                 0x20001f6c   Data          64  estimator.o(.bss)
+    PCT_f32                                  0x20001fac   Data         128  estimator.o(.bss)
+    I_KCT_f32                                0x2000202c   Data          64  estimator.o(.bss)
+    I_KCPI_KCT_f32                           0x2000206c   Data          64  estimator.o(.bss)
+    KR_f32                                   0x200020ac   Data         128  estimator.o(.bss)
+    KRKT_f32                                 0x2000212c   Data          64  estimator.o(.bss)
+    .bss                                     0x20002594   Section       32  gamepad.o(.bss)
+    .bss                                     0x200025b4   Section      356  force_calculate.o(.bss)
+    .bss                                     0x20002718   Section      116  fsm.o(.bss)
+    .bss                                     0x2000278c   Section      528  stand_state.o(.bss)
+    foot_start_pos                           0x2000284c   Data          48  stand_state.o(.bss)
+    foot_target_pos                          0x2000287c   Data          48  stand_state.o(.bss)
+    foot_target_vel                          0x200028ac   Data          48  stand_state.o(.bss)
+    motor_current_pos                        0x200028dc   Data          48  stand_state.o(.bss)
+    .bss                                     0x2000299c   Section      376  trot_state.o(.bss)
+    .bss                                     0x20002b14   Section     2900  j60.o(.bss)
+    .bss                                     0x20003668   Section      156  imu.o(.bss)
+    .bss                                     0x20003704   Section      130  my_usart.o(.bss)
+    .bss                                     0x20003788   Section      101  ano_tc.o(.bss)
+    data                                     0x200037b8   Data          53  ano_tc.o(.bss)
+    STACK                                    0x200037f0   Section     8192  startup_stm32f767xx.o(STACK)
 
     Global Symbols
 
@@ -3269,87 +3266,87 @@ Image Symbol Table
     dog_smooth_cog                           0x08007481   Thumb Code   214  dog.o(i.dog_smooth_cog)
     est_get_body_vel                         0x0800755d   Thumb Code    52  estimator.o(i.est_get_body_vel)
     estimation_init                          0x08007599   Thumb Code   534  estimator.o(i.estimation_init)
-    estimation_run                           0x080077d1   Thumb Code  1982  estimator.o(i.estimation_run)
-    estimation_start                         0x08007fdd   Thumb Code    12  estimator.o(i.estimation_start)
-    fabs                                     0x08007fed   Thumb Code    24  fabs.o(i.fabs)
-    fsm_change_to                            0x08008005   Thumb Code    20  fsm.o(i.fsm_change_to)
-    fsm_get_previous_state                   0x0800801d   Thumb Code     6  fsm.o(i.fsm_get_previous_state)
-    fsm_init                                 0x08008029   Thumb Code    54  fsm.o(i.fsm_init)
-    fsm_register_state                       0x0800806d   Thumb Code    34  fsm.o(i.fsm_register_state)
-    fsm_update                               0x08008095   Thumb Code    70  fsm.o(i.fsm_update)
-    gait_generator                           0x080080e1   Thumb Code   688  gait.o(i.gait_generator)
-    gamepad_control                          0x080083b1   Thumb Code   316  gamepad.o(i.gamepad_control)
-    gamepad_control_init                     0x080084f5   Thumb Code     8  gamepad.o(i.gamepad_control_init)
-    getTime                                  0x08008501   Thumb Code    28  timer.o(i.getTime)
-    get_dog_params                           0x08008525   Thumb Code     4  dog.o(i.get_dog_params)
-    get_robot_params                         0x0800852d   Thumb Code     4  robot_params.o(i.get_robot_params)
-    get_trot_params                          0x08008535   Thumb Code    12  gait.o(i.get_trot_params)
-    imu_data_process                         0x08008541   Thumb Code   360  imu.o(i.imu_data_process)
-    imu_get_data                             0x080086b9   Thumb Code     4  imu.o(i.imu_get_data)
-    leg_foot_to_motor_force_pos_vel          0x080086c1   Thumb Code    66  dog.o(i.leg_foot_to_motor_force_pos_vel)
-    leg_forward_kinematics                   0x08008705   Thumb Code   218  dog.o(i.leg_forward_kinematics)
-    leg_forward_kinematics_force_pos_vel     0x080087e5   Thumb Code   178  dog.o(i.leg_forward_kinematics_force_pos_vel)
-    leg_forward_kinematics_vel               0x0800889d   Thumb Code    88  dog.o(i.leg_forward_kinematics_vel)
-    leg_get_contact_state                    0x080088f9   Thumb Code    12  dog.o(i.leg_get_contact_state)
-    leg_get_current_foot_force_pos_vel       0x08008909   Thumb Code    54  dog.o(i.leg_get_current_foot_force_pos_vel)
-    leg_get_current_foot_pos                 0x0800893f   Thumb Code    24  dog.o(i.leg_get_current_foot_pos)
-    leg_get_current_foot_pos_body            0x08008959   Thumb Code   112  dog.o(i.leg_get_current_foot_pos_body)
-    leg_get_current_joint_pos                0x080089d1   Thumb Code    24  dog.o(i.leg_get_current_joint_pos)
-    leg_get_current_joint_vel                0x080089e9   Thumb Code    24  dog.o(i.leg_get_current_joint_vel)
-    leg_get_motors_current_force             0x08008a01   Thumb Code    38  motor.o(i.leg_get_motors_current_force)
-    leg_get_motors_current_pos               0x08008a27   Thumb Code    38  motor.o(i.leg_get_motors_current_pos)
-    leg_get_motors_current_vel               0x08008a4d   Thumb Code    38  motor.o(i.leg_get_motors_current_vel)
-    leg_get_neutral_current_pos              0x08008a75   Thumb Code    24  dog.o(i.leg_get_neutral_current_pos)
-    leg_get_phase                            0x08008a91   Thumb Code    12  dog.o(i.leg_get_phase)
-    leg_get_target_foot_pos                  0x08008aa1   Thumb Code    24  dog.o(i.leg_get_target_foot_pos)
-    leg_inverse_kinematics                   0x08008abd   Thumb Code   498  dog.o(i.leg_inverse_kinematics)
-    leg_inverse_kinematics_force_pos_vel     0x08008cc1   Thumb Code   228  dog.o(i.leg_inverse_kinematics_force_pos_vel)
-    leg_jacobian                             0x08008dad   Thumb Code   298  dog.o(i.leg_jacobian)
-    leg_joint_to_motor                       0x08008ee1   Thumb Code     6  dog.o(i.leg_joint_to_motor)
-    leg_joint_to_motor_force                 0x08008ee9   Thumb Code    82  dog.o(i.leg_joint_to_motor_force)
-    leg_joint_to_motor_vel                   0x08008f41   Thumb Code    82  dog.o(i.leg_joint_to_motor_vel)
-    leg_motor_to_foot_force_pos_vel          0x08008f99   Thumb Code    70  dog.o(i.leg_motor_to_foot_force_pos_vel)
-    leg_motor_to_joint                       0x08008fdf   Thumb Code     6  dog.o(i.leg_motor_to_joint)
-    leg_motor_to_joint_force                 0x08008fe5   Thumb Code    82  dog.o(i.leg_motor_to_joint_force)
-    leg_motor_to_joint_vel                   0x0800903d   Thumb Code    82  dog.o(i.leg_motor_to_joint_vel)
-    leg_set_motor_force_pos_vel              0x08009095   Thumb Code    40  dog.o(i.leg_set_motor_force_pos_vel)
-    leg_set_motor_force_vel_zero             0x080090c1   Thumb Code    30  dog.o(i.leg_set_motor_force_vel_zero)
-    leg_set_motor_kp_kd                      0x080090e5   Thumb Code   104  motor.o(i.leg_set_motor_kp_kd)
-    leg_set_motor_pos                        0x0800914d   Thumb Code    26  dog.o(i.leg_set_motor_pos)
-    leg_set_motor_pos_vel                    0x0800916d   Thumb Code    30  dog.o(i.leg_set_motor_pos_vel)
-    leg_set_target_foot_pos                  0x08009191   Thumb Code    26  dog.o(i.leg_set_target_foot_pos)
-    leg_thigh_to_hip                         0x080091b1   Thumb Code    48  dog.o(i.leg_thigh_to_hip)
-    leg_transform                            0x080091e5   Thumb Code   126  dog.o(i.leg_transform)
-    main                                     0x08009295   Thumb Code   214  main.o(i.main)
-    mat_add_ptr                              0x0800936b   Thumb Code    64  matrix.o(i.mat_add_ptr)
-    mat_inverse_3x3_ptr                      0x080093ad   Thumb Code   360  matrix.o(i.mat_inverse_3x3_ptr)
-    mat_mult_ptr                             0x08009519   Thumb Code    94  matrix.o(i.mat_mult_ptr)
-    mat_mult_vec_ptr                         0x0800957d   Thumb Code    64  matrix.o(i.mat_mult_vec_ptr)
-    mat_transpose_ptr                        0x080095bd   Thumb Code    44  matrix.o(i.mat_transpose_ptr)
-    motor_init                               0x080095e9   Thumb Code   438  motor.o(i.motor_init)
-    my_usart_init                            0x080097a5   Thumb Code    14  my_usart.o(i.my_usart_init)
-    phase_wave_generator                     0x08009805   Thumb Code   330  gait.o(i.phase_wave_generator)
-    register_passive_state                   0x08009951   Thumb Code    20  passive_state.o(i.register_passive_state)
-    register_stand_state                     0x08009975   Thumb Code    20  stand_state.o(i.register_stand_state)
-    register_trot_state                      0x08009999   Thumb Code    20  trot_state.o(i.register_trot_state)
-    send_debug_data                          0x080099bd   Thumb Code     8  ano_tc.o(i.send_debug_data)
-    send_motors_target_force_pos_vel         0x080099cd   Thumb Code   140  motor.o(i.send_motors_target_force_pos_vel)
-    set_debug_data                           0x08009a59   Thumb Code    16  ano_tc.o(i.set_debug_data)
-    smooth                                   0x08009a6d   Thumb Code    46  dog.o(i.smooth)
-    sqrtf                                    0x08009a9b   Thumb Code    62  sqrtf_full.o(i.sqrtf)
-    timer_init                               0x08009e11   Thumb Code    42  timer.o(i.timer_init)
-    usart1_start_recv                        0x08009fed   Thumb Code    26  my_usart.o(i.usart1_start_recv)
-    usart2_start_recv                        0x0800a015   Thumb Code    26  my_usart.o(i.usart2_start_recv)
-    vec3_cross                               0x0800a03d   Thumb Code    86  matrix.o(i.vec3_cross)
-    vmc_force_calculate                      0x0800a095   Thumb Code   522  force_calculate.o(i.vmc_force_calculate)
-    vmc_get_foot_target_force                0x0800a2b9   Thumb Code    18  force_calculate.o(i.vmc_get_foot_target_force)
-    vmc_get_force_control_state              0x0800a2d1   Thumb Code     6  force_calculate.o(i.vmc_get_force_control_state)
-    windowFunc                               0x0800a2dd   Thumb Code    72  estimator.o(i.windowFunc)
-    world_foot_to_body_vel                   0x0800a325   Thumb Code   138  estimator.o(i.world_foot_to_body_vel)
-    AHBPrescTable                            0x0800a3c4   Data          16  system_stm32f7xx.o(.constdata)
-    APBPrescTable                            0x0800a3d4   Data           8  system_stm32f7xx.o(.constdata)
-    Region$$Table$$Base                      0x0800a7b0   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x0800a7d0   Number         0  anon$$obj.o(Region$$Table)
+    estimation_run                           0x080077d1   Thumb Code  1958  estimator.o(i.estimation_run)
+    estimation_start                         0x08007fc5   Thumb Code    12  estimator.o(i.estimation_start)
+    fabs                                     0x08007fd5   Thumb Code    24  fabs.o(i.fabs)
+    fsm_change_to                            0x08007fed   Thumb Code    20  fsm.o(i.fsm_change_to)
+    fsm_get_previous_state                   0x08008005   Thumb Code     6  fsm.o(i.fsm_get_previous_state)
+    fsm_init                                 0x08008011   Thumb Code    54  fsm.o(i.fsm_init)
+    fsm_register_state                       0x08008055   Thumb Code    34  fsm.o(i.fsm_register_state)
+    fsm_update                               0x0800807d   Thumb Code    70  fsm.o(i.fsm_update)
+    gait_generator                           0x080080c9   Thumb Code   688  gait.o(i.gait_generator)
+    gamepad_control                          0x08008399   Thumb Code   430  gamepad.o(i.gamepad_control)
+    gamepad_control_init                     0x08008551   Thumb Code     8  gamepad.o(i.gamepad_control_init)
+    getTime                                  0x0800855d   Thumb Code    28  timer.o(i.getTime)
+    get_dog_params                           0x08008581   Thumb Code     4  dog.o(i.get_dog_params)
+    get_robot_params                         0x08008589   Thumb Code     4  robot_params.o(i.get_robot_params)
+    get_trot_params                          0x08008591   Thumb Code    12  gait.o(i.get_trot_params)
+    imu_data_process                         0x0800859d   Thumb Code   360  imu.o(i.imu_data_process)
+    imu_get_data                             0x08008715   Thumb Code     4  imu.o(i.imu_get_data)
+    leg_foot_to_motor_force_pos_vel          0x0800871d   Thumb Code    66  dog.o(i.leg_foot_to_motor_force_pos_vel)
+    leg_forward_kinematics                   0x08008761   Thumb Code   218  dog.o(i.leg_forward_kinematics)
+    leg_forward_kinematics_force_pos_vel     0x08008841   Thumb Code   178  dog.o(i.leg_forward_kinematics_force_pos_vel)
+    leg_forward_kinematics_vel               0x080088f9   Thumb Code    88  dog.o(i.leg_forward_kinematics_vel)
+    leg_get_contact_state                    0x08008955   Thumb Code    12  dog.o(i.leg_get_contact_state)
+    leg_get_current_foot_force_pos_vel       0x08008965   Thumb Code    54  dog.o(i.leg_get_current_foot_force_pos_vel)
+    leg_get_current_foot_pos                 0x0800899b   Thumb Code    24  dog.o(i.leg_get_current_foot_pos)
+    leg_get_current_foot_pos_body            0x080089b5   Thumb Code   112  dog.o(i.leg_get_current_foot_pos_body)
+    leg_get_current_joint_pos                0x08008a2d   Thumb Code    24  dog.o(i.leg_get_current_joint_pos)
+    leg_get_current_joint_vel                0x08008a45   Thumb Code    24  dog.o(i.leg_get_current_joint_vel)
+    leg_get_motors_current_force             0x08008a5d   Thumb Code    38  motor.o(i.leg_get_motors_current_force)
+    leg_get_motors_current_pos               0x08008a83   Thumb Code    38  motor.o(i.leg_get_motors_current_pos)
+    leg_get_motors_current_vel               0x08008aa9   Thumb Code    38  motor.o(i.leg_get_motors_current_vel)
+    leg_get_neutral_current_pos              0x08008ad1   Thumb Code    24  dog.o(i.leg_get_neutral_current_pos)
+    leg_get_phase                            0x08008aed   Thumb Code    12  dog.o(i.leg_get_phase)
+    leg_get_target_foot_pos                  0x08008afd   Thumb Code    24  dog.o(i.leg_get_target_foot_pos)
+    leg_inverse_kinematics                   0x08008b19   Thumb Code   498  dog.o(i.leg_inverse_kinematics)
+    leg_inverse_kinematics_force_pos_vel     0x08008d1d   Thumb Code   228  dog.o(i.leg_inverse_kinematics_force_pos_vel)
+    leg_jacobian                             0x08008e09   Thumb Code   298  dog.o(i.leg_jacobian)
+    leg_joint_to_motor                       0x08008f3d   Thumb Code     6  dog.o(i.leg_joint_to_motor)
+    leg_joint_to_motor_force                 0x08008f45   Thumb Code    82  dog.o(i.leg_joint_to_motor_force)
+    leg_joint_to_motor_vel                   0x08008f9d   Thumb Code    82  dog.o(i.leg_joint_to_motor_vel)
+    leg_motor_to_foot_force_pos_vel          0x08008ff5   Thumb Code    70  dog.o(i.leg_motor_to_foot_force_pos_vel)
+    leg_motor_to_joint                       0x0800903b   Thumb Code     6  dog.o(i.leg_motor_to_joint)
+    leg_motor_to_joint_force                 0x08009041   Thumb Code    82  dog.o(i.leg_motor_to_joint_force)
+    leg_motor_to_joint_vel                   0x08009099   Thumb Code    82  dog.o(i.leg_motor_to_joint_vel)
+    leg_set_motor_force_pos_vel              0x080090f1   Thumb Code    40  dog.o(i.leg_set_motor_force_pos_vel)
+    leg_set_motor_force_vel_zero             0x0800911d   Thumb Code    30  dog.o(i.leg_set_motor_force_vel_zero)
+    leg_set_motor_kp_kd                      0x08009141   Thumb Code   104  motor.o(i.leg_set_motor_kp_kd)
+    leg_set_motor_pos                        0x080091a9   Thumb Code    26  dog.o(i.leg_set_motor_pos)
+    leg_set_motor_pos_vel                    0x080091c9   Thumb Code    30  dog.o(i.leg_set_motor_pos_vel)
+    leg_set_target_foot_pos                  0x080091ed   Thumb Code    26  dog.o(i.leg_set_target_foot_pos)
+    leg_thigh_to_hip                         0x0800920d   Thumb Code    48  dog.o(i.leg_thigh_to_hip)
+    leg_transform                            0x08009241   Thumb Code   126  dog.o(i.leg_transform)
+    main                                     0x080092f1   Thumb Code   214  main.o(i.main)
+    mat_add_ptr                              0x080093c7   Thumb Code    64  matrix.o(i.mat_add_ptr)
+    mat_inverse_3x3_ptr                      0x08009409   Thumb Code   360  matrix.o(i.mat_inverse_3x3_ptr)
+    mat_mult_ptr                             0x08009575   Thumb Code    94  matrix.o(i.mat_mult_ptr)
+    mat_mult_vec_ptr                         0x080095d9   Thumb Code    64  matrix.o(i.mat_mult_vec_ptr)
+    mat_transpose_ptr                        0x08009619   Thumb Code    44  matrix.o(i.mat_transpose_ptr)
+    motor_init                               0x08009645   Thumb Code   438  motor.o(i.motor_init)
+    my_usart_init                            0x08009801   Thumb Code    14  my_usart.o(i.my_usart_init)
+    phase_wave_generator                     0x08009861   Thumb Code   330  gait.o(i.phase_wave_generator)
+    register_passive_state                   0x080099ad   Thumb Code    20  passive_state.o(i.register_passive_state)
+    register_stand_state                     0x080099d1   Thumb Code    20  stand_state.o(i.register_stand_state)
+    register_trot_state                      0x080099f5   Thumb Code    20  trot_state.o(i.register_trot_state)
+    send_debug_data                          0x08009a19   Thumb Code     8  ano_tc.o(i.send_debug_data)
+    send_motors_target_force_pos_vel         0x08009a29   Thumb Code   140  motor.o(i.send_motors_target_force_pos_vel)
+    set_debug_data                           0x08009ab5   Thumb Code    16  ano_tc.o(i.set_debug_data)
+    smooth                                   0x08009ac9   Thumb Code    46  dog.o(i.smooth)
+    sqrtf                                    0x08009af7   Thumb Code    62  sqrtf_full.o(i.sqrtf)
+    timer_init                               0x08009ebd   Thumb Code    42  timer.o(i.timer_init)
+    usart1_start_recv                        0x0800a0e5   Thumb Code    26  my_usart.o(i.usart1_start_recv)
+    usart2_start_recv                        0x0800a10d   Thumb Code    26  my_usart.o(i.usart2_start_recv)
+    vec3_cross                               0x0800a135   Thumb Code    86  matrix.o(i.vec3_cross)
+    vmc_force_calculate                      0x0800a18d   Thumb Code   522  force_calculate.o(i.vmc_force_calculate)
+    vmc_get_foot_target_force                0x0800a3b1   Thumb Code    18  force_calculate.o(i.vmc_get_foot_target_force)
+    vmc_get_force_control_state              0x0800a3c9   Thumb Code     6  force_calculate.o(i.vmc_get_force_control_state)
+    windowFunc                               0x0800a3d5   Thumb Code    72  estimator.o(i.windowFunc)
+    world_foot_to_body_vel                   0x0800a41d   Thumb Code   138  estimator.o(i.world_foot_to_body_vel)
+    AHBPrescTable                            0x0800a4bc   Data          16  system_stm32f7xx.o(.constdata)
+    APBPrescTable                            0x0800a4cc   Data           8  system_stm32f7xx.o(.constdata)
+    Region$$Table$$Base                      0x0800a8a8   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x0800a8c8   Number         0  anon$$obj.o(Region$$Table)
     uwTickFreq                               0x20000004   Data           1  stm32f7xx_hal.o(.data)
     uwTickPrio                               0x20000008   Data           4  stm32f7xx_hal.o(.data)
     uwTick                                   0x2000000c   Data           4  stm32f7xx_hal.o(.data)
@@ -3391,99 +3388,108 @@ Image Symbol Table
     vx_scale                                 0x200001a8   Data           4  gamepad.o(.data)
     vy_scale                                 0x200001ac   Data           4  gamepad.o(.data)
     w_scale                                  0x200001b0   Data           4  gamepad.o(.data)
-    force_control                            0x200001b4   Data           1  force_calculate.o(.data)
-    vmc_init_flag                            0x200001b5   Data           1  force_calculate.o(.data)
-    ky                                       0x200001b8   Data           4  force_calculate.o(.data)
-    kx                                       0x200001bc   Data           4  force_calculate.o(.data)
-    kyaw                                     0x200001c0   Data           4  force_calculate.o(.data)
-    test_time_force_cal                      0x200001c4   Data           4  force_calculate.o(.data)
-    _time                                    0x200001c8   Data           4  force_calculate.o(.data)
-    CONTACT_FORCE_THRESHOLD                  0x200001cc   Data           4  force_calculate.o(.data)
-    kpz                                      0x200001d0   Data          16  force_calculate.o(.data)
-    kdz                                      0x200001e0   Data          16  force_calculate.o(.data)
-    pos_hip                                  0x20000204   Data          32  stand_state.o(.data)
-    pos_thigh                                0x20000224   Data          32  stand_state.o(.data)
-    pos_calf                                 0x20000244   Data          32  stand_state.o(.data)
-    force_hip                                0x20000264   Data          32  stand_state.o(.data)
-    force_thigh                              0x20000284   Data          32  stand_state.o(.data)
-    force_calf                               0x200002a4   Data          32  stand_state.o(.data)
-    swing_hip                                0x200002c4   Data          32  trot_state.o(.data)
-    swing_thigh                              0x200002e4   Data          32  trot_state.o(.data)
-    swing_calf                               0x20000304   Data          32  trot_state.o(.data)
-    stance_hip                               0x20000324   Data          32  trot_state.o(.data)
-    stance_thigh                             0x20000344   Data          32  trot_state.o(.data)
-    stance_calf                              0x20000364   Data          32  trot_state.o(.data)
-    tx_data                                  0x20000384   Data           8  j60.o(.data)
-    can_instances                            0x2000038c   Data          12  j60.o(.data)
-    lpf_init_flag                            0x20000398   Data           1  imu.o(.data)
-    lpf_weight                               0x2000039c   Data           4  imu.o(.data)
-    size                                     0x200003a4   Data           2  my_usart.o(.data)
-    robot_params                             0x200003a8   Data         600  robot_params.o(.data)
-    hcan1                                    0x20000604   Data          40  can.o(.bss)
-    hcan2                                    0x2000062c   Data          40  can.o(.bss)
-    hcan3                                    0x20000654   Data          40  can.o(.bss)
-    htim1                                    0x2000067c   Data          76  tim.o(.bss)
-    htim2                                    0x200006c8   Data          76  tim.o(.bss)
-    htim3                                    0x20000714   Data          76  tim.o(.bss)
-    htim4                                    0x20000760   Data          76  tim.o(.bss)
-    htim5                                    0x200007ac   Data          76  tim.o(.bss)
-    htim6                                    0x200007f8   Data          76  tim.o(.bss)
-    htim7                                    0x20000844   Data          76  tim.o(.bss)
-    htim9                                    0x20000890   Data          76  tim.o(.bss)
-    htim10                                   0x200008dc   Data          76  tim.o(.bss)
-    huart4                                   0x20000928   Data         136  usart.o(.bss)
-    huart1                                   0x200009b0   Data         136  usart.o(.bss)
-    huart2                                   0x20000a38   Data         136  usart.o(.bss)
-    hdma_uart4_tx                            0x20000ac0   Data          96  usart.o(.bss)
-    hdma_usart1_rx                           0x20000b20   Data          96  usart.o(.bss)
-    hdma_usart2_rx                           0x20000b80   Data          96  usart.o(.bss)
-    body_vel                                 0x20000be0   Data          12  dog.o(.bss)
-    dog                                      0x20000bec   Data        1000  dog.o(.bss)
-    test_jacobian                            0x20000fd4   Data          36  dog.o(.bss)
-    test_joint_force                         0x20000ff8   Data          12  dog.o(.bss)
-    motors_target_force                      0x20001004   Data          48  dog.o(.bss)
-    p0                                       0x20001034   Data          48  gait.o(.bss)
-    pf                                       0x20001064   Data          48  gait.o(.bss)
-    I3dt_f32                                 0x20001094   Data          36  estimator.o(.bss)
-    I3_f32                                   0x200010b8   Data          36  estimator.o(.bss)
-    _I3_f32                                  0x200010dc   Data          36  estimator.o(.bss)
-    I12_f32                                  0x20001100   Data         576  estimator.o(.bss)
-    I18_f32                                  0x20001340   Data        1296  estimator.o(.bss)
-    kf                                       0x20002160   Data        1000  estimator.o(.bss)
-    lpf_x                                    0x20002548   Data          12  estimator.o(.bss)
-    lpf_y                                    0x20002554   Data          12  estimator.o(.bss)
-    start_time                               0x20002560   Data          20  estimator.o(.bss)
-    use_time                                 0x20002574   Data          20  estimator.o(.bss)
-    _channels                                0x20002588   Data          32  gamepad.o(.bss)
-    body_target_force                        0x200025a8   Data          24  force_calculate.o(.bss)
-    leg_force_z                              0x200025c0   Data          16  force_calculate.o(.bss)
-    foot_force                               0x200025d0   Data          48  force_calculate.o(.bss)
-    foot_pos                                 0x20002600   Data          12  force_calculate.o(.bss)
-    leg_height                               0x2000260c   Data          16  force_calculate.o(.bss)
-    leg_neutral_pos                          0x2000261c   Data          48  force_calculate.o(.bss)
-    leg_current_force                        0x2000264c   Data          48  force_calculate.o(.bss)
-    leg_current_pos                          0x2000267c   Data          48  force_calculate.o(.bss)
-    leg_current_vel                          0x200026ac   Data          48  force_calculate.o(.bss)
-    lpf_body_height_vel                      0x200026dc   Data          48  force_calculate.o(.bss)
-    fsm_context                              0x2000270c   Data         116  fsm.o(.bss)
-    motor_target_force                       0x20002780   Data          48  stand_state.o(.bss)
-    stand_test_foot_start_pos                0x20002870   Data          48  stand_state.o(.bss)
-    stand_test_foot_target_pos               0x200028a0   Data          48  stand_state.o(.bss)
-    stand_test_foot_target_force             0x200028d0   Data          48  stand_state.o(.bss)
-    phase                                    0x20002900   Data          16  trot_state.o(.bss)
-    trot_state                               0x20002910   Data         216  trot_state.o(.bss)
-    can_local_to_custom_map                  0x200029e8   Data          48  j60.o(.bss)
-    j60_motors                               0x20002a18   Data         512  j60.o(.bss)
-    can_queues                               0x20002c18   Data        2316  j60.o(.bss)
-    txHeader                                 0x20003524   Data          24  j60.o(.bss)
-    imu_recv                                 0x2000353c   Data          56  imu.o(.bss)
-    dat                                      0x20003574   Data          76  imu.o(.bss)
-    imu_angle                                0x200035c0   Data          12  imu.o(.bss)
-    lpf_w                                    0x200035cc   Data          12  imu.o(.bss)
-    imu_recv_data                            0x200035d8   Data         100  my_usart.o(.bss)
-    gamepad_buffer                           0x2000363c   Data          30  my_usart.o(.bss)
-    debug_data                               0x2000365c   Data          48  ano_tc.o(.bss)
-    __initial_sp                             0x200056c8   Data           0  startup_stm32f767xx.o(STACK)
+    kp_yaw                                   0x200001b4   Data           4  gamepad.o(.data)
+    kd_w                                     0x200001b8   Data           4  gamepad.o(.data)
+    target_yaw                               0x200001bc   Data           4  gamepad.o(.data)
+    force_control                            0x200001c0   Data           1  force_calculate.o(.data)
+    vmc_init_flag                            0x200001c1   Data           1  force_calculate.o(.data)
+    ky                                       0x200001c4   Data           4  force_calculate.o(.data)
+    kx                                       0x200001c8   Data           4  force_calculate.o(.data)
+    kyaw                                     0x200001cc   Data           4  force_calculate.o(.data)
+    test_time_force_cal                      0x200001d0   Data           4  force_calculate.o(.data)
+    _time                                    0x200001d4   Data           4  force_calculate.o(.data)
+    CONTACT_FORCE_THRESHOLD                  0x200001d8   Data           4  force_calculate.o(.data)
+    kpz                                      0x200001dc   Data          16  force_calculate.o(.data)
+    kdz                                      0x200001ec   Data          16  force_calculate.o(.data)
+    pos_hip                                  0x20000210   Data          32  stand_state.o(.data)
+    pos_thigh                                0x20000230   Data          32  stand_state.o(.data)
+    pos_calf                                 0x20000250   Data          32  stand_state.o(.data)
+    force_hip                                0x20000270   Data          32  stand_state.o(.data)
+    force_thigh                              0x20000290   Data          32  stand_state.o(.data)
+    force_calf                               0x200002b0   Data          32  stand_state.o(.data)
+    swing_hip                                0x200002d0   Data          32  trot_state.o(.data)
+    swing_thigh                              0x200002f0   Data          32  trot_state.o(.data)
+    swing_calf                               0x20000310   Data          32  trot_state.o(.data)
+    stance_hip                               0x20000330   Data          32  trot_state.o(.data)
+    stance_thigh                             0x20000350   Data          32  trot_state.o(.data)
+    stance_calf                              0x20000370   Data          32  trot_state.o(.data)
+    tx_data                                  0x20000390   Data           8  j60.o(.data)
+    can_instances                            0x20000398   Data          12  j60.o(.data)
+    lpf_init_flag                            0x200003a4   Data           1  imu.o(.data)
+    lpf_weight                               0x200003a8   Data           4  imu.o(.data)
+    size                                     0x200003b0   Data           2  my_usart.o(.data)
+    robot_params                             0x200003b4   Data         600  robot_params.o(.data)
+    hcan1                                    0x20000610   Data          40  can.o(.bss)
+    hcan2                                    0x20000638   Data          40  can.o(.bss)
+    hcan3                                    0x20000660   Data          40  can.o(.bss)
+    htim1                                    0x20000688   Data          76  tim.o(.bss)
+    htim2                                    0x200006d4   Data          76  tim.o(.bss)
+    htim3                                    0x20000720   Data          76  tim.o(.bss)
+    htim4                                    0x2000076c   Data          76  tim.o(.bss)
+    htim5                                    0x200007b8   Data          76  tim.o(.bss)
+    htim6                                    0x20000804   Data          76  tim.o(.bss)
+    htim7                                    0x20000850   Data          76  tim.o(.bss)
+    htim9                                    0x2000089c   Data          76  tim.o(.bss)
+    htim10                                   0x200008e8   Data          76  tim.o(.bss)
+    huart4                                   0x20000934   Data         136  usart.o(.bss)
+    huart1                                   0x200009bc   Data         136  usart.o(.bss)
+    huart2                                   0x20000a44   Data         136  usart.o(.bss)
+    hdma_uart4_tx                            0x20000acc   Data          96  usart.o(.bss)
+    hdma_usart1_rx                           0x20000b2c   Data          96  usart.o(.bss)
+    hdma_usart2_rx                           0x20000b8c   Data          96  usart.o(.bss)
+    body_vel                                 0x20000bec   Data          12  dog.o(.bss)
+    dog                                      0x20000bf8   Data        1000  dog.o(.bss)
+    test_jacobian                            0x20000fe0   Data          36  dog.o(.bss)
+    test_joint_force                         0x20001004   Data          12  dog.o(.bss)
+    motors_target_force                      0x20001010   Data          48  dog.o(.bss)
+    p0                                       0x20001040   Data          48  gait.o(.bss)
+    pf                                       0x20001070   Data          48  gait.o(.bss)
+    I3dt_f32                                 0x200010a0   Data          36  estimator.o(.bss)
+    I3_f32                                   0x200010c4   Data          36  estimator.o(.bss)
+    _I3_f32                                  0x200010e8   Data          36  estimator.o(.bss)
+    I12_f32                                  0x2000110c   Data         576  estimator.o(.bss)
+    I18_f32                                  0x2000134c   Data        1296  estimator.o(.bss)
+    kf                                       0x2000216c   Data        1000  estimator.o(.bss)
+    lpf_x                                    0x20002554   Data          12  estimator.o(.bss)
+    lpf_y                                    0x20002560   Data          12  estimator.o(.bss)
+    start_time                               0x2000256c   Data          20  estimator.o(.bss)
+    use_time                                 0x20002580   Data          20  estimator.o(.bss)
+    _channels                                0x20002594   Data          32  gamepad.o(.bss)
+    body_target_force                        0x200025b4   Data          24  force_calculate.o(.bss)
+    leg_force_z                              0x200025cc   Data          16  force_calculate.o(.bss)
+    foot_force                               0x200025dc   Data          48  force_calculate.o(.bss)
+    foot_pos                                 0x2000260c   Data          12  force_calculate.o(.bss)
+    leg_height                               0x20002618   Data          16  force_calculate.o(.bss)
+    leg_neutral_pos                          0x20002628   Data          48  force_calculate.o(.bss)
+    leg_current_force                        0x20002658   Data          48  force_calculate.o(.bss)
+    leg_current_pos                          0x20002688   Data          48  force_calculate.o(.bss)
+    leg_current_vel                          0x200026b8   Data          48  force_calculate.o(.bss)
+    lpf_body_height_vel                      0x200026e8   Data          48  force_calculate.o(.bss)
+    fsm_context                              0x20002718   Data         116  fsm.o(.bss)
+    stand_test_foot_current_force            0x2000278c   Data          48  stand_state.o(.bss)
+    stand_test_foot_current_pos              0x200027bc   Data          48  stand_state.o(.bss)
+    stand_test_foot_current_vel              0x200027ec   Data          48  stand_state.o(.bss)
+    motor_target_force                       0x2000281c   Data          48  stand_state.o(.bss)
+    stand_test_foot_start_pos                0x2000290c   Data          48  stand_state.o(.bss)
+    stand_test_foot_target_pos               0x2000293c   Data          48  stand_state.o(.bss)
+    stand_test_foot_target_force             0x2000296c   Data          48  stand_state.o(.bss)
+    trot_foot_current_force                  0x2000299c   Data          48  trot_state.o(.bss)
+    trot_foot_current_vel                    0x200029cc   Data          48  trot_state.o(.bss)
+    trot_foot_current_pos                    0x200029fc   Data          48  trot_state.o(.bss)
+    phase                                    0x20002a2c   Data          16  trot_state.o(.bss)
+    trot_state                               0x20002a3c   Data         216  trot_state.o(.bss)
+    can_local_to_custom_map                  0x20002b14   Data          48  j60.o(.bss)
+    j60_motors                               0x20002b44   Data         512  j60.o(.bss)
+    can_queues                               0x20002d44   Data        2316  j60.o(.bss)
+    txHeader                                 0x20003650   Data          24  j60.o(.bss)
+    imu_recv                                 0x20003668   Data          56  imu.o(.bss)
+    dat                                      0x200036a0   Data          76  imu.o(.bss)
+    imu_angle                                0x200036ec   Data          12  imu.o(.bss)
+    lpf_w                                    0x200036f8   Data          12  imu.o(.bss)
+    imu_recv_data                            0x20003704   Data         100  my_usart.o(.bss)
+    gamepad_buffer                           0x20003768   Data          30  my_usart.o(.bss)
+    debug_data                               0x20003788   Data          48  ano_tc.o(.bss)
+    __initial_sp                             0x200057f0   Data           0  startup_stm32f767xx.o(STACK)
 
 
 
@@ -3493,53 +3499,53 @@ Memory Map of the image
 
   Image Entry point : 0x080001f9
 
-  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x0000add4, Max: 0x00100000, ABSOLUTE, COMPRESSED[0x0000a994])
+  Load Region LR_IROM1 (Base: 0x08000000, Size: 0x0000aed8, Max: 0x00100000, ABSOLUTE, COMPRESSED[0x0000aa94])
 
-    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x0000a7d0, Max: 0x00100000, ABSOLUTE)
+    Execution Region ER_IROM1 (Exec base: 0x08000000, Load base: 0x08000000, Size: 0x0000a8c8, Max: 0x00100000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x08000000   0x08000000   0x000001f8   Data   RO            3    RESET               startup_stm32f767xx.o
-    0x080001f8   0x080001f8   0x00000000   Code   RO         5847  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
-    0x080001f8   0x080001f8   0x00000004   Code   RO         5917    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
-    0x080001fc   0x080001fc   0x00000004   Code   RO         5920    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
-    0x08000200   0x08000200   0x00000000   Code   RO         5922    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
-    0x08000200   0x08000200   0x00000000   Code   RO         5924    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
-    0x08000200   0x08000200   0x00000008   Code   RO         5925    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
-    0x08000208   0x08000208   0x00000000   Code   RO         5927    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
-    0x08000208   0x08000208   0x00000000   Code   RO         5929    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
-    0x08000208   0x08000208   0x00000004   Code   RO         5918    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
+    0x080001f8   0x080001f8   0x00000000   Code   RO         5842  * .ARM.Collect$$$$00000000  mc_w.l(entry.o)
+    0x080001f8   0x080001f8   0x00000004   Code   RO         5912    .ARM.Collect$$$$00000001  mc_w.l(entry2.o)
+    0x080001fc   0x080001fc   0x00000004   Code   RO         5915    .ARM.Collect$$$$00000004  mc_w.l(entry5.o)
+    0x08000200   0x08000200   0x00000000   Code   RO         5917    .ARM.Collect$$$$00000008  mc_w.l(entry7b.o)
+    0x08000200   0x08000200   0x00000000   Code   RO         5919    .ARM.Collect$$$$0000000A  mc_w.l(entry8b.o)
+    0x08000200   0x08000200   0x00000008   Code   RO         5920    .ARM.Collect$$$$0000000B  mc_w.l(entry9a.o)
+    0x08000208   0x08000208   0x00000000   Code   RO         5922    .ARM.Collect$$$$0000000D  mc_w.l(entry10a.o)
+    0x08000208   0x08000208   0x00000000   Code   RO         5924    .ARM.Collect$$$$0000000F  mc_w.l(entry11a.o)
+    0x08000208   0x08000208   0x00000004   Code   RO         5913    .ARM.Collect$$$$00002712  mc_w.l(entry2.o)
     0x0800020c   0x0800020c   0x00000024   Code   RO            4    .text               startup_stm32f767xx.o
-    0x08000230   0x08000230   0x0000010c   Code   RO         5580    .text               arm_cortexM7lfsp_math.lib(arm_mat_add_f32.o)
-    0x0800033c   0x0800033c   0x00000008   Code   RO         5604    .text               arm_cortexM7lfsp_math.lib(arm_mat_init_f32.o)
-    0x08000344   0x08000344   0x00000550   Code   RO         5628    .text               arm_cortexM7lfsp_math.lib(arm_mat_inverse_f32.o)
-    0x08000894   0x08000894   0x00000148   Code   RO         5652    .text               arm_cortexM7lfsp_math.lib(arm_mat_mult_f32.o)
-    0x080009dc   0x080009dc   0x0000010c   Code   RO         5676    .text               arm_cortexM7lfsp_math.lib(arm_mat_sub_f32.o)
-    0x08000ae8   0x08000ae8   0x00000118   Code   RO         5700    .text               arm_cortexM7lfsp_math.lib(arm_mat_trans_f32.o)
-    0x08000c00   0x08000c00   0x00000062   Code   RO         5850    .text               mc_w.l(uldiv.o)
-    0x08000c62   0x08000c62   0x00000024   Code   RO         5852    .text               mc_w.l(memcpya.o)
-    0x08000c86   0x08000c86   0x00000024   Code   RO         5854    .text               mc_w.l(memseta.o)
-    0x08000caa   0x08000caa   0x0000014e   Code   RO         5858    .text               mf_w.l(dadd.o)
-    0x08000df8   0x08000df8   0x000000e4   Code   RO         5860    .text               mf_w.l(dmul.o)
-    0x08000edc   0x08000edc   0x000000de   Code   RO         5862    .text               mf_w.l(ddiv.o)
-    0x08000fba   0x08000fba   0x0000001a   Code   RO         5864    .text               mf_w.l(dfltui.o)
-    0x08000fd4   0x08000fd4   0x00000026   Code   RO         5866    .text               mf_w.l(f2d.o)
-    0x08000ffa   0x08000ffa   0x00000038   Code   RO         5868    .text               mf_w.l(d2f.o)
-    0x08001032   0x08001032   0x0000001e   Code   RO         5931    .text               mc_w.l(llshl.o)
-    0x08001050   0x08001050   0x00000020   Code   RO         5933    .text               mc_w.l(llushr.o)
-    0x08001070   0x08001070   0x00000024   Code   RO         5935    .text               mc_w.l(llsshr.o)
-    0x08001094   0x08001094   0x00000000   Code   RO         5944    .text               mc_w.l(iusefp.o)
-    0x08001094   0x08001094   0x0000006e   Code   RO         5945    .text               mf_w.l(fepilogue.o)
-    0x08001102   0x08001102   0x000000ba   Code   RO         5947    .text               mf_w.l(depilogue.o)
-    0x080011bc   0x080011bc   0x00000086   Code   RO         5953    .text               mf_w.l(drem.o)
-    0x08001242   0x08001242   0x00000060   Code   RO         5957    .text               mf_w.l(dcmp4.o)
-    0x080012a2   0x080012a2   0x00000004   Code   RO         5959    .text               mf_w.l(fpstat.o)
+    0x08000230   0x08000230   0x0000010c   Code   RO         5575    .text               arm_cortexM7lfsp_math.lib(arm_mat_add_f32.o)
+    0x0800033c   0x0800033c   0x00000008   Code   RO         5599    .text               arm_cortexM7lfsp_math.lib(arm_mat_init_f32.o)
+    0x08000344   0x08000344   0x00000550   Code   RO         5623    .text               arm_cortexM7lfsp_math.lib(arm_mat_inverse_f32.o)
+    0x08000894   0x08000894   0x00000148   Code   RO         5647    .text               arm_cortexM7lfsp_math.lib(arm_mat_mult_f32.o)
+    0x080009dc   0x080009dc   0x0000010c   Code   RO         5671    .text               arm_cortexM7lfsp_math.lib(arm_mat_sub_f32.o)
+    0x08000ae8   0x08000ae8   0x00000118   Code   RO         5695    .text               arm_cortexM7lfsp_math.lib(arm_mat_trans_f32.o)
+    0x08000c00   0x08000c00   0x00000062   Code   RO         5845    .text               mc_w.l(uldiv.o)
+    0x08000c62   0x08000c62   0x00000024   Code   RO         5847    .text               mc_w.l(memcpya.o)
+    0x08000c86   0x08000c86   0x00000024   Code   RO         5849    .text               mc_w.l(memseta.o)
+    0x08000caa   0x08000caa   0x0000014e   Code   RO         5853    .text               mf_w.l(dadd.o)
+    0x08000df8   0x08000df8   0x000000e4   Code   RO         5855    .text               mf_w.l(dmul.o)
+    0x08000edc   0x08000edc   0x000000de   Code   RO         5857    .text               mf_w.l(ddiv.o)
+    0x08000fba   0x08000fba   0x0000001a   Code   RO         5859    .text               mf_w.l(dfltui.o)
+    0x08000fd4   0x08000fd4   0x00000026   Code   RO         5861    .text               mf_w.l(f2d.o)
+    0x08000ffa   0x08000ffa   0x00000038   Code   RO         5863    .text               mf_w.l(d2f.o)
+    0x08001032   0x08001032   0x0000001e   Code   RO         5926    .text               mc_w.l(llshl.o)
+    0x08001050   0x08001050   0x00000020   Code   RO         5928    .text               mc_w.l(llushr.o)
+    0x08001070   0x08001070   0x00000024   Code   RO         5930    .text               mc_w.l(llsshr.o)
+    0x08001094   0x08001094   0x00000000   Code   RO         5939    .text               mc_w.l(iusefp.o)
+    0x08001094   0x08001094   0x0000006e   Code   RO         5940    .text               mf_w.l(fepilogue.o)
+    0x08001102   0x08001102   0x000000ba   Code   RO         5942    .text               mf_w.l(depilogue.o)
+    0x080011bc   0x080011bc   0x00000086   Code   RO         5948    .text               mf_w.l(drem.o)
+    0x08001242   0x08001242   0x00000060   Code   RO         5952    .text               mf_w.l(dcmp4.o)
+    0x080012a2   0x080012a2   0x00000004   Code   RO         5954    .text               mf_w.l(fpstat.o)
     0x080012a6   0x080012a6   0x00000002   PAD
-    0x080012a8   0x080012a8   0x00000024   Code   RO         5971    .text               mc_w.l(init.o)
-    0x080012cc   0x080012cc   0x00000022   Code   RO         5973    .text               mf_w.l(dflti.o)
-    0x080012ee   0x080012ee   0x0000003e   Code   RO         5975    .text               mf_w.l(dfixi.o)
-    0x0800132c   0x0800132c   0x00000056   Code   RO         5985    .text               mc_w.l(__dczerorl2.o)
-    0x08001382   0x08001382   0x00000012   Code   RO         5349    i.ABS               imu.o
+    0x080012a8   0x080012a8   0x00000024   Code   RO         5966    .text               mc_w.l(init.o)
+    0x080012cc   0x080012cc   0x00000022   Code   RO         5968    .text               mf_w.l(dflti.o)
+    0x080012ee   0x080012ee   0x0000003e   Code   RO         5970    .text               mf_w.l(dfixi.o)
+    0x0800132c   0x0800132c   0x00000056   Code   RO         5980    .text               mc_w.l(__dczerorl2.o)
+    0x08001382   0x08001382   0x00000012   Code   RO         5344    i.ABS               imu.o
     0x08001394   0x08001394   0x00000002   Code   RO          483    i.BusFault_Handler  stm32f7xx_it.o
     0x08001396   0x08001396   0x00000002   PAD
     0x08001398   0x08001398   0x0000000c   Code   RO          484    i.CAN1_RX0_IRQHandler  stm32f7xx_it.o
@@ -3564,7 +3570,7 @@ Memory Map of the image
     0x08001ade   0x08001ade   0x00000002   PAD
     0x08001ae0   0x08001ae0   0x00000144   Code   RO          251    i.HAL_CAN_MspInit   can.o
     0x08001c24   0x08001c24   0x00000002   Code   RO          706    i.HAL_CAN_RxFifo0FullCallback  stm32f7xx_hal_can.o
-    0x08001c26   0x08001c26   0x00000022   Code   RO         5195    i.HAL_CAN_RxFifo0MsgPendingCallback  j60.o
+    0x08001c26   0x08001c26   0x00000022   Code   RO         5190    i.HAL_CAN_RxFifo0MsgPendingCallback  j60.o
     0x08001c48   0x08001c48   0x00000002   Code   RO          708    i.HAL_CAN_RxFifo1FullCallback  stm32f7xx_hal_can.o
     0x08001c4a   0x08001c4a   0x00000002   Code   RO          709    i.HAL_CAN_RxFifo1MsgPendingCallback  stm32f7xx_hal_can.o
     0x08001c4c   0x08001c4c   0x00000002   Code   RO          710    i.HAL_CAN_SleepCallback  stm32f7xx_hal_can.o
@@ -3621,14 +3627,14 @@ Memory Map of the image
     0x08003516   0x08003516   0x00000002   Code   RO         2688    i.HAL_TIM_OC_DelayElapsedCallback  stm32f7xx_hal_tim.o
     0x08003518   0x08003518   0x00000002   Code   RO         2715    i.HAL_TIM_PWM_PulseFinishedCallback  stm32f7xx_hal_tim.o
     0x0800351a   0x0800351a   0x00000002   PAD
-    0x0800351c   0x0800351c   0x00000078   Code   RO         4641    i.HAL_TIM_PeriodElapsedCallback  timer.o
+    0x0800351c   0x0800351c   0x00000078   Code   RO         4642    i.HAL_TIM_PeriodElapsedCallback  timer.o
     0x08003594   0x08003594   0x00000002   Code   RO         2728    i.HAL_TIM_TriggerCallback  stm32f7xx_hal_tim.o
     0x08003596   0x08003596   0x0000004a   Code   RO         4042    i.HAL_UARTEx_ReceiveToIdle_DMA  stm32f7xx_hal_uart_ex.o
-    0x080035e0   0x080035e0   0x00000050   Code   RO         5393    i.HAL_UARTEx_RxEventCallback  my_usart.o
+    0x080035e0   0x080035e0   0x00000050   Code   RO         5388    i.HAL_UARTEx_RxEventCallback  my_usart.o
     0x08003630   0x08003630   0x00000002   Code   RO         3646    i.HAL_UARTEx_WakeupCallback  stm32f7xx_hal_uart.o
     0x08003632   0x08003632   0x0000008c   Code   RO         3658    i.HAL_UART_DMAStop  stm32f7xx_hal_uart.o
     0x080036be   0x080036be   0x00000002   PAD
-    0x080036c0   0x080036c0   0x00000030   Code   RO         5394    i.HAL_UART_ErrorCallback  my_usart.o
+    0x080036c0   0x080036c0   0x00000030   Code   RO         5389    i.HAL_UART_ErrorCallback  my_usart.o
     0x080036f0   0x080036f0   0x000002b4   Code   RO         3665    i.HAL_UART_IRQHandler  stm32f7xx_hal_uart.o
     0x080039a4   0x080039a4   0x00000066   Code   RO         3666    i.HAL_UART_Init     stm32f7xx_hal_uart.o
     0x08003a0a   0x08003a0a   0x00000002   PAD
@@ -3638,28 +3644,28 @@ Memory Map of the image
     0x08003c24   0x08003c24   0x0000008c   Code   RO         3676    i.HAL_UART_Transmit_DMA  stm32f7xx_hal_uart.o
     0x08003cb0   0x08003cb0   0x00000002   Code   RO         3678    i.HAL_UART_TxCpltCallback  stm32f7xx_hal_uart.o
     0x08003cb2   0x08003cb2   0x00000002   Code   RO         3679    i.HAL_UART_TxHalfCpltCallback  stm32f7xx_hal_uart.o
-    0x08003cb4   0x08003cb4   0x000001e8   Code   RO         4677    i.HT10A_process     gamepad.o
+    0x08003cb4   0x08003cb4   0x000001e8   Code   RO         4678    i.HT10A_process     gamepad.o
     0x08003e9c   0x08003e9c   0x00000002   Code   RO          491    i.HardFault_Handler  stm32f7xx_it.o
     0x08003e9e   0x08003e9e   0x00000002   PAD
-    0x08003ea0   0x08003ea0   0x000000b8   Code   RO         5196    i.J60_Can_Init      j60.o
-    0x08003f58   0x08003f58   0x00000054   Code   RO         5197    i.J60_ConfigMotor   j60.o
-    0x08003fac   0x08003fac   0x0000000a   Code   RO         5200    i.J60_EnableMotor   j60.o
+    0x08003ea0   0x08003ea0   0x000000b8   Code   RO         5191    i.J60_Can_Init      j60.o
+    0x08003f58   0x08003f58   0x00000054   Code   RO         5192    i.J60_ConfigMotor   j60.o
+    0x08003fac   0x08003fac   0x0000000a   Code   RO         5195    i.J60_EnableMotor   j60.o
     0x08003fb6   0x08003fb6   0x00000002   PAD
-    0x08003fb8   0x08003fb8   0x00000018   Code   RO         5201    i.J60_GetMotor      j60.o
-    0x08003fd0   0x08003fd0   0x0000004c   Code   RO         5203    i.J60_MapKdToUint8  j60.o
-    0x0800401c   0x0800401c   0x00000038   Code   RO         5204    i.J60_MapKpToUint10  j60.o
-    0x08004054   0x08004054   0x0000005c   Code   RO         5205    i.J60_MapPositionToUint16  j60.o
-    0x080040b0   0x080040b0   0x0000005c   Code   RO         5206    i.J60_MapTorqueToUint16  j60.o
-    0x0800410c   0x0800410c   0x00000030   Code   RO         5207    i.J60_MapUint16ToTorque  j60.o
-    0x0800413c   0x0800413c   0x0000003c   Code   RO         5208    i.J60_MapUint20ToPosition  j60.o
-    0x08004178   0x08004178   0x0000003c   Code   RO         5209    i.J60_MapUint20ToVelocity  j60.o
-    0x080041b4   0x080041b4   0x00000030   Code   RO         5210    i.J60_MapUint7ToTemperature  j60.o
-    0x080041e4   0x080041e4   0x0000005c   Code   RO         5211    i.J60_MapVelocityToUint14  j60.o
-    0x08004240   0x08004240   0x000000a0   Code   RO         5212    i.J60_MotorControl  j60.o
-    0x080042e0   0x080042e0   0x00000094   Code   RO         5213    i.J60_ProcessCanQueues  j60.o
-    0x08004374   0x08004374   0x000000fc   Code   RO         5214    i.J60_ProcessReceivedData  j60.o
-    0x08004470   0x08004470   0x000000a4   Code   RO         5216    i.J60_SendCanMessage  j60.o
-    0x08004514   0x08004514   0x00000080   Code   RO         5217    i.J60_SendCanMessage_NonBlocking  j60.o
+    0x08003fb8   0x08003fb8   0x00000018   Code   RO         5196    i.J60_GetMotor      j60.o
+    0x08003fd0   0x08003fd0   0x0000004c   Code   RO         5198    i.J60_MapKdToUint8  j60.o
+    0x0800401c   0x0800401c   0x00000038   Code   RO         5199    i.J60_MapKpToUint10  j60.o
+    0x08004054   0x08004054   0x0000005c   Code   RO         5200    i.J60_MapPositionToUint16  j60.o
+    0x080040b0   0x080040b0   0x0000005c   Code   RO         5201    i.J60_MapTorqueToUint16  j60.o
+    0x0800410c   0x0800410c   0x00000030   Code   RO         5202    i.J60_MapUint16ToTorque  j60.o
+    0x0800413c   0x0800413c   0x0000003c   Code   RO         5203    i.J60_MapUint20ToPosition  j60.o
+    0x08004178   0x08004178   0x0000003c   Code   RO         5204    i.J60_MapUint20ToVelocity  j60.o
+    0x080041b4   0x080041b4   0x00000030   Code   RO         5205    i.J60_MapUint7ToTemperature  j60.o
+    0x080041e4   0x080041e4   0x0000005c   Code   RO         5206    i.J60_MapVelocityToUint14  j60.o
+    0x08004240   0x08004240   0x000000a0   Code   RO         5207    i.J60_MotorControl  j60.o
+    0x080042e0   0x080042e0   0x00000094   Code   RO         5208    i.J60_ProcessCanQueues  j60.o
+    0x08004374   0x08004374   0x000000fc   Code   RO         5209    i.J60_ProcessReceivedData  j60.o
+    0x08004470   0x08004470   0x000000a4   Code   RO         5211    i.J60_SendCanMessage  j60.o
+    0x08004514   0x08004514   0x00000080   Code   RO         5212    i.J60_SendCanMessage_NonBlocking  j60.o
     0x08004594   0x08004594   0x00000006   Code   RO         4541    i.LPF_get_value     estimator.o
     0x0800459a   0x0800459a   0x0000002a   Code   RO         4542    i.LPFilter          estimator.o
     0x080045c4   0x080045c4   0x0000002c   Code   RO         4543    i.LPFilter_init     estimator.o
@@ -3719,50 +3725,50 @@ Memory Map of the image
     0x08005450   0x08005450   0x0000000c   Code   RO          507    i.USART2_IRQHandler  stm32f7xx_it.o
     0x0800545c   0x0800545c   0x00000002   Code   RO          508    i.UsageFault_Handler  stm32f7xx_it.o
     0x0800545e   0x0800545e   0x00000002   PAD
-    0x08005460   0x08005460   0x0000007c   Code   RO         5444    i.Usart_Send_To_Show32  ano_tc.o
-    0x080054dc   0x080054dc   0x00000030   Code   RO         5967    i.__ARM_fpclassify  m_wm.l(fpclassify.o)
-    0x0800550c   0x0800550c   0x00000026   Code   RO         5887    i.__ARM_fpclassifyf  m_wm.l(fpclassifyf.o)
+    0x08005460   0x08005460   0x0000007c   Code   RO         5439    i.Usart_Send_To_Show32  ano_tc.o
+    0x080054dc   0x080054dc   0x00000030   Code   RO         5962    i.__ARM_fpclassify  m_wm.l(fpclassify.o)
+    0x0800550c   0x0800550c   0x00000026   Code   RO         5882    i.__ARM_fpclassifyf  m_wm.l(fpclassifyf.o)
     0x08005532   0x08005532   0x00000022   Code   RO         1712    i.__NVIC_SetPriority  stm32f7xx_hal_cortex.o
-    0x08005554   0x08005554   0x00000118   Code   RO         5721    i.__hardfp_acosf    m_wm.l(acosf.o)
-    0x0800566c   0x0800566c   0x00000250   Code   RO         5733    i.__hardfp_atan2f   m_wm.l(atan2f.o)
+    0x08005554   0x08005554   0x00000118   Code   RO         5716    i.__hardfp_acosf    m_wm.l(acosf.o)
+    0x0800566c   0x0800566c   0x00000250   Code   RO         5728    i.__hardfp_atan2f   m_wm.l(atan2f.o)
     0x080058bc   0x080058bc   0x00000004   PAD
-    0x080058c0   0x080058c0   0x000000c8   Code   RO         5745    i.__hardfp_cos      m_wm.l(cos.o)
-    0x08005988   0x08005988   0x00000150   Code   RO         5757    i.__hardfp_cosf     m_wm.l(cosf.o)
-    0x08005ad8   0x08005ad8   0x00000074   Code   RO         5769    i.__hardfp_fmax     m_wm.l(fmax.o)
-    0x08005b4c   0x08005b4c   0x00000104   Code   RO         5773    i.__hardfp_fmod     m_wm.l(fmod.o)
-    0x08005c50   0x08005c50   0x00000664   Code   RO         5785    i.__hardfp_powf     m_wm.l(powf.o)
+    0x080058c0   0x080058c0   0x000000c8   Code   RO         5740    i.__hardfp_cos      m_wm.l(cos.o)
+    0x08005988   0x08005988   0x00000150   Code   RO         5752    i.__hardfp_cosf     m_wm.l(cosf.o)
+    0x08005ad8   0x08005ad8   0x00000074   Code   RO         5764    i.__hardfp_fmax     m_wm.l(fmax.o)
+    0x08005b4c   0x08005b4c   0x00000104   Code   RO         5768    i.__hardfp_fmod     m_wm.l(fmod.o)
+    0x08005c50   0x08005c50   0x00000664   Code   RO         5780    i.__hardfp_powf     m_wm.l(powf.o)
     0x080062b4   0x080062b4   0x00000004   PAD
-    0x080062b8   0x080062b8   0x000000c8   Code   RO         5799    i.__hardfp_sin      m_wm.l(sin.o)
-    0x08006380   0x08006380   0x00000190   Code   RO         5811    i.__hardfp_sinf     m_wm.l(sinf.o)
-    0x08006510   0x08006510   0x0000003a   Code   RO         5829    i.__hardfp_sqrtf    m_wm.l(sqrtf_full.o)
+    0x080062b8   0x080062b8   0x000000c8   Code   RO         5794    i.__hardfp_sin      m_wm.l(sin.o)
+    0x08006380   0x08006380   0x00000190   Code   RO         5806    i.__hardfp_sinf     m_wm.l(sinf.o)
+    0x08006510   0x08006510   0x0000003a   Code   RO         5824    i.__hardfp_sqrtf    m_wm.l(sqrtf_full.o)
     0x0800654a   0x0800654a   0x00000006   PAD
-    0x08006550   0x08006550   0x00000438   Code   RO         5903    i.__ieee754_rem_pio2  m_wm.l(rred.o)
-    0x08006988   0x08006988   0x00000170   Code   RO         5870    i.__kernel_cos      m_wm.l(cos_i.o)
-    0x08006af8   0x08006af8   0x000000f8   Code   RO         5969    i.__kernel_poly     m_wm.l(poly.o)
-    0x08006bf0   0x08006bf0   0x00000130   Code   RO         5911    i.__kernel_sin      m_wm.l(sin_i.o)
-    0x08006d20   0x08006d20   0x00000014   Code   RO         5874    i.__mathlib_dbl_infnan  m_wm.l(dunder.o)
+    0x08006550   0x08006550   0x00000438   Code   RO         5898    i.__ieee754_rem_pio2  m_wm.l(rred.o)
+    0x08006988   0x08006988   0x00000170   Code   RO         5865    i.__kernel_cos      m_wm.l(cos_i.o)
+    0x08006af8   0x08006af8   0x000000f8   Code   RO         5964    i.__kernel_poly     m_wm.l(poly.o)
+    0x08006bf0   0x08006bf0   0x00000130   Code   RO         5906    i.__kernel_sin      m_wm.l(sin_i.o)
+    0x08006d20   0x08006d20   0x00000014   Code   RO         5869    i.__mathlib_dbl_infnan  m_wm.l(dunder.o)
     0x08006d34   0x08006d34   0x00000004   PAD
-    0x08006d38   0x08006d38   0x00000020   Code   RO         5876    i.__mathlib_dbl_invalid  m_wm.l(dunder.o)
-    0x08006d58   0x08006d58   0x00000020   Code   RO         5879    i.__mathlib_dbl_underflow  m_wm.l(dunder.o)
-    0x08006d78   0x08006d78   0x00000014   Code   RO         5889    i.__mathlib_flt_divzero  m_wm.l(funder.o)
-    0x08006d8c   0x08006d8c   0x00000006   Code   RO         5890    i.__mathlib_flt_infnan  m_wm.l(funder.o)
-    0x08006d92   0x08006d92   0x00000006   Code   RO         5891    i.__mathlib_flt_infnan2  m_wm.l(funder.o)
-    0x08006d98   0x08006d98   0x00000010   Code   RO         5892    i.__mathlib_flt_invalid  m_wm.l(funder.o)
-    0x08006da8   0x08006da8   0x00000010   Code   RO         5893    i.__mathlib_flt_overflow  m_wm.l(funder.o)
-    0x08006db8   0x08006db8   0x00000010   Code   RO         5895    i.__mathlib_flt_underflow  m_wm.l(funder.o)
-    0x08006dc8   0x08006dc8   0x00000154   Code   RO         5908    i.__mathlib_rredf2  m_wm.l(rredf.o)
-    0x08006f1c   0x08006f1c   0x0000000e   Code   RO         5979    i.__scatterload_copy  mc_w.l(handlers.o)
-    0x08006f2a   0x08006f2a   0x00000002   Code   RO         5980    i.__scatterload_null  mc_w.l(handlers.o)
-    0x08006f2c   0x08006f2c   0x0000000e   Code   RO         5981    i.__scatterload_zeroinit  mc_w.l(handlers.o)
+    0x08006d38   0x08006d38   0x00000020   Code   RO         5871    i.__mathlib_dbl_invalid  m_wm.l(dunder.o)
+    0x08006d58   0x08006d58   0x00000020   Code   RO         5874    i.__mathlib_dbl_underflow  m_wm.l(dunder.o)
+    0x08006d78   0x08006d78   0x00000014   Code   RO         5884    i.__mathlib_flt_divzero  m_wm.l(funder.o)
+    0x08006d8c   0x08006d8c   0x00000006   Code   RO         5885    i.__mathlib_flt_infnan  m_wm.l(funder.o)
+    0x08006d92   0x08006d92   0x00000006   Code   RO         5886    i.__mathlib_flt_infnan2  m_wm.l(funder.o)
+    0x08006d98   0x08006d98   0x00000010   Code   RO         5887    i.__mathlib_flt_invalid  m_wm.l(funder.o)
+    0x08006da8   0x08006da8   0x00000010   Code   RO         5888    i.__mathlib_flt_overflow  m_wm.l(funder.o)
+    0x08006db8   0x08006db8   0x00000010   Code   RO         5890    i.__mathlib_flt_underflow  m_wm.l(funder.o)
+    0x08006dc8   0x08006dc8   0x00000154   Code   RO         5903    i.__mathlib_rredf2  m_wm.l(rredf.o)
+    0x08006f1c   0x08006f1c   0x0000000e   Code   RO         5974    i.__scatterload_copy  mc_w.l(handlers.o)
+    0x08006f2a   0x08006f2a   0x00000002   Code   RO         5975    i.__scatterload_null  mc_w.l(handlers.o)
+    0x08006f2c   0x08006f2c   0x0000000e   Code   RO         5976    i.__scatterload_zeroinit  mc_w.l(handlers.o)
     0x08006f3a   0x08006f3a   0x00000002   PAD
-    0x08006f3c   0x08006f3c   0x0000000c   Code   RO         5939    i.__set_errno       mc_w.l(errno.o)
+    0x08006f3c   0x08006f3c   0x0000000c   Code   RO         5934    i.__set_errno       mc_w.l(errno.o)
     0x08006f48   0x08006f48   0x00000028   Code   RO         4544    i.body_to_world_acc  estimator.o
     0x08006f70   0x08006f70   0x0000016c   Code   RO         4474    i.cal_foot_end_pos  gait.o
-    0x080070dc   0x080070dc   0x0000002e   Code   RO         5350    i.crc16_update      imu.o
-    0x0800710a   0x0800710a   0x00000004   Code   RO         4787    i.default_checker   fsm.o
-    0x0800710e   0x0800710e   0x00000002   Code   RO         4788    i.default_handler   fsm.o
+    0x080070dc   0x080070dc   0x0000002e   Code   RO         5345    i.crc16_update      imu.o
+    0x0800710a   0x0800710a   0x00000004   Code   RO         4788    i.default_checker   fsm.o
+    0x0800710e   0x0800710e   0x00000002   Code   RO         4789    i.default_handler   fsm.o
     0x08007110   0x08007110   0x00000148   Code   RO         4156    i.dog_cog_to_foot   dog.o
-    0x08007258   0x08007258   0x00000018   Code   RO         4789    i.dog_fsm_init      fsm.o
+    0x08007258   0x08007258   0x00000018   Code   RO         4790    i.dog_fsm_init      fsm.o
     0x08007270   0x08007270   0x00000020   Code   RO         4158    i.dog_get_body_vel  dog.o
     0x08007290   0x08007290   0x0000003c   Code   RO         4159    i.dog_get_body_vel_without_cog  dog.o
     0x080072cc   0x080072cc   0x0000000c   Code   RO         4160    i.dog_get_stand_height  dog.o
@@ -3772,121 +3778,121 @@ Memory Map of the image
     0x08007480   0x08007480   0x000000dc   Code   RO         4165    i.dog_smooth_cog    dog.o
     0x0800755c   0x0800755c   0x0000003c   Code   RO         4545    i.est_get_body_vel  estimator.o
     0x08007598   0x08007598   0x00000238   Code   RO         4546    i.estimation_init   estimator.o
-    0x080077d0   0x080077d0   0x0000080c   Code   RO         4547    i.estimation_run    estimator.o
-    0x08007fdc   0x08007fdc   0x00000010   Code   RO         4548    i.estimation_start  estimator.o
-    0x08007fec   0x08007fec   0x00000018   Code   RO         5963    i.fabs              m_wm.l(fabs.o)
-    0x08008004   0x08008004   0x00000018   Code   RO         4790    i.fsm_change_to     fsm.o
-    0x0800801c   0x0800801c   0x0000000c   Code   RO         4793    i.fsm_get_previous_state  fsm.o
-    0x08008028   0x08008028   0x00000044   Code   RO         4794    i.fsm_init          fsm.o
-    0x0800806c   0x0800806c   0x00000028   Code   RO         4795    i.fsm_register_state  fsm.o
-    0x08008094   0x08008094   0x0000004c   Code   RO         4796    i.fsm_update        fsm.o
-    0x080080e0   0x080080e0   0x000002d0   Code   RO         4475    i.gait_generator    gait.o
-    0x080083b0   0x080083b0   0x00000144   Code   RO         4678    i.gamepad_control   gamepad.o
-    0x080084f4   0x080084f4   0x0000000c   Code   RO         4679    i.gamepad_control_init  gamepad.o
-    0x08008500   0x08008500   0x00000024   Code   RO         4642    i.getTime           timer.o
-    0x08008524   0x08008524   0x00000008   Code   RO         4166    i.get_dog_params    dog.o
-    0x0800852c   0x0800852c   0x00000008   Code   RO         5483    i.get_robot_params  robot_params.o
-    0x08008534   0x08008534   0x0000000c   Code   RO         4476    i.get_trot_params   gait.o
-    0x08008540   0x08008540   0x00000178   Code   RO         5351    i.imu_data_process  imu.o
-    0x080086b8   0x080086b8   0x00000008   Code   RO         5352    i.imu_get_data      imu.o
-    0x080086c0   0x080086c0   0x00000042   Code   RO         4168    i.leg_foot_to_motor_force_pos_vel  dog.o
-    0x08008702   0x08008702   0x00000002   PAD
-    0x08008704   0x08008704   0x000000e0   Code   RO         4169    i.leg_forward_kinematics  dog.o
-    0x080087e4   0x080087e4   0x000000b8   Code   RO         4170    i.leg_forward_kinematics_force_pos_vel  dog.o
-    0x0800889c   0x0800889c   0x0000005c   Code   RO         4171    i.leg_forward_kinematics_vel  dog.o
-    0x080088f8   0x080088f8   0x00000010   Code   RO         4172    i.leg_get_contact_state  dog.o
-    0x08008908   0x08008908   0x00000036   Code   RO         4173    i.leg_get_current_foot_force_pos_vel  dog.o
-    0x0800893e   0x0800893e   0x00000018   Code   RO         4174    i.leg_get_current_foot_pos  dog.o
-    0x08008956   0x08008956   0x00000002   PAD
-    0x08008958   0x08008958   0x00000078   Code   RO         4175    i.leg_get_current_foot_pos_body  dog.o
-    0x080089d0   0x080089d0   0x00000018   Code   RO         4177    i.leg_get_current_joint_pos  dog.o
-    0x080089e8   0x080089e8   0x00000018   Code   RO         4178    i.leg_get_current_joint_vel  dog.o
-    0x08008a00   0x08008a00   0x00000026   Code   RO         5134    i.leg_get_motors_current_force  motor.o
-    0x08008a26   0x08008a26   0x00000026   Code   RO         5135    i.leg_get_motors_current_pos  motor.o
-    0x08008a4c   0x08008a4c   0x00000026   Code   RO         5136    i.leg_get_motors_current_vel  motor.o
-    0x08008a72   0x08008a72   0x00000002   PAD
-    0x08008a74   0x08008a74   0x0000001c   Code   RO         4179    i.leg_get_neutral_current_pos  dog.o
-    0x08008a90   0x08008a90   0x00000010   Code   RO         4180    i.leg_get_phase     dog.o
-    0x08008aa0   0x08008aa0   0x0000001c   Code   RO         4181    i.leg_get_target_foot_pos  dog.o
-    0x08008abc   0x08008abc   0x00000204   Code   RO         4183    i.leg_inverse_kinematics  dog.o
-    0x08008cc0   0x08008cc0   0x000000ec   Code   RO         4184    i.leg_inverse_kinematics_force_pos_vel  dog.o
-    0x08008dac   0x08008dac   0x00000134   Code   RO         4185    i.leg_jacobian      dog.o
-    0x08008ee0   0x08008ee0   0x00000006   Code   RO         4186    i.leg_joint_to_motor  dog.o
-    0x08008ee6   0x08008ee6   0x00000002   PAD
-    0x08008ee8   0x08008ee8   0x00000058   Code   RO         4187    i.leg_joint_to_motor_force  dog.o
-    0x08008f40   0x08008f40   0x00000058   Code   RO         4188    i.leg_joint_to_motor_vel  dog.o
-    0x08008f98   0x08008f98   0x00000046   Code   RO         4189    i.leg_motor_to_foot_force_pos_vel  dog.o
-    0x08008fde   0x08008fde   0x00000006   Code   RO         4190    i.leg_motor_to_joint  dog.o
-    0x08008fe4   0x08008fe4   0x00000058   Code   RO         4191    i.leg_motor_to_joint_force  dog.o
-    0x0800903c   0x0800903c   0x00000058   Code   RO         4192    i.leg_motor_to_joint_vel  dog.o
-    0x08009094   0x08009094   0x0000002c   Code   RO         4194    i.leg_set_motor_force_pos_vel  dog.o
-    0x080090c0   0x080090c0   0x00000024   Code   RO         4195    i.leg_set_motor_force_vel_zero  dog.o
-    0x080090e4   0x080090e4   0x00000068   Code   RO         5137    i.leg_set_motor_kp_kd  motor.o
-    0x0800914c   0x0800914c   0x00000020   Code   RO         4196    i.leg_set_motor_pos  dog.o
-    0x0800916c   0x0800916c   0x00000024   Code   RO         4197    i.leg_set_motor_pos_vel  dog.o
-    0x08009190   0x08009190   0x00000020   Code   RO         4199    i.leg_set_target_foot_pos  dog.o
-    0x080091b0   0x080091b0   0x00000034   Code   RO         4200    i.leg_thigh_to_hip  dog.o
-    0x080091e4   0x080091e4   0x00000088   Code   RO         4201    i.leg_transform     dog.o
-    0x0800926c   0x0800926c   0x00000028   Code   RO         4477    i.limit             gait.o
-    0x08009294   0x08009294   0x000000d6   Code   RO           15    i.main              main.o
-    0x0800936a   0x0800936a   0x00000040   Code   RO         5020    i.mat_add_ptr       matrix.o
-    0x080093aa   0x080093aa   0x00000002   PAD
-    0x080093ac   0x080093ac   0x0000016c   Code   RO         5021    i.mat_inverse_3x3_ptr  matrix.o
-    0x08009518   0x08009518   0x00000064   Code   RO         5025    i.mat_mult_ptr      matrix.o
-    0x0800957c   0x0800957c   0x00000040   Code   RO         5026    i.mat_mult_vec_ptr  matrix.o
-    0x080095bc   0x080095bc   0x0000002c   Code   RO         5030    i.mat_transpose_ptr  matrix.o
-    0x080095e8   0x080095e8   0x000001bc   Code   RO         5138    i.motor_init        motor.o
-    0x080097a4   0x080097a4   0x0000000e   Code   RO         5395    i.my_usart_init     my_usart.o
-    0x080097b2   0x080097b2   0x0000000c   Code   RO         4870    i.passive_check_transition  passive_state.o
-    0x080097be   0x080097be   0x00000002   Code   RO         4871    i.passive_enter     passive_state.o
-    0x080097c0   0x080097c0   0x00000002   Code   RO         4872    i.passive_exit      passive_state.o
-    0x080097c2   0x080097c2   0x00000002   PAD
-    0x080097c4   0x080097c4   0x00000040   Code   RO         4873    i.passive_run       passive_state.o
-    0x08009804   0x08009804   0x0000014a   Code   RO         4478    i.phase_wave_generator  gait.o
-    0x0800994e   0x0800994e   0x00000002   PAD
-    0x08009950   0x08009950   0x00000024   Code   RO         4874    i.register_passive_state  passive_state.o
-    0x08009974   0x08009974   0x00000024   Code   RO         4917    i.register_stand_state  stand_state.o
-    0x08009998   0x08009998   0x00000024   Code   RO         4968    i.register_trot_state  trot_state.o
-    0x080099bc   0x080099bc   0x00000010   Code   RO         5445    i.send_debug_data   ano_tc.o
-    0x080099cc   0x080099cc   0x0000008c   Code   RO         5139    i.send_motors_target_force_pos_vel  motor.o
-    0x08009a58   0x08009a58   0x00000014   Code   RO         5446    i.set_debug_data    ano_tc.o
-    0x08009a6c   0x08009a6c   0x0000002e   Code   RO         4202    i.smooth            dog.o
-    0x08009a9a   0x08009a9a   0x0000003e   Code   RO         5831    i.sqrtf             m_wm.l(sqrtf_full.o)
-    0x08009ad8   0x08009ad8   0x00000028   Code   RO         4918    i.stand_check_transition  stand_state.o
-    0x08009b00   0x08009b00   0x000000d4   Code   RO         4919    i.stand_enter       stand_state.o
-    0x08009bd4   0x08009bd4   0x00000002   Code   RO         4920    i.stand_exit        stand_state.o
-    0x08009bd6   0x08009bd6   0x00000002   PAD
-    0x08009bd8   0x08009bd8   0x00000238   Code   RO         4921    i.stand_run         stand_state.o
-    0x08009e10   0x08009e10   0x00000044   Code   RO         4643    i.timer_init        timer.o
-    0x08009e54   0x08009e54   0x00000030   Code   RO         4969    i.trot_check_transition  trot_state.o
-    0x08009e84   0x08009e84   0x00000048   Code   RO         4970    i.trot_enter        trot_state.o
-    0x08009ecc   0x08009ecc   0x00000002   Code   RO         4971    i.trot_exit         trot_state.o
-    0x08009ece   0x08009ece   0x00000002   PAD
-    0x08009ed0   0x08009ed0   0x0000011c   Code   RO         4972    i.trot_run          trot_state.o
-    0x08009fec   0x08009fec   0x00000028   Code   RO         5396    i.usart1_start_recv  my_usart.o
-    0x0800a014   0x0800a014   0x00000028   Code   RO         5397    i.usart2_start_recv  my_usart.o
-    0x0800a03c   0x0800a03c   0x00000056   Code   RO         5031    i.vec3_cross        matrix.o
-    0x0800a092   0x0800a092   0x00000002   PAD
-    0x0800a094   0x0800a094   0x00000224   Code   RO         4728    i.vmc_force_calculate  force_calculate.o
-    0x0800a2b8   0x0800a2b8   0x00000018   Code   RO         4729    i.vmc_get_foot_target_force  force_calculate.o
-    0x0800a2d0   0x0800a2d0   0x0000000c   Code   RO         4730    i.vmc_get_force_control_state  force_calculate.o
-    0x0800a2dc   0x0800a2dc   0x00000048   Code   RO         4550    i.windowFunc        estimator.o
-    0x0800a324   0x0800a324   0x00000098   Code   RO         4552    i.world_foot_to_body_vel  estimator.o
-    0x0800a3bc   0x0800a3bc   0x00000008   Data   RO         1344    .constdata          stm32f7xx_hal_dma.o
-    0x0800a3c4   0x0800a3c4   0x00000010   Data   RO         4120    .constdata          system_stm32f7xx.o
-    0x0800a3d4   0x0800a3d4   0x00000008   Data   RO         4121    .constdata          system_stm32f7xx.o
-    0x0800a3dc   0x0800a3dc   0x00000040   Data   RO         4481    .constdata          gait.o
-    0x0800a41c   0x0800a41c   0x00000110   Data   RO         4554    .constdata          estimator.o
-    0x0800a52c   0x0800a52c   0x00000140   Data   RO         5788    .constdata          m_wm.l(powf.o)
-    0x0800a66c   0x0800a66c   0x00000004   PAD
-    0x0800a670   0x0800a670   0x00000030   Data   RO         5871    .constdata          m_wm.l(cos_i.o)
-    0x0800a6a0   0x0800a6a0   0x000000c8   Data   RO         5905    .constdata          m_wm.l(rred.o)
-    0x0800a768   0x0800a768   0x00000020   Data   RO         5909    .constdata          m_wm.l(rredf.o)
-    0x0800a788   0x0800a788   0x00000028   Data   RO         5912    .constdata          m_wm.l(sin_i.o)
-    0x0800a7b0   0x0800a7b0   0x00000020   Data   RO         5977    Region$$Table       anon$$obj.o
+    0x080077d0   0x080077d0   0x000007f4   Code   RO         4547    i.estimation_run    estimator.o
+    0x08007fc4   0x08007fc4   0x00000010   Code   RO         4548    i.estimation_start  estimator.o
+    0x08007fd4   0x08007fd4   0x00000018   Code   RO         5958    i.fabs              m_wm.l(fabs.o)
+    0x08007fec   0x08007fec   0x00000018   Code   RO         4791    i.fsm_change_to     fsm.o
+    0x08008004   0x08008004   0x0000000c   Code   RO         4794    i.fsm_get_previous_state  fsm.o
+    0x08008010   0x08008010   0x00000044   Code   RO         4795    i.fsm_init          fsm.o
+    0x08008054   0x08008054   0x00000028   Code   RO         4796    i.fsm_register_state  fsm.o
+    0x0800807c   0x0800807c   0x0000004c   Code   RO         4797    i.fsm_update        fsm.o
+    0x080080c8   0x080080c8   0x000002d0   Code   RO         4475    i.gait_generator    gait.o
+    0x08008398   0x08008398   0x000001b8   Code   RO         4679    i.gamepad_control   gamepad.o
+    0x08008550   0x08008550   0x0000000c   Code   RO         4680    i.gamepad_control_init  gamepad.o
+    0x0800855c   0x0800855c   0x00000024   Code   RO         4643    i.getTime           timer.o
+    0x08008580   0x08008580   0x00000008   Code   RO         4166    i.get_dog_params    dog.o
+    0x08008588   0x08008588   0x00000008   Code   RO         5478    i.get_robot_params  robot_params.o
+    0x08008590   0x08008590   0x0000000c   Code   RO         4476    i.get_trot_params   gait.o
+    0x0800859c   0x0800859c   0x00000178   Code   RO         5346    i.imu_data_process  imu.o
+    0x08008714   0x08008714   0x00000008   Code   RO         5347    i.imu_get_data      imu.o
+    0x0800871c   0x0800871c   0x00000042   Code   RO         4168    i.leg_foot_to_motor_force_pos_vel  dog.o
+    0x0800875e   0x0800875e   0x00000002   PAD
+    0x08008760   0x08008760   0x000000e0   Code   RO         4169    i.leg_forward_kinematics  dog.o
+    0x08008840   0x08008840   0x000000b8   Code   RO         4170    i.leg_forward_kinematics_force_pos_vel  dog.o
+    0x080088f8   0x080088f8   0x0000005c   Code   RO         4171    i.leg_forward_kinematics_vel  dog.o
+    0x08008954   0x08008954   0x00000010   Code   RO         4172    i.leg_get_contact_state  dog.o
+    0x08008964   0x08008964   0x00000036   Code   RO         4173    i.leg_get_current_foot_force_pos_vel  dog.o
+    0x0800899a   0x0800899a   0x00000018   Code   RO         4174    i.leg_get_current_foot_pos  dog.o
+    0x080089b2   0x080089b2   0x00000002   PAD
+    0x080089b4   0x080089b4   0x00000078   Code   RO         4175    i.leg_get_current_foot_pos_body  dog.o
+    0x08008a2c   0x08008a2c   0x00000018   Code   RO         4177    i.leg_get_current_joint_pos  dog.o
+    0x08008a44   0x08008a44   0x00000018   Code   RO         4178    i.leg_get_current_joint_vel  dog.o
+    0x08008a5c   0x08008a5c   0x00000026   Code   RO         5129    i.leg_get_motors_current_force  motor.o
+    0x08008a82   0x08008a82   0x00000026   Code   RO         5130    i.leg_get_motors_current_pos  motor.o
+    0x08008aa8   0x08008aa8   0x00000026   Code   RO         5131    i.leg_get_motors_current_vel  motor.o
+    0x08008ace   0x08008ace   0x00000002   PAD
+    0x08008ad0   0x08008ad0   0x0000001c   Code   RO         4179    i.leg_get_neutral_current_pos  dog.o
+    0x08008aec   0x08008aec   0x00000010   Code   RO         4180    i.leg_get_phase     dog.o
+    0x08008afc   0x08008afc   0x0000001c   Code   RO         4181    i.leg_get_target_foot_pos  dog.o
+    0x08008b18   0x08008b18   0x00000204   Code   RO         4183    i.leg_inverse_kinematics  dog.o
+    0x08008d1c   0x08008d1c   0x000000ec   Code   RO         4184    i.leg_inverse_kinematics_force_pos_vel  dog.o
+    0x08008e08   0x08008e08   0x00000134   Code   RO         4185    i.leg_jacobian      dog.o
+    0x08008f3c   0x08008f3c   0x00000006   Code   RO         4186    i.leg_joint_to_motor  dog.o
+    0x08008f42   0x08008f42   0x00000002   PAD
+    0x08008f44   0x08008f44   0x00000058   Code   RO         4187    i.leg_joint_to_motor_force  dog.o
+    0x08008f9c   0x08008f9c   0x00000058   Code   RO         4188    i.leg_joint_to_motor_vel  dog.o
+    0x08008ff4   0x08008ff4   0x00000046   Code   RO         4189    i.leg_motor_to_foot_force_pos_vel  dog.o
+    0x0800903a   0x0800903a   0x00000006   Code   RO         4190    i.leg_motor_to_joint  dog.o
+    0x08009040   0x08009040   0x00000058   Code   RO         4191    i.leg_motor_to_joint_force  dog.o
+    0x08009098   0x08009098   0x00000058   Code   RO         4192    i.leg_motor_to_joint_vel  dog.o
+    0x080090f0   0x080090f0   0x0000002c   Code   RO         4194    i.leg_set_motor_force_pos_vel  dog.o
+    0x0800911c   0x0800911c   0x00000024   Code   RO         4195    i.leg_set_motor_force_vel_zero  dog.o
+    0x08009140   0x08009140   0x00000068   Code   RO         5132    i.leg_set_motor_kp_kd  motor.o
+    0x080091a8   0x080091a8   0x00000020   Code   RO         4196    i.leg_set_motor_pos  dog.o
+    0x080091c8   0x080091c8   0x00000024   Code   RO         4197    i.leg_set_motor_pos_vel  dog.o
+    0x080091ec   0x080091ec   0x00000020   Code   RO         4199    i.leg_set_target_foot_pos  dog.o
+    0x0800920c   0x0800920c   0x00000034   Code   RO         4200    i.leg_thigh_to_hip  dog.o
+    0x08009240   0x08009240   0x00000088   Code   RO         4201    i.leg_transform     dog.o
+    0x080092c8   0x080092c8   0x00000028   Code   RO         4477    i.limit             gait.o
+    0x080092f0   0x080092f0   0x000000d6   Code   RO           15    i.main              main.o
+    0x080093c6   0x080093c6   0x00000040   Code   RO         5015    i.mat_add_ptr       matrix.o
+    0x08009406   0x08009406   0x00000002   PAD
+    0x08009408   0x08009408   0x0000016c   Code   RO         5016    i.mat_inverse_3x3_ptr  matrix.o
+    0x08009574   0x08009574   0x00000064   Code   RO         5020    i.mat_mult_ptr      matrix.o
+    0x080095d8   0x080095d8   0x00000040   Code   RO         5021    i.mat_mult_vec_ptr  matrix.o
+    0x08009618   0x08009618   0x0000002c   Code   RO         5025    i.mat_transpose_ptr  matrix.o
+    0x08009644   0x08009644   0x000001bc   Code   RO         5133    i.motor_init        motor.o
+    0x08009800   0x08009800   0x0000000e   Code   RO         5390    i.my_usart_init     my_usart.o
+    0x0800980e   0x0800980e   0x0000000c   Code   RO         4871    i.passive_check_transition  passive_state.o
+    0x0800981a   0x0800981a   0x00000002   Code   RO         4872    i.passive_enter     passive_state.o
+    0x0800981c   0x0800981c   0x00000002   Code   RO         4873    i.passive_exit      passive_state.o
+    0x0800981e   0x0800981e   0x00000002   PAD
+    0x08009820   0x08009820   0x00000040   Code   RO         4874    i.passive_run       passive_state.o
+    0x08009860   0x08009860   0x0000014a   Code   RO         4478    i.phase_wave_generator  gait.o
+    0x080099aa   0x080099aa   0x00000002   PAD
+    0x080099ac   0x080099ac   0x00000024   Code   RO         4875    i.register_passive_state  passive_state.o
+    0x080099d0   0x080099d0   0x00000024   Code   RO         4918    i.register_stand_state  stand_state.o
+    0x080099f4   0x080099f4   0x00000024   Code   RO         4966    i.register_trot_state  trot_state.o
+    0x08009a18   0x08009a18   0x00000010   Code   RO         5440    i.send_debug_data   ano_tc.o
+    0x08009a28   0x08009a28   0x0000008c   Code   RO         5134    i.send_motors_target_force_pos_vel  motor.o
+    0x08009ab4   0x08009ab4   0x00000014   Code   RO         5441    i.set_debug_data    ano_tc.o
+    0x08009ac8   0x08009ac8   0x0000002e   Code   RO         4202    i.smooth            dog.o
+    0x08009af6   0x08009af6   0x0000003e   Code   RO         5826    i.sqrtf             m_wm.l(sqrtf_full.o)
+    0x08009b34   0x08009b34   0x00000028   Code   RO         4919    i.stand_check_transition  stand_state.o
+    0x08009b5c   0x08009b5c   0x000000d4   Code   RO         4920    i.stand_enter       stand_state.o
+    0x08009c30   0x08009c30   0x00000002   Code   RO         4921    i.stand_exit        stand_state.o
+    0x08009c32   0x08009c32   0x00000002   PAD
+    0x08009c34   0x08009c34   0x00000288   Code   RO         4922    i.stand_run         stand_state.o
+    0x08009ebc   0x08009ebc   0x00000044   Code   RO         4644    i.timer_init        timer.o
+    0x08009f00   0x08009f00   0x00000030   Code   RO         4967    i.trot_check_transition  trot_state.o
+    0x08009f30   0x08009f30   0x00000048   Code   RO         4968    i.trot_enter        trot_state.o
+    0x08009f78   0x08009f78   0x00000002   Code   RO         4969    i.trot_exit         trot_state.o
+    0x08009f7a   0x08009f7a   0x00000002   PAD
+    0x08009f7c   0x08009f7c   0x00000168   Code   RO         4970    i.trot_run          trot_state.o
+    0x0800a0e4   0x0800a0e4   0x00000028   Code   RO         5391    i.usart1_start_recv  my_usart.o
+    0x0800a10c   0x0800a10c   0x00000028   Code   RO         5392    i.usart2_start_recv  my_usart.o
+    0x0800a134   0x0800a134   0x00000056   Code   RO         5026    i.vec3_cross        matrix.o
+    0x0800a18a   0x0800a18a   0x00000002   PAD
+    0x0800a18c   0x0800a18c   0x00000224   Code   RO         4729    i.vmc_force_calculate  force_calculate.o
+    0x0800a3b0   0x0800a3b0   0x00000018   Code   RO         4730    i.vmc_get_foot_target_force  force_calculate.o
+    0x0800a3c8   0x0800a3c8   0x0000000c   Code   RO         4731    i.vmc_get_force_control_state  force_calculate.o
+    0x0800a3d4   0x0800a3d4   0x00000048   Code   RO         4550    i.windowFunc        estimator.o
+    0x0800a41c   0x0800a41c   0x00000098   Code   RO         4552    i.world_foot_to_body_vel  estimator.o
+    0x0800a4b4   0x0800a4b4   0x00000008   Data   RO         1344    .constdata          stm32f7xx_hal_dma.o
+    0x0800a4bc   0x0800a4bc   0x00000010   Data   RO         4120    .constdata          system_stm32f7xx.o
+    0x0800a4cc   0x0800a4cc   0x00000008   Data   RO         4121    .constdata          system_stm32f7xx.o
+    0x0800a4d4   0x0800a4d4   0x00000040   Data   RO         4481    .constdata          gait.o
+    0x0800a514   0x0800a514   0x00000110   Data   RO         4554    .constdata          estimator.o
+    0x0800a624   0x0800a624   0x00000140   Data   RO         5783    .constdata          m_wm.l(powf.o)
+    0x0800a764   0x0800a764   0x00000004   PAD
+    0x0800a768   0x0800a768   0x00000030   Data   RO         5866    .constdata          m_wm.l(cos_i.o)
+    0x0800a798   0x0800a798   0x000000c8   Data   RO         5900    .constdata          m_wm.l(rred.o)
+    0x0800a860   0x0800a860   0x00000020   Data   RO         5904    .constdata          m_wm.l(rredf.o)
+    0x0800a880   0x0800a880   0x00000028   Data   RO         5907    .constdata          m_wm.l(sin_i.o)
+    0x0800a8a8   0x0800a8a8   0x00000020   Data   RO         5972    Region$$Table       anon$$obj.o
 
 
-    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x0800a7d0, Size: 0x000056c8, Max: 0x00080000, ABSOLUTE, COMPRESSED[0x000001c4])
+    Execution Region RW_IRAM1 (Exec base: 0x20000000, Load base: 0x0800a8c8, Size: 0x000057f0, Max: 0x00080000, ABSOLUTE, COMPRESSED[0x000001cc])
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -3895,34 +3901,34 @@ Memory Map of the image
     0x20000010   COMPRESSED   0x00000004   Data   RW         4122    .data               system_stm32f7xx.o
     0x20000014   COMPRESSED   0x00000038   Data   RW         4482    .data               gait.o
     0x2000004c   COMPRESSED   0x00000130   Data   RW         4555    .data               estimator.o
-    0x2000017c   COMPRESSED   0x00000038   Data   RW         4682    .data               gamepad.o
-    0x200001b4   COMPRESSED   0x0000003c   Data   RW         4733    .data               force_calculate.o
-    0x200001f0   COMPRESSED   0x000000d4   Data   RW         4926    .data               stand_state.o
-    0x200002c4   COMPRESSED   0x000000c0   Data   RW         4977    .data               trot_state.o
-    0x20000384   COMPRESSED   0x00000014   Data   RW         5219    .data               j60.o
-    0x20000398   COMPRESSED   0x0000000c   Data   RW         5354    .data               imu.o
-    0x200003a4   COMPRESSED   0x00000002   Data   RW         5399    .data               my_usart.o
-    0x200003a6   COMPRESSED   0x00000002   PAD
-    0x200003a8   COMPRESSED   0x00000258   Data   RW         5484    .data               robot_params.o
-    0x20000600   COMPRESSED   0x00000004   Data   RW         5940    .data               mc_w.l(errno.o)
-    0x20000604        -       0x00000078   Zero   RW          255    .bss                can.o
-    0x2000067c        -       0x000002ac   Zero   RW          340    .bss                tim.o
-    0x20000928        -       0x000002b8   Zero   RW          425    .bss                usart.o
-    0x20000be0        -       0x00000454   Zero   RW         4203    .bss                dog.o
-    0x20001034        -       0x00000060   Zero   RW         4480    .bss                gait.o
-    0x20001094        -       0x000014f4   Zero   RW         4553    .bss                estimator.o
-    0x20002588        -       0x00000020   Zero   RW         4681    .bss                gamepad.o
-    0x200025a8        -       0x00000164   Zero   RW         4732    .bss                force_calculate.o
-    0x2000270c        -       0x00000074   Zero   RW         4797    .bss                fsm.o
-    0x20002780        -       0x00000180   Zero   RW         4925    .bss                stand_state.o
-    0x20002900        -       0x000000e8   Zero   RW         4976    .bss                trot_state.o
-    0x200029e8        -       0x00000b54   Zero   RW         5218    .bss                j60.o
-    0x2000353c        -       0x0000009c   Zero   RW         5353    .bss                imu.o
-    0x200035d8        -       0x00000082   Zero   RW         5398    .bss                my_usart.o
-    0x2000365a   COMPRESSED   0x00000002   PAD
-    0x2000365c        -       0x00000065   Zero   RW         5447    .bss                ano_tc.o
-    0x200036c1   COMPRESSED   0x00000007   PAD
-    0x200036c8        -       0x00002000   Zero   RW            1    STACK               startup_stm32f767xx.o
+    0x2000017c   COMPRESSED   0x00000044   Data   RW         4683    .data               gamepad.o
+    0x200001c0   COMPRESSED   0x0000003c   Data   RW         4734    .data               force_calculate.o
+    0x200001fc   COMPRESSED   0x000000d4   Data   RW         4924    .data               stand_state.o
+    0x200002d0   COMPRESSED   0x000000c0   Data   RW         4972    .data               trot_state.o
+    0x20000390   COMPRESSED   0x00000014   Data   RW         5214    .data               j60.o
+    0x200003a4   COMPRESSED   0x0000000c   Data   RW         5349    .data               imu.o
+    0x200003b0   COMPRESSED   0x00000002   Data   RW         5394    .data               my_usart.o
+    0x200003b2   COMPRESSED   0x00000002   PAD
+    0x200003b4   COMPRESSED   0x00000258   Data   RW         5479    .data               robot_params.o
+    0x2000060c   COMPRESSED   0x00000004   Data   RW         5935    .data               mc_w.l(errno.o)
+    0x20000610        -       0x00000078   Zero   RW          255    .bss                can.o
+    0x20000688        -       0x000002ac   Zero   RW          340    .bss                tim.o
+    0x20000934        -       0x000002b8   Zero   RW          425    .bss                usart.o
+    0x20000bec        -       0x00000454   Zero   RW         4203    .bss                dog.o
+    0x20001040        -       0x00000060   Zero   RW         4480    .bss                gait.o
+    0x200010a0        -       0x000014f4   Zero   RW         4553    .bss                estimator.o
+    0x20002594        -       0x00000020   Zero   RW         4682    .bss                gamepad.o
+    0x200025b4        -       0x00000164   Zero   RW         4733    .bss                force_calculate.o
+    0x20002718        -       0x00000074   Zero   RW         4798    .bss                fsm.o
+    0x2000278c        -       0x00000210   Zero   RW         4923    .bss                stand_state.o
+    0x2000299c        -       0x00000178   Zero   RW         4971    .bss                trot_state.o
+    0x20002b14        -       0x00000b54   Zero   RW         5213    .bss                j60.o
+    0x20003668        -       0x0000009c   Zero   RW         5348    .bss                imu.o
+    0x20003704        -       0x00000082   Zero   RW         5393    .bss                my_usart.o
+    0x20003786   COMPRESSED   0x00000002   PAD
+    0x20003788        -       0x00000065   Zero   RW         5442    .bss                ano_tc.o
+    0x200037ed   COMPRESSED   0x00000003   PAD
+    0x200037f0        -       0x00002000   Zero   RW            1    STACK               startup_stm32f767xx.o
 
 
 ==============================================================================
@@ -3936,13 +3942,13 @@ Image component sizes
        516         48          0          4        120       3123   can.o
         92          4          0          0          0        802   dma.o
       3892        196          0          0       1108      30934   dog.o
-      3060        202        272        304       5364      12442   estimator.o
+      3036        202        272        304       5364      12316   estimator.o
        584         38          0         60        356       3679   force_calculate.o
        250         36          0          0        116       4807   fsm.o
       1466         70         64         56         96       7703   gait.o
-       824         26          0         56         32       3672   gamepad.o
+       940         28          0         68         32       3867   gamepad.o
         76          6          0          0          0        835   gpio.o
-       448         20          0         12        156       3658   imu.o
+       448         20          0         12        156       3674   imu.o
       1812        256          0         20       2900      14328   j60.o
        378         10          0          0          0     926312   main.o
        722         10          0          0          0       4467   matrix.o
@@ -3950,7 +3956,7 @@ Image component sizes
        222         52          0          2        130       3388   my_usart.o
        116         20          0          0          0       2389   passive_state.o
          8          4          0        600          0       1014   robot_params.o
-       858         46          0        212        384       5240   stand_state.o
+       938         44          0        212        528       5264   stand_state.o
         36          8        504          0       8192        824   startup_stm32f767xx.o
        150         24          0         12          0       9101   stm32f7xx_hal.o
       1730         10          0          0          0      14933   stm32f7xx_hal_can.o
@@ -3969,13 +3975,13 @@ Image component sizes
         16          4         24          4          0       1091   system_stm32f7xx.o
       1188        114          0          0        684       7088   tim.o
        224         60          0          0          0       2031   timer.o
-       442         40          0        192        232       4046   trot_state.o
+       518         40          0        192        376       4034   trot_state.o
        720         70          0          0        696       3646   usart.o
 
     ----------------------------------------------------------------------
-     30142       1924        904       1536      20676    1183125   Object Totals
+     30390       1924        904       1548      20960    1183222   Object Totals
          0          0         32          0          0          0   (incl. Generated)
-        48          0          0          2          9          0   (incl. Padding)
+        48          0          0          2          5          0   (incl. Padding)
 
     ----------------------------------------------------------------------
 
@@ -4064,15 +4070,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-     41412       2642       1548       1540      20676    1191029   Grand Totals
-     41412       2642       1548        452      20676    1191029   ELF Image Totals (compressed)
-     41412       2642       1548        452          0          0   ROM Totals
+     41660       2642       1548       1552      20960    1191126   Grand Totals
+     41660       2642       1548        460      20960    1191126   ELF Image Totals (compressed)
+     41660       2642       1548        460          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                42960 (  41.95kB)
-    Total RW  Size (RW Data + ZI Data)             22216 (  21.70kB)
-    Total ROM Size (Code + RO Data + RW Data)      43412 (  42.39kB)
+    Total RO  Size (Code + RO Data)                43208 (  42.20kB)
+    Total RW  Size (RW Data + ZI Data)             22512 (  21.98kB)
+    Total ROM Size (Code + RO Data + RW Data)      43668 (  42.64kB)
 
 ==============================================================================
 

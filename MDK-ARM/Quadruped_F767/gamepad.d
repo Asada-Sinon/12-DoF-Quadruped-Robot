@@ -50,3 +50,4 @@ quadruped_f767\gamepad.o: ../My/Inc/matrix.h
 quadruped_f767\gamepad.o: ../Drivers/CMSIS/DSP/Include/arm_math.h
 quadruped_f767\gamepad.o: ../Drivers/CMSIS/Include/core_cm7.h
 quadruped_f767\gamepad.o: D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin\..\include\string.h
+quadruped_f767\gamepad.o: ../My/Inc/imu.h

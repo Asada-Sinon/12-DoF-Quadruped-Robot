@@ -45,3 +45,4 @@ quadruped_f767\imu.o: ../My/Inc/estimator.h
 quadruped_f767\imu.o: ../My/Inc/matrix.h
 quadruped_f767\imu.o: ../Drivers/CMSIS/DSP/Include/arm_math.h
 quadruped_f767\imu.o: ../Drivers/CMSIS/Include/core_cm7.h
+quadruped_f767\imu.o: ../My/Inc/ANO_TC.h

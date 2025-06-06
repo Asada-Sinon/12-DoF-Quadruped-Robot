@@ -146,12 +146,12 @@ static void stand_run(void) {
         leg_foot_to_motor_force_pos_vel(i, stand_test_foot_target_force[i], foot_target_pos[i], foot_target_vel[i], motor_target_force[i], motor_target_pos[i], motor_target_vel[i]);
         leg_set_motor_force_pos_vel(i, motor_target_force[i], motor_target_pos[i], motor_target_vel[i]);
 
-//        // 获取足端力，调试用
-//        leg_get_current_foot_force_pos_vel(i, stand_test_foot_current_force[i], stand_test_foot_current_pos[i], stand_test_foot_current_vel[i]);
-//        set_debug_data(2, stand_test_foot_current_force[0][2]);
-//        set_debug_data(3, stand_test_foot_current_force[1][2]);
-//        set_debug_data(4, stand_test_foot_current_force[2][2]);
-//        set_debug_data(5, stand_test_foot_current_force[3][2]);
+        // 获取足端力，调试用
+        leg_get_current_foot_force_pos_vel(i, stand_test_foot_current_force[i], stand_test_foot_current_pos[i], stand_test_foot_current_vel[i]);
+        set_debug_data(2, stand_test_foot_current_force[0][2]);
+        set_debug_data(3, stand_test_foot_current_force[1][2]);
+        set_debug_data(4, stand_test_foot_current_force[2][2]);
+        set_debug_data(5, stand_test_foot_current_force[3][2]);
 //        
 //        set_debug_data(6, stand_test_foot_current_force[0][2]);
 //        set_debug_data(7, stand_test_foot_current_force[1][2]);

@@ -4,6 +4,8 @@
 #include "stdlib.h"
 #include "ANO_TC.h"
 #include "estimator.h"
+#include "imu.h"
+
 int16_t _channels[16];
 // 通道定义
 #define LEFT_X_CH   3
@@ -46,6 +48,11 @@ float v_big_dead_zone = 0.1f;
 float vx_scale = 0.005;
 float vy_scale = 0.005;
 float w_scale = 0.001;
+
+// 走直线时保持当前yaw角
+float kp_yaw = 0.015;
+float kd_w = 0.001;
+float target_yaw = 0;
 
 // 重心调整步长
 #define COG_ADJUST_STEP 0.01f
@@ -188,9 +195,23 @@ void gamepad_control()
     vx_smooth = smooth(vx_smooth, vx, v_inc);
     vy_smooth = smooth(vy_smooth, vy, v_inc);
     w_smooth = smooth(w_smooth, w, v_inc);
+    // 如果手柄设定vx、vy为零、或者w不为0时，更新当前yaw角
+    if ((fabs(vx_smooth) < v_dead_zone && fabs(vy_smooth) < v_dead_zone) || fabs(w) > v_dead_zone)
+    {
+        target_yaw = imu_get_data()->angle[2];
+    }
+    else // 使用pd控制器保持当前yaw角
+    {
+        w_smooth = kp_yaw * (target_yaw - imu_get_data()->angle[2]) + kd_w * (0 - imu_get_data()->gyro[2]);
+    }
+
     dog_set_body_vel(vx_smooth, vy_smooth, w_smooth);
     
-    set_debug_data(0, vx_smooth);
+//    set_debug_data(0, vx_smooth);
+//    
+//    set_debug_data(4, w_smooth);
+//    set_debug_data(5, target_yaw);
+    
     
     if (SWITCH_DOWN(SWITCH_CH3)) {
         fsm_change_to(STATE_PASSIVE);
