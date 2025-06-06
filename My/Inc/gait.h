@@ -18,6 +18,7 @@ typedef struct {
     float foot_target_vel[4][3];
     float foot_target_force[4][3];
     int contact[4];
+    float phase[4];
 } GaitState;
 
 // 获取步态参数

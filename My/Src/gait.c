@@ -176,7 +176,7 @@ void phase_wave_generator_with_force(GaitParams *gait, WaveStatus status, float 
                 t = 0;
             // 检查是否全部触地
             all_legs_contact = 1;
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 4; i++)
             {
                 if (contact_judge_with_force(i) == 1)
                 {
@@ -204,7 +204,7 @@ void phase_wave_generator_with_force(GaitParams *gait, WaveStatus status, float 
             }
             
             // 计算每条腿的相位
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 4; i++)
             {
                 // float normalized_time = fmod(t + gait->T - gait->T * gait->phase[i], gait->T) / gait->T;
                 if (contact[i] == 1)

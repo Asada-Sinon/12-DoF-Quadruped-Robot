@@ -98,18 +98,21 @@ void vmc_force_calculate() // 放在定时器里
     test_time_force_cal = (getTime() - _time) * 1000;
 }
 
-float CONTACT_FORCE_THRESHOLD = 5;
+float CONTACT_FORCE_THRESHOLD = -40;
+float CONTACT_VEL_THRESHOLD_MAX = 0.25;
+float CONTACT_VEL_THRESHOLD_MIN = -0.5;
+float foot_force[4][3];
 uint8_t contact_judge_with_force(uint8_t leg_id)
 {
-    float foot_force[3];
+//    float foot_force[3];
     float foot_pos[3];
     float foot_vel[3];
     
     // 获取足端力和位置信息
-    leg_get_current_foot_force_pos_vel(leg_id, foot_force, foot_pos, foot_vel);
+    leg_get_current_foot_force_pos_vel(leg_id, foot_force[leg_id], foot_pos, foot_vel);
     
-    // 判断z轴力是否超过阈值
-    if(foot_force[2] > CONTACT_FORCE_THRESHOLD)
+    // 判断z轴力是否超过阈值 与 z轴速度是否小于阈值
+    if(foot_force[leg_id][2] < CONTACT_FORCE_THRESHOLD && foot_vel[leg_id] > CONTACT_VEL_THRESHOLD_MIN && foot_vel[leg_id] < CONTACT_VEL_THRESHOLD_MAX)
     {
         return 1;  // 触地
     }

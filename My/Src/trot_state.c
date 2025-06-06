@@ -46,8 +46,13 @@ float trot_foot_current_pos[4][3] = {0};
 static void trot_enter(void) {
     // printf("进入对角步态状态\n");
     for(uint8_t i = 0; i < 4; i ++)
+    {
         leg_set_motor_kp_kd(i, stance_hip[0].kp, stance_hip[0].kd, stance_thigh[0].kp, stance_thigh[0].kd, stance_calf[0].kp, stance_calf[0].kd);
+        trot_state.contact[i] = 1;
+    }
+        
     trot_state.time_start = getTime();   
+    
 }
 
 float phase[4] = {0};
@@ -73,9 +78,9 @@ static void trot_run(void) {
 //        get_dog_params()->posture.center_of_gravity.translation[X_IDX] = get_dog_params()->posture.center_of_gravity.stand_cog_offset[X_IDX];
 //    }
     
-    phase_wave_generator(get_trot_params(), trot_state.wave_status, trot_state.time_start, phase, trot_state.contact);
-//    phase_wave_generator_with_force(get_trot_params(), trot_state.wave_status, trot_state.time_start, phase, trot_state.contact);
-    gait_generator(get_trot_params(), phase, trot_state.contact, trot_state.foot_target_pos, trot_state.foot_target_vel);
+//    phase_wave_generator(get_trot_params(), trot_state.wave_status, trot_state.time_start, trot_state.phase, trot_state.contact);
+    phase_wave_generator_with_force(get_trot_params(), trot_state.wave_status, trot_state.time_start, trot_state.phase, trot_state.contact);
+    gait_generator(get_trot_params(), trot_state.phase, trot_state.contact, trot_state.foot_target_pos, trot_state.foot_target_vel);
     
     for(int i = 0; i < 4; i++){
         if (trot_state.contact[i] == 0) // 摆动腿
@@ -98,8 +103,13 @@ static void trot_run(void) {
         set_debug_data(3, trot_foot_current_force[1][2]);
         set_debug_data(4, trot_foot_current_force[2][2]);
         set_debug_data(5, trot_foot_current_force[3][2]);
-//        
-//        set_debug_data(6, trot_state.contact[0]);
+        
+        set_debug_data(6, trot_foot_current_vel[0][2]);
+        set_debug_data(7, trot_foot_current_vel[1][2]);
+        set_debug_data(8, trot_foot_current_vel[2][2]);
+        set_debug_data(9, trot_foot_current_vel[3][2]);
+        
+        set_debug_data(10, trot_state.contact[0]);
 //        set_debug_data(7, trot_state.contact[1]);
 //        set_debug_data(8, trot_state.contact[2]);
 //        set_debug_data(9, trot_state.contact[3]);
