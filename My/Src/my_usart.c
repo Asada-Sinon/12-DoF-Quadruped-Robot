@@ -3,9 +3,12 @@
 #include "stdint.h"
 #include "imu.h"
 #include "gamepad.h"
+#include "vision.h"
 
 uint8_t imu_recv_data[100];
 uint8_t gamepad_buffer[30];
+uint8_t vision_buffer[30];
+
 void usart1_start_recv() // imu
 {
     HAL_UARTEx_ReceiveToIdle_DMA(&huart1, imu_recv_data, 100);
@@ -18,10 +21,17 @@ void usart2_start_recv(void) // 遥控
 	__HAL_DMA_DISABLE_IT(&hdma_usart2_rx,DMA_IT_HT);
 }
 
+void usart6_start_recv(void) // 小电脑的雷达数据
+{
+		HAL_UARTEx_ReceiveToIdle_DMA(&huart6,vision_buffer,12);
+	__HAL_DMA_DISABLE_IT(&hdma_usart6_rx,DMA_IT_HT);
+}
+
 void my_usart_init(void)
 {
     usart1_start_recv();
     usart2_start_recv();
+    usart6_start_recv();
 }
 
 
@@ -41,6 +51,12 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
         HT10A_process(gamepad_buffer);
         usart2_start_recv();
     }
+    if (huart->Instance == USART6) // 小电脑
+    {
+        HAL_UART_DMAStop(huart);
+        vision_data_process(vision_buffer);
+        usart6_start_recv();
+    }
 }
 
 
@@ -55,5 +71,10 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart)
     {
         __HAL_UART_CLEAR_OREFLAG(huart);
         usart2_start_recv();
+    }
+    if (huart->Instance == USART6)
+    {
+        __HAL_UART_CLEAR_OREFLAG(huart);
+        usart6_start_recv();
     }
 }

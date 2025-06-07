@@ -948,6 +948,11 @@
               <FileType>1</FileType>
               <FilePath>..\My\Src\ANO_TC.c</FilePath>
             </File>
+            <File>
+              <FileName>vision.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\My\Src\vision.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

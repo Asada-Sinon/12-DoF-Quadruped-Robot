@@ -38,3 +38,4 @@ quadruped_f767\my_usart.o: ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uar
 quadruped_f767\my_usart.o: ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h
 quadruped_f767\my_usart.o: ../My/Inc/imu.h
 quadruped_f767\my_usart.o: ../My/Inc/gamepad.h
+quadruped_f767\my_usart.o: ../My/Inc/vision.h

@@ -123,6 +123,7 @@ int main(void)
   MX_TIM10_Init();
   MX_UART4_Init();
   MX_USART2_UART_Init();
+  MX_USART6_UART_Init();
   /* USER CODE BEGIN 2 */
     // 初始化
     dog_fsm_init();// 状态机初始化，注册状态

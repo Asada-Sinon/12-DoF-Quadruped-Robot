@@ -73,7 +73,7 @@ float cal_foot_end_pos(int leg_id, GaitParams *gait, const float body_vel[3], fl
     end_pos[X_IDX] = vbx*(1-phase)*Tswing + (vbx + VW_SIGNS[leg_id][0] * vw * sinf(HIP_ANGLE))*Tstance/2.0f + x_adjust;
 //    end_pos[X_IDX] = (vx + VW_SIGNS[leg_id][0] * vw * sinf(HIP_ANGLE))*Tstance/2.0f + x_adjust;
     // end_pos[X_IDX] = (vx + VW_SIGNS[leg_id][0] * vw * sinf(HIP_ANGLE))*Tstance/2.0f;
-    end_pos[Y_IDX] = (vy + VW_SIGNS[leg_id][1] * vw * cosf(HIP_ANGLE))*Tstance/2.0f;
+    end_pos[Y_IDX] = (vby + VW_SIGNS[leg_id][1] * vw * cosf(HIP_ANGLE))*Tstance/2.0f + y_adjust;
 //    end_pos[Y_IDX] = (vy + VW_SIGNS[leg_id][1] * vw * cosf(HIP_ANGLE))*Tstance/2.0f + y_adjust;
     // end_pos[Y_IDX] = (vy + VW_SIGNS[leg_id][1] * vw * cosf(HIP_ANGLE))*Tstance/2.0f;
     end_pos[Z_IDX] = 0.0f;  // 默认高度为0
@@ -306,8 +306,8 @@ void gait_generator(GaitParams *gait, float *phase, int *contact, float foot_tar
             y = p0[i][Y_IDX] - (body_vel[Y_IDX] + VW_SIGNS[i][1] * body_vel[2] * cosf(HIP_ANGLE)) * T * gait->stance_ratio * phase[i] * ratio;
             z = 0;
 
-            vx = 0;
-            vy = 0;
+            vx = - (body_vel[X_IDX] + VW_SIGNS[i][0] * body_vel[2] * sinf(HIP_ANGLE));
+            vy = - (body_vel[Y_IDX] + VW_SIGNS[i][1] * body_vel[2] * cosf(HIP_ANGLE));
             vz = 0;
         }
         else{ // 处于摆动相 

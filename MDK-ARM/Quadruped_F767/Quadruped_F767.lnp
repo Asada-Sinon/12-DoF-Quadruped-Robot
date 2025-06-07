@@ -45,6 +45,7 @@
 "quadruped_f767\imu.o"
 "quadruped_f767\my_usart.o"
 "quadruped_f767\ano_tc.o"
+"quadruped_f767\vision.o"
 "quadruped_f767\robot_params.o"
 --library_type=microlib --strict --scatter "Quadruped_F767\Quadruped_F767.sct"
 --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
