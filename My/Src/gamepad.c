@@ -5,6 +5,14 @@
 #include "ANO_TC.h"
 #include "estimator.h"
 #include "imu.h"
+#include "vision.h"
+// 拨杆功能：
+// 拨杆1：无
+// 拨杆2：UP：默认状态， DOWN：开启雷达矫正
+// 拨杆3：UP：默认状态， DOWN：进入阻尼模式
+// 拨杆4：无
+// 左摇杆：控制机体平移速度
+// 右摇杆：控制机体旋转速度，Y轴无作用
 
 int16_t _channels[16];
 // 通道定义
@@ -53,6 +61,8 @@ float w_scale = 0.001;
 float kp_yaw = 0.015;
 float kd_w = 0.001;
 float target_yaw = 0;
+float kp_y = 0.001;
+float target_y = 0; // 雷达反馈的机体侧移坐标
 
 // 重心调整步长
 #define COG_ADJUST_STEP 0.01f
@@ -196,13 +206,18 @@ void gamepad_control()
     vy_smooth = smooth(vy_smooth, vy, v_inc);
     w_smooth = smooth(w_smooth, w, v_inc);
     // 如果手柄设定vx、vy为零、或者w不为0时，更新当前yaw角
-    if ((fabs(vx_smooth) < v_dead_zone && fabs(vy_smooth) < v_dead_zone) || fabs(w) > v_dead_zone)
+    if ((fabs(vx) < v_dead_zone && fabs(vy) < v_dead_zone) || fabs(w) > v_dead_zone)
     {
         target_yaw = imu_get_data()->angle[2];
+        target_y = vision_get_pos(1);
     }
     else // 使用pd控制器保持当前yaw角
     {
         w_smooth = kp_yaw * (target_yaw - imu_get_data()->angle[2]) + kd_w * (0 - imu_get_data()->gyro[2]);
+        if (SWITCH_DOWN(SWITCH_CH2) && (fabs(vy) < v_dead_zone) && fabs(w) < v_dead_zone)  // 只有x方向速度时，开启雷达矫正y方向
+        {
+            vy_smooth = kp_y* (target_y - vision_get_pos(1));
+        }
     }
 
     dog_set_body_vel(vx_smooth, vy_smooth, w_smooth);
@@ -226,8 +241,10 @@ void gamepad_control()
         SWITCH_UP(SWITCH_CH2)) {
         fsm_change_to(STATE_STAND);
     } else {
-        fsm_change_to(STATE_TROT);
+        // fsm_change_to(STATE_TROT);
     } 
+
+    
 }
 
 float get_origin_target_body_vel(int idx)

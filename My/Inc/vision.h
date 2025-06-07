@@ -17,7 +17,6 @@ typedef union
 
 void vision_data_process(uint8_t *vision_recv);
 
-float vision_get_pos_x(void);
-float vision_get_pos_y(void);
-float vision_get_pos_x_start(void);
+float vision_get_pos(uint8_t axis);
+
 #endif 
