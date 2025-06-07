@@ -3,9 +3,9 @@
 <title>Static Call Graph - [Quadruped_F767\Quadruped_F767.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image Quadruped_F767\Quadruped_F767.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Fri Jun 06 17:04:40 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Sat Jun 07 13:42:34 2025
 <BR><P>
-<H3>Maximum Stack Usage =        808 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =        768 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
 stand_run &rArr; leg_foot_to_motor_force_pos_vel &rArr; leg_inverse_kinematics_force_pos_vel &rArr; leg_inverse_kinematics &rArr; __hardfp_sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 <P>
@@ -533,9 +533,9 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[162]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_init
 <LI><a href="#[158]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_init
 <LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_run
-<LI><a href="#[174]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
+<LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
 <LI><a href="#[14e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cal_foot_end_pos
-<LI><a href="#[181]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics_force_pos_vel
+<LI><a href="#[182]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics_force_pos_vel
 <LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_enter
 </UL>
@@ -582,7 +582,7 @@ Global Symbols
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
 </UL>
 <BR>[Called By]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
-<LI><a href="#[192]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
+<LI><a href="#[193]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
 <LI><a href="#[149]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_poly
 <LI><a href="#[13a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_sin
 <LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ieee754_rem_pio2
@@ -598,8 +598,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
 <LI><a href="#[170]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;world_foot_to_body_vel
 <LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_run
-<LI><a href="#[1a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
-<LI><a href="#[192]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
+<LI><a href="#[1a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
+<LI><a href="#[193]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
 <LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
 <LI><a href="#[13a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_sin
 <LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ieee754_rem_pio2
@@ -626,7 +626,7 @@ Global Symbols
 <LI><a href="#[170]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;world_foot_to_body_vel
 <LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_run
 <LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getTime
-<LI><a href="#[192]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
+<LI><a href="#[193]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
 <LI><a href="#[149]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_poly
 <LI><a href="#[13a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_sin
 <LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ieee754_rem_pio2
@@ -639,8 +639,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_round
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
-<LI><a href="#[192]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
+<BR>[Called By]<UL><LI><a href="#[1a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
+<LI><a href="#[193]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
 <LI><a href="#[137]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_invalid
 </UL>
 
@@ -657,8 +657,8 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
 <LI><a href="#[170]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;world_foot_to_body_vel
 <LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_run
-<LI><a href="#[1a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
-<LI><a href="#[192]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
+<LI><a href="#[1a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
+<LI><a href="#[193]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
 <LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
 </UL>
 
@@ -670,8 +670,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
 <LI><a href="#[170]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;world_foot_to_body_vel
 <LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_run
-<LI><a href="#[1a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
-<LI><a href="#[192]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
+<LI><a href="#[1a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
+<LI><a href="#[193]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
 <LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;trot_enter
 <LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_enter
@@ -1036,7 +1036,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
 </UL>
-<BR>[Called By]<UL><LI><a href="#[19a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_init
+<BR>[Called By]<UL><LI><a href="#[19b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_init
 <LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
@@ -1088,17 +1088,17 @@ Global Symbols
 <LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Init
 </UL>
 
-<P><STRONG><a name="[197]"></a>HAL_MPU_ConfigRegion</STRONG> (Thumb, 86 bytes, Stack size 20 bytes, stm32f7xx_hal_cortex.o(i.HAL_MPU_ConfigRegion))
+<P><STRONG><a name="[198]"></a>HAL_MPU_ConfigRegion</STRONG> (Thumb, 86 bytes, Stack size 20 bytes, stm32f7xx_hal_cortex.o(i.HAL_MPU_ConfigRegion))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = HAL_MPU_ConfigRegion
 </UL>
 <BR>[Called By]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[196]"></a>HAL_MPU_Disable</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, stm32f7xx_hal_cortex.o(i.HAL_MPU_Disable))
+<P><STRONG><a name="[197]"></a>HAL_MPU_Disable</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, stm32f7xx_hal_cortex.o(i.HAL_MPU_Disable))
 <BR><BR>[Called By]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[198]"></a>HAL_MPU_Enable</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, stm32f7xx_hal_cortex.o(i.HAL_MPU_Enable))
+<P><STRONG><a name="[199]"></a>HAL_MPU_Enable</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, stm32f7xx_hal_cortex.o(i.HAL_MPU_Enable))
 <BR><BR>[Called By]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
@@ -1243,7 +1243,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[1a8]"></a>HAL_TIM_Base_Start_IT</STRONG> (Thumb, 106 bytes, Stack size 0 bytes, stm32f7xx_hal_tim.o(i.HAL_TIM_Base_Start_IT))
-<BR><BR>[Called By]<UL><LI><a href="#[19b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_init
+<BR><BR>[Called By]<UL><LI><a href="#[19c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_init
 </UL>
 
 <P><STRONG><a name="[d3]"></a>HAL_TIM_ConfigClockSource</STRONG> (Thumb, 220 bytes, Stack size 16 bytes, stm32f7xx_hal_tim.o(i.HAL_TIM_ConfigClockSource))
@@ -1454,13 +1454,13 @@ Global Symbols
 <LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 <LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memset
 </UL>
-<BR>[Called By]<UL><LI><a href="#[19a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_init
+<BR>[Called By]<UL><LI><a href="#[19b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_init
 </UL>
 
-<P><STRONG><a name="[19f]"></a>J60_ConfigMotor</STRONG> (Thumb, 80 bytes, Stack size 20 bytes, j60.o(i.J60_ConfigMotor))
+<P><STRONG><a name="[1a0]"></a>J60_ConfigMotor</STRONG> (Thumb, 80 bytes, Stack size 20 bytes, j60.o(i.J60_ConfigMotor))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = J60_ConfigMotor
 </UL>
-<BR>[Called By]<UL><LI><a href="#[19a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_init
+<BR>[Called By]<UL><LI><a href="#[19b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_init
 </UL>
 
 <P><STRONG><a name="[103]"></a>J60_EnableMotor</STRONG> (Thumb, 10 bytes, Stack size 0 bytes, j60.o(i.J60_EnableMotor))
@@ -1468,17 +1468,17 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_SendCanMessage
 </UL>
-<BR>[Called By]<UL><LI><a href="#[19a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_init
+<BR>[Called By]<UL><LI><a href="#[19b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_init
 </UL>
 
 <P><STRONG><a name="[15e]"></a>J60_GetMotor</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, j60.o(i.J60_GetMotor))
-<BR><BR>[Called By]<UL><LI><a href="#[19a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_init
+<BR><BR>[Called By]<UL><LI><a href="#[19b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_init
 <LI><a href="#[158]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_init
 <LI><a href="#[15f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_motors_target_force_pos_vel
-<LI><a href="#[18c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_motors_current_vel
+<LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_motors_current_vel
 <LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_motors_current_pos
-<LI><a href="#[18b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_motors_current_force
-<LI><a href="#[195]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_kp_kd
+<LI><a href="#[18c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_motors_current_force
+<LI><a href="#[196]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_kp_kd
 </UL>
 
 <P><STRONG><a name="[109]"></a>J60_MapKdToUint8</STRONG> (Thumb, 58 bytes, Stack size 0 bytes, j60.o(i.J60_MapKdToUint8))
@@ -1551,7 +1551,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_RxFifo0MsgPendingCallback
 </UL>
 
-<P><STRONG><a name="[17f]"></a>LPF_get_value</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, estimator.o(i.LPF_get_value))
+<P><STRONG><a name="[180]"></a>LPF_get_value</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, estimator.o(i.LPF_get_value))
 <BR><BR>[Called By]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
 <LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;imu_data_process
 </UL>
@@ -1604,7 +1604,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[199]"></a>MX_GPIO_Init</STRONG> (Thumb, 70 bytes, Stack size 8 bytes, gpio.o(i.MX_GPIO_Init))
+<P><STRONG><a name="[19a]"></a>MX_GPIO_Init</STRONG> (Thumb, 70 bytes, Stack size 8 bytes, gpio.o(i.MX_GPIO_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = MX_GPIO_Init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -1932,7 +1932,7 @@ Global Symbols
 <LI><a href="#[12f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_flt_infnan
 <LI><a href="#[12e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sqrtf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[192]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
+<BR>[Called By]<UL><LI><a href="#[193]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
 </UL>
 
 <P><STRONG><a name="[132]"></a>__hardfp_atan2f</STRONG> (Thumb, 502 bytes, Stack size 16 bytes, atan2f.o(i.__hardfp_atan2f))
@@ -1942,9 +1942,9 @@ Global Symbols
 <LI><a href="#[135]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_flt_infnan2
 <LI><a href="#[133]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ARM_fpclassifyf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[174]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
+<BR>[Called By]<UL><LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
 <LI><a href="#[14e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cal_foot_end_pos
-<LI><a href="#[192]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
+<LI><a href="#[193]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
 </UL>
 
 <P><STRONG><a name="[136]"></a>__hardfp_cos</STRONG> (Thumb, 180 bytes, Stack size 32 bytes, cos.o(i.__hardfp_cos))
@@ -1957,7 +1957,7 @@ Global Symbols
 <LI><a href="#[138]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_infnan
 <LI><a href="#[13b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_cos
 </UL>
-<BR>[Called By]<UL><LI><a href="#[192]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
+<BR>[Called By]<UL><LI><a href="#[193]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
 </UL>
 
 <P><STRONG><a name="[13c]"></a>__hardfp_cosf</STRONG> (Thumb, 280 bytes, Stack size 8 bytes, cosf.o(i.__hardfp_cosf))
@@ -1968,10 +1968,10 @@ Global Symbols
 <LI><a href="#[131]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_flt_invalid
 <LI><a href="#[12f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_flt_infnan
 </UL>
-<BR>[Called By]<UL><LI><a href="#[174]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
+<BR>[Called By]<UL><LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
 <LI><a href="#[14e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cal_foot_end_pos
-<LI><a href="#[187]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_jacobian
-<LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_forward_kinematics
+<LI><a href="#[188]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_jacobian
+<LI><a href="#[186]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_forward_kinematics
 <LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
 </UL>
 
@@ -1991,7 +1991,7 @@ Global Symbols
 <LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_drem
 <LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_drsub
 </UL>
-<BR>[Called By]<UL><LI><a href="#[1a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
+<BR>[Called By]<UL><LI><a href="#[1a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
 </UL>
 
 <P><STRONG><a name="[141]"></a>__hardfp_powf</STRONG> (Thumb, 1606 bytes, Stack size 32 bytes, powf.o(i.__hardfp_powf))
@@ -2021,7 +2021,7 @@ Global Symbols
 <LI><a href="#[138]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_infnan
 <LI><a href="#[13b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_cos
 </UL>
-<BR>[Called By]<UL><LI><a href="#[192]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
+<BR>[Called By]<UL><LI><a href="#[193]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
 </UL>
 
 <P><STRONG><a name="[146]"></a>__hardfp_sinf</STRONG> (Thumb, 344 bytes, Stack size 16 bytes, sinf.o(i.__hardfp_sinf))
@@ -2034,10 +2034,10 @@ Global Symbols
 <LI><a href="#[12f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_flt_infnan
 <LI><a href="#[133]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ARM_fpclassifyf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[174]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
+<BR>[Called By]<UL><LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
 <LI><a href="#[14e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cal_foot_end_pos
-<LI><a href="#[187]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_jacobian
-<LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_forward_kinematics
+<LI><a href="#[188]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_jacobian
+<LI><a href="#[186]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_forward_kinematics
 </UL>
 
 <P><STRONG><a name="[147]"></a>__hardfp_sqrtf</STRONG> (Thumb, 58 bytes, Stack size 16 bytes, sqrtf_full.o(i.__hardfp_sqrtf))
@@ -2046,7 +2046,7 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[130]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__set_errno
 </UL>
 <BR>[Called By]<UL><LI><a href="#[14e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cal_foot_end_pos
-<LI><a href="#[192]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
+<LI><a href="#[193]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
 <LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
 </UL>
 
@@ -2208,7 +2208,7 @@ Global Symbols
 <LI><a href="#[13c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_cosf
 <LI><a href="#[132]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_atan2f
 </UL>
-<BR>[Called By]<UL><LI><a href="#[174]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
+<BR>[Called By]<UL><LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
 </UL>
 
 <P><STRONG><a name="[15a]"></a>dog_cog_to_foot</STRONG> (Thumb, 322 bytes, Stack size 12 bytes, dog.o(i.dog_cog_to_foot))
@@ -2229,16 +2229,16 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[175]"></a>dog_get_body_vel</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, dog.o(i.dog_get_body_vel))
+<P><STRONG><a name="[176]"></a>dog_get_body_vel</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, dog.o(i.dog_get_body_vel))
 <BR><BR>[Called By]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
-<LI><a href="#[174]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
+<LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
 </UL>
 
 <P><STRONG><a name="[1a9]"></a>dog_get_body_vel_without_cog</STRONG> (Thumb, 56 bytes, Stack size 0 bytes, dog.o(i.dog_get_body_vel_without_cog))
 <BR><BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;trot_run
 </UL>
 
-<P><STRONG><a name="[1a4]"></a>dog_get_stand_height</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, dog.o(i.dog_get_stand_height))
+<P><STRONG><a name="[1a5]"></a>dog_get_stand_height</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, dog.o(i.dog_get_stand_height))
 <BR><BR>[Called By]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
 </UL>
 
@@ -2264,7 +2264,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_PeriodElapsedCallback
 </UL>
 
-<P><STRONG><a name="[17a]"></a>dog_set_body_vel</STRONG> (Thumb, 44 bytes, Stack size 0 bytes, dog.o(i.dog_set_body_vel))
+<P><STRONG><a name="[17b]"></a>dog_set_body_vel</STRONG> (Thumb, 44 bytes, Stack size 0 bytes, dog.o(i.dog_set_body_vel))
 <BR><BR>[Called By]<UL><LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gamepad_control
 </UL>
 
@@ -2301,10 +2301,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[e6]"></a>estimation_run</STRONG> (Thumb, 1958 bytes, Stack size 64 bytes, estimator.o(i.estimation_run))
+<P><STRONG><a name="[e6]"></a>estimation_run</STRONG> (Thumb, 1982 bytes, Stack size 64 bytes, estimator.o(i.estimation_run))
 <BR><BR>[Stack]<UL><LI>Max Depth = 300<LI>Call Chain = estimation_run &rArr; world_foot_to_body_vel &rArr; leg_forward_kinematics_vel &rArr; leg_jacobian &rArr; __hardfp_sinf &rArr; __mathlib_rredf2
 </UL>
-<BR>[Calls]<UL><LI><a href="#[161]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;imu_get_data
+<BR>[Calls]<UL><LI><a href="#[174]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_debug_data
+<LI><a href="#[161]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;imu_get_data
 <LI><a href="#[16f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;arm_mat_trans_f32
 <LI><a href="#[172]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;arm_mat_sub_f32
 <LI><a href="#[16d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;arm_mat_mult_f32
@@ -2329,7 +2330,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_PeriodElapsedCallback
 </UL>
 
-<P><STRONG><a name="[19e]"></a>estimation_start</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, estimator.o(i.estimation_start))
+<P><STRONG><a name="[19f]"></a>estimation_start</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, estimator.o(i.estimation_start))
 <BR><BR>[Called By]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
@@ -2339,12 +2340,12 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ieee754_rem_pio2
 </UL>
 
-<P><STRONG><a name="[17b]"></a>fsm_change_to</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, fsm.o(i.fsm_change_to))
+<P><STRONG><a name="[17c]"></a>fsm_change_to</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, fsm.o(i.fsm_change_to))
 <BR><BR>[Called By]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 <LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gamepad_control
 </UL>
 
-<P><STRONG><a name="[1a3]"></a>fsm_get_previous_state</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, fsm.o(i.fsm_get_previous_state))
+<P><STRONG><a name="[1a4]"></a>fsm_get_previous_state</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, fsm.o(i.fsm_get_previous_state))
 <BR><BR>[Called By]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_enter
 </UL>
 
@@ -2354,7 +2355,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[153]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_fsm_init
 </UL>
 
-<P><STRONG><a name="[1a2]"></a>fsm_register_state</STRONG> (Thumb, 34 bytes, Stack size 12 bytes, fsm.o(i.fsm_register_state))
+<P><STRONG><a name="[1a3]"></a>fsm_register_state</STRONG> (Thumb, 34 bytes, Stack size 12 bytes, fsm.o(i.fsm_register_state))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = fsm_register_state
 </UL>
 <BR>[Called By]<UL><LI><a href="#[156]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;register_trot_state
@@ -2368,15 +2369,15 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_PeriodElapsedCallback
 </UL>
 
-<P><STRONG><a name="[174]"></a>gait_generator</STRONG> (Thumb, 688 bytes, Stack size 192 bytes, gait.o(i.gait_generator))
+<P><STRONG><a name="[175]"></a>gait_generator</STRONG> (Thumb, 688 bytes, Stack size 192 bytes, gait.o(i.gait_generator))
 <BR><BR>[Stack]<UL><LI>Max Depth = 316<LI>Call Chain = gait_generator &rArr; cal_foot_end_pos &rArr; __hardfp_sinf &rArr; __mathlib_rredf2
 </UL>
 <BR>[Calls]<UL><LI><a href="#[14e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cal_foot_end_pos
-<LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_thigh_to_hip
-<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_target_foot_pos
-<LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_neutral_current_pos
-<LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_pos
-<LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_get_body_vel
+<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_thigh_to_hip
+<LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_target_foot_pos
+<LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_neutral_current_pos
+<LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_pos
+<LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_get_body_vel
 <LI><a href="#[14f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 <LI><a href="#[146]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_sinf
 <LI><a href="#[13c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_cosf
@@ -2388,16 +2389,16 @@ Global Symbols
 <P><STRONG><a name="[e4]"></a>gamepad_control</STRONG> (Thumb, 430 bytes, Stack size 24 bytes, gamepad.o(i.gamepad_control))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = gamepad_control &rArr; est_get_body_vel
 </UL>
-<BR>[Calls]<UL><LI><a href="#[17b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fsm_change_to
+<BR>[Calls]<UL><LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fsm_change_to
 <LI><a href="#[161]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;imu_get_data
 <LI><a href="#[150]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;est_get_body_vel
 <LI><a href="#[160]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth
-<LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_set_body_vel
+<LI><a href="#[17b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_set_body_vel
 </UL>
 <BR>[Called By]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_PeriodElapsedCallback
 </UL>
 
-<P><STRONG><a name="[19d]"></a>gamepad_control_init</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, gamepad.o(i.gamepad_control_init))
+<P><STRONG><a name="[19e]"></a>gamepad_control_init</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, gamepad.o(i.gamepad_control_init))
 <BR><BR>[Called By]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
@@ -2411,15 +2412,15 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
 <LI><a href="#[170]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;world_foot_to_body_vel
 <LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_run
-<LI><a href="#[1a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
+<LI><a href="#[1a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
 <LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;trot_enter
 <LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_enter
 </UL>
 
 <P><STRONG><a name="[151]"></a>get_dog_params</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, dog.o(i.get_dog_params))
-<BR><BR>[Called By]<UL><LI><a href="#[1a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
-<LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_trot_params
+<BR><BR>[Called By]<UL><LI><a href="#[1a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
+<LI><a href="#[17d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_trot_params
 <LI><a href="#[14e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cal_foot_end_pos
 <LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;trot_run
 <LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
@@ -2430,7 +2431,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[158]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_init
 </UL>
 
-<P><STRONG><a name="[17c]"></a>get_trot_params</STRONG> (Thumb, 12 bytes, Stack size 8 bytes, gait.o(i.get_trot_params))
+<P><STRONG><a name="[17d]"></a>get_trot_params</STRONG> (Thumb, 12 bytes, Stack size 8 bytes, gait.o(i.get_trot_params))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = get_trot_params
 </UL>
 <BR>[Calls]<UL><LI><a href="#[151]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_dog_params
@@ -2443,9 +2444,9 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LPFilter_init
 <LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LPFilter
-<LI><a href="#[17f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LPF_get_value
-<LI><a href="#[17d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc16_update
-<LI><a href="#[17e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ABS
+<LI><a href="#[180]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LPF_get_value
+<LI><a href="#[17e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc16_update
+<LI><a href="#[17f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ABS
 <LI><a href="#[111]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 </UL>
 <BR>[Called By]<UL><LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UARTEx_RxEventCallback
@@ -2458,43 +2459,43 @@ Global Symbols
 <LI><a href="#[150]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;est_get_body_vel
 </UL>
 
-<P><STRONG><a name="[180]"></a>leg_foot_to_motor_force_pos_vel</STRONG> (Thumb, 66 bytes, Stack size 72 bytes, dog.o(i.leg_foot_to_motor_force_pos_vel))
+<P><STRONG><a name="[181]"></a>leg_foot_to_motor_force_pos_vel</STRONG> (Thumb, 66 bytes, Stack size 72 bytes, dog.o(i.leg_foot_to_motor_force_pos_vel))
 <BR><BR>[Stack]<UL><LI>Max Depth = 528<LI>Call Chain = leg_foot_to_motor_force_pos_vel &rArr; leg_inverse_kinematics_force_pos_vel &rArr; leg_inverse_kinematics &rArr; __hardfp_sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
-<BR>[Calls]<UL><LI><a href="#[182]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_joint_to_motor_vel
-<LI><a href="#[184]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_joint_to_motor_force
-<LI><a href="#[183]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_joint_to_motor
-<LI><a href="#[181]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics_force_pos_vel
+<BR>[Calls]<UL><LI><a href="#[183]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_joint_to_motor_vel
+<LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_joint_to_motor_force
+<LI><a href="#[184]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_joint_to_motor
+<LI><a href="#[182]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics_force_pos_vel
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;trot_run
 <LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
 </UL>
 
-<P><STRONG><a name="[185]"></a>leg_forward_kinematics</STRONG> (Thumb, 218 bytes, Stack size 56 bytes, dog.o(i.leg_forward_kinematics))
+<P><STRONG><a name="[186]"></a>leg_forward_kinematics</STRONG> (Thumb, 218 bytes, Stack size 56 bytes, dog.o(i.leg_forward_kinematics))
 <BR><BR>[Stack]<UL><LI>Max Depth = 92<LI>Call Chain = leg_forward_kinematics &rArr; __hardfp_sinf &rArr; __mathlib_rredf2
 </UL>
 <BR>[Calls]<UL><LI><a href="#[146]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_sinf
 <LI><a href="#[13c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_cosf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_pos
-<LI><a href="#[186]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_forward_kinematics_force_pos_vel
+<BR>[Called By]<UL><LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_pos
+<LI><a href="#[187]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_forward_kinematics_force_pos_vel
 </UL>
 
-<P><STRONG><a name="[186]"></a>leg_forward_kinematics_force_pos_vel</STRONG> (Thumb, 178 bytes, Stack size 168 bytes, dog.o(i.leg_forward_kinematics_force_pos_vel))
+<P><STRONG><a name="[187]"></a>leg_forward_kinematics_force_pos_vel</STRONG> (Thumb, 178 bytes, Stack size 168 bytes, dog.o(i.leg_forward_kinematics_force_pos_vel))
 <BR><BR>[Stack]<UL><LI>Max Depth = 260<LI>Call Chain = leg_forward_kinematics_force_pos_vel &rArr; leg_jacobian &rArr; __hardfp_sinf &rArr; __mathlib_rredf2
 </UL>
 <BR>[Calls]<UL><LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mat_transpose_ptr
-<LI><a href="#[188]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mat_inverse_3x3_ptr
-<LI><a href="#[187]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_jacobian
-<LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_forward_kinematics
+<LI><a href="#[189]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mat_inverse_3x3_ptr
+<LI><a href="#[188]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_jacobian
+<LI><a href="#[186]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_forward_kinematics
 </UL>
-<BR>[Called By]<UL><LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_motor_to_foot_force_pos_vel
+<BR>[Called By]<UL><LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_motor_to_foot_force_pos_vel
 </UL>
 
-<P><STRONG><a name="[189]"></a>leg_forward_kinematics_vel</STRONG> (Thumb, 88 bytes, Stack size 56 bytes, dog.o(i.leg_forward_kinematics_vel))
+<P><STRONG><a name="[18a]"></a>leg_forward_kinematics_vel</STRONG> (Thumb, 88 bytes, Stack size 56 bytes, dog.o(i.leg_forward_kinematics_vel))
 <BR><BR>[Stack]<UL><LI>Max Depth = 148<LI>Call Chain = leg_forward_kinematics_vel &rArr; leg_jacobian &rArr; __hardfp_sinf &rArr; __mathlib_rredf2
 </UL>
-<BR>[Calls]<UL><LI><a href="#[187]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_jacobian
+<BR>[Calls]<UL><LI><a href="#[188]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_jacobian
 </UL>
 <BR>[Called By]<UL><LI><a href="#[170]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;world_foot_to_body_vel
 </UL>
@@ -2504,65 +2505,63 @@ Global Symbols
 <LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_run
 </UL>
 
-<P><STRONG><a name="[18a]"></a>leg_get_current_foot_force_pos_vel</STRONG> (Thumb, 54 bytes, Stack size 72 bytes, dog.o(i.leg_get_current_foot_force_pos_vel))
+<P><STRONG><a name="[18b]"></a>leg_get_current_foot_force_pos_vel</STRONG> (Thumb, 54 bytes, Stack size 72 bytes, dog.o(i.leg_get_current_foot_force_pos_vel))
 <BR><BR>[Stack]<UL><LI>Max Depth = 412<LI>Call Chain = leg_get_current_foot_force_pos_vel &rArr; leg_motor_to_foot_force_pos_vel &rArr; leg_forward_kinematics_force_pos_vel &rArr; leg_jacobian &rArr; __hardfp_sinf &rArr; __mathlib_rredf2
 </UL>
-<BR>[Calls]<UL><LI><a href="#[18c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_motors_current_vel
+<BR>[Calls]<UL><LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_motors_current_vel
 <LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_motors_current_pos
-<LI><a href="#[18b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_motors_current_force
-<LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_motor_to_foot_force_pos_vel
+<LI><a href="#[18c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_motors_current_force
+<LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_motor_to_foot_force_pos_vel
 </UL>
 <BR>[Called By]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
-<LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;trot_run
-<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
 </UL>
 
-<P><STRONG><a name="[179]"></a>leg_get_current_foot_pos</STRONG> (Thumb, 24 bytes, Stack size 24 bytes, dog.o(i.leg_get_current_foot_pos))
+<P><STRONG><a name="[17a]"></a>leg_get_current_foot_pos</STRONG> (Thumb, 24 bytes, Stack size 24 bytes, dog.o(i.leg_get_current_foot_pos))
 <BR><BR>[Stack]<UL><LI>Max Depth = 116<LI>Call Chain = leg_get_current_foot_pos &rArr; leg_forward_kinematics &rArr; __hardfp_sinf &rArr; __mathlib_rredf2
 </UL>
-<BR>[Calls]<UL><LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_joint_pos
-<LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_forward_kinematics
+<BR>[Calls]<UL><LI><a href="#[18f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_joint_pos
+<LI><a href="#[186]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_forward_kinematics
 </UL>
 <BR>[Called By]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
-<LI><a href="#[174]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
-<LI><a href="#[18f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_pos_body
+<LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
+<LI><a href="#[190]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_pos_body
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_enter
 </UL>
 
-<P><STRONG><a name="[18f]"></a>leg_get_current_foot_pos_body</STRONG> (Thumb, 112 bytes, Stack size 24 bytes, dog.o(i.leg_get_current_foot_pos_body))
+<P><STRONG><a name="[190]"></a>leg_get_current_foot_pos_body</STRONG> (Thumb, 112 bytes, Stack size 24 bytes, dog.o(i.leg_get_current_foot_pos_body))
 <BR><BR>[Stack]<UL><LI>Max Depth = 140<LI>Call Chain = leg_get_current_foot_pos_body &rArr; leg_get_current_foot_pos &rArr; leg_forward_kinematics &rArr; __hardfp_sinf &rArr; __mathlib_rredf2
 </UL>
-<BR>[Calls]<UL><LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_pos
+<BR>[Calls]<UL><LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_pos
 </UL>
 <BR>[Called By]<UL><LI><a href="#[170]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;world_foot_to_body_vel
 </UL>
 
-<P><STRONG><a name="[18e]"></a>leg_get_current_joint_pos</STRONG> (Thumb, 24 bytes, Stack size 24 bytes, dog.o(i.leg_get_current_joint_pos))
+<P><STRONG><a name="[18f]"></a>leg_get_current_joint_pos</STRONG> (Thumb, 24 bytes, Stack size 24 bytes, dog.o(i.leg_get_current_joint_pos))
 <BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = leg_get_current_joint_pos &rArr; leg_motor_to_joint &rArr; leg_transform
 </UL>
 <BR>[Calls]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_motors_current_pos
 <LI><a href="#[15c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_motor_to_joint
 </UL>
 <BR>[Called By]<UL><LI><a href="#[170]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;world_foot_to_body_vel
-<LI><a href="#[181]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics_force_pos_vel
-<LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_pos
+<LI><a href="#[182]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics_force_pos_vel
+<LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_pos
 </UL>
 
-<P><STRONG><a name="[190]"></a>leg_get_current_joint_vel</STRONG> (Thumb, 24 bytes, Stack size 24 bytes, dog.o(i.leg_get_current_joint_vel))
+<P><STRONG><a name="[191]"></a>leg_get_current_joint_vel</STRONG> (Thumb, 24 bytes, Stack size 24 bytes, dog.o(i.leg_get_current_joint_vel))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = leg_get_current_joint_vel &rArr; leg_get_motors_current_vel
 </UL>
-<BR>[Calls]<UL><LI><a href="#[18c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_motors_current_vel
-<LI><a href="#[191]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_motor_to_joint_vel
+<BR>[Calls]<UL><LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_motors_current_vel
+<LI><a href="#[192]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_motor_to_joint_vel
 </UL>
 <BR>[Called By]<UL><LI><a href="#[170]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;world_foot_to_body_vel
 </UL>
 
-<P><STRONG><a name="[18b]"></a>leg_get_motors_current_force</STRONG> (Thumb, 38 bytes, Stack size 16 bytes, motor.o(i.leg_get_motors_current_force))
+<P><STRONG><a name="[18c]"></a>leg_get_motors_current_force</STRONG> (Thumb, 38 bytes, Stack size 16 bytes, motor.o(i.leg_get_motors_current_force))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = leg_get_motors_current_force
 </UL>
 <BR>[Calls]<UL><LI><a href="#[15e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_GetMotor
 </UL>
-<BR>[Called By]<UL><LI><a href="#[18a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_force_pos_vel
+<BR>[Called By]<UL><LI><a href="#[18b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_force_pos_vel
 </UL>
 
 <P><STRONG><a name="[15b]"></a>leg_get_motors_current_pos</STRONG> (Thumb, 38 bytes, Stack size 16 bytes, motor.o(i.leg_get_motors_current_pos))
@@ -2571,23 +2570,23 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[15e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_GetMotor
 </UL>
 <BR>[Called By]<UL><LI><a href="#[158]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_init
-<LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_joint_pos
-<LI><a href="#[18a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_force_pos_vel
+<LI><a href="#[18f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_joint_pos
+<LI><a href="#[18b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_force_pos_vel
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_enter
 </UL>
 
-<P><STRONG><a name="[18c]"></a>leg_get_motors_current_vel</STRONG> (Thumb, 38 bytes, Stack size 16 bytes, motor.o(i.leg_get_motors_current_vel))
+<P><STRONG><a name="[18d]"></a>leg_get_motors_current_vel</STRONG> (Thumb, 38 bytes, Stack size 16 bytes, motor.o(i.leg_get_motors_current_vel))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = leg_get_motors_current_vel
 </UL>
 <BR>[Calls]<UL><LI><a href="#[15e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_GetMotor
 </UL>
-<BR>[Called By]<UL><LI><a href="#[190]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_joint_vel
-<LI><a href="#[18a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_force_pos_vel
+<BR>[Called By]<UL><LI><a href="#[191]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_joint_vel
+<LI><a href="#[18b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_force_pos_vel
 </UL>
 
-<P><STRONG><a name="[176]"></a>leg_get_neutral_current_pos</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, dog.o(i.leg_get_neutral_current_pos))
+<P><STRONG><a name="[177]"></a>leg_get_neutral_current_pos</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, dog.o(i.leg_get_neutral_current_pos))
 <BR><BR>[Called By]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
-<LI><a href="#[174]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
+<LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
 <LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
 </UL>
 
@@ -2595,11 +2594,11 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_run
 </UL>
 
-<P><STRONG><a name="[178]"></a>leg_get_target_foot_pos</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, dog.o(i.leg_get_target_foot_pos))
-<BR><BR>[Called By]<UL><LI><a href="#[174]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
+<P><STRONG><a name="[179]"></a>leg_get_target_foot_pos</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, dog.o(i.leg_get_target_foot_pos))
+<BR><BR>[Called By]<UL><LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
 </UL>
 
-<P><STRONG><a name="[192]"></a>leg_inverse_kinematics</STRONG> (Thumb, 498 bytes, Stack size 56 bytes, dog.o(i.leg_inverse_kinematics))
+<P><STRONG><a name="[193]"></a>leg_inverse_kinematics</STRONG> (Thumb, 498 bytes, Stack size 56 bytes, dog.o(i.leg_inverse_kinematics))
 <BR><BR>[Stack]<UL><LI>Max Depth = 296<LI>Call Chain = leg_inverse_kinematics &rArr; __hardfp_sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[16b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
@@ -2614,91 +2613,91 @@ Global Symbols
 <LI><a href="#[132]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_atan2f
 <LI><a href="#[12d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_acosf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[181]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics_force_pos_vel
+<BR>[Called By]<UL><LI><a href="#[182]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics_force_pos_vel
 </UL>
 
-<P><STRONG><a name="[181]"></a>leg_inverse_kinematics_force_pos_vel</STRONG> (Thumb, 228 bytes, Stack size 160 bytes, dog.o(i.leg_inverse_kinematics_force_pos_vel))
+<P><STRONG><a name="[182]"></a>leg_inverse_kinematics_force_pos_vel</STRONG> (Thumb, 228 bytes, Stack size 160 bytes, dog.o(i.leg_inverse_kinematics_force_pos_vel))
 <BR><BR>[Stack]<UL><LI>Max Depth = 456<LI>Call Chain = leg_inverse_kinematics_force_pos_vel &rArr; leg_inverse_kinematics &rArr; __hardfp_sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mat_transpose_ptr
-<LI><a href="#[188]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mat_inverse_3x3_ptr
-<LI><a href="#[187]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_jacobian
-<LI><a href="#[192]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
-<LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_joint_pos
+<LI><a href="#[189]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mat_inverse_3x3_ptr
+<LI><a href="#[188]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_jacobian
+<LI><a href="#[193]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
+<LI><a href="#[18f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_joint_pos
 <LI><a href="#[14f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 </UL>
-<BR>[Called By]<UL><LI><a href="#[180]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_foot_to_motor_force_pos_vel
+<BR>[Called By]<UL><LI><a href="#[181]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_foot_to_motor_force_pos_vel
 </UL>
 
-<P><STRONG><a name="[187]"></a>leg_jacobian</STRONG> (Thumb, 298 bytes, Stack size 56 bytes, dog.o(i.leg_jacobian))
+<P><STRONG><a name="[188]"></a>leg_jacobian</STRONG> (Thumb, 298 bytes, Stack size 56 bytes, dog.o(i.leg_jacobian))
 <BR><BR>[Stack]<UL><LI>Max Depth = 92<LI>Call Chain = leg_jacobian &rArr; __hardfp_sinf &rArr; __mathlib_rredf2
 </UL>
 <BR>[Calls]<UL><LI><a href="#[146]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_sinf
 <LI><a href="#[13c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_cosf
 </UL>
-<BR>[Called By]<UL><LI><a href="#[181]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics_force_pos_vel
-<LI><a href="#[189]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_forward_kinematics_vel
-<LI><a href="#[186]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_forward_kinematics_force_pos_vel
+<BR>[Called By]<UL><LI><a href="#[182]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics_force_pos_vel
+<LI><a href="#[18a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_forward_kinematics_vel
+<LI><a href="#[187]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_forward_kinematics_force_pos_vel
 </UL>
 
-<P><STRONG><a name="[183]"></a>leg_joint_to_motor</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, dog.o(i.leg_joint_to_motor))
+<P><STRONG><a name="[184]"></a>leg_joint_to_motor</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, dog.o(i.leg_joint_to_motor))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = leg_joint_to_motor &rArr; leg_transform
 </UL>
-<BR>[Calls]<UL><LI><a href="#[193]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_transform
+<BR>[Calls]<UL><LI><a href="#[194]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_transform
 </UL>
-<BR>[Called By]<UL><LI><a href="#[180]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_foot_to_motor_force_pos_vel
-</UL>
-
-<P><STRONG><a name="[184]"></a>leg_joint_to_motor_force</STRONG> (Thumb, 82 bytes, Stack size 0 bytes, dog.o(i.leg_joint_to_motor_force))
-<BR><BR>[Called By]<UL><LI><a href="#[180]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_foot_to_motor_force_pos_vel
+<BR>[Called By]<UL><LI><a href="#[181]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_foot_to_motor_force_pos_vel
 </UL>
 
-<P><STRONG><a name="[182]"></a>leg_joint_to_motor_vel</STRONG> (Thumb, 82 bytes, Stack size 0 bytes, dog.o(i.leg_joint_to_motor_vel))
-<BR><BR>[Called By]<UL><LI><a href="#[180]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_foot_to_motor_force_pos_vel
+<P><STRONG><a name="[185]"></a>leg_joint_to_motor_force</STRONG> (Thumb, 82 bytes, Stack size 0 bytes, dog.o(i.leg_joint_to_motor_force))
+<BR><BR>[Called By]<UL><LI><a href="#[181]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_foot_to_motor_force_pos_vel
 </UL>
 
-<P><STRONG><a name="[18d]"></a>leg_motor_to_foot_force_pos_vel</STRONG> (Thumb, 70 bytes, Stack size 80 bytes, dog.o(i.leg_motor_to_foot_force_pos_vel))
+<P><STRONG><a name="[183]"></a>leg_joint_to_motor_vel</STRONG> (Thumb, 82 bytes, Stack size 0 bytes, dog.o(i.leg_joint_to_motor_vel))
+<BR><BR>[Called By]<UL><LI><a href="#[181]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_foot_to_motor_force_pos_vel
+</UL>
+
+<P><STRONG><a name="[18e]"></a>leg_motor_to_foot_force_pos_vel</STRONG> (Thumb, 70 bytes, Stack size 80 bytes, dog.o(i.leg_motor_to_foot_force_pos_vel))
 <BR><BR>[Stack]<UL><LI>Max Depth = 340<LI>Call Chain = leg_motor_to_foot_force_pos_vel &rArr; leg_forward_kinematics_force_pos_vel &rArr; leg_jacobian &rArr; __hardfp_sinf &rArr; __mathlib_rredf2
 </UL>
-<BR>[Calls]<UL><LI><a href="#[191]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_motor_to_joint_vel
-<LI><a href="#[194]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_motor_to_joint_force
+<BR>[Calls]<UL><LI><a href="#[192]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_motor_to_joint_vel
+<LI><a href="#[195]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_motor_to_joint_force
 <LI><a href="#[15c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_motor_to_joint
-<LI><a href="#[186]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_forward_kinematics_force_pos_vel
+<LI><a href="#[187]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_forward_kinematics_force_pos_vel
 </UL>
-<BR>[Called By]<UL><LI><a href="#[18a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_force_pos_vel
+<BR>[Called By]<UL><LI><a href="#[18b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_force_pos_vel
 </UL>
 
 <P><STRONG><a name="[15c]"></a>leg_motor_to_joint</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, dog.o(i.leg_motor_to_joint))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = leg_motor_to_joint &rArr; leg_transform
 </UL>
-<BR>[Calls]<UL><LI><a href="#[193]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_transform
+<BR>[Calls]<UL><LI><a href="#[194]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_transform
 </UL>
 <BR>[Called By]<UL><LI><a href="#[158]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_init
-<LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_motor_to_foot_force_pos_vel
-<LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_joint_pos
+<LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_motor_to_foot_force_pos_vel
+<LI><a href="#[18f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_joint_pos
 </UL>
 
-<P><STRONG><a name="[194]"></a>leg_motor_to_joint_force</STRONG> (Thumb, 82 bytes, Stack size 0 bytes, dog.o(i.leg_motor_to_joint_force))
-<BR><BR>[Called By]<UL><LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_motor_to_foot_force_pos_vel
+<P><STRONG><a name="[195]"></a>leg_motor_to_joint_force</STRONG> (Thumb, 82 bytes, Stack size 0 bytes, dog.o(i.leg_motor_to_joint_force))
+<BR><BR>[Called By]<UL><LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_motor_to_foot_force_pos_vel
 </UL>
 
-<P><STRONG><a name="[191]"></a>leg_motor_to_joint_vel</STRONG> (Thumb, 82 bytes, Stack size 0 bytes, dog.o(i.leg_motor_to_joint_vel))
-<BR><BR>[Called By]<UL><LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_motor_to_foot_force_pos_vel
-<LI><a href="#[190]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_joint_vel
+<P><STRONG><a name="[192]"></a>leg_motor_to_joint_vel</STRONG> (Thumb, 82 bytes, Stack size 0 bytes, dog.o(i.leg_motor_to_joint_vel))
+<BR><BR>[Called By]<UL><LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_motor_to_foot_force_pos_vel
+<LI><a href="#[191]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_joint_vel
 </UL>
 
-<P><STRONG><a name="[1a6]"></a>leg_set_motor_force_pos_vel</STRONG> (Thumb, 40 bytes, Stack size 20 bytes, dog.o(i.leg_set_motor_force_pos_vel))
+<P><STRONG><a name="[1a7]"></a>leg_set_motor_force_pos_vel</STRONG> (Thumb, 40 bytes, Stack size 20 bytes, dog.o(i.leg_set_motor_force_pos_vel))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = leg_set_motor_force_pos_vel
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;trot_run
 <LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
 </UL>
 
-<P><STRONG><a name="[1a0]"></a>leg_set_motor_force_vel_zero</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, dog.o(i.leg_set_motor_force_vel_zero))
+<P><STRONG><a name="[1a1]"></a>leg_set_motor_force_vel_zero</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, dog.o(i.leg_set_motor_force_vel_zero))
 <BR><BR>[Called By]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;passive_run
 </UL>
 
-<P><STRONG><a name="[195]"></a>leg_set_motor_kp_kd</STRONG> (Thumb, 104 bytes, Stack size 40 bytes, motor.o(i.leg_set_motor_kp_kd))
+<P><STRONG><a name="[196]"></a>leg_set_motor_kp_kd</STRONG> (Thumb, 104 bytes, Stack size 40 bytes, motor.o(i.leg_set_motor_kp_kd))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = leg_set_motor_kp_kd
 </UL>
 <BR>[Calls]<UL><LI><a href="#[15e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_GetMotor
@@ -2717,34 +2716,34 @@ Global Symbols
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_enter
 </UL>
 
-<P><STRONG><a name="[1a5]"></a>leg_set_target_foot_pos</STRONG> (Thumb, 26 bytes, Stack size 8 bytes, dog.o(i.leg_set_target_foot_pos))
+<P><STRONG><a name="[1a6]"></a>leg_set_target_foot_pos</STRONG> (Thumb, 26 bytes, Stack size 8 bytes, dog.o(i.leg_set_target_foot_pos))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = leg_set_target_foot_pos
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;trot_run
 <LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
 </UL>
 
-<P><STRONG><a name="[177]"></a>leg_thigh_to_hip</STRONG> (Thumb, 48 bytes, Stack size 0 bytes, dog.o(i.leg_thigh_to_hip))
-<BR><BR>[Called By]<UL><LI><a href="#[174]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
+<P><STRONG><a name="[178]"></a>leg_thigh_to_hip</STRONG> (Thumb, 48 bytes, Stack size 0 bytes, dog.o(i.leg_thigh_to_hip))
+<BR><BR>[Called By]<UL><LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
 <LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
 </UL>
 
-<P><STRONG><a name="[193]"></a>leg_transform</STRONG> (Thumb, 126 bytes, Stack size 20 bytes, dog.o(i.leg_transform))
+<P><STRONG><a name="[194]"></a>leg_transform</STRONG> (Thumb, 126 bytes, Stack size 20 bytes, dog.o(i.leg_transform))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = leg_transform
 </UL>
 <BR>[Called By]<UL><LI><a href="#[15c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_motor_to_joint
-<LI><a href="#[183]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_joint_to_motor
+<LI><a href="#[184]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_joint_to_motor
 </UL>
 
 <P><STRONG><a name="[77]"></a>main</STRONG> (Thumb, 214 bytes, Stack size 24 bytes, main.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 548<LI>Call Chain = main &rArr; estimation_init &rArr; mat_transpose_ptr &rArr; arm_mat_trans_f32
 </UL>
-<BR>[Calls]<UL><LI><a href="#[19b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_init
-<LI><a href="#[19c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;my_usart_init
-<LI><a href="#[19a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_init
-<LI><a href="#[19d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gamepad_control_init
-<LI><a href="#[17b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fsm_change_to
-<LI><a href="#[19e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_start
+<BR>[Calls]<UL><LI><a href="#[19c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;timer_init
+<LI><a href="#[19d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;my_usart_init
+<LI><a href="#[19b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_init
+<LI><a href="#[19e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gamepad_control_init
+<LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fsm_change_to
+<LI><a href="#[19f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_start
 <LI><a href="#[162]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_init
 <LI><a href="#[158]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_init
 <LI><a href="#[153]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_fsm_init
@@ -2760,14 +2759,14 @@ Global Symbols
 <LI><a href="#[11a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_TIM2_Init
 <LI><a href="#[118]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_TIM1_Init
 <LI><a href="#[117]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_TIM10_Init
-<LI><a href="#[199]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_GPIO_Init
+<LI><a href="#[19a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_GPIO_Init
 <LI><a href="#[116]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_DMA_Init
 <LI><a href="#[115]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_CAN3_Init
 <LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_CAN2_Init
 <LI><a href="#[113]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_CAN1_Init
-<LI><a href="#[198]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_MPU_Enable
-<LI><a href="#[196]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_MPU_Disable
-<LI><a href="#[197]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_MPU_ConfigRegion
+<LI><a href="#[199]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_MPU_Enable
+<LI><a href="#[197]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_MPU_Disable
+<LI><a href="#[198]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_MPU_ConfigRegion
 <LI><a href="#[c5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Init
 <LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[125]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemClock_Config
@@ -2783,9 +2782,9 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[162]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_init
 </UL>
 
-<P><STRONG><a name="[188]"></a>mat_inverse_3x3_ptr</STRONG> (Thumb, 360 bytes, Stack size 0 bytes, matrix.o(i.mat_inverse_3x3_ptr))
-<BR><BR>[Called By]<UL><LI><a href="#[181]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics_force_pos_vel
-<LI><a href="#[186]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_forward_kinematics_force_pos_vel
+<P><STRONG><a name="[189]"></a>mat_inverse_3x3_ptr</STRONG> (Thumb, 360 bytes, Stack size 0 bytes, matrix.o(i.mat_inverse_3x3_ptr))
+<BR><BR>[Called By]<UL><LI><a href="#[182]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics_force_pos_vel
+<LI><a href="#[187]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_forward_kinematics_force_pos_vel
 </UL>
 
 <P><STRONG><a name="[163]"></a>mat_mult_ptr</STRONG> (Thumb, 94 bytes, Stack size 36 bytes, matrix.o(i.mat_mult_ptr))
@@ -2810,23 +2809,23 @@ Global Symbols
 <LI><a href="#[16c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;arm_mat_init_f32
 </UL>
 <BR>[Called By]<UL><LI><a href="#[162]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_init
-<LI><a href="#[181]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics_force_pos_vel
-<LI><a href="#[186]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_forward_kinematics_force_pos_vel
+<LI><a href="#[182]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics_force_pos_vel
+<LI><a href="#[187]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_forward_kinematics_force_pos_vel
 </UL>
 
-<P><STRONG><a name="[19a]"></a>motor_init</STRONG> (Thumb, 258 bytes, Stack size 24 bytes, motor.o(i.motor_init))
+<P><STRONG><a name="[19b]"></a>motor_init</STRONG> (Thumb, 258 bytes, Stack size 24 bytes, motor.o(i.motor_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 108<LI>Call Chain = motor_init &rArr; J60_EnableMotor &rArr; J60_SendCanMessage &rArr; J60_SendCanMessage_NonBlocking &rArr; HAL_CAN_AddTxMessage
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
 <LI><a href="#[15e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_GetMotor
 <LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_EnableMotor
-<LI><a href="#[19f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_ConfigMotor
+<LI><a href="#[1a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_ConfigMotor
 <LI><a href="#[100]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_Can_Init
 </UL>
 <BR>[Called By]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[19c]"></a>my_usart_init</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, my_usart.o(i.my_usart_init))
+<P><STRONG><a name="[19d]"></a>my_usart_init</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, my_usart.o(i.my_usart_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = my_usart_init &rArr; usart2_start_recv &rArr; HAL_UARTEx_ReceiveToIdle_DMA &rArr; UART_Start_Receive_DMA &rArr; HAL_DMA_Start_IT &rArr; DMA_SetConfig
 </UL>
 <BR>[Calls]<UL><LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart2_start_recv
@@ -2835,7 +2834,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[1a1]"></a>phase_wave_generator</STRONG> (Thumb, 330 bytes, Stack size 56 bytes, gait.o(i.phase_wave_generator))
+<P><STRONG><a name="[1a2]"></a>phase_wave_generator</STRONG> (Thumb, 330 bytes, Stack size 56 bytes, gait.o(i.phase_wave_generator))
 <BR><BR>[Stack]<UL><LI>Max Depth = 192<LI>Call Chain = phase_wave_generator &rArr; __hardfp_fmod &rArr; _drem &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getTime
@@ -2852,7 +2851,7 @@ Global Symbols
 <P><STRONG><a name="[157]"></a>register_passive_state</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, passive_state.o(i.register_passive_state))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = register_passive_state &rArr; fsm_register_state
 </UL>
-<BR>[Calls]<UL><LI><a href="#[1a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fsm_register_state
+<BR>[Calls]<UL><LI><a href="#[1a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fsm_register_state
 </UL>
 <BR>[Called By]<UL><LI><a href="#[153]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_fsm_init
 </UL>
@@ -2860,7 +2859,7 @@ Global Symbols
 <P><STRONG><a name="[155]"></a>register_stand_state</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, stand_state.o(i.register_stand_state))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = register_stand_state &rArr; fsm_register_state
 </UL>
-<BR>[Calls]<UL><LI><a href="#[1a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fsm_register_state
+<BR>[Calls]<UL><LI><a href="#[1a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fsm_register_state
 </UL>
 <BR>[Called By]<UL><LI><a href="#[153]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_fsm_init
 </UL>
@@ -2868,7 +2867,7 @@ Global Symbols
 <P><STRONG><a name="[156]"></a>register_trot_state</STRONG> (Thumb, 20 bytes, Stack size 8 bytes, trot_state.o(i.register_trot_state))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = register_trot_state &rArr; fsm_register_state
 </UL>
-<BR>[Calls]<UL><LI><a href="#[1a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fsm_register_state
+<BR>[Calls]<UL><LI><a href="#[1a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fsm_register_state
 </UL>
 <BR>[Called By]<UL><LI><a href="#[153]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_fsm_init
 </UL>
@@ -2890,9 +2889,9 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_send_motors
 </UL>
 
-<P><STRONG><a name="[1a7]"></a>set_debug_data</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, ano_tc.o(i.set_debug_data))
-<BR><BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;trot_run
-<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
+<P><STRONG><a name="[174]"></a>set_debug_data</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, ano_tc.o(i.set_debug_data))
+<BR><BR>[Called By]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
+<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_run
 </UL>
 
 <P><STRONG><a name="[160]"></a>smooth</STRONG> (Thumb, 46 bytes, Stack size 0 bytes, dog.o(i.smooth))
@@ -2908,7 +2907,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[12d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_acosf
 </UL>
 
-<P><STRONG><a name="[19b]"></a>timer_init</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, timer.o(i.timer_init))
+<P><STRONG><a name="[19c]"></a>timer_init</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, timer.o(i.timer_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = timer_init
 </UL>
 <BR>[Calls]<UL><LI><a href="#[1a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_Base_Start_IT
@@ -2921,7 +2920,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UARTEx_ReceiveToIdle_DMA
 </UL>
-<BR>[Called By]<UL><LI><a href="#[19c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;my_usart_init
+<BR>[Called By]<UL><LI><a href="#[19d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;my_usart_init
 <LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_ErrorCallback
 <LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UARTEx_RxEventCallback
 </UL>
@@ -2931,7 +2930,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[e9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UARTEx_ReceiveToIdle_DMA
 </UL>
-<BR>[Called By]<UL><LI><a href="#[19c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;my_usart_init
+<BR>[Called By]<UL><LI><a href="#[19d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;my_usart_init
 <LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_ErrorCallback
 <LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UARTEx_RxEventCallback
 </UL>
@@ -2940,23 +2939,24 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[170]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;world_foot_to_body_vel
 </UL>
 
-<P><STRONG><a name="[e8]"></a>vmc_force_calculate</STRONG> (Thumb, 522 bytes, Stack size 56 bytes, force_calculate.o(i.vmc_force_calculate))
+<P><STRONG><a name="[e8]"></a>vmc_force_calculate</STRONG> (Thumb, 552 bytes, Stack size 56 bytes, force_calculate.o(i.vmc_force_calculate))
 <BR><BR>[Stack]<UL><LI>Max Depth = 468<LI>Call Chain = vmc_force_calculate &rArr; leg_get_current_foot_force_pos_vel &rArr; leg_motor_to_foot_force_pos_vel &rArr; leg_forward_kinematics_force_pos_vel &rArr; leg_jacobian &rArr; __hardfp_sinf &rArr; __mathlib_rredf2
 </UL>
-<BR>[Calls]<UL><LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LPFilter_init
+<BR>[Calls]<UL><LI><a href="#[174]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_debug_data
+<LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LPFilter_init
 <LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LPFilter
-<LI><a href="#[17f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LPF_get_value
+<LI><a href="#[180]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LPF_get_value
 <LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getTime
 <LI><a href="#[150]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;est_get_body_vel
 <LI><a href="#[16b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
 <LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
-<LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_neutral_current_pos
-<LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_pos
-<LI><a href="#[18a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_force_pos_vel
+<LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_neutral_current_pos
+<LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_pos
+<LI><a href="#[18b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_force_pos_vel
 <LI><a href="#[168]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_contact_state
-<LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_get_body_vel
+<LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_get_body_vel
 </UL>
 <BR>[Called By]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_PeriodElapsedCallback
 </UL>
@@ -2983,10 +2983,10 @@ Global Symbols
 <LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
-<LI><a href="#[190]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_joint_vel
-<LI><a href="#[18e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_joint_pos
-<LI><a href="#[18f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_pos_body
-<LI><a href="#[189]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_forward_kinematics_vel
+<LI><a href="#[191]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_joint_vel
+<LI><a href="#[18f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_joint_pos
+<LI><a href="#[190]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_pos_body
+<LI><a href="#[18a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_forward_kinematics_vel
 </UL>
 <BR>[Called By]<UL><LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_run
 </UL>
@@ -3118,8 +3118,8 @@ Local Symbols
 <P><STRONG><a name="[84]"></a>passive_run</STRONG> (Thumb, 60 bytes, Stack size 16 bytes, passive_state.o(i.passive_run))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = passive_run &rArr; leg_set_motor_kp_kd
 </UL>
-<BR>[Calls]<UL><LI><a href="#[1a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_force_vel_zero
-<LI><a href="#[195]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_kp_kd
+<BR>[Calls]<UL><LI><a href="#[1a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_force_vel_zero
+<LI><a href="#[196]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_kp_kd
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> passive_state.o(i.register_passive_state)
 </UL>
@@ -3133,10 +3133,10 @@ Local Symbols
 <LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_motors_current_pos
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
 <LI><a href="#[15d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_pos
-<LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_pos
+<LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_pos
 <LI><a href="#[151]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_dog_params
-<LI><a href="#[195]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_kp_kd
-<LI><a href="#[1a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fsm_get_previous_state
+<LI><a href="#[196]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_kp_kd
+<LI><a href="#[1a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fsm_get_previous_state
 <LI><a href="#[14f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> stand_state.o(i.register_stand_state)
@@ -3144,23 +3144,21 @@ Local Symbols
 <P><STRONG><a name="[87]"></a>stand_exit</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stand_state.o(i.stand_exit))
 <BR>[Address Reference Count : 1]<UL><LI> stand_state.o(i.register_stand_state)
 </UL>
-<P><STRONG><a name="[88]"></a>stand_run</STRONG> (Thumb, 580 bytes, Stack size 280 bytes, stand_state.o(i.stand_run))
-<BR><BR>[Stack]<UL><LI>Max Depth = 808<LI>Call Chain = stand_run &rArr; leg_foot_to_motor_force_pos_vel &rArr; leg_inverse_kinematics_force_pos_vel &rArr; leg_inverse_kinematics &rArr; __hardfp_sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
+<P><STRONG><a name="[88]"></a>stand_run</STRONG> (Thumb, 514 bytes, Stack size 240 bytes, stand_state.o(i.stand_run))
+<BR><BR>[Stack]<UL><LI>Max Depth = 768<LI>Call Chain = stand_run &rArr; leg_foot_to_motor_force_pos_vel &rArr; leg_inverse_kinematics_force_pos_vel &rArr; leg_inverse_kinematics &rArr; __hardfp_sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getTime
 <LI><a href="#[16b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
 <LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
-<LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_thigh_to_hip
-<LI><a href="#[1a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_target_foot_pos
-<LI><a href="#[1a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_force_pos_vel
-<LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_neutral_current_pos
-<LI><a href="#[18a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_force_pos_vel
-<LI><a href="#[180]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_foot_to_motor_force_pos_vel
+<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_thigh_to_hip
+<LI><a href="#[1a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_target_foot_pos
+<LI><a href="#[1a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_force_pos_vel
+<LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_neutral_current_pos
+<LI><a href="#[181]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_foot_to_motor_force_pos_vel
 <LI><a href="#[151]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_dog_params
-<LI><a href="#[1a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_get_stand_height
-<LI><a href="#[1a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_debug_data
-<LI><a href="#[195]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_kp_kd
+<LI><a href="#[1a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_get_stand_height
+<LI><a href="#[196]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_kp_kd
 <LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 <LI><a href="#[14f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 <LI><a href="#[147]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_sqrtf
@@ -3177,27 +3175,25 @@ Local Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getTime
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
-<LI><a href="#[195]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_kp_kd
+<LI><a href="#[196]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_kp_kd
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> trot_state.o(i.register_trot_state)
 </UL>
 <P><STRONG><a name="[8b]"></a>trot_exit</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, trot_state.o(i.trot_exit))
 <BR>[Address Reference Count : 1]<UL><LI> trot_state.o(i.register_trot_state)
 </UL>
-<P><STRONG><a name="[8c]"></a>trot_run</STRONG> (Thumb, 520 bytes, Stack size 216 bytes, trot_state.o(i.trot_run))
+<P><STRONG><a name="[8c]"></a>trot_run</STRONG> (Thumb, 376 bytes, Stack size 216 bytes, trot_state.o(i.trot_run))
 <BR><BR>[Stack]<UL><LI>Max Depth = 744<LI>Call Chain = trot_run &rArr; leg_foot_to_motor_force_pos_vel &rArr; leg_inverse_kinematics_force_pos_vel &rArr; leg_inverse_kinematics &rArr; __hardfp_sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
-<BR>[Calls]<UL><LI><a href="#[1a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
-<LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_trot_params
-<LI><a href="#[174]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
-<LI><a href="#[1a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_target_foot_pos
-<LI><a href="#[1a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_force_pos_vel
-<LI><a href="#[18a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_force_pos_vel
-<LI><a href="#[180]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_foot_to_motor_force_pos_vel
+<BR>[Calls]<UL><LI><a href="#[1a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
+<LI><a href="#[17d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_trot_params
+<LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
+<LI><a href="#[1a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_target_foot_pos
+<LI><a href="#[1a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_force_pos_vel
+<LI><a href="#[181]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_foot_to_motor_force_pos_vel
 <LI><a href="#[151]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_dog_params
 <LI><a href="#[1a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_get_body_vel_without_cog
-<LI><a href="#[1a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_debug_data
-<LI><a href="#[195]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_kp_kd
+<LI><a href="#[196]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_kp_kd
 <LI><a href="#[1aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_get_force_control_state
 <LI><a href="#[1ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_get_foot_target_force
 </UL>
@@ -3225,11 +3221,11 @@ Local Symbols
 <LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_SendCanMessage
 </UL>
 
-<P><STRONG><a name="[17e]"></a>ABS</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, imu.o(i.ABS))
+<P><STRONG><a name="[17f]"></a>ABS</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, imu.o(i.ABS))
 <BR><BR>[Called By]<UL><LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;imu_data_process
 </UL>
 
-<P><STRONG><a name="[17d]"></a>crc16_update</STRONG> (Thumb, 46 bytes, Stack size 20 bytes, imu.o(i.crc16_update))
+<P><STRONG><a name="[17e]"></a>crc16_update</STRONG> (Thumb, 46 bytes, Stack size 20 bytes, imu.o(i.crc16_update))
 <BR><BR>[Stack]<UL><LI>Max Depth = 20<LI>Call Chain = crc16_update
 </UL>
 <BR>[Called By]<UL><LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;imu_data_process
