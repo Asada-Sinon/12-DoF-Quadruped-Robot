@@ -80,6 +80,7 @@ static void MPU_Config(void);
   * @retval int
   */
 int main(void)
+
 {
 
   /* USER CODE BEGIN 1 */

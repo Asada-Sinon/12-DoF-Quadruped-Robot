@@ -61,7 +61,7 @@ float w_scale = 0.001;
 float kp_yaw = 0.015;
 float kd_w = 0.001;
 float target_yaw = 0;
-float kp_y = 0.001;
+float kp_y = 0.032;
 float target_y = 0; // 雷达反馈的机体侧移坐标
 
 // 重心调整步长
@@ -221,6 +221,7 @@ void gamepad_control()
     }
 
     dog_set_body_vel(vx_smooth, vy_smooth, w_smooth);
+    set_debug_data(7, vy_smooth);
     
 //    set_debug_data(0, vx_smooth);
 //    
@@ -237,11 +238,10 @@ void gamepad_control()
         fabs(vy_smooth) < v_dead_zone && 
         fabs(w_smooth) < v_dead_zone && 
         fabs(est_get_body_vel(0)) < v_big_dead_zone && 
-        fabs(est_get_body_vel(1)) < v_big_dead_zone && 
-        SWITCH_UP(SWITCH_CH2)) {
+        fabs(est_get_body_vel(1)) < v_big_dead_zone) {
         fsm_change_to(STATE_STAND);
     } else {
-        // fsm_change_to(STATE_TROT);
+        fsm_change_to(STATE_TROT);
     } 
 
     

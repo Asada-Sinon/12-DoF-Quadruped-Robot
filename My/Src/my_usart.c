@@ -23,7 +23,7 @@ void usart2_start_recv(void) // 遥控
 
 void usart6_start_recv(void) // 小电脑的雷达数据
 {
-		HAL_UARTEx_ReceiveToIdle_DMA(&huart6,vision_buffer,12);
+		HAL_UARTEx_ReceiveToIdle_DMA(&huart6,vision_buffer,16);
 	__HAL_DMA_DISABLE_IT(&hdma_usart6_rx,DMA_IT_HT);
 }
 
