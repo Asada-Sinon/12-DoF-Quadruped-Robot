@@ -3,11 +3,11 @@
 <title>Static Call Graph - [Quadruped_F767\Quadruped_F767.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image Quadruped_F767\Quadruped_F767.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Mon Jun 09 18:59:21 2025
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Mon Jun 09 19:24:09 2025
 <BR><P>
 <H3>Maximum Stack Usage =        768 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
-stand_run &rArr; leg_foot_to_motor_force_pos_vel &rArr; leg_inverse_kinematics_force_pos_vel &rArr; leg_inverse_kinematics &rArr; __hardfp_sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_drsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
+stand_run &rArr; leg_foot_to_motor_force_pos_vel &rArr; leg_inverse_kinematics_force_pos_vel &rArr; leg_inverse_kinematics &rArr; __hardfp_sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 <P>
 <H3>
 Mutually Recursive functions
@@ -526,12 +526,12 @@ Global Symbols
 <P><STRONG><a name="[152]"></a>__aeabi_memcpy4</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memcpya.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[165]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_init
 <LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_init
-<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
-<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_enter
 <LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_run
 <LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
 <LI><a href="#[151]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cal_foot_end_pos
 <LI><a href="#[186]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics_force_pos_vel
+<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
+<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_enter
 </UL>
 
 <P><STRONG><a name="[1b7]"></a>__aeabi_memcpy8</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memcpya.o(.text), UNUSED)
@@ -555,10 +555,10 @@ Global Symbols
 <LI><a href="#[b5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_MspInit
 <LI><a href="#[165]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_init
 <LI><a href="#[128]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemClock_Config
-<LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_Can_Init
-<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
 <LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_run
 <LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_smooth_cog
+<LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_Can_Init
+<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
 </UL>
 
 <P><STRONG><a name="[1ba]"></a>__aeabi_memclr8</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
@@ -575,12 +575,12 @@ Global Symbols
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_round
 <LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
 </UL>
-<BR>[Called By]<UL><LI><a href="#[13d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_sin
+<BR>[Called By]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
+<LI><a href="#[197]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
+<LI><a href="#[13d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_sin
 <LI><a href="#[13c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ieee754_rem_pio2
 <LI><a href="#[13b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_infnan
 <LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_drsub
-<LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
-<LI><a href="#[197]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
 <LI><a href="#[14c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_poly
 </UL>
 
@@ -589,15 +589,15 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 </UL>
-<BR>[Called By]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
+<BR>[Called By]<UL><LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;world_foot_to_body_vel
+<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_run
+<LI><a href="#[1a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
+<LI><a href="#[197]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
+<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
 <LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
 <LI><a href="#[13d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_sin
 <LI><a href="#[13c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ieee754_rem_pio2
 <LI><a href="#[13e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_cos
-<LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;world_foot_to_body_vel
-<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_run
-<LI><a href="#[1a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
-<LI><a href="#[197]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
 </UL>
 
 <P><STRONG><a name="[9b]"></a>__aeabi_drsub</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, dadd.o(.text))
@@ -616,15 +616,15 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
 </UL>
-<BR>[Called By]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
+<BR>[Called By]<UL><LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;world_foot_to_body_vel
+<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_run
+<LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getTime
+<LI><a href="#[197]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
 <LI><a href="#[13d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_sin
 <LI><a href="#[13c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ieee754_rem_pio2
 <LI><a href="#[14e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_underflow
 <LI><a href="#[13e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_cos
-<LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;world_foot_to_body_vel
-<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_run
-<LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getTime
-<LI><a href="#[197]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
 <LI><a href="#[14c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_poly
 </UL>
 
@@ -633,9 +633,9 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_round
 </UL>
-<BR>[Called By]<UL><LI><a href="#[13a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_invalid
-<LI><a href="#[1a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
+<BR>[Called By]<UL><LI><a href="#[1a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
 <LI><a href="#[197]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
+<LI><a href="#[13a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_invalid
 </UL>
 
 <P><STRONG><a name="[9e]"></a>__aeabi_ui2d</STRONG> (Thumb, 26 bytes, Stack size 16 bytes, dfltui.o(.text))
@@ -643,17 +643,17 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
 </UL>
-<BR>[Called By]<UL><LI><a href="#[13c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ieee754_rem_pio2
-<LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getTime
+<BR>[Called By]<UL><LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getTime
+<LI><a href="#[13c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ieee754_rem_pio2
 </UL>
 
 <P><STRONG><a name="[16e]"></a>__aeabi_f2d</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, f2d.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
-<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
-<LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;world_foot_to_body_vel
+<BR><BR>[Called By]<UL><LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;world_foot_to_body_vel
 <LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_run
 <LI><a href="#[1a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
 <LI><a href="#[197]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
+<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
 </UL>
 
 <P><STRONG><a name="[9f]"></a>__aeabi_d2f</STRONG> (Thumb, 56 bytes, Stack size 8 bytes, d2f.o(.text))
@@ -661,20 +661,20 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_float_round
 </UL>
-<BR>[Called By]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;trot_enter
-<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
-<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_enter
-<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
-<LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;world_foot_to_body_vel
+<BR>[Called By]<UL><LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;world_foot_to_body_vel
 <LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_run
 <LI><a href="#[1a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
 <LI><a href="#[197]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
+<LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;trot_enter
+<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
+<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_enter
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
 </UL>
 
 <P><STRONG><a name="[92]"></a>__aeabi_llsl</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, llshl.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
+<BR><BR>[Called By]<UL><LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
+<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
 <LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uldivmod
-<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 </UL>
 
 <P><STRONG><a name="[1bb]"></a>_ll_shift_l</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, llshl.o(.text), UNUSED)
@@ -704,9 +704,9 @@ Global Symbols
 <P><STRONG><a name="[99]"></a>_double_round</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, depilogue.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = _double_round
 </UL>
-<BR>[Called By]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
-<LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
+<BR>[Called By]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
+<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
 </UL>
 
 <P><STRONG><a name="[98]"></a>_double_epilogue</STRONG> (Thumb, 156 bytes, Stack size 32 bytes, depilogue.o(.text))
@@ -716,11 +716,11 @@ Global Symbols
 <LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_llsl
 <LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_round
 </UL>
-<BR>[Called By]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2d
+<BR>[Called By]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
+<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
+<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2d
 <LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
 <LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_drem
-<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
-<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 </UL>
 
 <P><STRONG><a name="[a1]"></a>_drem</STRONG> (Thumb, 134 bytes, Stack size 48 bytes, drem.o(.text))
@@ -887,8 +887,7 @@ Global Symbols
 <P><STRONG><a name="[a5]"></a>HAL_CAN_IRQHandler</STRONG> (Thumb, 508 bytes, Stack size 40 bytes, stm32f7xx_hal_can.o(i.HAL_CAN_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 112<LI>Call Chain = HAL_CAN_IRQHandler &rArr; HAL_CAN_RxFifo0MsgPendingCallback &rArr; J60_ProcessReceivedData
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_RxFifo0MsgPendingCallback
-<LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_WakeUpFromRxMsgCallback
+<BR>[Calls]<UL><LI><a href="#[b2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_WakeUpFromRxMsgCallback
 <LI><a href="#[ab]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_TxMailbox2CompleteCallback
 <LI><a href="#[ac]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_TxMailbox2AbortCallback
 <LI><a href="#[a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_TxMailbox1CompleteCallback
@@ -900,6 +899,7 @@ Global Symbols
 <LI><a href="#[af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_RxFifo1FullCallback
 <LI><a href="#[ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_RxFifo0FullCallback
 <LI><a href="#[b3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_ErrorCallback
+<LI><a href="#[ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_RxFifo0MsgPendingCallback
 </UL>
 <BR>[Called By]<UL><LI><a href="#[72]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN3_RX0_IRQHandler
 <LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;CAN2_RX0_IRQHandler
@@ -935,8 +935,8 @@ Global Symbols
 <P><STRONG><a name="[ae]"></a>HAL_CAN_RxFifo0MsgPendingCallback</STRONG> (Thumb, 34 bytes, Stack size 48 bytes, j60.o(i.HAL_CAN_RxFifo0MsgPendingCallback))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = HAL_CAN_RxFifo0MsgPendingCallback &rArr; J60_ProcessReceivedData
 </UL>
-<BR>[Calls]<UL><LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_ProcessReceivedData
-<LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_GetRxMessage
+<BR>[Calls]<UL><LI><a href="#[bb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_GetRxMessage
+<LI><a href="#[bc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_ProcessReceivedData
 </UL>
 <BR>[Called By]<UL><LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_IRQHandler
 </UL>
@@ -994,8 +994,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_IRQHandler
-<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_DMAStop
+<BR>[Called By]<UL><LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_DMAStop
+<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_IRQHandler
 </UL>
 
 <P><STRONG><a name="[f8]"></a>HAL_DMA_Abort_IT</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, stm32f7xx_hal_dma.o(i.HAL_DMA_Abort_IT))
@@ -1058,13 +1058,13 @@ Global Symbols
 <LI><a href="#[cd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_RCC_ClockConfig
 <LI><a href="#[cb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_PWREx_EnableOverDrive
 <LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
-<LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_SendCanMessage
-<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_ProcessCanQueues
-<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Abort
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_Start
 <LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getTime
 <LI><a href="#[129]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_WaitOnFlagUntilTimeout
 <LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_CheckIdleState
+<LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Abort
+<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_Start
+<LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_SendCanMessage
+<LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_ProcessCanQueues
 </UL>
 
 <P><STRONG><a name="[127]"></a>HAL_IncTick</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, stm32f7xx_hal.o(i.HAL_IncTick))
@@ -1252,10 +1252,10 @@ Global Symbols
 <P><STRONG><a name="[d3]"></a>HAL_TIM_ConfigClockSource</STRONG> (Thumb, 220 bytes, Stack size 16 bytes, stm32f7xx_hal_tim.o(i.HAL_TIM_ConfigClockSource))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = HAL_TIM_ConfigClockSource &rArr; TIM_TI2_ConfigInputStage
 </UL>
-<BR>[Calls]<UL><LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_ETR_SetConfig
-<LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_TI2_ConfigInputStage
+<BR>[Calls]<UL><LI><a href="#[d6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_TI2_ConfigInputStage
 <LI><a href="#[d5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_TI1_ConfigInputStage
 <LI><a href="#[d7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_ITRx_SetConfig
+<LI><a href="#[d4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TIM_ETR_SetConfig
 </UL>
 <BR>[Called By]<UL><LI><a href="#[122]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_TIM9_Init
 <LI><a href="#[11f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;MX_TIM5_Init
@@ -1302,14 +1302,14 @@ Global Symbols
 <P><STRONG><a name="[dc]"></a>HAL_TIM_PeriodElapsedCallback</STRONG> (Thumb, 94 bytes, Stack size 8 bytes, timer.o(i.HAL_TIM_PeriodElapsedCallback))
 <BR><BR>[Stack]<UL><LI>Max Depth = 476<LI>Call Chain = HAL_TIM_PeriodElapsedCallback &rArr; vmc_force_calculate &rArr; leg_get_current_foot_force_pos_vel &rArr; leg_motor_to_foot_force_pos_vel &rArr; leg_forward_kinematics_force_pos_vel &rArr; leg_jacobian &rArr; __hardfp_sinf &rArr; __mathlib_rredf2
 </UL>
-<BR>[Calls]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
+<BR>[Calls]<UL><LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_run
+<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_smooth_cog
+<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_send_motors
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
 <LI><a href="#[e7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_debug_data
 <LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gamepad_control
 <LI><a href="#[e5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fsm_update
 <LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_ProcessCanQueues
-<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_run
-<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_smooth_cog
-<LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_send_motors
 </UL>
 <BR>[Called By]<UL><LI><a href="#[d8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_IRQHandler
 </UL>
@@ -1331,17 +1331,17 @@ Global Symbols
 <P><STRONG><a name="[eb]"></a>HAL_UARTEx_RxEventCallback</STRONG> (Thumb, 90 bytes, Stack size 8 bytes, my_usart.o(i.HAL_UARTEx_RxEventCallback))
 <BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = HAL_UARTEx_RxEventCallback &rArr; usart6_start_recv &rArr; HAL_UARTEx_ReceiveToIdle_DMA &rArr; UART_Start_Receive_DMA &rArr; HAL_DMA_Start_IT &rArr; DMA_SetConfig
 </UL>
-<BR>[Calls]<UL><LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HT10A_process
+<BR>[Calls]<UL><LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_DMAStop
+<LI><a href="#[ef]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HT10A_process
 <LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vision_data_process
 <LI><a href="#[f2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart6_start_recv
 <LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart2_start_recv
 <LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_start_recv
 <LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;imu_data_process
-<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_DMAStop
 </UL>
-<BR>[Called By]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_DMARxHalfCplt
+<BR>[Called By]<UL><LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_IRQHandler
+<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_DMARxHalfCplt
 <LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_DMAReceiveCplt
-<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_IRQHandler
 </UL>
 
 <P><STRONG><a name="[f9]"></a>HAL_UARTEx_WakeupCallback</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f7xx_hal_uart.o(i.HAL_UARTEx_WakeupCallback))
@@ -1351,10 +1351,10 @@ Global Symbols
 <P><STRONG><a name="[ec]"></a>HAL_UART_DMAStop</STRONG> (Thumb, 140 bytes, Stack size 16 bytes, stm32f7xx_hal_uart.o(i.HAL_UART_DMAStop))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = HAL_UART_DMAStop &rArr; HAL_DMA_Abort
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_EndTxTransfer
-<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_EndRxTransfer
-<LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_GetError
+<BR>[Calls]<UL><LI><a href="#[f3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_GetError
 <LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Abort
+<LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_EndTxTransfer
+<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_EndRxTransfer
 </UL>
 <BR>[Called By]<UL><LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UARTEx_RxEventCallback
 </UL>
@@ -1366,21 +1366,21 @@ Global Symbols
 <LI><a href="#[f0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart2_start_recv
 <LI><a href="#[ee]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;usart1_start_recv
 </UL>
-<BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_DMAError
+<BR>[Called By]<UL><LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_IRQHandler
+<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_DMAError
 <LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_DMAAbortOnError
-<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_IRQHandler
 </UL>
 
 <P><STRONG><a name="[f7]"></a>HAL_UART_IRQHandler</STRONG> (Thumb, 684 bytes, Stack size 24 bytes, stm32f7xx_hal_uart.o(i.HAL_UART_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 108<LI>Call Chain = HAL_UART_IRQHandler &rArr; HAL_UART_ErrorCallback &rArr; usart6_start_recv &rArr; HAL_UARTEx_ReceiveToIdle_DMA &rArr; UART_Start_Receive_DMA &rArr; HAL_DMA_Start_IT &rArr; DMA_SetConfig
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_EndRxTransfer
-<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_ErrorCallback
-<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UARTEx_RxEventCallback
+<BR>[Calls]<UL><LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_TxCpltCallback
+<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UARTEx_WakeupCallback
 <LI><a href="#[f8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Abort_IT
 <LI><a href="#[be]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_DMA_Abort
-<LI><a href="#[fa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_TxCpltCallback
-<LI><a href="#[f9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UARTEx_WakeupCallback
+<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_EndRxTransfer
+<LI><a href="#[f6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_ErrorCallback
+<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UARTEx_RxEventCallback
 </UL>
 <BR>[Called By]<UL><LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART6_IRQHandler
 <LI><a href="#[31]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
@@ -1433,8 +1433,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[fa]"></a>HAL_UART_TxCpltCallback</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f7xx_hal_uart.o(i.HAL_UART_TxCpltCallback))
-<BR><BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_DMATransmitCplt
-<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_IRQHandler
+<BR><BR>[Called By]<UL><LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_IRQHandler
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_DMATransmitCplt
 </UL>
 
 <P><STRONG><a name="[12c]"></a>HAL_UART_TxHalfCpltCallback</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, stm32f7xx_hal_uart.o(i.HAL_UART_TxHalfCpltCallback))
@@ -1457,11 +1457,11 @@ Global Symbols
 <P><STRONG><a name="[102]"></a>J60_Can_Init</STRONG> (Thumb, 162 bytes, Stack size 56 bytes, j60.o(i.J60_Can_Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = J60_Can_Init &rArr; HAL_CAN_Start
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
-<LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memset
-<LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_Start
+<BR>[Calls]<UL><LI><a href="#[bd]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_Start
 <LI><a href="#[103]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_ConfigFilter
 <LI><a href="#[104]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_ActivateNotification
+<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memset
 </UL>
 <BR>[Called By]<UL><LI><a href="#[19f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_init
 </UL>
@@ -1483,11 +1483,11 @@ Global Symbols
 <P><STRONG><a name="[161]"></a>J60_GetMotor</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, j60.o(i.J60_GetMotor))
 <BR><BR>[Called By]<UL><LI><a href="#[19f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;motor_init
 <LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_init
-<LI><a href="#[19a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_kp_kd
 <LI><a href="#[162]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;send_motors_target_force_pos_vel
 <LI><a href="#[191]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_motors_current_vel
 <LI><a href="#[15e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_motors_current_pos
 <LI><a href="#[190]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_motors_current_force
+<LI><a href="#[19a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_kp_kd
 </UL>
 
 <P><STRONG><a name="[10b]"></a>J60_MapKdToUint8</STRONG> (Thumb, 58 bytes, Stack size 0 bytes, j60.o(i.J60_MapKdToUint8))
@@ -1542,9 +1542,9 @@ Global Symbols
 <P><STRONG><a name="[e1]"></a>J60_ProcessCanQueues</STRONG> (Thumb, 138 bytes, Stack size 24 bytes, j60.o(i.J60_ProcessCanQueues))
 <BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = J60_ProcessCanQueues &rArr; J60_SendCanMessage_NonBlocking &rArr; HAL_CAN_AddTxMessage
 </UL>
-<BR>[Calls]<UL><LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_SendCanMessage_NonBlocking
-<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
+<BR>[Calls]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
 <LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_GetTxMailboxesFreeLevel
+<LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_SendCanMessage_NonBlocking
 </UL>
 <BR>[Called By]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_PeriodElapsedCallback
 </UL>
@@ -1566,9 +1566,9 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[176]"></a>LPFilter</STRONG> (Thumb, 42 bytes, Stack size 0 bytes, estimator.o(i.LPFilter))
-<BR><BR>[Called By]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
+<BR><BR>[Called By]<UL><LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_run
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
 <LI><a href="#[ed]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;imu_data_process
-<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_run
 </UL>
 
 <P><STRONG><a name="[169]"></a>LPFilter_init</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, estimator.o(i.LPFilter_init))
@@ -1868,8 +1868,8 @@ Global Symbols
 <P><STRONG><a name="[ff]"></a>UART_CheckIdleState</STRONG> (Thumb, 166 bytes, Stack size 32 bytes, stm32f7xx_hal_uart.o(i.UART_CheckIdleState))
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = UART_CheckIdleState &rArr; UART_WaitOnFlagUntilTimeout
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
-<LI><a href="#[129]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_WaitOnFlagUntilTimeout
+<BR>[Calls]<UL><LI><a href="#[129]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_WaitOnFlagUntilTimeout
+<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
 </UL>
 <BR>[Called By]<UL><LI><a href="#[fb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_Init
 </UL>
@@ -1895,8 +1895,8 @@ Global Symbols
 <P><STRONG><a name="[129]"></a>UART_WaitOnFlagUntilTimeout</STRONG> (Thumb, 148 bytes, Stack size 32 bytes, stm32f7xx_hal_uart.o(i.UART_WaitOnFlagUntilTimeout))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = UART_WaitOnFlagUntilTimeout
 </UL>
-<BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_EndRxTransfer
-<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
+<BR>[Calls]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
+<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_EndRxTransfer
 </UL>
 <BR>[Called By]<UL><LI><a href="#[ff]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_CheckIdleState
 </UL>
@@ -1973,7 +1973,7 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[139]"></a>__hardfp_cos</STRONG> (Thumb, 180 bytes, Stack size 32 bytes, cos.o(i.__hardfp_cos))
-<BR><BR>[Stack]<UL><LI>Max Depth = 240<LI>Call Chain = __hardfp_cos &rArr; __ieee754_rem_pio2 &rArr; __aeabi_drsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
+<BR><BR>[Stack]<UL><LI>Max Depth = 240<LI>Call Chain = __hardfp_cos &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[133]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__set_errno
 <LI><a href="#[13d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_sin
@@ -1993,11 +1993,11 @@ Global Symbols
 <LI><a href="#[134]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_flt_invalid
 <LI><a href="#[132]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_flt_infnan
 </UL>
-<BR>[Called By]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
-<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
+<BR>[Called By]<UL><LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
 <LI><a href="#[151]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cal_foot_end_pos
 <LI><a href="#[18c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_jacobian
 <LI><a href="#[18a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_forward_kinematics
+<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
 </UL>
 
 <P><STRONG><a name="[141]"></a>__hardfp_fmax</STRONG> (Thumb, 116 bytes, Stack size 32 bytes, fmax.o(i.__hardfp_fmax))
@@ -2037,7 +2037,7 @@ Global Symbols
 <P><STRONG><a name="[1c5]"></a>__mathlib_powf</STRONG> (Thumb, 0 bytes, Stack size 32 bytes, powf.o(i.__hardfp_powf), UNUSED)
 
 <P><STRONG><a name="[148]"></a>__hardfp_sin</STRONG> (Thumb, 180 bytes, Stack size 32 bytes, sin.o(i.__hardfp_sin))
-<BR><BR>[Stack]<UL><LI>Max Depth = 240<LI>Call Chain = __hardfp_sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_drsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
+<BR><BR>[Stack]<UL><LI>Max Depth = 240<LI>Call Chain = __hardfp_sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[133]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__set_errno
 <LI><a href="#[13d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_sin
@@ -2070,21 +2070,21 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[133]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__set_errno
 </UL>
-<BR>[Called By]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
-<LI><a href="#[151]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cal_foot_end_pos
+<BR>[Called By]<UL><LI><a href="#[151]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cal_foot_end_pos
 <LI><a href="#[197]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
+<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
 </UL>
 
 <P><STRONG><a name="[13c]"></a>__ieee754_rem_pio2</STRONG> (Thumb, 938 bytes, Stack size 120 bytes, rred.o(i.__ieee754_rem_pio2))
-<BR><BR>[Stack]<UL><LI>Max Depth = 208<LI>Call Chain = __ieee754_rem_pio2 &rArr; __aeabi_drsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
+<BR><BR>[Stack]<UL><LI>Max Depth = 208<LI>Call Chain = __ieee754_rem_pio2 &rArr; __aeabi_dsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
-<BR>[Calls]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2d
+<BR>[Calls]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
+<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
+<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
+<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2d
 <LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
 <LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
 <LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_drsub
-<LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
-<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
-<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 <LI><a href="#[14b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fabs
 </UL>
 <BR>[Called By]<UL><LI><a href="#[148]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_sin
@@ -2094,10 +2094,10 @@ Global Symbols
 <P><STRONG><a name="[13e]"></a>__kernel_cos</STRONG> (Thumb, 322 bytes, Stack size 64 bytes, cos_i.o(i.__kernel_cos))
 <BR><BR>[Stack]<UL><LI>Max Depth = 176<LI>Call Chain = __kernel_cos &rArr; __kernel_poly &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
 </UL>
-<BR>[Calls]<UL><LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
-<LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_drsub
-<LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
+<BR>[Calls]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
+<LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
+<LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_drsub
 <LI><a href="#[14c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_poly
 </UL>
 <BR>[Called By]<UL><LI><a href="#[148]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_sin
@@ -2117,11 +2117,11 @@ Global Symbols
 <P><STRONG><a name="[13d]"></a>__kernel_sin</STRONG> (Thumb, 280 bytes, Stack size 72 bytes, sin_i.o(i.__kernel_sin))
 <BR><BR>[Stack]<UL><LI>Max Depth = 184<LI>Call Chain = __kernel_sin &rArr; __kernel_poly &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
 </UL>
-<BR>[Calls]<UL><LI><a href="#[14e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_underflow
-<LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_drsub
-<LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
+<BR>[Calls]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
+<LI><a href="#[14e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__mathlib_dbl_underflow
+<LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_drsub
 <LI><a href="#[14c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__kernel_poly
 <LI><a href="#[14d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ARM_fpclassify
 </UL>
@@ -2224,14 +2224,14 @@ Global Symbols
 <P><STRONG><a name="[151]"></a>cal_foot_end_pos</STRONG> (Thumb, 340 bytes, Stack size 88 bytes, gait.o(i.cal_foot_end_pos))
 <BR><BR>[Stack]<UL><LI>Max Depth = 124<LI>Call Chain = cal_foot_end_pos &rArr; __hardfp_sinf &rArr; __mathlib_rredf2
 </UL>
-<BR>[Calls]<UL><LI><a href="#[152]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
+<BR>[Calls]<UL><LI><a href="#[153]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;est_get_body_vel
+<LI><a href="#[155]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;limit
+<LI><a href="#[154]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_dog_params
+<LI><a href="#[152]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 <LI><a href="#[14a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_sqrtf
 <LI><a href="#[149]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_sinf
 <LI><a href="#[13f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_cosf
 <LI><a href="#[135]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_atan2f
-<LI><a href="#[153]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;est_get_body_vel
-<LI><a href="#[155]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;limit
-<LI><a href="#[154]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_dog_params
 </UL>
 <BR>[Called By]<UL><LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
 </UL>
@@ -2255,8 +2255,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[179]"></a>dog_get_body_vel</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, dog.o(i.dog_get_body_vel))
-<BR><BR>[Called By]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
-<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
+<BR><BR>[Called By]<UL><LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
 </UL>
 
 <P><STRONG><a name="[1ad]"></a>dog_get_body_vel_without_cog</STRONG> (Thumb, 56 bytes, Stack size 0 bytes, dog.o(i.dog_get_body_vel_without_cog))
@@ -2270,13 +2270,13 @@ Global Symbols
 <P><STRONG><a name="[15b]"></a>dog_init</STRONG> (Thumb, 258 bytes, Stack size 128 bytes, dog.o(i.dog_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 148<LI>Call Chain = dog_init &rArr; leg_motor_to_joint &rArr; leg_transform
 </UL>
-<BR>[Calls]<UL><LI><a href="#[152]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
-<LI><a href="#[15e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_motors_current_pos
+<BR>[Calls]<UL><LI><a href="#[15e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_motors_current_pos
 <LI><a href="#[15c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_robot_params
 <LI><a href="#[161]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_GetMotor
 <LI><a href="#[160]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_pos
 <LI><a href="#[15f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_motor_to_joint
 <LI><a href="#[15d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_cog_to_foot
+<LI><a href="#[152]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -2296,9 +2296,9 @@ Global Symbols
 <P><STRONG><a name="[e3]"></a>dog_smooth_cog</STRONG> (Thumb, 214 bytes, Stack size 64 bytes, dog.o(i.dog_smooth_cog))
 <BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = dog_smooth_cog &rArr; dog_cog_to_foot
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
-<LI><a href="#[163]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth
+<BR>[Calls]<UL><LI><a href="#[163]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth
 <LI><a href="#[15d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_cog_to_foot
+<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_PeriodElapsedCallback
 </UL>
@@ -2308,20 +2308,20 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;imu_get_data
 </UL>
-<BR>[Called By]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
+<BR>[Called By]<UL><LI><a href="#[151]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cal_foot_end_pos
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
 <LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gamepad_control
-<LI><a href="#[151]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cal_foot_end_pos
 </UL>
 
 <P><STRONG><a name="[165]"></a>estimation_init</STRONG> (Thumb, 534 bytes, Stack size 448 bytes, estimator.o(i.estimation_init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 524<LI>Call Chain = estimation_init &rArr; mat_transpose_ptr &rArr; arm_mat_trans_f32
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
-<LI><a href="#[152]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
-<LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mat_mult_ptr
+<BR>[Calls]<UL><LI><a href="#[166]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mat_mult_ptr
 <LI><a href="#[168]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mat_add_ptr
 <LI><a href="#[169]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LPFilter_init
 <LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mat_transpose_ptr
+<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[152]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -2329,10 +2329,7 @@ Global Symbols
 <P><STRONG><a name="[e6]"></a>estimation_run</STRONG> (Thumb, 1982 bytes, Stack size 64 bytes, estimator.o(i.estimation_run))
 <BR><BR>[Stack]<UL><LI>Max Depth = 300<LI>Call Chain = estimation_run &rArr; world_foot_to_body_vel &rArr; leg_forward_kinematics_vel &rArr; leg_jacobian &rArr; __hardfp_sinf &rArr; __mathlib_rredf2
 </UL>
-<BR>[Calls]<UL><LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
-<LI><a href="#[152]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
-<LI><a href="#[141]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_fmax
-<LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_debug_data
+<BR>[Calls]<UL><LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_debug_data
 <LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;imu_get_data
 <LI><a href="#[172]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;arm_mat_trans_f32
 <LI><a href="#[175]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;arm_mat_sub_f32
@@ -2351,6 +2348,9 @@ Global Symbols
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
 <LI><a href="#[16c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_phase
 <LI><a href="#[16b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_contact_state
+<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[152]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
+<LI><a href="#[141]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_fmax
 </UL>
 <BR>[Called By]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_PeriodElapsedCallback
 </UL>
@@ -2397,16 +2397,16 @@ Global Symbols
 <P><STRONG><a name="[178]"></a>gait_generator</STRONG> (Thumb, 758 bytes, Stack size 192 bytes, gait.o(i.gait_generator))
 <BR><BR>[Stack]<UL><LI>Max Depth = 316<LI>Call Chain = gait_generator &rArr; cal_foot_end_pos &rArr; __hardfp_sinf &rArr; __mathlib_rredf2
 </UL>
-<BR>[Calls]<UL><LI><a href="#[152]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
-<LI><a href="#[149]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_sinf
-<LI><a href="#[13f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_cosf
-<LI><a href="#[135]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_atan2f
-<LI><a href="#[151]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cal_foot_end_pos
+<BR>[Calls]<UL><LI><a href="#[151]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cal_foot_end_pos
 <LI><a href="#[17b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_thigh_to_hip
 <LI><a href="#[17c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_target_foot_pos
 <LI><a href="#[17a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_neutral_current_pos
 <LI><a href="#[17d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_pos
 <LI><a href="#[179]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_get_body_vel
+<LI><a href="#[152]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
+<LI><a href="#[149]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_sinf
+<LI><a href="#[13f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_cosf
+<LI><a href="#[135]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_atan2f
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;trot_run
 </UL>
@@ -2415,12 +2415,12 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = gamepad_control &rArr; est_get_body_vel
 </UL>
 <BR>[Calls]<UL><LI><a href="#[180]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fsm_change_to
-<LI><a href="#[17e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vision_get_pos
 <LI><a href="#[177]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;set_debug_data
 <LI><a href="#[164]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;imu_get_data
 <LI><a href="#[153]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;est_get_body_vel
 <LI><a href="#[163]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;smooth
 <LI><a href="#[17f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_set_body_vel
+<LI><a href="#[17e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vision_get_pos
 </UL>
 <BR>[Called By]<UL><LI><a href="#[dc]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_TIM_PeriodElapsedCallback
 </UL>
@@ -2432,26 +2432,26 @@ Global Symbols
 <P><STRONG><a name="[16a]"></a>getTime</STRONG> (Thumb, 28 bytes, Stack size 8 bytes, timer.o(i.getTime))
 <BR><BR>[Stack]<UL><LI>Max Depth = 96<LI>Call Chain = getTime &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
 </UL>
-<BR>[Calls]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2d
+<BR>[Calls]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
 <LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
-<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
+<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ui2d
 </UL>
-<BR>[Called By]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;trot_enter
+<BR>[Called By]<UL><LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;world_foot_to_body_vel
+<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_run
+<LI><a href="#[1a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
+<LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;trot_enter
 <LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
 <LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_enter
 <LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
-<LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;world_foot_to_body_vel
-<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_run
-<LI><a href="#[1a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
 </UL>
 
 <P><STRONG><a name="[154]"></a>get_dog_params</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, dog.o(i.get_dog_params))
-<BR><BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;trot_run
-<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
-<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_enter
-<LI><a href="#[1a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
+<BR><BR>[Called By]<UL><LI><a href="#[1a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
 <LI><a href="#[181]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_trot_params
 <LI><a href="#[151]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;cal_foot_end_pos
+<LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;trot_run
+<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
+<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_enter
 </UL>
 
 <P><STRONG><a name="[15c]"></a>get_robot_params</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, robot_params.o(i.get_robot_params))
@@ -2469,25 +2469,25 @@ Global Symbols
 <P><STRONG><a name="[ed]"></a>imu_data_process</STRONG> (Thumb, 360 bytes, Stack size 40 bytes, imu.o(i.imu_data_process))
 <BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = imu_data_process &rArr; crc16_update
 </UL>
-<BR>[Calls]<UL><LI><a href="#[182]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc16_update
-<LI><a href="#[183]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ABS
-<LI><a href="#[113]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
-<LI><a href="#[169]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LPFilter_init
+<BR>[Calls]<UL><LI><a href="#[169]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LPFilter_init
 <LI><a href="#[176]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LPFilter
 <LI><a href="#[184]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;LPF_get_value
+<LI><a href="#[182]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;crc16_update
+<LI><a href="#[183]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ABS
+<LI><a href="#[113]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 </UL>
 <BR>[Called By]<UL><LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UARTEx_RxEventCallback
 </UL>
 
 <P><STRONG><a name="[164]"></a>imu_get_data</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, imu.o(i.imu_get_data))
-<BR><BR>[Called By]<UL><LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gamepad_control
-<LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;world_foot_to_body_vel
+<BR><BR>[Called By]<UL><LI><a href="#[173]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;world_foot_to_body_vel
 <LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_run
 <LI><a href="#[153]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;est_get_body_vel
+<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gamepad_control
 </UL>
 
 <P><STRONG><a name="[185]"></a>leg_foot_to_motor_force_pos_vel</STRONG> (Thumb, 66 bytes, Stack size 72 bytes, dog.o(i.leg_foot_to_motor_force_pos_vel))
-<BR><BR>[Stack]<UL><LI>Max Depth = 528<LI>Call Chain = leg_foot_to_motor_force_pos_vel &rArr; leg_inverse_kinematics_force_pos_vel &rArr; leg_inverse_kinematics &rArr; __hardfp_sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_drsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
+<BR><BR>[Stack]<UL><LI>Max Depth = 528<LI>Call Chain = leg_foot_to_motor_force_pos_vel &rArr; leg_inverse_kinematics_force_pos_vel &rArr; leg_inverse_kinematics &rArr; __hardfp_sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
 <BR>[Calls]<UL><LI><a href="#[187]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_joint_to_motor_vel
 <LI><a href="#[189]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_joint_to_motor_force
@@ -2528,8 +2528,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[16b]"></a>leg_get_contact_state</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, dog.o(i.leg_get_contact_state))
-<BR><BR>[Called By]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
-<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_run
+<BR><BR>[Called By]<UL><LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_run
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
 </UL>
 
 <P><STRONG><a name="[18f]"></a>leg_get_current_foot_force_pos_vel</STRONG> (Thumb, 54 bytes, Stack size 72 bytes, dog.o(i.leg_get_current_foot_force_pos_vel))
@@ -2549,10 +2549,10 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[193]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_joint_pos
 <LI><a href="#[18a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_forward_kinematics
 </UL>
-<BR>[Called By]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_enter
-<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
-<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
+<BR>[Called By]<UL><LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
 <LI><a href="#[194]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_pos_body
+<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_enter
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
 </UL>
 
 <P><STRONG><a name="[194]"></a>leg_get_current_foot_pos_body</STRONG> (Thumb, 112 bytes, Stack size 24 bytes, dog.o(i.leg_get_current_foot_pos_body))
@@ -2597,9 +2597,9 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[161]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_GetMotor
 </UL>
 <BR>[Called By]<UL><LI><a href="#[15b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_init
-<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_enter
 <LI><a href="#[193]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_joint_pos
 <LI><a href="#[18f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_force_pos_vel
+<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_enter
 </UL>
 
 <P><STRONG><a name="[191]"></a>leg_get_motors_current_vel</STRONG> (Thumb, 38 bytes, Stack size 16 bytes, motor.o(i.leg_get_motors_current_vel))
@@ -2612,9 +2612,9 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[17a]"></a>leg_get_neutral_current_pos</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, dog.o(i.leg_get_neutral_current_pos))
-<BR><BR>[Called By]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
+<BR><BR>[Called By]<UL><LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
+<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
 <LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
-<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
 </UL>
 
 <P><STRONG><a name="[16c]"></a>leg_get_phase</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, dog.o(i.leg_get_phase))
@@ -2626,32 +2626,32 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[197]"></a>leg_inverse_kinematics</STRONG> (Thumb, 498 bytes, Stack size 56 bytes, dog.o(i.leg_inverse_kinematics))
-<BR><BR>[Stack]<UL><LI>Max Depth = 296<LI>Call Chain = leg_inverse_kinematics &rArr; __hardfp_sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_drsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
+<BR><BR>[Stack]<UL><LI>Max Depth = 296<LI>Call Chain = leg_inverse_kinematics &rArr; __hardfp_sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
-<BR>[Calls]<UL><LI><a href="#[14a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_sqrtf
-<LI><a href="#[148]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_sin
-<LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_cos
-<LI><a href="#[135]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_atan2f
-<LI><a href="#[130]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_acosf
-<LI><a href="#[16e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
+<BR>[Calls]<UL><LI><a href="#[16e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
 <LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
 <LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
 <LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
 <LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dadd
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
+<LI><a href="#[14a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_sqrtf
+<LI><a href="#[148]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_sin
+<LI><a href="#[139]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_cos
+<LI><a href="#[135]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_atan2f
+<LI><a href="#[130]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_acosf
 </UL>
 <BR>[Called By]<UL><LI><a href="#[186]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics_force_pos_vel
 </UL>
 
 <P><STRONG><a name="[186]"></a>leg_inverse_kinematics_force_pos_vel</STRONG> (Thumb, 228 bytes, Stack size 160 bytes, dog.o(i.leg_inverse_kinematics_force_pos_vel))
-<BR><BR>[Stack]<UL><LI>Max Depth = 456<LI>Call Chain = leg_inverse_kinematics_force_pos_vel &rArr; leg_inverse_kinematics &rArr; __hardfp_sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_drsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
+<BR><BR>[Stack]<UL><LI>Max Depth = 456<LI>Call Chain = leg_inverse_kinematics_force_pos_vel &rArr; leg_inverse_kinematics &rArr; __hardfp_sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
-<BR>[Calls]<UL><LI><a href="#[152]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
-<LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mat_transpose_ptr
+<BR>[Calls]<UL><LI><a href="#[167]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mat_transpose_ptr
 <LI><a href="#[18d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;mat_inverse_3x3_ptr
 <LI><a href="#[18c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_jacobian
 <LI><a href="#[197]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_inverse_kinematics
 <LI><a href="#[193]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_joint_pos
+<LI><a href="#[152]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_foot_to_motor_force_pos_vel
 </UL>
@@ -2751,8 +2751,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[17b]"></a>leg_thigh_to_hip</STRONG> (Thumb, 48 bytes, Stack size 0 bytes, dog.o(i.leg_thigh_to_hip))
-<BR><BR>[Called By]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
-<LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
+<BR><BR>[Called By]<UL><LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
+<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stand_run
 </UL>
 
 <P><STRONG><a name="[198]"></a>leg_transform</STRONG> (Thumb, 126 bytes, Stack size 20 bytes, dog.o(i.leg_transform))
@@ -2845,10 +2845,10 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 108<LI>Call Chain = motor_init &rArr; J60_EnableMotor &rArr; J60_SendCanMessage &rArr; J60_SendCanMessage_NonBlocking &rArr; HAL_CAN_AddTxMessage
 </UL>
 <BR>[Calls]<UL><LI><a href="#[c4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_Delay
+<LI><a href="#[161]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_GetMotor
 <LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_EnableMotor
 <LI><a href="#[1a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_ConfigMotor
 <LI><a href="#[102]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_Can_Init
-<LI><a href="#[161]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_GetMotor
 </UL>
 <BR>[Called By]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -2866,13 +2866,13 @@ Global Symbols
 <P><STRONG><a name="[1a6]"></a>phase_wave_generator</STRONG> (Thumb, 330 bytes, Stack size 56 bytes, gait.o(i.phase_wave_generator))
 <BR><BR>[Stack]<UL><LI>Max Depth = 192<LI>Call Chain = phase_wave_generator &rArr; __hardfp_fmod &rArr; _drem &rArr; _double_epilogue &rArr; _double_round
 </UL>
-<BR>[Calls]<UL><LI><a href="#[143]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_fmod
-<LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getTime
+<BR>[Calls]<UL><LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getTime
 <LI><a href="#[16e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
 <LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
 <LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
 <LI><a href="#[154]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_dog_params
+<LI><a href="#[143]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_fmod
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;trot_run
 </UL>
@@ -2912,22 +2912,22 @@ Global Symbols
 <P><STRONG><a name="[162]"></a>send_motors_target_force_pos_vel</STRONG> (Thumb, 140 bytes, Stack size 40 bytes, motor.o(i.send_motors_target_force_pos_vel))
 <BR><BR>[Stack]<UL><LI>Max Depth = 156<LI>Call Chain = send_motors_target_force_pos_vel &rArr; J60_MotorControl &rArr; J60_SendCanMessage &rArr; J60_SendCanMessage_NonBlocking &rArr; HAL_CAN_AddTxMessage
 </UL>
-<BR>[Calls]<UL><LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_MotorControl
-<LI><a href="#[161]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_GetMotor
+<BR>[Calls]<UL><LI><a href="#[161]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_GetMotor
+<LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_MotorControl
 </UL>
 <BR>[Called By]<UL><LI><a href="#[e2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_send_motors
 </UL>
 
 <P><STRONG><a name="[177]"></a>set_debug_data</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, ano_tc.o(i.set_debug_data))
-<BR><BR>[Called By]<UL><LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
+<BR><BR>[Called By]<UL><LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_run
+<LI><a href="#[e8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_force_calculate
 <LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gamepad_control
 <LI><a href="#[f1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vision_data_process
-<LI><a href="#[e6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;estimation_run
 </UL>
 
 <P><STRONG><a name="[163]"></a>smooth</STRONG> (Thumb, 46 bytes, Stack size 0 bytes, dog.o(i.smooth))
-<BR><BR>[Called By]<UL><LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gamepad_control
-<LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_smooth_cog
+<BR><BR>[Called By]<UL><LI><a href="#[e3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_smooth_cog
+<LI><a href="#[e4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gamepad_control
 </UL>
 
 <P><STRONG><a name="[131]"></a>sqrtf</STRONG> (Thumb, 62 bytes, Stack size 16 bytes, sqrtf_full.o(i.sqrtf))
@@ -3104,16 +3104,16 @@ Local Symbols
 <P><STRONG><a name="[7e]"></a>UART_DMAReceiveCplt</STRONG> (Thumb, 130 bytes, Stack size 8 bytes, stm32f7xx_hal_uart.o(i.UART_DMAReceiveCplt))
 <BR><BR>[Stack]<UL><LI>Max Depth = 84<LI>Call Chain = UART_DMAReceiveCplt &rArr; HAL_UARTEx_RxEventCallback &rArr; usart6_start_recv &rArr; HAL_UARTEx_ReceiveToIdle_DMA &rArr; UART_Start_Receive_DMA &rArr; HAL_DMA_Start_IT &rArr; DMA_SetConfig
 </UL>
-<BR>[Calls]<UL><LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UARTEx_RxEventCallback
-<LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_RxCpltCallback
+<BR>[Calls]<UL><LI><a href="#[12a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_RxCpltCallback
+<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UARTEx_RxEventCallback
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> stm32f7xx_hal_uart.o(i.UART_Start_Receive_DMA)
 </UL>
 <P><STRONG><a name="[7f]"></a>UART_DMARxHalfCplt</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, stm32f7xx_hal_uart.o(i.UART_DMARxHalfCplt))
 <BR><BR>[Stack]<UL><LI>Max Depth = 84<LI>Call Chain = UART_DMARxHalfCplt &rArr; HAL_UARTEx_RxEventCallback &rArr; usart6_start_recv &rArr; HAL_UARTEx_ReceiveToIdle_DMA &rArr; UART_Start_Receive_DMA &rArr; HAL_DMA_Start_IT &rArr; DMA_SetConfig
 </UL>
-<BR>[Calls]<UL><LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UARTEx_RxEventCallback
-<LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_RxHalfCpltCallback
+<BR>[Calls]<UL><LI><a href="#[12b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_RxHalfCpltCallback
+<LI><a href="#[eb]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UARTEx_RxEventCallback
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> stm32f7xx_hal_uart.o(i.UART_Start_Receive_DMA)
 </UL>
@@ -3134,19 +3134,19 @@ Local Symbols
 <P><STRONG><a name="[f5]"></a>UART_EndRxTransfer</STRONG> (Thumb, 76 bytes, Stack size 0 bytes, stm32f7xx_hal_uart.o(i.UART_EndRxTransfer))
 <BR><BR>[Calls]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_EndRxTransfer
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_EndRxTransfer
-<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_DMAError
-<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_IRQHandler
-<LI><a href="#[129]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_WaitOnFlagUntilTimeout
+<BR>[Called By]<UL><LI><a href="#[129]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_WaitOnFlagUntilTimeout
 <LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_DMAStop
+<LI><a href="#[f7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_IRQHandler
+<LI><a href="#[f5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_EndRxTransfer
+<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_DMAError
 </UL>
 
 <P><STRONG><a name="[f4]"></a>UART_EndTxTransfer</STRONG> (Thumb, 24 bytes, Stack size 0 bytes, stm32f7xx_hal_uart.o(i.UART_EndTxTransfer))
 <BR><BR>[Calls]<UL><LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_EndTxTransfer
 </UL>
-<BR>[Called By]<UL><LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_EndTxTransfer
+<BR>[Called By]<UL><LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_DMAStop
+<LI><a href="#[f4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_EndTxTransfer
 <LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;UART_DMAError
-<LI><a href="#[ec]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_UART_DMAStop
 </UL>
 
 <P><STRONG><a name="[155]"></a>limit</STRONG> (Thumb, 40 bytes, Stack size 0 bytes, gait.o(i.limit))
@@ -3171,8 +3171,8 @@ Local Symbols
 <P><STRONG><a name="[84]"></a>passive_run</STRONG> (Thumb, 60 bytes, Stack size 16 bytes, passive_state.o(i.passive_run))
 <BR><BR>[Stack]<UL><LI>Max Depth = 56<LI>Call Chain = passive_run &rArr; leg_set_motor_kp_kd
 </UL>
-<BR>[Calls]<UL><LI><a href="#[19a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_kp_kd
-<LI><a href="#[1a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_force_vel_zero
+<BR>[Calls]<UL><LI><a href="#[1a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_force_vel_zero
+<LI><a href="#[19a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_kp_kd
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> passive_state.o(i.register_passive_state)
 </UL>
@@ -3182,15 +3182,15 @@ Local Symbols
 <P><STRONG><a name="[89]"></a>stand_enter</STRONG> (Thumb, 204 bytes, Stack size 32 bytes, stand_state.o(i.stand_enter))
 <BR><BR>[Stack]<UL><LI>Max Depth = 148<LI>Call Chain = stand_enter &rArr; leg_get_current_foot_pos &rArr; leg_forward_kinematics &rArr; __hardfp_sinf &rArr; __mathlib_rredf2
 </UL>
-<BR>[Calls]<UL><LI><a href="#[19a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_kp_kd
-<LI><a href="#[1a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fsm_get_previous_state
-<LI><a href="#[152]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
-<LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getTime
+<BR>[Calls]<UL><LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getTime
 <LI><a href="#[15e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_motors_current_pos
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
 <LI><a href="#[160]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_pos
 <LI><a href="#[17d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_get_current_foot_pos
 <LI><a href="#[154]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_dog_params
+<LI><a href="#[19a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_kp_kd
+<LI><a href="#[1a8]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;fsm_get_previous_state
+<LI><a href="#[152]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> stand_state.o(i.register_stand_state)
 </UL>
@@ -3198,15 +3198,9 @@ Local Symbols
 <BR>[Address Reference Count : 1]<UL><LI> stand_state.o(i.register_stand_state)
 </UL>
 <P><STRONG><a name="[88]"></a>stand_run</STRONG> (Thumb, 514 bytes, Stack size 240 bytes, stand_state.o(i.stand_run))
-<BR><BR>[Stack]<UL><LI>Max Depth = 768<LI>Call Chain = stand_run &rArr; leg_foot_to_motor_force_pos_vel &rArr; leg_inverse_kinematics_force_pos_vel &rArr; leg_inverse_kinematics &rArr; __hardfp_sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_drsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
+<BR><BR>[Stack]<UL><LI>Max Depth = 768<LI>Call Chain = stand_run &rArr; leg_foot_to_motor_force_pos_vel &rArr; leg_inverse_kinematics_force_pos_vel &rArr; leg_inverse_kinematics &rArr; __hardfp_sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
-<BR>[Calls]<UL><LI><a href="#[19a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_kp_kd
-<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
-<LI><a href="#[152]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
-<LI><a href="#[14a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_sqrtf
-<LI><a href="#[144]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_powf
-<LI><a href="#[13f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_cosf
-<LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getTime
+<BR>[Calls]<UL><LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getTime
 <LI><a href="#[16e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2d
 <LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dsub
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
@@ -3217,6 +3211,12 @@ Local Symbols
 <LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_foot_to_motor_force_pos_vel
 <LI><a href="#[154]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_dog_params
 <LI><a href="#[1a9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_get_stand_height
+<LI><a href="#[19a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_kp_kd
+<LI><a href="#[b7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr4
+<LI><a href="#[152]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
+<LI><a href="#[14a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_sqrtf
+<LI><a href="#[144]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_powf
+<LI><a href="#[13f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__hardfp_cosf
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> stand_state.o(i.register_stand_state)
 </UL>
@@ -3226,9 +3226,9 @@ Local Symbols
 <P><STRONG><a name="[8d]"></a>trot_enter</STRONG> (Thumb, 80 bytes, Stack size 32 bytes, trot_state.o(i.trot_enter))
 <BR><BR>[Stack]<UL><LI>Max Depth = 128<LI>Call Chain = trot_enter &rArr; getTime &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; _double_round
 </UL>
-<BR>[Calls]<UL><LI><a href="#[19a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_kp_kd
-<LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getTime
+<BR>[Calls]<UL><LI><a href="#[16a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getTime
 <LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
+<LI><a href="#[19a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_kp_kd
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> trot_state.o(i.register_trot_state)
 </UL>
@@ -3236,12 +3236,9 @@ Local Symbols
 <BR>[Address Reference Count : 1]<UL><LI> trot_state.o(i.register_trot_state)
 </UL>
 <P><STRONG><a name="[8c]"></a>trot_run</STRONG> (Thumb, 376 bytes, Stack size 216 bytes, trot_state.o(i.trot_run))
-<BR><BR>[Stack]<UL><LI>Max Depth = 744<LI>Call Chain = trot_run &rArr; leg_foot_to_motor_force_pos_vel &rArr; leg_inverse_kinematics_force_pos_vel &rArr; leg_inverse_kinematics &rArr; __hardfp_sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_drsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
+<BR><BR>[Stack]<UL><LI>Max Depth = 744<LI>Call Chain = trot_run &rArr; leg_foot_to_motor_force_pos_vel &rArr; leg_inverse_kinematics_force_pos_vel &rArr; leg_inverse_kinematics &rArr; __hardfp_sin &rArr; __ieee754_rem_pio2 &rArr; __aeabi_dsub &rArr; __aeabi_dadd &rArr; _double_epilogue &rArr; _double_round
 </UL>
-<BR>[Calls]<UL><LI><a href="#[19a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_kp_kd
-<LI><a href="#[1ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_get_force_control_state
-<LI><a href="#[1af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_get_foot_target_force
-<LI><a href="#[1a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
+<BR>[Calls]<UL><LI><a href="#[1a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;phase_wave_generator
 <LI><a href="#[181]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_trot_params
 <LI><a href="#[178]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gait_generator
 <LI><a href="#[1aa]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_target_foot_pos
@@ -3249,15 +3246,18 @@ Local Symbols
 <LI><a href="#[185]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_foot_to_motor_force_pos_vel
 <LI><a href="#[154]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;get_dog_params
 <LI><a href="#[1ad]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;dog_get_body_vel_without_cog
+<LI><a href="#[19a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;leg_set_motor_kp_kd
+<LI><a href="#[1ae]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_get_force_control_state
+<LI><a href="#[1af]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;vmc_get_foot_target_force
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> trot_state.o(i.register_trot_state)
 </UL>
 <P><STRONG><a name="[106]"></a>J60_SendCanMessage</STRONG> (Thumb, 154 bytes, Stack size 32 bytes, j60.o(i.J60_SendCanMessage))
 <BR><BR>[Stack]<UL><LI>Max Depth = 84<LI>Call Chain = J60_SendCanMessage &rArr; J60_SendCanMessage_NonBlocking &rArr; HAL_CAN_AddTxMessage
 </UL>
-<BR>[Calls]<UL><LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_SendCanMessage_NonBlocking
+<BR>[Calls]<UL><LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
+<LI><a href="#[10e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_SendCanMessage_NonBlocking
 <LI><a href="#[113]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
-<LI><a href="#[b6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_GetTick
 </UL>
 <BR>[Called By]<UL><LI><a href="#[107]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_MotorControl
 <LI><a href="#[105]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_EnableMotor
@@ -3266,9 +3266,9 @@ Local Symbols
 <P><STRONG><a name="[10e]"></a>J60_SendCanMessage_NonBlocking</STRONG> (Thumb, 114 bytes, Stack size 32 bytes, j60.o(i.J60_SendCanMessage_NonBlocking))
 <BR><BR>[Stack]<UL><LI>Max Depth = 52<LI>Call Chain = J60_SendCanMessage_NonBlocking &rArr; HAL_CAN_AddTxMessage
 </UL>
-<BR>[Calls]<UL><LI><a href="#[113]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
-<LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_GetTxMailboxesFreeLevel
+<BR>[Calls]<UL><LI><a href="#[10d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_GetTxMailboxesFreeLevel
 <LI><a href="#[114]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;HAL_CAN_AddTxMessage
+<LI><a href="#[113]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy
 </UL>
 <BR>[Called By]<UL><LI><a href="#[106]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_SendCanMessage
 <LI><a href="#[e1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;J60_ProcessCanQueues
