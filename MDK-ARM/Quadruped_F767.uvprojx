@@ -888,6 +888,11 @@
               <FileType>1</FileType>
               <FilePath>..\My\Src\force_calculate.c</FilePath>
             </File>
+            <File>
+              <FileName>path.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\My\Src\path.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

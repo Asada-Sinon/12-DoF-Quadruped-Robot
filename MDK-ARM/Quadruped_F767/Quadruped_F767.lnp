@@ -35,6 +35,7 @@
 "quadruped_f767\timer.o"
 "quadruped_f767\gamepad.o"
 "quadruped_f767\force_calculate.o"
+"quadruped_f767\path.o"
 "quadruped_f767\fsm.o"
 "quadruped_f767\passive_state.o"
 "quadruped_f767\stand_state.o"

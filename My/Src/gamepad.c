@@ -64,6 +64,11 @@ float target_yaw = 0;
 float kp_y = 0.032;
 float target_y = 0; // 雷达反馈的机体侧移坐标
 
+float crawl_stand_height = 0.18;
+float crawl_foot_offest_y = 0.03;
+float crawl_trot_cog_forward_offset = 0.07;
+float crawl_swing_height = 0.08;
+
 // 重心调整步长
 #define COG_ADJUST_STEP 0.01f
 
@@ -214,10 +219,10 @@ void gamepad_control()
     else // 使用pd控制器保持当前yaw角
     {
         w_smooth = kp_yaw * (target_yaw - imu_get_data()->angle[2]) + kd_w * (0 - imu_get_data()->gyro[2]);
-        if (SWITCH_DOWN(SWITCH_CH2) && (fabs(vy) < v_dead_zone) && fabs(w) < v_dead_zone)  // 只有x方向速度时，开启雷达矫正y方向
-        {
-            vy_smooth = kp_y* (target_y - vision_get_pos(1));
-        }
+//        if (SWITCH_DOWN(SWITCH_CH2) && (fabs(vy) < v_dead_zone) && fabs(w) < v_dead_zone)  // 只有x方向速度时，开启雷达矫正y方向
+//        {
+//            vy_smooth = kp_y* (target_y - vision_get_pos(1));
+//        }
     }
 
     dog_set_body_vel(vx_smooth, vy_smooth, w_smooth);
@@ -227,7 +232,29 @@ void gamepad_control()
 //    
 //    set_debug_data(4, w_smooth);
 //    set_debug_data(5, target_yaw);
-    
+    // 切换成匍匐前进
+    if (SWITCH_DOWN(SWITCH_CH2))
+    {
+        // 降低高度
+        dog_set_stand_height(crawl_stand_height);
+        // 足端y方向往外偏移
+        get_dog_params()->posture.center_of_gravity.foot_offset[Y_IDX] = crawl_foot_offest_y;
+        // 重心前移
+        get_dog_params()->posture.center_of_gravity.trot_cog_forward_offset[X_IDX] = crawl_trot_cog_forward_offset;
+        // 降低步高
+        get_dog_params()->trot_gait.swing_height = crawl_swing_height;
+    }
+    else // 恢复默认步态
+    {
+        // 降低高度
+        dog_set_stand_height(0.35);
+        // 足端y方向往外偏移
+        get_dog_params()->posture.center_of_gravity.foot_offset[Y_IDX] = 0;
+        // 重心前移
+        get_dog_params()->posture.center_of_gravity.trot_cog_forward_offset[X_IDX] = 0.025;
+        // 降低步高
+        get_dog_params()->trot_gait.swing_height = 0.12;
+    }
     
     if (SWITCH_DOWN(SWITCH_CH3)) {
         fsm_change_to(STATE_PASSIVE);
