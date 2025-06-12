@@ -18,6 +18,5 @@ uint8_t path_is_finished(void);
 // 获取当前路径状态
 void path_get_state(float *speed, float *cross_error);
 
-#define PI 3.14159265358979323846f
 
 #endif

@@ -53,3 +53,4 @@ quadruped_f767\timer.o: ../My/Inc/gamepad.h
 quadruped_f767\timer.o: ../My/Inc/ANO_TC.h
 quadruped_f767\timer.o: ../Core/Inc/usart.h
 quadruped_f767\timer.o: ../My/Inc/force_calculate.h
+quadruped_f767\timer.o: ../My/Inc/path.h

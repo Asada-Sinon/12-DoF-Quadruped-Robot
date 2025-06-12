@@ -8,6 +8,7 @@
 #include "gamepad.h"
 #include "ANO_TC.h"
 #include "force_calculate.h"
+#include "path.h"
 
 // 获取系统时间
 // long long getSystemTime() {

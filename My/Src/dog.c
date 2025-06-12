@@ -633,6 +633,18 @@ void dog_set_body_vel(float vx, float vy, float w)
     body_vel[X_IDX] = vx + get_dog_params()->posture.center_of_gravity.velocity[X_IDX];
     body_vel[Y_IDX] = vy + get_dog_params()->posture.center_of_gravity.velocity[Y_IDX];
     body_vel[Z_IDX] = w + get_dog_params()->posture.center_of_gravity.velocity[Z_IDX];
+
+    // 速度限制
+    float max_speed_x = 1;
+    float max_speed_y = 0.8;
+    float max_speed_w = 0.8;
+    if (body_vel[X_IDX] > max_speed_x) body_vel[X_IDX] = max_speed_x;
+    if (body_vel[X_IDX] < -max_speed_x) body_vel[X_IDX] = -max_speed_x;
+    if (body_vel[Y_IDX] > max_speed_y) body_vel[Y_IDX] = max_speed_y;
+    if (body_vel[Y_IDX] < -max_speed_y) body_vel[Y_IDX] = -max_speed_y;
+    if (body_vel[Z_IDX] > max_speed_w) body_vel[Z_IDX] = max_speed_w;
+    if (body_vel[Z_IDX] < -max_speed_w) body_vel[Z_IDX] = -max_speed_w;
+    
 }
 
 float dog_get_stand_height()

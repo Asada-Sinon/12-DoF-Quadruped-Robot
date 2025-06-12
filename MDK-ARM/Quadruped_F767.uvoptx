@@ -1052,6 +1052,31 @@
           <WinNumber>2</WinNumber>
           <ItemText>crawl_trot_cog_forward_offset</ItemText>
         </Ww>
+        <Ww>
+          <count>116</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>\\Quadruped_F767\../My/Src/fsm.c\fsm_context.current</ItemText>
+        </Ww>
+        <Ww>
+          <count>117</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>path</ItemText>
+        </Ww>
+        <Ww>
+          <count>118</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>accel_distance</ItemText>
+        </Ww>
+        <Ww>
+          <count>119</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>decel_distance</ItemText>
+        </Ww>
+        <Ww>
+          <count>120</count>
+          <WinNumber>2</WinNumber>
+          <ItemText>vision_data</ItemText>
+        </Ww>
       </WatchWindow2>
       <MemoryWindow1>
         <Mm>

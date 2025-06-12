@@ -5,7 +5,9 @@
 #include "ANO_TC.h"
 #include "estimator.h"
 #include "imu.h"
-#include "vision.h"
+#include "vision.h" 
+#include "path.h"
+
 // 拨杆功能：
 // 拨杆1：无
 // 拨杆2：UP：默认状态， DOWN：开启雷达矫正
@@ -68,6 +70,10 @@ float crawl_stand_height = 0.18;
 float crawl_foot_offest_y = 0.03;
 float crawl_trot_cog_forward_offset = 0.07;
 float crawl_swing_height = 0.08;
+
+float path_target_x = 100; // 单位cm
+float path_target_y = 100;
+float path_target_yaw = 1; // 单位度°
 
 // 重心调整步长
 #define COG_ADJUST_STEP 0.01f
@@ -141,75 +147,27 @@ void gamepad_control_init()
 // 手柄控制机体速度
 void gamepad_control()
 {
+    // 为了调试方便暂时注释，记得改回来
     if (!start_gamepad_control || !GAMEPAD_CONNECTED)
         return;
-        
-//    // 当拨杆4在中间位置时调整前进后退的重心
-//    if (!SWITCH_UP(SWITCH_CH4)) {
-//        // 获取当前重心位置
-//        float *cog_forward_offset = get_dog_params()->posture.center_of_gravity.trot_cog_forward_offset;
-//        float *cog_backward_offset = get_dog_params()->posture.center_of_gravity.trot_cog_backward_offset;
-//        
-//        // 检测右摇杆Y轴（前后）变化，调整机体X方向重心
-//        if (abs(_channels[RIGHT_Y_CH] - CHANNEL_MIDDLE) > big_dead_zone && 
-//            abs(prev_right_y - CHANNEL_MIDDLE) <= big_dead_zone) {
-//            // 从中位开始推动摇杆的瞬间
-//            if (_channels[RIGHT_Y_CH] > CHANNEL_MIDDLE) {
-//                // 向前推
-//                if (SWITCH_MIDDLE(SWITCH_CH4)) { // 如果拨杆4在中间位置
-//                    cog_forward_offset[X_IDX] += COG_ADJUST_STEP;
-//                }
-//                else if(SWITCH_DOWN(SWITCH_CH4)) { // 如果拨杆4在向下位置
-//                    cog_backward_offset[X_IDX] += COG_ADJUST_STEP;
-//                }
-//            }   
-//            else {
-//                // 向后推
-//                if (SWITCH_MIDDLE(SWITCH_CH4)) { // 如果拨杆4在中间位置
-//                    cog_forward_offset[X_IDX] -= COG_ADJUST_STEP;
-//                }
-//                else if(SWITCH_DOWN(SWITCH_CH4)) { // 如果拨杆4在向下位置
-//                    cog_backward_offset[X_IDX] -= COG_ADJUST_STEP;
-//                }
-//            }
-//        }
-//        
-//        // 检测右摇杆X轴（左右）变化，调整Y方向重心
-//        if (abs(_channels[RIGHT_X_CH] - CHANNEL_MIDDLE) > big_dead_zone && 
-//            abs(prev_right_x - CHANNEL_MIDDLE) <= big_dead_zone) {
-//            // 从中位开始推动摇杆的瞬间
-//            if (_channels[RIGHT_X_CH] > CHANNEL_MIDDLE) {
-//                // 向右推
-//                if (SWITCH_MIDDLE(SWITCH_CH4)) { // 如果拨杆4在中间位置
-//                    cog_forward_offset[Y_IDX] -= COG_ADJUST_STEP;
-//                }
-//                else if(SWITCH_DOWN(SWITCH_CH4)) { // 如果拨杆4在向下位置
-//                    cog_backward_offset[Y_IDX] -= COG_ADJUST_STEP;
-//                }
-//            } else {
-//                // 向左推
-//                if (SWITCH_MIDDLE(SWITCH_CH4)) { // 如果拨杆4在中间位置
-//                    cog_forward_offset[Y_IDX] += COG_ADJUST_STEP;
-//                }
-//                else if(SWITCH_DOWN(SWITCH_CH4)) { // 如果拨杆4在向下位置
-//                    cog_backward_offset[Y_IDX] += COG_ADJUST_STEP;
-//                }
-//            }
-//        }
-//        // 更新上一次摇杆位置
-//        prev_right_x = _channels[RIGHT_X_CH];
-//        prev_right_y = _channels[RIGHT_Y_CH];
-//        w = 0;
-//    } else {
-//        // 不在重心调整模式时，重置摇杆位置记录
-//        prev_right_x = CHANNEL_MIDDLE;
-//        prev_right_y = CHANNEL_MIDDLE;
-//    }
     
+
     // 计算机体速度
     vx_smooth = smooth(vx_smooth, vx, v_inc);
     vy_smooth = smooth(vy_smooth, vy, v_inc);
     w_smooth = smooth(w_smooth, w, v_inc);
+
+    // 速度限制
+    float max_speed_x = 1;
+    float max_speed_y = 0.8;
+    float max_speed_w = 0.8;
+    if (vx_smooth > max_speed_x) vx_smooth = max_speed_x;
+    if (vx_smooth < -max_speed_x) vx_smooth = -max_speed_x;
+    if (vy_smooth > max_speed_y) vy_smooth = max_speed_y;
+    if (vy_smooth < -max_speed_y) vy_smooth = -max_speed_y;
+    if (w_smooth > max_speed_w) w_smooth = max_speed_w;
+    if (w_smooth < -max_speed_w) w_smooth = -max_speed_w;
+    
     // 如果手柄设定vx、vy为零、或者w不为0时，更新当前yaw角
     if ((fabs(vx) < v_dead_zone && fabs(vy) < v_dead_zone) || fabs(w) > v_dead_zone)
     {
@@ -224,8 +182,7 @@ void gamepad_control()
 //            vy_smooth = kp_y* (target_y - vision_get_pos(1));
 //        }
     }
-
-    dog_set_body_vel(vx_smooth, vy_smooth, w_smooth);
+    
     set_debug_data(7, vy_smooth);
     
 //    set_debug_data(0, vx_smooth);
@@ -233,44 +190,61 @@ void gamepad_control()
 //    set_debug_data(4, w_smooth);
 //    set_debug_data(5, target_yaw);
     // 切换成匍匐前进
-    if (SWITCH_DOWN(SWITCH_CH2))
-    {
-        // 降低高度
-        dog_set_stand_height(crawl_stand_height);
-        // 足端y方向往外偏移
-        get_dog_params()->posture.center_of_gravity.foot_offset[Y_IDX] = crawl_foot_offest_y;
-        // 重心前移
-        get_dog_params()->posture.center_of_gravity.trot_cog_forward_offset[X_IDX] = crawl_trot_cog_forward_offset;
-        // 降低步高
-        get_dog_params()->trot_gait.swing_height = crawl_swing_height;
-    }
-    else // 恢复默认步态
-    {
-        // 降低高度
-        dog_set_stand_height(0.35);
-        // 足端y方向往外偏移
-        get_dog_params()->posture.center_of_gravity.foot_offset[Y_IDX] = 0;
-        // 重心前移
-        get_dog_params()->posture.center_of_gravity.trot_cog_forward_offset[X_IDX] = 0.025;
-        // 降低步高
-        get_dog_params()->trot_gait.swing_height = 0.12;
-    }
+    // if (SWITCH_DOWN(SWITCH_CH2))
+    // {
+    //     // 降低高度
+    //     dog_set_stand_height(crawl_stand_height);
+    //     // 足端y方向往外偏移
+    //     get_dog_params()->posture.center_of_gravity.foot_offset[Y_IDX] = crawl_foot_offest_y;
+    //     // 重心前移
+    //     get_dog_params()->posture.center_of_gravity.trot_cog_forward_offset[X_IDX] = crawl_trot_cog_forward_offset;
+    //     // 降低步高
+    //     get_dog_params()->trot_gait.swing_height = crawl_swing_height;
+    // }
+    // else // 恢复默认步态
+    // {
+    //     // 降低高度
+    //     dog_set_stand_height(0.35);
+    //     // 足端y方向往外偏移
+    //     get_dog_params()->posture.center_of_gravity.foot_offset[Y_IDX] = 0;
+    //     // 重心前移
+    //     get_dog_params()->posture.center_of_gravity.trot_cog_forward_offset[X_IDX] = 0.025;
+    //     // 降低步高
+    //     get_dog_params()->trot_gait.swing_height = 0.12;
+    // }
     
     if (SWITCH_DOWN(SWITCH_CH3)) {
         fsm_change_to(STATE_PASSIVE);
         return;
     }   
     
-    if (fabs(vx_smooth) < v_dead_zone && 
+    // 关闭手柄操控功能
+    // 为了调试方便这里使用SWITCH_DOWN，正常逻辑应该是SWITCH_UP
+    if (SWITCH_UP(SWITCH_CH2))
+    {
+        if (fabs(vx_smooth) < v_dead_zone && 
         fabs(vy_smooth) < v_dead_zone && 
         fabs(w_smooth) < v_dead_zone && 
         fabs(est_get_body_vel(0)) < v_big_dead_zone && 
         fabs(est_get_body_vel(1)) < v_big_dead_zone) {
         fsm_change_to(STATE_STAND);
-    } else {
-        fsm_change_to(STATE_TROT);
-    } 
-
+        } else {
+            fsm_change_to(STATE_TROT);
+        } 
+        dog_set_body_vel(vx_smooth, vy_smooth, w_smooth);
+    }
+    else // 自动路径
+    {
+        if (path_is_finished())
+        {
+            fsm_change_to(STATE_TROT);
+            path_set_target(path_target_x, path_target_y, path_target_yaw, 1);
+        }
+        else
+        {
+            path_update();
+        }
+    }
     
 }
 

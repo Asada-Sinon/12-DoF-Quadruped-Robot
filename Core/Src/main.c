@@ -128,7 +128,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
     // 初始化
     dog_fsm_init();// 状态机初始化，注册状态
-    motor_init();// 电机初始化，循环直到电机使能完成
+//    motor_init();// 电机初始化，循环直到电机使能完成
     timer_init();// 定时器初始化，开启状态机，电机回传等
     HAL_Delay(100); // 等待以确保接收到电机回传数据
     dog_init(NULL);// 初始化狗参数

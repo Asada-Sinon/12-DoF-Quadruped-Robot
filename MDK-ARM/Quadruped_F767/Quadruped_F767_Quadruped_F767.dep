@@ -1,6 +1,6 @@
 Dependencies for Project 'Quadruped_F767', Target 'Quadruped_F767': (DO NOT MODIFY !)
 F (startup_stm32f767xx.s)(0x6843E37D)(--cpu Cortex-M7.fp.sp -g --apcs=interwork --pd "__MICROLIB SETA 1"-I.\RTE\_Quadruped_F767-ID:\1.Work\Flushbonading\keil\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\1.Work\Flushbonading\keil\ARM\PACK\Keil\STM32F7xx_DFP\2.15.2\Drivers\CMSIS\Device\ST\STM32F7xx\Include--pd "__UVISION_VERSION SETA 526" --pd "_RTE_ SETA 1" --pd "STM32F767xx SETA 1"--list startup_stm32f767xx.lst --xref -o quadruped_f767\startup_stm32f767xx.o --depend quadruped_f767\startup_stm32f767xx.d)
-F (../Core/Src/main.c)(0x6846BE84)(--c99 -c --cpu Cortex-M7.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F7xx/Include -I ../Drivers/CMSIS/Include -I ../My/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp-I.\RTE\_Quadruped_F767-ID:\1.Work\Flushbonading\keil\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\1.Work\Flushbonading\keil\ARM\PACK\Keil\STM32F7xx_DFP\2.15.2\Drivers\CMSIS\Device\ST\STM32F7xx\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F767xx -DUSE_HAL_DRIVER -DSTM32F767xx -DARM_MATH_CM7 -D__TARGET_FPU_VFP-o quadruped_f767\main.o --omf_browse quadruped_f767\main.crf --depend quadruped_f767\main.d)
+F (../Core/Src/main.c)(0x684A5EA4)(--c99 -c --cpu Cortex-M7.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F7xx/Include -I ../Drivers/CMSIS/Include -I ../My/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp-I.\RTE\_Quadruped_F767-ID:\1.Work\Flushbonading\keil\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\1.Work\Flushbonading\keil\ARM\PACK\Keil\STM32F7xx_DFP\2.15.2\Drivers\CMSIS\Device\ST\STM32F7xx\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F767xx -DUSE_HAL_DRIVER -DSTM32F767xx -DARM_MATH_CM7 -D__TARGET_FPU_VFP-o quadruped_f767\main.o --omf_browse quadruped_f767\main.crf --depend quadruped_f767\main.d)
 I (../Core/Inc/main.h)(0x67FB9EE8)
 I (../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h)(0x67FCA83B)
 I (../Core/Inc/stm32f7xx_hal_conf.h)(0x67FDEAA8)
@@ -988,7 +988,7 @@ I (../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim.h)(0x67FCA83B)
 I (../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_tim_ex.h)(0x67FCA83B)
 I (../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h)(0x67FCA83B)
 I (../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h)(0x67FCA83B)
-F (..\My\Src\dog.c)(0x684045BE)(--c99 -c --cpu Cortex-M7.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F7xx/Include -I ../Drivers/CMSIS/Include -I ../My/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp-I.\RTE\_Quadruped_F767-ID:\1.Work\Flushbonading\keil\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\1.Work\Flushbonading\keil\ARM\PACK\Keil\STM32F7xx_DFP\2.15.2\Drivers\CMSIS\Device\ST\STM32F7xx\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F767xx -DUSE_HAL_DRIVER -DSTM32F767xx -DARM_MATH_CM7 -D__TARGET_FPU_VFP-o quadruped_f767\dog.o --omf_browse quadruped_f767\dog.crf --depend quadruped_f767\dog.d)
+F (..\My\Src\dog.c)(0x684A67B0)(--c99 -c --cpu Cortex-M7.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F7xx/Include -I ../Drivers/CMSIS/Include -I ../My/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp-I.\RTE\_Quadruped_F767-ID:\1.Work\Flushbonading\keil\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\1.Work\Flushbonading\keil\ARM\PACK\Keil\STM32F7xx_DFP\2.15.2\Drivers\CMSIS\Device\ST\STM32F7xx\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F767xx -DUSE_HAL_DRIVER -DSTM32F767xx -DARM_MATH_CM7 -D__TARGET_FPU_VFP-o quadruped_f767\dog.o --omf_browse quadruped_f767\dog.crf --depend quadruped_f767\dog.d)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\stdio.h)(0x599EDB3C)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\stdlib.h)(0x599EDB3C)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\string.h)(0x599EDB3C)
@@ -1138,7 +1138,7 @@ I (../My/Inc/imu.h)(0x6832ACA7)
 I (../My/Inc/timer.h)(0x67FCFB69)
 I (../My/Inc/ANO_TC.h)(0x683ED61C)
 I (../Core/Inc/usart.h)(0x6843E56D)
-F (..\My\Src\timer.c)(0x68493CE5)(--c99 -c --cpu Cortex-M7.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F7xx/Include -I ../Drivers/CMSIS/Include -I ../My/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp-I.\RTE\_Quadruped_F767-ID:\1.Work\Flushbonading\keil\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\1.Work\Flushbonading\keil\ARM\PACK\Keil\STM32F7xx_DFP\2.15.2\Drivers\CMSIS\Device\ST\STM32F7xx\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F767xx -DUSE_HAL_DRIVER -DSTM32F767xx -DARM_MATH_CM7 -D__TARGET_FPU_VFP-o quadruped_f767\timer.o --omf_browse quadruped_f767\timer.crf --depend quadruped_f767\timer.d)
+F (..\My\Src\timer.c)(0x684A57B3)(--c99 -c --cpu Cortex-M7.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F7xx/Include -I ../Drivers/CMSIS/Include -I ../My/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp-I.\RTE\_Quadruped_F767-ID:\1.Work\Flushbonading\keil\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\1.Work\Flushbonading\keil\ARM\PACK\Keil\STM32F7xx_DFP\2.15.2\Drivers\CMSIS\Device\ST\STM32F7xx\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F767xx -DUSE_HAL_DRIVER -DSTM32F767xx -DARM_MATH_CM7 -D__TARGET_FPU_VFP-o quadruped_f767\timer.o --omf_browse quadruped_f767\timer.crf --depend quadruped_f767\timer.d)
 I (../My/Inc/timer.h)(0x67FCFB69)
 I (../Core/Inc/tim.h)(0x67FCAEB3)
 I (../Core/Inc/main.h)(0x67FB9EE8)
@@ -1191,7 +1191,8 @@ I (../My/Inc/gamepad.h)(0x683ED61C)
 I (../My/Inc/ANO_TC.h)(0x683ED61C)
 I (../Core/Inc/usart.h)(0x6843E56D)
 I (../My/Inc/force_calculate.h)(0x6843E4A3)
-F (..\My\Src\gamepad.c)(0x68493EF7)(--c99 -c --cpu Cortex-M7.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F7xx/Include -I ../Drivers/CMSIS/Include -I ../My/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp-I.\RTE\_Quadruped_F767-ID:\1.Work\Flushbonading\keil\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\1.Work\Flushbonading\keil\ARM\PACK\Keil\STM32F7xx_DFP\2.15.2\Drivers\CMSIS\Device\ST\STM32F7xx\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F767xx -DUSE_HAL_DRIVER -DSTM32F767xx -DARM_MATH_CM7 -D__TARGET_FPU_VFP-o quadruped_f767\gamepad.o --omf_browse quadruped_f767\gamepad.crf --depend quadruped_f767\gamepad.d)
+I (../My/Inc/path.h)(0x684A5A00)
+F (..\My\Src\gamepad.c)(0x684A68C3)(--c99 -c --cpu Cortex-M7.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F7xx/Include -I ../Drivers/CMSIS/Include -I ../My/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp-I.\RTE\_Quadruped_F767-ID:\1.Work\Flushbonading\keil\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\1.Work\Flushbonading\keil\ARM\PACK\Keil\STM32F7xx_DFP\2.15.2\Drivers\CMSIS\Device\ST\STM32F7xx\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F767xx -DUSE_HAL_DRIVER -DSTM32F767xx -DARM_MATH_CM7 -D__TARGET_FPU_VFP-o quadruped_f767\gamepad.o --omf_browse quadruped_f767\gamepad.crf --depend quadruped_f767\gamepad.d)
 I (../My/Inc/gamepad.h)(0x683ED61C)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\stdint.h)(0x599EDB3E)
 I (../My/Inc/dog.h)(0x683ED61C)
@@ -1243,6 +1244,7 @@ I (../Drivers/CMSIS/DSP/Include/arm_math.h)(0x67FCA803)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\string.h)(0x599EDB3C)
 I (../My/Inc/imu.h)(0x6832ACA7)
 I (../My/Inc/vision.h)(0x684420BE)
+I (../My/Inc/path.h)(0x684A5A00)
 F (..\My\Src\force_calculate.c)(0x6843CD80)(--c99 -c --cpu Cortex-M7.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F7xx/Include -I ../Drivers/CMSIS/Include -I ../My/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp-I.\RTE\_Quadruped_F767-ID:\1.Work\Flushbonading\keil\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\1.Work\Flushbonading\keil\ARM\PACK\Keil\STM32F7xx_DFP\2.15.2\Drivers\CMSIS\Device\ST\STM32F7xx\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F767xx -DUSE_HAL_DRIVER -DSTM32F767xx -DARM_MATH_CM7 -D__TARGET_FPU_VFP-o quadruped_f767\force_calculate.o --omf_browse quadruped_f767\force_calculate.crf --depend quadruped_f767\force_calculate.d)
 I (../My/Inc/force_calculate.h)(0x6843E4A3)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\stdint.h)(0x599EDB3E)
@@ -1291,8 +1293,8 @@ I (../My/Inc/estimator.h)(0x68342993)
 I (../My/Inc/ANO_TC.h)(0x683ED61C)
 I (../Core/Inc/usart.h)(0x6843E56D)
 I (../My/Inc/timer.h)(0x67FCFB69)
-F (..\My\Src\path.c)(0x68497472)(--c99 -c --cpu Cortex-M7.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F7xx/Include -I ../Drivers/CMSIS/Include -I ../My/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp-I.\RTE\_Quadruped_F767-ID:\1.Work\Flushbonading\keil\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\1.Work\Flushbonading\keil\ARM\PACK\Keil\STM32F7xx_DFP\2.15.2\Drivers\CMSIS\Device\ST\STM32F7xx\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F767xx -DUSE_HAL_DRIVER -DSTM32F767xx -DARM_MATH_CM7 -D__TARGET_FPU_VFP-o quadruped_f767\path.o --omf_browse quadruped_f767\path.crf --depend quadruped_f767\path.d)
-I (../My/Inc/path.h)(0x6849748C)
+F (..\My\Src\path.c)(0x684A6C3B)(--c99 -c --cpu Cortex-M7.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F7xx/Include -I ../Drivers/CMSIS/Include -I ../My/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp-I.\RTE\_Quadruped_F767-ID:\1.Work\Flushbonading\keil\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\1.Work\Flushbonading\keil\ARM\PACK\Keil\STM32F7xx_DFP\2.15.2\Drivers\CMSIS\Device\ST\STM32F7xx\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F767xx -DUSE_HAL_DRIVER -DSTM32F767xx -DARM_MATH_CM7 -D__TARGET_FPU_VFP-o quadruped_f767\path.o --omf_browse quadruped_f767\path.crf --depend quadruped_f767\path.d)
+I (../My/Inc/path.h)(0x684A5A00)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\stdint.h)(0x599EDB3E)
 I (../My/Inc/dog.h)(0x683ED61C)
 I (../My/Inc/robot_params.h)(0x684036CA)
@@ -1338,6 +1340,8 @@ I (../My/Inc/matrix.h)(0x682C182A)
 I (../Drivers/CMSIS/DSP/Include/arm_math.h)(0x67FCA803)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\string.h)(0x599EDB3C)
 I (../My/Inc/imu.h)(0x6832ACA7)
+I (../My/Inc/fsm.h)(0x67FCF542)
+I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\stdbool.h)(0x599EDB3E)
 F (..\My\Src\fsm.c)(0x67FE24F5)(--c99 -c --cpu Cortex-M7.fp.sp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Core/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc -I ../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy -I ../Drivers/CMSIS/Device/ST/STM32F7xx/Include -I ../Drivers/CMSIS/Include -I ../My/Inc -I ../Drivers/CMSIS/DSP/Include -I ../Drivers/CMSIS/DSP/Include/dsp-I.\RTE\_Quadruped_F767-ID:\1.Work\Flushbonading\keil\ARM\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include-ID:\1.Work\Flushbonading\keil\ARM\PACK\Keil\STM32F7xx_DFP\2.15.2\Drivers\CMSIS\Device\ST\STM32F7xx\Include-D__UVISION_VERSION="526" -D_RTE_ -DSTM32F767xx -DUSE_HAL_DRIVER -DSTM32F767xx -DARM_MATH_CM7 -D__TARGET_FPU_VFP-o quadruped_f767\fsm.o --omf_browse quadruped_f767\fsm.crf --depend quadruped_f767\fsm.d)
 I (../My/Inc/fsm.h)(0x67FCF542)
 I (D:\1.Work\Flushbonading\keil\ARM\ARMCC\include\stdint.h)(0x599EDB3E)

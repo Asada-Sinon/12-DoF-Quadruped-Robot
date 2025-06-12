@@ -4,6 +4,7 @@
 #include "vision.h"
 #include "estimator.h"
 #include "imu.h"
+#include "fsm.h"
 
 // 路径规划参数
 typedef struct {
@@ -44,7 +45,7 @@ void path_init(void) {
     path.decel = 0.3f;        // 减速度0.3m/s^2
     
     // 设置控制参数
-    path.kp_cross = 0.032;     // 横向误差修正系数
+    path.kp_cross = 0.03;     // 横向误差修正系数
     path.kd_cross = 0.0f;
     path.kp_yaw = 0.015;
     path.kd_yaw = 0.001;
@@ -58,6 +59,8 @@ void path_init(void) {
 // yaw：世界坐标系下目标点偏航角
 // keep_yaw：是否保持偏航角，为1时调整偏航角为yaw，为0时调整偏航角朝向线坐标系方向
 void path_set_target(float x, float y, float yaw, uint8_t keep_yaw) {
+    // 初始化路径参数
+    path_init();
     // 获取当前位置作为起点
     path.start_x = vision_get_pos(0);
     path.start_y = vision_get_pos(1);
@@ -82,6 +85,8 @@ void path_set_target(float x, float y, float yaw, uint8_t keep_yaw) {
     path.is_moving = 1;
 }
 
+float accel_distance = 0;
+float decel_distance = 0;
 // 更新路径状态
 void path_update(void) {
     if (!path.is_moving) {
@@ -92,10 +97,22 @@ void path_update(void) {
     path.current_x = vision_get_pos(0);
     path.current_y = vision_get_pos(1);
 
-    // 计算当前机体在线坐标系下坐标
+    // 获取当前机体偏航角
+    float current_yaw = imu_get_data()->angle[2]; // 单位deg
+    float current_w = imu_get_data()->gyro[2]; // 单位deg/s
+
+    // 机体在世界坐标系下坐标转换到线坐标系下
     float line_x = cosf(path.angle) * path.current_x + sinf(path.angle) * path.current_y;
     float line_y = -sinf(path.angle) * path.current_x + cosf(path.angle) * path.current_y;
     
+    // 机体坐标系下速度转换到世界坐标系下
+    float world_current_vx = cosf(current_yaw * DEGREE_TO_RADIAN) * est_get_body_vel(0) - sinf(current_yaw * DEGREE_TO_RADIAN) * est_get_body_vel(1);
+    float world_current_vy = sinf(current_yaw * DEGREE_TO_RADIAN) * est_get_body_vel(0) + cosf(current_yaw * DEGREE_TO_RADIAN) * est_get_body_vel(1);
+
+    // 世界坐标系下速度转换到线坐标系下
+    float line_vx = cosf(path.angle) * world_current_vx + sinf(path.angle) * world_current_vy;
+    float line_vy = -sinf(path.angle) * world_current_vx + cosf(path.angle) * world_current_vy;
+
     // 计算当前到目标点的距离
     float current_distance = sqrtf(powf(path.target_x - path.current_x, 2) + 
                                  powf(path.target_y - path.current_y, 2));
@@ -104,16 +121,17 @@ void path_update(void) {
     path.cross_track_error = line_y;
     
     // 如果到达目标点附近，停止运动
-    if (current_distance < 0.05f) { // 5cm误差范围
+    if (current_distance < 5.0f) { // 5cm误差范围
         path.is_moving = 0;
         path.current_speed = 0.0f;
         dog_set_body_vel(0, 0, 0);
+        fsm_change_to(STATE_STAND);
         return;
     }
     
     // 计算加速和减速所需的距离
-    float accel_distance = (path.max_speed * path.max_speed) / (2.0f * path.accel);
-    float decel_distance = (path.current_speed * path.current_speed) / (2.0f * path.decel);
+    accel_distance = 100 * (path.max_speed * path.max_speed) / (2.0f * path.accel);
+    decel_distance = 100 * (path.current_speed * path.current_speed) / (2.0f * path.decel);
     
     // 速度规划
     if (current_distance > (accel_distance + decel_distance)) {
@@ -121,13 +139,11 @@ void path_update(void) {
         if (path.current_speed < path.max_speed) {
             // 加速阶段
             path.current_speed += path.accel * path.dt;
+            // 匀速阶段
             if (path.current_speed > path.max_speed) {
                 path.current_speed = path.max_speed;
             }
         }
-    } else if (current_distance > decel_distance) {
-        // 匀速阶段
-        path.current_speed = path.max_speed;
     } else {
         // 减速阶段
         path.current_speed -= path.decel * path.dt;
@@ -138,10 +154,8 @@ void path_update(void) {
         path.current_speed = 0.05f;
     }
     
-    // 应用横向误差修正
-    float current_yaw = imu_get_data()->angle[2];
-    float current_w = imu_get_data()->gyro[2];
-    float line_correction_y = path.kp_cross * (0 - path.cross_track_error);
+    // 线坐标系y方向与yaw角pd矫正
+    float line_correction_y = path.kp_cross * (0 - path.cross_track_error) + path.kd_cross * (0 - line_vy);
     float correction_w = path.kp_yaw * (path.yaw - current_yaw) + path.kd_yaw * (0 - current_w);
 
     // 线坐标系转世界坐标系
@@ -149,8 +163,8 @@ void path_update(void) {
     float world_vy = sinf(path.angle) * path.current_speed + cosf(path.angle) * line_correction_y;
 
     // 世界坐标系转机体坐标系
-    float body_vx = cosf(current_yaw) * world_vx + sinf(current_yaw) * world_vy;
-    float body_vy = -sinf(current_yaw) * world_vx + cosf(current_yaw) * world_vy;
+    float body_vx = cosf(current_yaw * DEGREE_TO_RADIAN) * world_vx + sinf(current_yaw * DEGREE_TO_RADIAN) * world_vy;
+    float body_vy = -sinf(current_yaw * DEGREE_TO_RADIAN) * world_vx + cosf(current_yaw * DEGREE_TO_RADIAN) * world_vy;
 
     // 设置运动速度
     dog_set_body_vel(
