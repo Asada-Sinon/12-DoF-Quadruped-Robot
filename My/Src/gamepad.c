@@ -1,0 +1,261 @@
+#include "gamepad.h"
+#include "dog.h"
+#include "fsm.h"
+#include "stdlib.h"
+#include "ANO_TC.h"
+#include "estimator.h"
+#include "imu.h"
+#include "vision.h" 
+#include "path.h"
+
+// 拨杆功能：
+// 拨杆1：无
+// 拨杆2：UP：默认状态， DOWN：开启雷达矫正
+// 拨杆3：UP：默认状态， DOWN：进入阻尼模式
+// 拨杆4：无
+// 左摇杆：控制机体平移速度
+// 右摇杆：控制机体旋转速度，Y轴无作用
+
+int16_t _channels[16];
+// 通道定义
+#define LEFT_X_CH   3
+#define LEFT_Y_CH   2
+#define RIGHT_X_CH  0
+#define RIGHT_Y_CH  1
+
+#define SWITCH_CH1   4
+#define SWITCH_CH2   5
+#define SWITCH_CH3   6
+#define SWITCH_CH4   7
+
+#define CHANNEL_MIDDLE 992 
+
+#define GAMEPAD_CONNECTED (_channels[0] || _channels[1] || _channels[2] || _channels[3] || _channels[4] || _channels[5] || _channels[6] || _channels[7] || _channels[8] || _channels[9] || _channels[10] || _channels[11] || _channels[12] || _channels[13] || _channels[14] || _channels[15])
+
+// 拨杆位置阈值定义
+#define SWITCH_UP_THRESHOLD      500
+#define SWITCH_DOWN_THRESHOLD    1500
+
+// 拨杆状态判断宏
+#define SWITCH_UP(ch)          (_channels[ch] < SWITCH_UP_THRESHOLD)
+#define SWITCH_DOWN(ch)        (_channels[ch] > SWITCH_DOWN_THRESHOLD)
+#define SWITCH_MIDDLE(ch)      (_channels[ch] <= SWITCH_DOWN_THRESHOLD && _channels[ch] >= SWITCH_UP_THRESHOLD)
+
+
+float vx = 0.0f;
+float vy = 0.0f;
+float w = 0.0f;
+
+float vx_smooth = 0.0f;
+float vy_smooth = 0.0f;
+float w_smooth = 0.0f;
+
+int dead_zone = 50;
+int big_dead_zone = 200;
+float v_inc = 0.002f; // 高频时可以给高，低频时就给低一点吧
+float v_dead_zone = 0.05f;
+float v_big_dead_zone = 0.1f;
+float vx_scale = 0.005;
+float vy_scale = 0.005;
+float w_scale = 0.001;
+
+// 走直线时保持当前yaw角
+float kp_yaw = 0.015;
+float kd_w = 0.001;
+float target_yaw = 0;
+float kp_y = 0.032;
+float target_y = 0; // 雷达反馈的机体侧移坐标
+
+float crawl_stand_height = 0.18;
+float crawl_foot_offest_y = 0.03;
+float crawl_trot_cog_forward_offset = 0.07;
+float crawl_swing_height = 0.08;
+
+float path_target_x = 100; // 单位cm
+float path_target_y = 100;
+float path_target_yaw = 1; // 单位度°
+
+// 重心调整步长
+#define COG_ADJUST_STEP 0.01f
+
+// 记录上一次摇杆位置
+static int16_t prev_right_x = CHANNEL_MIDDLE;
+static int16_t prev_right_y = CHANNEL_MIDDLE;
+
+void HT10A_process(uint8_t buffer[30])
+{
+	_channels[0] = (buffer[1] | ((buffer[2] & 0x07) << 8)) & 0x07FF;
+    // 通道1: bits 11-21 (byte2低5位 + byte3高6位)
+    _channels[1] = ((buffer[2] >> 3) | (buffer[3] << 5)) & 0x07FF;   
+    // 通道2: bits 22-32 (byte3低2位 + byte4全8位 + byte5高1位)
+    _channels[2] = ((buffer[3] >> 6) | (buffer[4] << 2) | ((buffer[5] & 0x01) << 10)) & 0x07FF;  
+    // 通道3: bits 33-43 (byte5低7位 + byte6高4位)
+    _channels[3] = ((buffer[5] >> 1) | (buffer[6] << 7)) & 0x07FF;  
+    // 通道4: bits 44-54 (byte6低4位 + byte7高7位)
+    _channels[4] = ((buffer[6] >> 4) | (buffer[7] << 4)) & 0x07FF;    
+    // 通道5: bits 55-65 (byte7低1位 + byte8全8位 + byte9高2位)
+    _channels[5] = ((buffer[7] >> 7) | (buffer[8] << 1) | ((buffer[9] & 0x03) << 9)) & 0x07FF;    
+    // 通道6: bits 66-76 (byte9低6位 + byte10高5位)
+    _channels[6] = ((buffer[9] >> 2) | (buffer[10] << 6)) & 0x07FF;
+    // 通道7: bits 77-87 (byte10低3位 + byte11全8位)
+    _channels[7] = ((buffer[10] >> 5) | (buffer[11] << 3)) & 0x07FF;    
+    // 通道8: bits 88-98 (byte12低8位 + byte13高3位)
+    _channels[8] = (buffer[12] | ((buffer[13] & 0x07) << 8)) & 0x07FF;    
+    // 通道9: bits 99-109 (byte13低5位 + byte14高6位)
+    _channels[9] = ((buffer[13] >> 3) | (buffer[14] << 5)) & 0x07FF;    
+    // 通道10: bits 110-120 (byte14低2位 + byte15全8位 + byte16高1位)
+    _channels[10] = ((buffer[14] >> 6) | (buffer[15] << 2) | ((buffer[16] & 0x01) << 10)) & 0x07FF;    
+    // 通道11: bits 121-131 (byte16低7位 + byte17高4位)
+    _channels[11] = ((buffer[16] >> 1) | (buffer[17] << 7)) & 0x07FF;    
+    // 通道12: bits 132-142 (byte17低4位 + byte18高7位)
+    _channels[12] = ((buffer[17] >> 4) | (buffer[18] << 4)) & 0x07FF;    
+    // 通道13: bits 143-153 (byte18低1位 + byte19全8位 + byte20高2位)
+    _channels[13] = ((buffer[18] >> 7) | (buffer[19] << 1) | ((buffer[20] & 0x03) << 9)) & 0x07FF;    
+    // 通道14: bits 154-164 (byte20低6位 + byte21高5位)
+    _channels[14] = ((buffer[20] >> 2) | (buffer[21] << 6)) & 0x07FF;    
+    // 通道15: bits 165-175 (byte21低3位 + byte22全8位)
+    _channels[15] = ((buffer[21] >> 5) | (buffer[22] << 3)) & 0x07FF;
+    
+    if (_channels[LEFT_Y_CH] - CHANNEL_MIDDLE > dead_zone)
+        vx = (_channels[LEFT_Y_CH] - CHANNEL_MIDDLE - dead_zone) * vx_scale;
+    else if (_channels[LEFT_Y_CH] - CHANNEL_MIDDLE < -dead_zone)
+        vx = (_channels[LEFT_Y_CH] - CHANNEL_MIDDLE + dead_zone) * vx_scale;
+    else
+        vx = 0;
+
+    if (_channels[LEFT_X_CH] - CHANNEL_MIDDLE > dead_zone)
+        vy = -(_channels[LEFT_X_CH] - CHANNEL_MIDDLE - dead_zone) * vy_scale;
+    else if (_channels[LEFT_X_CH] - CHANNEL_MIDDLE < -dead_zone)
+        vy = -(_channels[LEFT_X_CH] - CHANNEL_MIDDLE + dead_zone) * vy_scale;
+    else
+        vy = 0;
+    
+    if (_channels[RIGHT_X_CH] - CHANNEL_MIDDLE > dead_zone)
+        w = -(_channels[RIGHT_X_CH] - CHANNEL_MIDDLE - dead_zone) * w_scale;
+    else if (_channels[RIGHT_X_CH] - CHANNEL_MIDDLE < -dead_zone)
+        w = -(_channels[RIGHT_X_CH] - CHANNEL_MIDDLE + dead_zone) * w_scale;
+    else
+        w = 0;
+}
+
+uint8_t start_gamepad_control = 0;
+void gamepad_control_init()
+{
+    start_gamepad_control = 1;
+}
+
+// 手柄控制机体速度
+void gamepad_control()
+{
+    // 为了调试方便暂时注释，记得改回来
+    if (!start_gamepad_control || !GAMEPAD_CONNECTED)
+        return;
+    
+
+    // 计算机体速度
+    vx_smooth = smooth(vx_smooth, vx, v_inc);
+    vy_smooth = smooth(vy_smooth, vy, v_inc);
+    w_smooth = smooth(w_smooth, w, v_inc);
+
+    // 速度限制
+    float max_speed_x = 1;
+    float max_speed_y = 0.8;
+    float max_speed_w = 0.8;
+    if (vx_smooth > max_speed_x) vx_smooth = max_speed_x;
+    if (vx_smooth < -max_speed_x) vx_smooth = -max_speed_x;
+    if (vy_smooth > max_speed_y) vy_smooth = max_speed_y;
+    if (vy_smooth < -max_speed_y) vy_smooth = -max_speed_y;
+    if (w_smooth > max_speed_w) w_smooth = max_speed_w;
+    if (w_smooth < -max_speed_w) w_smooth = -max_speed_w;
+    
+    // 如果手柄设定vx、vy为零、或者w不为0时，更新当前yaw角
+    if ((fabs(vx) < v_dead_zone && fabs(vy) < v_dead_zone) || fabs(w) > v_dead_zone)
+    {
+        target_yaw = imu_get_data()->angle[2];
+        target_y = vision_get_pos(1);
+    }
+    else // 使用pd控制器保持当前yaw角
+    {
+        w_smooth = kp_yaw * (target_yaw - imu_get_data()->angle[2]) + kd_w * (0 - imu_get_data()->gyro[2]);
+//        if (SWITCH_DOWN(SWITCH_CH2) && (fabs(vy) < v_dead_zone) && fabs(w) < v_dead_zone)  // 只有x方向速度时，开启雷达矫正y方向
+//        {
+//            vy_smooth = kp_y* (target_y - vision_get_pos(1));
+//        }
+    }
+    
+    set_debug_data(7, vy_smooth);
+    
+//    set_debug_data(0, vx_smooth);
+//    
+//    set_debug_data(4, w_smooth);
+//    set_debug_data(5, target_yaw);
+    // 切换成匍匐前进
+    // if (SWITCH_DOWN(SWITCH_CH2))
+    // {
+    //     // 降低高度
+    //     dog_set_stand_height(crawl_stand_height);
+    //     // 足端y方向往外偏移
+    //     get_dog_params()->posture.center_of_gravity.foot_offset[Y_IDX] = crawl_foot_offest_y;
+    //     // 重心前移
+    //     get_dog_params()->posture.center_of_gravity.trot_cog_forward_offset[X_IDX] = crawl_trot_cog_forward_offset;
+    //     // 降低步高
+    //     get_dog_params()->trot_gait.swing_height = crawl_swing_height;
+    // }
+    // else // 恢复默认步态
+    // {
+    //     // 降低高度
+    //     dog_set_stand_height(0.35);
+    //     // 足端y方向往外偏移
+    //     get_dog_params()->posture.center_of_gravity.foot_offset[Y_IDX] = 0;
+    //     // 重心前移
+    //     get_dog_params()->posture.center_of_gravity.trot_cog_forward_offset[X_IDX] = 0.025;
+    //     // 降低步高
+    //     get_dog_params()->trot_gait.swing_height = 0.12;
+    // }
+    
+    if (SWITCH_DOWN(SWITCH_CH3)) {
+        fsm_change_to(STATE_PASSIVE);
+        return;
+    }   
+    
+    // 关闭手柄操控功能
+    // 为了调试方便这里使用SWITCH_DOWN，正常逻辑应该是SWITCH_UP
+    if (SWITCH_UP(SWITCH_CH2))
+    {
+        if (fabs(vx_smooth) < v_dead_zone && 
+        fabs(vy_smooth) < v_dead_zone && 
+        fabs(w_smooth) < v_dead_zone && 
+        fabs(est_get_body_vel(0)) < v_big_dead_zone && 
+        fabs(est_get_body_vel(1)) < v_big_dead_zone) {
+        fsm_change_to(STATE_STAND);
+        } else {
+            fsm_change_to(STATE_TROT);
+        } 
+        dog_set_body_vel(vx_smooth, vy_smooth, w_smooth);
+    }
+    else // 自动路径
+    {
+        if (path_is_finished())
+        {
+            fsm_change_to(STATE_TROT);
+            path_set_target(path_target_x, path_target_y, path_target_yaw, 1);
+        }
+        else
+        {
+            path_update();
+        }
+    }
+    
+}
+
+float get_origin_target_body_vel(int idx)
+{
+    if (idx == 0)
+        return vx;
+    else if (idx == 1)
+        return vy;
+    else if (idx == 2)
+        return w;
+    else 
+        return 0;
+}

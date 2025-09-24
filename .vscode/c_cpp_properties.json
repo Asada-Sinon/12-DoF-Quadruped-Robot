@@ -1,0 +1,27 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${default}",
+                "Drivers\\STM32F7xx_HAL_Driver\\Inc",
+                "Drivers\\CMSIS\\Device\\ST\\STM32F7xx\\Include",
+                "Drivers\\STM32F7xx_HAL_Driver\\Inc\\Legacy",
+                "My\\Inc",
+                "Core\\Inc",
+                "${workspaceFolder}/Drivers/CMSIS/DSP/Include",
+                "Drivers/CMSIS/DSP/Include"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "compilerPath": "D:\\1.Work\\gcc\\bin\\gcc.exe",
+            "cStandard": "c11",
+            "cppStandard": "gnu++14",
+            "intelliSenseMode": "windows-gcc-x86"
+        }
+    ],
+    "version": 4
+}

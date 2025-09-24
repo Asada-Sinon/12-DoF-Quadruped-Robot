@@ -1,0 +1,15 @@
+quadruped_f767\matrix.o: ..\My\Src\matrix.c
+quadruped_f767\matrix.o: ../My/Inc/matrix.h
+quadruped_f767\matrix.o: ../Drivers/CMSIS/Device/ST/STM32F7xx/Include/stm32f767xx.h
+quadruped_f767\matrix.o: ../Drivers/CMSIS/Include/core_cm7.h
+quadruped_f767\matrix.o: D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin\..\include\stdint.h
+quadruped_f767\matrix.o: ../Drivers/CMSIS/Include/cmsis_version.h
+quadruped_f767\matrix.o: ../Drivers/CMSIS/Include/cmsis_compiler.h
+quadruped_f767\matrix.o: ../Drivers/CMSIS/Include/cmsis_armcc.h
+quadruped_f767\matrix.o: ../Drivers/CMSIS/Include/mpu_armv7.h
+quadruped_f767\matrix.o: ../Drivers/CMSIS/Device/ST/STM32F7xx/Include/system_stm32f7xx.h
+quadruped_f767\matrix.o: ../Drivers/CMSIS/DSP/Include/arm_math.h
+quadruped_f767\matrix.o: ../Drivers/CMSIS/Include/core_cm7.h
+quadruped_f767\matrix.o: D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin\..\include\string.h
+quadruped_f767\matrix.o: D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin\..\include\math.h
+quadruped_f767\matrix.o: D:\1.Work\Flushbonading\keil\ARM\ARMCC\Bin\..\include\stdio.h
